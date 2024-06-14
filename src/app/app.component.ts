@@ -9,34 +9,34 @@ declare let $: any;
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  location: any;
-  routerSubscription: any;
+    location: any;
+    routerSubscription: any;
 
-  constructor(private router: Router) {
-  }
+    constructor(private router: Router) {
+    }
 
-  ngOnInit(){
-      this.recallJsFuntions();
-  }
+    ngOnInit(){
+        this.recallJsFuntions();
+    }
 
-  recallJsFuntions() {
-      this.router.events
-      .subscribe((event) => {
-          if ( event instanceof NavigationStart ) {
-              $('.preloader-area').fadeIn('slow');
-          }
-      });
-      this.routerSubscription = this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd || event instanceof NavigationCancel))
-      .subscribe(event => {
-          $.getScript('../assets/js/main.js');
-          $.getScript('../assets/js/conversation.js');
-          $('.preloader-area').fadeOut('slow');
-          this.location = this.router.url;
-          if (!(event instanceof NavigationEnd)) {
-              return;
-          }
-          window.scrollTo(0, 0);
-      });
-}
+    recallJsFuntions() {
+        this.router.events
+        .subscribe((event) => {
+            if ( event instanceof NavigationStart ) {
+                $('.preloader-area').fadeIn('slow');
+            }
+        });
+        this.routerSubscription = this.router.events
+        .pipe(filter(event => event instanceof NavigationEnd || event instanceof NavigationCancel))
+        .subscribe(event => {
+            $.getScript('../assets/js/main.js');
+            $.getScript('../assets/js/conversation.js');
+            $('.preloader-area').fadeOut('slow');
+            this.location = this.router.url;
+            if (!(event instanceof NavigationEnd)) {
+                return;
+            }
+            window.scrollTo(0, 0);
+        });
+    }
 }

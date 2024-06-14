@@ -1,4 +1,14 @@
 <!-- <app-preloader></app-preloader> -->
-<app-navbar></app-navbar>
+<app-navbar *ngIf="!(location == '/error' || location == '/log-in' || location == '/sign-up')"></app-navbar>
 <router-outlet></router-outlet>
-<app-footer></app-footer>
+<app-footer *ngIf="!(location == '/error' || location == '/log-in' || location == '/sign-up')"></app-footer>
+<ng-container *ngIf="(location == '/home')">
+    <app-sidebar></app-sidebar>
+    <!-- Start Main Content Wrapper Area -->
+    <div class="main-content d-flex flex-column">
+      <app-header></app-header>
+        <router-outlet></router-outlet>
+        <div class="flex-grow-1"></div>
+      <!-- <app-footer></app-footer> -->
+    </div>
+  </ng-container>
