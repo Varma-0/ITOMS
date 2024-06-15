@@ -1,0 +1,19 @@
+<ng-container *ngIf="!(location == '/login' || location == '/landing' || location == '/authentication/login' || location == '/authentication/login-with-image' || location == '/authentication/register' || location == '/authentication/register-with-image' || location == '/authentication/forgot-password' || location == '/authentication/forgot-password-with-image' || location == '/authentication/reset-password' || location == '/authentication/reset-password-with-image' || location == '/authentication/lock-screen' || location == '/authentication/lock-screen-with-image' || location == '/miscellaneous/not-authorized' || location == '/miscellaneous/not-authorized-with-image' || location == '/miscellaneous/maintenance' || location == '/miscellaneous/maintenance-with-image' || location == '/miscellaneous/coming-soon' || location == '/miscellaneous/coming-soon-with-image' || location == '/error/errorv1' || location == '/error/errorv2' || location == '/error/errorv3' || location == '/error/errorv4')">
+  <app-sidebar></app-sidebar>
+  <!-- Start Main Content Wrapper Area -->
+  <div class="main-content d-flex flex-column">
+    <app-header></app-header>
+      <router-outlet></router-outlet>
+      <div class="flex-grow-1"></div>
+    <app-footer></app-footer>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="(location == '/authentication/login' || location == '/authentication/login-with-image' || location == '/authentication/register' || location == '/authentication/register-with-image' || location == '/authentication/forgot-password' || location == '/authentication/forgot-password-with-image' || location == '/authentication/reset-password' || location == '/authentication/reset-password-with-image' || location == '/authentication/lock-screen' || location == '/authentication/lock-screen-with-image' || location == '/miscellaneous/not-authorized' || location == '/miscellaneous/not-authorized-with-image' || location == '/miscellaneous/maintenance' || location == '/miscellaneous/maintenance-with-image' || location == '/miscellaneous/coming-soon' || location == '/miscellaneous/coming-soon-with-image' || location == '/error/errorv1' || location == '/error/errorv2' || location == '/error/errorv3' || location == '/error/errorv4')">
+  <router-outlet></router-outlet>
+</ng-container>
+
+<ng-container *ngIf="(location == '/login' || location == '/landing')">
+    <router-outlet></router-outlet>
+</ng-container>
+

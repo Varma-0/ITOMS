@@ -1,0 +1,322 @@
+<!-- Breadcrumb Area -->
+<div class="breadcrumb-area">
+    <h1>Dashboard</h1>
+
+    <ol class="breadcrumb">
+        <li class="item"><a routerLink="/ui-components/navs"><i class='bx bx-home-alt'></i></a></li>
+
+        <li class="item">Dashboard</li>
+
+        <li class="item">Navs</li>
+    </ol>
+</div>
+<!-- End Breadcrumb Area -->
+
+<!-- Start -->
+<div class="card mb-30">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3>Base Nav</h3>
+    </div>
+
+    <div class="card-body">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link active" href="javascript:void(0)">Active</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="javascript:void(0)">Disabled</a>
+            </li>
+        </ul>
+
+        <div class="demo-code-preview" data-label="Code Example">
+            <div class="highlight" id="basicBaseNav"><pre><code class="language-markup" data-lang="html"><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"nav"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link active"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Active<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link disabled"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Disabled<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span></code></pre>
+
+                <button type="button" class="btn btn-clipboard" data-clipboard-target="#basicBaseNav"><i class='bx bx-copy'></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-30">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3>Horizontal Alignment</h3>
+    </div>
+
+    <div class="card-body">
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" href="javascript:void(0)">Active</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="javascript:void(0)" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+        </ul>
+
+        <div class="demo-code-preview" data-label="Code Example">
+            <div class="highlight" id="horizontalAlignmentNav"><pre><code class="language-markup" data-lang="html"><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"nav justify-content-center"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link active"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Active<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link disabled"</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">tabindex=</span><span class="s">"-1"</span> <span class="na">aria-disabled=</span><span class="s">"true"</span><span class="nt">&gt;</span>Disabled<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span></code></pre>
+
+                <button type="button" class="btn btn-clipboard" data-clipboard-target="#horizontalAlignmentNav"><i class='bx bx-copy'></i></button>
+            </div>
+        </div>
+
+        <ul class="nav justify-content-end mt-4">
+            <li class="nav-item">
+                <a class="nav-link active" href="javascript:void(0)">Active</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="javascript:void(0)" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+        </ul>
+
+        <div class="demo-code-preview" data-label="Code Example">
+            <div class="highlight" id="horizontalAlignmentNav2"><pre><code class="language-markup" data-lang="html"><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"nav justify-content-end"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link active"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Active<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link disabled"</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">tabindex=</span><span class="s">"-1"</span> <span class="na">aria-disabled=</span><span class="s">"true"</span><span class="nt">&gt;</span>Disabled<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span></code></pre>
+
+                <button type="button" class="btn btn-clipboard" data-clipboard-target="#horizontalAlignmentNav2"><i class='bx bx-copy'></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-30">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3>Vertical</h3>
+    </div>
+
+    <div class="card-body">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="javascript:void(0)">Active</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="javascript:void(0)" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+        </ul>
+
+        <div class="demo-code-preview" data-label="Code Example">
+            <div class="highlight" id="verticalAlignmentNav"><pre><code class="language-markup" data-lang="html"><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"nav flex-column"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link active"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Active<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link disabled"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Disabled<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span></code></pre>
+
+                <button type="button" class="btn btn-clipboard" data-clipboard-target="#verticalAlignmentNav"><i class='bx bx-copy'></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-30">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3>Tabs</h3>
+    </div>
+
+    <div class="card-body">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="javascript:void(0)">Active</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="javascript:void(0)" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+        </ul>
+
+        <div class="demo-code-preview" data-label="Code Example">
+            <div class="highlight" id="tabsNav"><pre><code class="language-markup" data-lang="html"><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"nav nav-tabs"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link active"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Active<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link disabled"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Disabled<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span></code></pre>
+
+                <button type="button" class="btn btn-clipboard" data-clipboard-target="#tabsNav"><i class='bx bx-copy'></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-30">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3>Fill and Justify</h3>
+    </div>
+
+    <div class="card-body">
+        <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+                <a class="nav-link active" href="javascript:void(0)">Active</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="javascript:void(0)" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+        </ul>
+
+        <div class="demo-code-preview" data-label="Code Example">
+            <div class="highlight" id="fillAndJustifyNav"><pre><code class="language-markup" data-lang="html"><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"nav nav-pills nav-fill"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link active"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Active<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link disabled"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Disabled<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span></code></pre>
+
+                <button type="button" class="btn btn-clipboard" data-clipboard-target="#fillAndJustifyNav"><i class='bx bx-copy'></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-30">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3>Navs with Dropdowns</h3>
+    </div>
+
+    <div class="card-body">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="javascript:void(0)">Active</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="javascript:void(0)">Action</a>
+                    <a class="dropdown-item" href="javascript:void(0)">Another action</a>
+                    <a class="dropdown-item" href="javascript:void(0)">Something else here</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="javascript:void(0)">Separated link</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="javascript:void(0)" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+        </ul>
+
+        <div class="demo-code-preview" data-label="Code Example">
+            <div class="highlight" id="tabsWithDropdowns"><pre><code class="language-markup" data-lang="html"><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"nav nav-tabs"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link active"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Active<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link dropdown-toggle"</span> <span class="na">data-toggle=</span><span class="s">"dropdown"</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">role=</span><span class="s">"button"</span> <span class="na">aria-haspopup=</span><span class="s">"true"</span> <span class="na">aria-expanded=</span><span class="s">"false"</span><span class="nt">&gt;</span>Dropdown<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"dropdown-menu"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"dropdown-item"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Action<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"dropdown-item"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Another action<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"dropdown-item"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Something else here<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"dropdown-divider"</span><span class="nt">&gt;&lt;/div&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"dropdown-item"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Separated link<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link disabled"</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">tabindex=</span><span class="s">"-1"</span> <span class="na">aria-disabled=</span><span class="s">"true"</span><span class="nt">&gt;</span>Disabled<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span></code></pre>
+
+                <button type="button" class="btn btn-clipboard" data-clipboard-target="#tabsWithDropdowns"><i class='bx bx-copy'></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->
