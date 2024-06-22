@@ -88,11 +88,12 @@ import { ApexChartsComponent } from './components/pages/apex-charts/apex-charts.
 import { ChartjsComponent } from './components/pages/chartjs/chartjs.component';
 import { LandingComponent } from './landing/dashboard/dashboard.component';
 import { DLogInComponent } from './landing/log-in/log-in.component';
+import { AuthGuard } from './services/login/auth.guard';
 
 const routes: Routes = [
   {path: '', redirectTo:'landing',pathMatch:'full'},
   {
-    path:'login',component:DLogInComponent
+    path:'login',component:DLogInComponent, canActivate: [AuthGuard]
   },
   {
     path:'landing', component:LandingComponent

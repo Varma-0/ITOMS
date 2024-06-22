@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { emailBody, passBody } from './body/body';
+import { dropBody, emailBody, passBody } from './body/body';
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +17,9 @@ export class AuthService {
 
   loginWithPassword(options: passBody): Observable<any>  {
     return this.http.post<any>(`${this.apiUrl}/login/authenticate`, options);
+  }
+
+  loginWithOption(options: dropBody): Observable<any>  {
+    return this.http.post<any>(`${this.apiUrl}/login/token`, options);
   }
 }

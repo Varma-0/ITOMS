@@ -19,10 +19,12 @@ export class passData {
 }
 
 export class dropData {
+    tid: string;
     uid: string;
     inaSecretKey: string;
 
-    constructor(uid: string, inaSecretKey: string) {
+    constructor(tid: string,uid: string, inaSecretKey: string) {
+        this.tid = tid;
         this.uid = uid;
         this.inaSecretKey = inaSecretKey;
     }

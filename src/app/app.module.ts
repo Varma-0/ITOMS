@@ -26,7 +26,7 @@ import { FeathericonsComponent } from './components/pages/icons/feathericons/fea
 import { IconsComponent } from './components/pages/icons/icons/icons.component';
 import { CardComponent } from './components/pages/card/card/card.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BasicCardComponent } from './components/pages/card/basic-card/basic-card.component';
 import { ColorsCardComponent } from './components/pages/card/colors-card/colors-card.component';
 import { StatisticsCardComponent } from './components/pages/card/statistics-card/statistics-card.component';
@@ -156,6 +156,12 @@ import { LandingHeaderComponent } from './landing/layouts/header/header.componen
 import { LandingNavbarComponent } from './landing/layouts/navbar/navbar.component';
 import { LandingPreloaderComponent } from './landing/layouts/preloader/preloader.component';
 import { DLogInComponent } from './landing/log-in/log-in.component';
+import { AuthInterceptor } from './services/login/auth.interceptor';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatIconModule } from '@angular/material/icon';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatOptgroup, MatOption, MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -316,9 +322,17 @@ import { DLogInComponent } from './landing/log-in/log-in.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatOption,
+    BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
