@@ -25,6 +25,8 @@ import { BoxiconsComponent } from './components/pages/icons/boxicons/boxicons.co
 import { FeathericonsComponent } from './components/pages/icons/feathericons/feathericons.component';
 import { IconsComponent } from './components/pages/icons/icons/icons.component';
 import { CardComponent } from './components/pages/card/card/card.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { BasicCardComponent } from './components/pages/card/basic-card/basic-card.component';
 import { ColorsCardComponent } from './components/pages/card/colors-card/colors-card.component';
 import { StatisticsCardComponent } from './components/pages/card/statistics-card/statistics-card.component';
@@ -153,7 +155,7 @@ import { LandingFooterComponent } from './landing/layouts/footer/footer.componen
 import { LandingHeaderComponent } from './landing/layouts/header/header.component';
 import { LandingNavbarComponent } from './landing/layouts/navbar/navbar.component';
 import { LandingPreloaderComponent } from './landing/layouts/preloader/preloader.component';
-import { LogInComponent } from './landing/log-in/log-in.component';
+import { DLogInComponent } from './landing/log-in/log-in.component';
 
 @NgModule({
   declarations: [
@@ -308,11 +310,13 @@ import { LogInComponent } from './landing/log-in/log-in.component';
     LandingHeaderComponent,
     LandingNavbarComponent,
     LandingPreloaderComponent,
-    LogInComponent
+    DLogInComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -87,12 +87,12 @@ import { MapsComponent } from './components/pages/maps/maps.component';
 import { ApexChartsComponent } from './components/pages/apex-charts/apex-charts.component';
 import { ChartjsComponent } from './components/pages/chartjs/chartjs.component';
 import { LandingComponent } from './landing/dashboard/dashboard.component';
-import { LogInComponent } from './landing/log-in/log-in.component';
+import { DLogInComponent } from './landing/log-in/log-in.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'landing',pathMatch:'full'},
   {
-    path:'login',component:LogInComponent
+    path:'login',component:DLogInComponent
   },
   {
     path:'landing', component:LandingComponent
