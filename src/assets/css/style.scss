@@ -3342,7 +3342,6 @@ Pricing Area CSS
 .single-pricing-table {
     margin-bottom: 30px;
     text-align: center;
-    background-color: $white-color;
     padding-bottom: 30px;
     border-radius: 5px;
     transition: $transition;
@@ -8134,7 +8133,6 @@ Main Content CSS
             weight: 700;
         };
         &::before {
-            content: '';
             position: absolute;
             right: 0;
             top: 50%;

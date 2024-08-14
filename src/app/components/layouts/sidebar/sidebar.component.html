@@ -21,32 +21,12 @@
 
     <div class="sidemenu-body">
         <ul class="sidemenu-nav metisMenu h-100" id="sidemenu-nav" data-simplebar>
-            <li class="nav-item-title">
-                Main
-            </li>
 
             <li class="nav-item" routerLinkActive="active mm-active">
-                <a href="#" class="collapsed-nav-link nav-link" aria-expanded="false">
+                <a routerLink="/dashboard/analytics" class="nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-home-circle'></i></span>
-                    <span class="menu-title">Dashboard</span>
-                    <span class="badge">2</span>
+                    <span class="menu-title">HOME</span>
                 </a>
-
-                <ul class="sidemenu-nav-second-level">
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/dashboard/analytics" class="nav-link">
-                            <span class="icon"><i class='bx bx-analyse'></i></span>
-                            <span class="menu-title">Analytics</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/dashboard/e-commerce" class="nav-link">
-                            <span class="icon"><i class='bx bxs-shopping-bag'></i></span>
-                            <span class="menu-title">eCommerce</span>
-                        </a>
-                    </li>
-                </ul>
             </li>
 
             <!-- <li class="nav-item-title">
@@ -149,7 +129,7 @@
             <li class="nav-item" routerLinkActive="active mm-active">
                 <a href="#" class="collapsed-nav-link nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-card'></i></span>
-                    <span class="menu-title">Card</span>
+                    <span class="menu-title">TMS</span>
                 </a>
 
                 <ul class="sidemenu-nav-second-level">
@@ -168,9 +148,39 @@
                     </li> -->
 
                     <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/table/table-light" class="nav-link">
+                            <span class="icon"><i class='bx bx-right-arrow-alt'></i></span>
+                            <span class="menu-title">Terminal</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
                         <a routerLink="/card/statistics-card" class="nav-link">
                             <span class="icon"><i class='bx bx-right-arrow-alt'></i></span>
-                            <span class="menu-title">Statistics Card</span>
+                            <span class="menu-title">Merchant</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/card/statistics-card" class="nav-link">
+                            <span class="icon"><i class='bx bx-right-arrow-alt'></i></span>
+                            <span class="menu-title">Deployment</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/card/statistics-card" class="nav-link">
+                            <span class="icon"><i class='bx bx-right-arrow-alt'></i></span>
+                            <span class="menu-title">Resources</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/card/statistics-card" class="nav-link">
+                            <span class="icon"><i class='bx bx-right-arrow-alt'></i></span>
+                            <span class="menu-title">Group</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/card/statistics-card" class="nav-link">
+                            <span class="icon"><i class='bx bx-right-arrow-alt'></i></span>
+                            <span class="menu-title">Update Schedule</span>
                         </a>
                     </li>
                 </ul>

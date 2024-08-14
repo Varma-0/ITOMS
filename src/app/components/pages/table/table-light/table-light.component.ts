@@ -7,6 +7,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableLightComponent implements OnInit {
 
+  terminals=[
+    {
+      check:false,
+      sn : 'JHDHJD726',
+      model: 'hjddjh',
+      status: 'Inventory',
+      ostatus:'Offline',
+      time:''
+    },
+    {
+        check:false,
+        sn : 'JHDHJD726',
+        model: 'hjddjh',
+        status: 'Inventory',
+        ostatus:'Offline',
+        time:''
+      },
+      {
+        check:false,
+        sn : 'JHDHJD726',
+        model: 'hjddjh',
+        status: 'Inventory',
+        ostatus:'Offline',
+        time:''
+      }
+  ];
+
   constructor() { }
 
   ngOnInit() {
