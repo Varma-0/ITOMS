@@ -903,7 +903,7 @@ Navbar Area CSS
         .navbar-nav {
             border: 1px solid #eeeeee;
             padding: 10px 20px;
-            height: 350px;
+            // height: 350px;
             overflow-y: scroll;
             margin: {
                 left: 0;
@@ -5119,9 +5119,10 @@ Login Area CSS
     height: 100%;
     width: 100%;
     background: {
-        image: url(../../assets/img/login-bg.jpg);
+        image: url(../../assets/img/toms.png);
         position: center center;
-        size: cover;
+        height: 200%;
+        size: contain;
         repeat: no-repeat;
     };
     img {
