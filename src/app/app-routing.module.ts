@@ -23,7 +23,7 @@ import { ColorsCardComponent } from './components/pages/card/colors-card/colors-
 import { StatisticsCardComponent } from './components/pages/card/statistics-card/statistics-card.component';
 import { FormLayoutComponent } from './components/pages/forms/form-layout/form-layout.component';
 import { FormInputGroupComponent } from './components/pages/forms/form-input-group/form-input-group.component';
-import { TableLightComponent } from './components/pages/table/table-light/table-light.component';
+import { TerminalComponent } from './components/pages/table/terminal/terminal.component';
 import { TableDarkComponent } from './components/pages/table/table-dark/table-dark.component';
 import { InboxComponent } from './components/pages/app-email/inbox/inbox.component';
 import { ReadComponent } from './components/pages/app-email/read/read.component';
@@ -176,7 +176,7 @@ const routes: Routes = [
   {
     path: 'table', component: TableComponent,
     children: [
-      {path: 'table-light', data: { breadcrumb: 'Table' }, component: TableLightComponent},
+      {path: 'terminal', data: { breadcrumb: 'Table' }, component: TerminalComponent},
       {path: 'table-dark', data: { breadcrumb: 'Table Dark' }, component: TableDarkComponent},
     ]
   },

@@ -34,7 +34,7 @@ import { FormComponent } from './components/pages/forms/form/form.component';
 import { FormLayoutComponent } from './components/pages/forms/form-layout/form-layout.component';
 import { FormInputGroupComponent } from './components/pages/forms/form-input-group/form-input-group.component';
 import { TableComponent } from './components/pages/table/table/table.component';
-import { TableLightComponent } from './components/pages/table/table-light/table-light.component';
+import { TerminalComponent } from './components/pages/table/terminal/terminal.component';
 import { TableDarkComponent } from './components/pages/table/table-dark/table-dark.component';
 import { InboxComponent } from './components/pages/app-email/inbox/inbox.component';
 import { ReadComponent } from './components/pages/app-email/read/read.component';
@@ -162,6 +162,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatOptgroup, MatOption, MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
+import { MatChipsModule } from '@angular/material/chips';
+import { ToolbarComponent } from "./components/pages/table/toolbar/toolbar.component";
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -195,7 +205,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     FormLayoutComponent,
     FormInputGroupComponent,
     TableComponent,
-    TableLightComponent,
+    TerminalComponent,
     TableDarkComponent,
     InboxComponent,
     ReadComponent,
@@ -316,7 +326,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     LandingHeaderComponent,
     LandingNavbarComponent,
     LandingPreloaderComponent,
-    DLogInComponent
+    DLogInComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,
@@ -328,7 +339,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatFormFieldModule,
     MatOption,
     BrowserAnimationsModule,
-  ],
+    MatTableModule,
+    MatToolbarModule,
+    MatChipsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatMenuModule
+],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideAnimationsAsync()

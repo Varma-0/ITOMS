@@ -1,0 +1,94 @@
+
+.mat-header-cell {
+  background-color: #909399;
+  font-weight: bold;
+}
+
+.bg-light {
+  background-color: #edf2f9 !important;
+}
+
+.button-group {
+  display: inline-flex;
+  gap: 8px; /* Adjust gap between buttons */
+}
+
+.btn-outline-primary {
+  background-color: grey;
+  color: rgba(0, 0, 0, 0.429);
+  border: 1px solid #cccccc;
+  cursor: not-allowed;
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px; /* Adjust gap between icon and text */
+}
+
+.btn-outline-primary.mat-icon {
+  font-size: 18px;
+}
+
+.btn-active {
+  background-color: #007bff;
+  color: #ffffff;
+  border: 1px solid #007bff;
+  cursor: pointer;
+}
+
+.button-group .btn:not(:last-child) {
+  border-right: none; /* Remove right border to create separator effect */
+  justify-content: space-between;
+}
+
+.button-group .btn + .btn {
+  border-left: 1px solid #ffffff; /* Add separator between buttons */
+}
+.mat-mdc-paginator-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+  border-radius: 0 0 4px 4px;
+}
+
+.mat-paginator-page-size {
+  display: flex;
+  align-items: center;
+}
+
+.mat-paginator-page-size label {
+  margin-right: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.mat-paginator-page-size .mat-select {
+  padding: 4px 8px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  font-size: 14px;
+  color: #333;
+}
+
+.mat-paginator-range-label {
+  font-size: 14px;
+  color: #333;
+  margin-right: 24px;
+}
+
+.mat-paginator-navigation {
+  display: flex;
+  align-items: center;
+}
+
+.mat-paginator-navigation button {
+  color: #007bff;
+}
+
+.mat-paginator-navigation button[disabled] {
+  color: #cccccc;
+}
