@@ -14,6 +14,8 @@ import { NavigationEnd, Router } from '@angular/router';
 export class DLogInComponent implements OnInit{
   username: string = '';
   password: string = '';
+  newPassword: string = '';
+  confirmNewPassword: string = '';
   showPasswordField: boolean = false;
   showDropdown: boolean = false;
   dropdownOptions: Array<string> = [];
@@ -21,9 +23,12 @@ export class DLogInComponent implements OnInit{
   errorMessage: string = '';
   uid: string ='';
   inasecretkey: string='';
+  errorApiMessage: string='';
   loadingEmail: boolean = false;
   loadingPassword: boolean = false;
   loadingDropdown: boolean = false;
+  forgotPassword: boolean = false;
+  loadingNewPassword: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -65,6 +70,10 @@ export class DLogInComponent implements OnInit{
     );
   }
 
+  onForgotEmailClick(): void {
+
+  }
+
   onSubmitPassword(): void {
     this.loadingPassword = true;
     const eventData = new passData(this.uid,this.password);
@@ -79,17 +88,48 @@ export class DLogInComponent implements OnInit{
           this.inasecretkey = response.event.eventData.inaSecretKey;
           this.dropdownOptions = response.event.eventData.userTenants;
           this.errorMessage = '';
+        } else if (response.status == 422) {
+          this.errorApiMessage = response.message;
+          this.errorMessage = this.errorApiMessage;
         }
         this.loadingPassword = false;
 
       },
       error => {
-        this.errorMessage = 'Invalid password';
-        // console.error('Password validation failed', error);
+        this.errorMessage = this.errorApiMessage;
+        console.error('Password validation failed', this.errorMessage);
         this.loadingPassword = false;
 
       }
     );
+  }
+
+  onForgotPasswordClick() {
+    this.forgotPassword = true; 
+    const eventData = new passData(this.uid,this.password);
+    console.log(eventData)
+    const event = new passEvent(eventData, 'USER', 'CRD_RESET');
+    const updatePassRequest = new passBody(event);
+    
+    this.authService.updatePassword(updatePassRequest).subscribe(
+      response => {
+        if(response.status == 200) {
+          this.showDropdown = true;
+        } else {
+          this.errorApiMessage = response.message;
+        }
+        this.loadingNewPassword = false;
+      },
+      error => {
+        this.errorMessage = this.errorApiMessage;
+        // console.error('Password validation failed', error);
+        this.loadingNewPassword = false;
+      }
+    );
+  }
+
+  onSubmitNewPassword() {
+
   }
 
   onSubmitDropdown(): void {

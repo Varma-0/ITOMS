@@ -22,4 +22,8 @@ export class AuthService {
   loginWithOption(options: dropBody): Observable<any>  {
     return this.http.post<any>(`${this.apiUrl}/login/token`, options);
   }
+
+  updatePassword(options: passBody): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/cred/reset`, options);
+  }
 }

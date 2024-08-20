@@ -48,7 +48,8 @@ const ELEMENT_DATA: TerminalElement[] = [
 export class TerminalComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['select', 'sn', 'model', 'status', 'onlineStatus', 'activationTime', 'actions'];
   dataSource = new MatTableDataSource<TerminalElement>(ELEMENT_DATA);
-
+  statusOptions: Array<string> = [];
+  modelOptions: Array<string> = [];
   searchSn: string = '';
   searchStatus: string = '';
   searchModel: string = '';
@@ -56,11 +57,9 @@ export class TerminalComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
-    // Initialization logic here
   }
 
   ngAfterViewInit() {
-    // Set the paginator after the view is initialized
     this.dataSource.paginator = this.paginator;
   }
 

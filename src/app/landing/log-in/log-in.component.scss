@@ -36,6 +36,15 @@ $transitions: .5s;
     } 
 }
 
+.log {
+  &:hover,
+    &:focus {
+      color: $mains-color;
+      background-color: $whites-color;
+        // box-shadow: 0px 5px 28.5px 1.5px rgba(19, 196, 161, 0.3) !important;
+    } 
+}
+
 .form-group {
     position: relative;
   }

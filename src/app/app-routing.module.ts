@@ -89,11 +89,13 @@ import { ChartjsComponent } from './components/pages/chartjs/chartjs.component';
 import { LandingComponent } from './landing/dashboard/dashboard.component';
 import { DLogInComponent } from './landing/log-in/log-in.component';
 import { AuthGuard } from './services/login/auth.guard';
+import { MerchantComponent } from './components/pages/merchant/merchant.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'landing',pathMatch:'full'},
   {
-    path:'login',component:DLogInComponent, canActivate: [AuthGuard]
+    path:'login',component:DLogInComponent
+    // , canActivate: [AuthGuard]
   },
   {
     path:'landing', component:LandingComponent
@@ -180,6 +182,7 @@ const routes: Routes = [
       {path: 'table-dark', data: { breadcrumb: 'Table Dark' }, component: TableDarkComponent},
     ]
   },
+  {path: 'merchant', component: MerchantComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'gallery', component: GalleryComponent},
   {path: 'timeline', component: TimelineComponent},

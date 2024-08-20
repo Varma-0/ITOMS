@@ -23,6 +23,11 @@
                     required
                     email>
                 </div>
+
+                <!-- <div class="form-group mt-3 d-flex justify-content-end">
+                  <a class="log" (click)="onForgotEmailClick()">Forgot Email?</a>
+                </div> -->
+
                 <button type="submit" class="default-btn" *ngIf="!loadingEmail">
                   <i class="bx bxs-hot me-2"></i>
                   Validate Email<span></span>
@@ -33,7 +38,8 @@
                 </button>
               </form>
 
-              <form *ngIf="showPasswordField" (ngSubmit)="onSubmitPassword()">
+                
+              <form *ngIf="showPasswordField && !forgotPassword" (ngSubmit)="onSubmitPassword()">
                 <div class="form-group mb-3">
                   <input 
                     type="password" 
@@ -44,15 +50,60 @@
                     class="form-control" 
                     required>
                 </div>
+
+                <div class="form-group mt-3 d-flex justify-content-end">
+                  <a class="log" (click)="onForgotPasswordClick()">Forgot Password?</a>
+                </div>
+                
                 <button type="submit" class="default-btn" *ngIf="!loadingPassword">
                   <i class="bx bxs-hot me-2"></i>
                   Login<span></span>
                 </button>
+                
                 <button class="loading-btn" type="button" disabled *ngIf="loadingPassword">
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   Loading...
                 </button>
+                
+                
               </form>
+              
+              <!-- New Password Form -->
+              <form *ngIf="forgotPassword" (ngSubmit)="onSubmitNewPassword()">
+                <div class="form-group mb-3">
+                  <input 
+                    type="password" 
+                    id="newPassword" 
+                    [(ngModel)]="newPassword" 
+                    name="newPassword"
+                    placeholder="New password" 
+                    class="form-control" 
+                    required>
+                </div>
+                
+                <div class="form-group mb-3">
+                  <input 
+                    type="password" 
+                    id="confirmNewPassword" 
+                    [(ngModel)]="confirmNewPassword" 
+                    name="confirmNewPassword"
+                    placeholder="Confirm new password" 
+                    class="form-control" 
+                    required>
+                </div>
+                
+                <button type="submit" class="default-btn" *ngIf="!loadingNewPassword">
+                  <i class="bx bxs-hot me-2"></i>
+                  Update Password<span></span>
+                </button>
+                
+                <button class="loading-btn" type="button" disabled *ngIf="loadingNewPassword">
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Loading...
+                </button>
+              </form>
+              
+
 
               <form *ngIf="showDropdown" (ngSubmit)="onSubmitDropdown()">
                 <div class="form-group mb-3">

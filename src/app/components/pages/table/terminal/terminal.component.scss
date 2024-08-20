@@ -92,3 +92,55 @@
 .mat-paginator-navigation button[disabled] {
   color: #cccccc;
 }
+
+.toolbar {
+  background: white;
+  padding: 0 16px;
+  color: black;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge {
+  font-size: 1rem;
+  padding: 0.5em;
+  background-color: #e0e0e0; /* grey background */
+  color: #333; /* dark text */
+  border-radius: 4px;
+  margin-left: 0.5em; /* space between the text and badge */
+}
+
+.btn-link {
+  color: #333; /* dark text color */
+  font-size: 1rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.btn-link i {
+  margin-right: 0.5em;
+  font-size: 1.25rem;
+}
+
+.btn-link:hover {
+  color: #007bff; /* Bootstrap primary color on hover */
+  text-decoration: underline; /* underline on hover for a more distinct look */
+}
+
+.btn-link .bi-caret-down-fill {
+  margin-left: 0.3em;
+  font-size: 0.75rem;
+}
+
+hr {
+  border-top: 1px solid #dee2e6; /* Bootstrap's light grey */
+  margin-top: 0;
+  margin-bottom: 16px;
+}

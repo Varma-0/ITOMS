@@ -1,20 +1,58 @@
+<div class="container-fluid">
+  <!-- Terminal Title and Badge -->
+  <div class="row align-items-center py-3">
+    <div class="col">
+      <h2 class="mb-0">Terminal <span class="badge bg-grey text-dark fs-6">61</span></h2>
+    </div>
+  </div>
+  
+  <!-- Buttons Row -->
+  <div class="row align-items-center">
+    <div class="col d-flex flex-wrap">
+      <button class="btn btn-link me-3">
+        <mat-icon>history</mat-icon>  Device Event Log
+      </button>
+      <button class="btn btn-link me-3">
+        <mat-icon>file_download</mat-icon> 
+      <mat-icon>arrow_drop_down</mat-icon> Export
+      </button>
+      <button class="btn btn-link me-3">
+        <mat-icon>location_on</mat-icon> Device Location
+      </button>
+      <button class="btn btn-link">
+        <mat-icon>edit</mat-icon> TID Batch Modification
+      </button>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <div class="row">
+    <div class="col">
+      <hr class="my-3">
+    </div>
+  </div>
+</div>
+
 <div class="row mb-3">
   <div class="col-md-3">
     <input type="text" class="form-control" placeholder="Device SN / TID" [(ngModel)]="searchSn">
   </div>
   <div class="col-md-3">
     <select class="form-control" [(ngModel)]="searchStatus">
-      <option value="">Status</option>
-      <option value="Inventory">Inventory</option>
-      <option value="Online">Online</option>
+      <option value=""  disabled selected>Status</option>
+      <!-- <option value="Inventory">Inventory</option>
+      <option value="Online">Online</option> -->
+      <option *ngFor="let option of statusOptions"[ngValue]="option">{{ option.name }}</option>
     </select>
   </div>
   <div class="col-md-3">
     <select class="form-control" [(ngModel)]="searchModel">
-      <option value="">Model</option>
-      <option value="SP630 ECR">SP630 ECR</option>
+      <option value=""  disabled selected>Model</option>
+      <!-- <option value="SP630 ECR">SP630 ECR</option>
       <option value="P180">P180</option>
-      <option value="SP630 Pro">SP630 Pro</option>
+      <option value="SP630 Pro">SP630 Pro</option> -->
+      <option *ngFor="let option of modelOptions"[ngValue]="option">{{ option.name }}</option>
+
     </select>
   </div>
   <div class="col-1">

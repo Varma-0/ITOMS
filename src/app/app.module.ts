@@ -169,9 +169,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
-import { ToolbarComponent } from "./components/pages/table/toolbar/toolbar.component";
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
+import { MerchantComponent } from './components/pages/merchant/merchant.component';
 
 @NgModule({
   declarations: [
@@ -327,7 +327,7 @@ import { MatMenuModule } from '@angular/material/menu';
     LandingNavbarComponent,
     LandingPreloaderComponent,
     DLogInComponent,
-    ToolbarComponent
+    MerchantComponent,
   ],
   imports: [
     BrowserModule,

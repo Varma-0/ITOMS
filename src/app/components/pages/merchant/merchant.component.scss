@@ -1,0 +1,137 @@
+/* Main container */
+.container {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 100vh; /* Full height of the viewport */
+}
+
+/* Sidebar (20% width) */
+.sidebar {
+    flex: 0 0 30%;
+    max-width: 30%;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Allows scrolling if content exceeds height */
+    border-right: 1px solid #ddd; /* Add a right border to separate from main content */
+}
+
+/* Main content (75% width) */
+.main-content {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+/* Header styling */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-with-image {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start; /* Ensures content starts from the beginning */
+}
+
+
+.circular-image {
+    margin-right: 15px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    margin-top: 10px;
+    padding: 0;
+}
+
+.tabs li {
+    margin-right: 20px;
+}
+
+.tabs li:last-child {
+    margin-right: 0;
+}
+
+.tabs li button {
+    background: none;
+    border: none;
+    color: #333; /* Default color */
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Style for the active tab */
+.tabs li button.active-tab {
+    color: #007bff; /* Blue color for active tab */
+    border-bottom: 2px solid #007bff;
+}
+
+.tabs li button:hover {
+    color: #0056b3;
+}
+
+.content {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Hide all content divs by default */
+.content div {
+    display: none;
+}
+
+/* Show only the active content */
+.content-active {
+    display: block;
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background-color: #000; /* Light gray color */
+    margin: 20px 0; /* Spacing around the divider */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sidebar, .main-content {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .header-info, .title-with-image {
+        flex-direction: column;
+    }
+
+    .tabs {
+        margin-top: 15px;
+        justify-content: space-around;
+    }
+}
