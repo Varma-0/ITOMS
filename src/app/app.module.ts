@@ -172,6 +172,12 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
 import { MerchantComponent } from './components/pages/merchant/merchant.component';
+import { MatCardModule } from '@angular/material/card';
+import { AdministrationComponent } from './components/pages/admin/administration/administration.component';
+import { UserComponent } from './components/pages/admin/user/user.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { RoleComponent } from './components/pages/admin/role/role.component';
+import { AlertComponent } from './components/pages/admin/alerts/alerts.component';
 
 @NgModule({
   declarations: [
@@ -207,6 +213,10 @@ import { MerchantComponent } from './components/pages/merchant/merchant.componen
     TableComponent,
     TerminalComponent,
     TableDarkComponent,
+    AdministrationComponent,
+    UserComponent,
+    RoleComponent,
+    AlertComponent,
     InboxComponent,
     ReadComponent,
     ComposeComponent,
@@ -340,6 +350,8 @@ import { MerchantComponent } from './components/pages/merchant/merchant.componen
     MatOption,
     BrowserAnimationsModule,
     MatTableModule,
+    MatCardModule,
+    MatDialogModule,
     MatToolbarModule,
     MatChipsModule,
     MatButtonModule,

@@ -1,0 +1,64 @@
+.user-card {
+    margin: 8px 0;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .user-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .date-info {
+    text-align: center;
+    margin-right: 18px;
+  }
+  
+  .day {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .month,.date{
+    font-size: 14px;
+    color: gray;
+  }
+  
+  .user-info {
+    flex-grow: 1;
+  }
+  
+  .user-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .user-email {
+    font-size: 14px;
+    color: gray;
+    margin: 0;
+  }
+  
+  .status-btn {
+    font-size: 12px;
+    padding: 2px 8px;
+  }
+  
+  .user-card-actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 8px;
+  }
+
+  .add-user {
+   text-align: right;
+   margin-bottom: 10px;
+  }
+  

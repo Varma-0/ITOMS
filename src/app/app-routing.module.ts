@@ -90,6 +90,10 @@ import { LandingComponent } from './landing/dashboard/dashboard.component';
 import { DLogInComponent } from './landing/log-in/log-in.component';
 import { AuthGuard } from './services/login/auth.guard';
 import { MerchantComponent } from './components/pages/merchant/merchant.component';
+import { AdministrationComponent } from './components/pages/admin/administration/administration.component';
+import { UserComponent } from './components/pages/admin/user/user.component';
+import { RoleComponent } from './components/pages/admin/role/role.component';
+import { AlertComponent } from './components/pages/admin/alerts/alerts.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'landing',pathMatch:'full'},
@@ -180,6 +184,14 @@ const routes: Routes = [
     children: [
       {path: 'terminal', data: { breadcrumb: 'Table' }, component: TerminalComponent},
       {path: 'table-dark', data: { breadcrumb: 'Table Dark' }, component: TableDarkComponent},
+    ]
+  },
+  {
+    path: 'admin', component: AdministrationComponent,
+    children: [
+      {path: 'user', data: { breadcrumb: 'User' }, component: UserComponent},
+      {path: 'role', data: { breadcrumb: 'Role' }, component: RoleComponent},
+      {path: 'alert', data: { breadcrumb: 'Alert' }, component: AlertComponent},
     ]
   },
   {path: 'merchant', component: MerchantComponent},
