@@ -63,4 +63,9 @@ export class MerchantComponent implements OnInit {
   selectTab(tab: string) {
     this.selectedTab = tab;
   }
+
+  edit(element) {
+
+  }
+
 }

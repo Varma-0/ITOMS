@@ -170,6 +170,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatListModule} from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MerchantComponent } from './components/pages/merchant/merchant.component';
 import { MatCardModule } from '@angular/material/card';
@@ -185,6 +186,7 @@ import { HierarchyLevelComponent } from './components/pages/admin/hierarchy-leve
 import { HierarchyComponent } from './components/pages/admin/hierarchy/hierarchy.component';
 import { MerchantsComponent } from './components/pages/admin/merchants/merchants.component';
 import { ConfirmDeleteDialogComponent } from './components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
+import { SchedulingComponent } from './components/pages/table/scheduling/scheduling.component';
 
 @NgModule({
   declarations: [
@@ -350,7 +352,8 @@ import { ConfirmDeleteDialogComponent } from './components/dialogs/confirm-delet
     HierarchyLevelComponent,
     HierarchyComponent,
     MerchantsComponent,
-    ConfirmDeleteDialogComponent
+    ConfirmDeleteDialogComponent,
+    SchedulingComponent
   ],
   imports: [
     BrowserModule,
@@ -367,6 +370,7 @@ import { ConfirmDeleteDialogComponent } from './components/dialogs/confirm-delet
     MatDialogModule,
     MatToolbarModule,
     MatChipsModule,
+    MatListModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,

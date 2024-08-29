@@ -1,7 +1,7 @@
 /* Main container */
 .container {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     width: 100%;
     height: 100vh; /* Full height of the viewport */
 }
@@ -10,12 +10,48 @@
 .sidebar {
     flex: 0 0 18%;
     max-width: 18%;
-    padding: 20px;
     box-sizing: border-box;
     overflow-y: auto; /* Allows scrolling if content exceeds height */
     border-right: 1px solid #ddd; /* Add a right border to separate from main content */
+
+    @media (max-width: 1024px) {
+        flex: 0 0 25%; /* Adjust width for tablets */
+        max-width: 25%;
+    }
+
+    @media (max-width: 768px) {
+        flex: 0 0 100%; /* Full width for mobile */
+        max-width: 100%;
+        border-right: none; /* Remove border on mobile */
+        border-bottom: 1px solid #ddd; /* Add bottom border on mobile */
+    }
 }
 
+.nolist {
+    list-style-type: none;
+    margin-right: 4%;
+    margin-left: -15%;
+}
+
+.sidebar .butt {
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    // text-align: left;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .sidebar button:hover,
+  .sidebar .active-sidebar {
+    background-color: #e9ecef;
+    color: #007bff;
+  }
+  
 /* Main content (75% width) */
 .main-content {
     flex: 1;
@@ -23,15 +59,36 @@
     padding: 20px;
     box-sizing: border-box;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media (max-width: 1024px) {
+        padding: 15px; /* Reduce padding for tablets */
+    }
+
+    @media (max-width: 768px) {
+        flex: 0 0 100%; /* Full width for mobile */
+        max-width: 100%;
+        padding: 15px; /* Adjust padding for mobile */
+    }
+}
+
+.mat-icons {
+    background: none;
+    border: none;
+    // padding: 10px;
 }
 
 /* Header styling */
 .header {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
+
+    @media (max-width: 768px) {
+        margin-bottom: 15px; /* Adjust spacing on mobile */
+    }
 }
 
 .header-info {
@@ -39,6 +96,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: 768px) {
+        align-items: center; /* Center align on mobile */
+    }
 }
 
 .title-with-image {
@@ -46,8 +107,18 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-start; /* Ensures content starts from the beginning */
+
+    @media (max-width: 768px) {
+        flex-direction: column; /* Stack image and title on mobile */
+        align-items: center; /* Center align on mobile */
+    }
 }
 
+.heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
 
 .circular-image {
     margin-right: 15px;
@@ -56,18 +127,33 @@
     border-radius: 50%;
     margin-bottom: 10px;
     object-fit: cover;
+
+    @media (max-width: 768px) {
+        margin-right: 0;
+        margin-bottom: 15px; /* Add margin below image on mobile */
+    }
 }
 
+/* Tabs styling */
 .tabs {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     list-style-type: none;
     margin-top: 10px;
     padding: 0;
+
+    @media (max-width: 768px) {
+        margin-top: 15px;
+        justify-content: space-around; /* Spread tabs evenly on mobile */
+    }
 }
 
 .tabs li {
     margin-right: 20px;
+
+    @media (max-width: 768px) {
+        margin-right: 10px; /* Reduce margin for mobile */
+    }
 }
 
 .tabs li:last-child {
@@ -83,6 +169,11 @@
     border-bottom: 2px solid transparent;
     cursor: pointer;
     font-size: 16px;
+    justify-content: left;
+
+    @media (max-width: 768px) {
+        font-size: 14px; /* Adjust font size on mobile */
+    }
 }
 
 /* Style for the active tab */
@@ -95,11 +186,17 @@
     color: #0056b3;
 }
 
+/* Content section */
 .content {
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+
+    @media (max-width: 768px) {
+        padding: 15px; /* Adjust padding on mobile */
+    }
 }
 
 /* Hide all content divs by default */
@@ -112,26 +209,14 @@
     display: block;
 }
 
+/* Divider styling */
 .divider {
     border: 0;
     height: 1px;
     background-color: #000; /* Light gray color */
     margin: 20px 0; /* Spacing around the divider */
-}
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .sidebar, .main-content {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-
-    .header-info, .title-with-image {
-        flex-direction: column;
-    }
-
-    .tabs {
-        margin-top: 15px;
-        justify-content: space-around;
+    @media (max-width: 768px) {
+        margin: 15px 0; /* Adjust spacing on mobile */
     }
 }

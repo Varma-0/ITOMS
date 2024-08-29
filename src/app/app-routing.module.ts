@@ -99,6 +99,7 @@ import { TenantsComponent } from './components/pages/admin/tenants/tenants.compo
 import { HierarchyLevelComponent } from './components/pages/admin/hierarchy-level/hierarchy-level.component';
 import { HierarchyComponent } from './components/pages/admin/hierarchy/hierarchy.component';
 import { MerchantsComponent } from './components/pages/admin/merchants/merchants.component';
+import { SchedulingComponent } from './components/pages/table/scheduling/scheduling.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'landing',pathMatch:'full'},
@@ -189,6 +190,7 @@ const routes: Routes = [
     children: [
       {path: 'terminal', data: { breadcrumb: 'Table' }, component: TerminalComponent},
       {path: 'table-dark', data: { breadcrumb: 'Table Dark' }, component: TableDarkComponent},
+      {path: 'scheduling', data: { breadcrumb: 'Scheduling' }, component: SchedulingComponent},
     ]
   },
   {

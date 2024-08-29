@@ -1,95 +1,29 @@
-<!-- 
 <div class="breadcrumb-area">
   <h1>Organization</h1>
 </div>
 
 <div class="container">
   <div class="sidebar">
-    <h2>Organization</h2>
-    <ul>
-      <li>
-        <button 
-          [ngClass]="{'active-sidebar': selectedItem === 'StandardPos1'}" 
-          (click)="selectItem('StandardPos1')">
-          StandardPos1
-        </button>
-      </li>
-      <li>
-        <button 
-          [ngClass]="{'active-sidebar': selectedItem === 'StandardPos2'}" 
-          (click)="selectItem('StandardPos2')">
-          StandardPos2
-        </button>
-      </li>
-    </ul>
-  </div>
-
-  <div class="main-content">
-    <div class="header">
-      <div class="header-info">
-        <div class="title-with-image">
-          <img src="assets/img/computer.png" alt="StandardPos" class="circular-image">
-          <h2>{{ selectedItem }}</h2>
-        </div>
-      </div>
-      <ul class="tabs">
-        <li>
-          <button 
-            [ngClass]="{'active-tab': selectedTab === 'overview'}" 
-            (click)="selectTab('overview')">
-            Overview
-          </button>
-        </li>
-        <li>
-          <button 
-            [ngClass]="{'active-tab': selectedTab === 'merchant'}" 
-            (click)="selectTab('merchant')">
-            Merchant
-          </button>
-        </li>
-        <li>
-          <button 
-            [ngClass]="{'active-tab': selectedTab === 'terminal'}" 
-            (click)="selectTab('terminal')">
-            Terminal
-          </button>
-        </li>
-      </ul>
+    <div class="heading">
+      <h2>Organization</h2>
+      <button class="mat-icons">
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
-    <hr class="divider">
-    
-    <div>
-      <div *ngIf="selectedTab === 'overview'">
-        <h3>Overview Information</h3>
-        <p>This is the overview content for {{ selectedItem }}.</p>
-      </div>
-      
-      <div *ngIf="selectedTab === 'merchant'">
-        <h3>Merchant Information</h3>
-        <p>This is the merchant content for {{ selectedItem }}.</p>
-      </div>
-
-      <div *ngIf="selectedTab === 'terminal'">
-        <h3>Terminal Information</h3>
-        <p>This is the terminal content for {{ selectedItem }}.</p>
-      </div>
-    </div>
-  </div>
-</div> -->
-<!-- Breadcrumb Area -->
-<div class="breadcrumb-area">
-  <h1>Organization</h1>
-</div>
-
-<div class="container">
-  <div class="sidebar">
-    <h2>Organization</h2>
-    <ul>
+    <ul class="nolist">
       <li *ngFor="let item of sidebarItems">
-        <button 
-          [ngClass]="{'active-sidebar': selectedItem === item}" 
-          (click)="selectItem(item)">
+        <button class="butt" [ngClass]="{'active-sidebar': selectedItem === item}" (click)="selectItem(item)">
+          <span class="icon"><i class='bx bx-buildings'></i></span>&nbsp;
           {{ item }}
+          <button class="mat-icons" [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="edit(item)">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+          </mat-menu>
         </button>
       </li>
     </ul>
@@ -105,44 +39,60 @@
       </div>
       <ul class="tabs">
         <li>
-          <button 
-            [ngClass]="{'active-tab': selectedTab === 'overview'}" 
-            (click)="selectTab('overview')">
+          <button [ngClass]="{'active-tab': selectedTab === 'overview'}" (click)="selectTab('overview')">
             Overview
           </button>
         </li>
         <li>
-          <button 
-            [ngClass]="{'active-tab': selectedTab === 'merchant'}" 
-            (click)="selectTab('merchant')">
+          <button [ngClass]="{'active-tab': selectedTab === 'merchant'}" (click)="selectTab('merchant')">
             Merchant
           </button>
         </li>
         <li>
-          <button 
-            [ngClass]="{'active-tab': selectedTab === 'terminal'}" 
-            (click)="selectTab('terminal')">
+          <button [ngClass]="{'active-tab': selectedTab === 'terminal'}" (click)="selectTab('terminal')">
             Terminal
           </button>
         </li>
       </ul>
     </div>
     <hr class="divider">
-    
-    <div *ngIf="data">
+
+    <div class="tab-content">
       <div *ngIf="selectedTab === 'overview'">
         <h3>Overview Information</h3>
-        <p>{{ data.overview }}</p>
+        <div class="info-grid">
+          <div class="info-item">
+            <i class="fas fa-map-marker-alt"></i> <!-- Example icon -->
+            <span>{{ data.overview.location }}</span>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Creation Time: {{ data.overview.creationTime }}</span>
+          </div>
+          <!-- Add more items as necessary -->
+        </div>
       </div>
-      
+
       <div *ngIf="selectedTab === 'merchant'">
         <h3>Merchant Information</h3>
-        <p>{{ data.merchant }}</p>
+        <div class="info-grid">
+          <div class="info-item">
+            <i class="fas fa-user"></i>
+            <span>{{ data.merchant.name }}</span>
+          </div>
+          <!-- Add more merchant-related items -->
+        </div>
       </div>
 
       <div *ngIf="selectedTab === 'terminal'">
         <h3>Terminal Information</h3>
-        <p>{{ data.terminal }}</p>
+        <div class="info-grid">
+          <div class="info-item">
+            <i class="fas fa-terminal"></i>
+            <span>{{ data.terminal.model }}</span>
+          </div>
+          <!-- Add more terminal-related items -->
+        </div>
       </div>
     </div>
   </div>
