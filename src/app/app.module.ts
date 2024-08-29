@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -177,7 +177,14 @@ import { AdministrationComponent } from './components/pages/admin/administration
 import { UserComponent } from './components/pages/admin/user/user.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RoleComponent } from './components/pages/admin/role/role.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AlertComponent } from './components/pages/admin/alerts/alerts.component';
+import { PermissionComponent } from './components/pages/admin/permission/permission.component';
+import { TenantsComponent } from './components/pages/admin/tenants/tenants.component';
+import { HierarchyLevelComponent } from './components/pages/admin/hierarchy-level/hierarchy-level.component';
+import { HierarchyComponent } from './components/pages/admin/hierarchy/hierarchy.component';
+import { MerchantsComponent } from './components/pages/admin/merchants/merchants.component';
+import { ConfirmDeleteDialogComponent } from './components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -338,6 +345,12 @@ import { AlertComponent } from './components/pages/admin/alerts/alerts.component
     LandingPreloaderComponent,
     DLogInComponent,
     MerchantComponent,
+    PermissionComponent,
+    TenantsComponent,
+    HierarchyLevelComponent,
+    HierarchyComponent,
+    MerchantsComponent,
+    ConfirmDeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -360,7 +373,8 @@ import { AlertComponent } from './components/pages/admin/alerts/alerts.component
     MatCheckboxModule,
     MatSortModule,
     MatPaginatorModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSlideToggleModule
 ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

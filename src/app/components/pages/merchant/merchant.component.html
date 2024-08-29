@@ -1,69 +1,149 @@
+<!-- 
+<div class="breadcrumb-area">
+  <h1>Organization</h1>
+</div>
+
+<div class="container">
+  <div class="sidebar">
+    <h2>Organization</h2>
+    <ul>
+      <li>
+        <button 
+          [ngClass]="{'active-sidebar': selectedItem === 'StandardPos1'}" 
+          (click)="selectItem('StandardPos1')">
+          StandardPos1
+        </button>
+      </li>
+      <li>
+        <button 
+          [ngClass]="{'active-sidebar': selectedItem === 'StandardPos2'}" 
+          (click)="selectItem('StandardPos2')">
+          StandardPos2
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <div class="header-info">
+        <div class="title-with-image">
+          <img src="assets/img/computer.png" alt="StandardPos" class="circular-image">
+          <h2>{{ selectedItem }}</h2>
+        </div>
+      </div>
+      <ul class="tabs">
+        <li>
+          <button 
+            [ngClass]="{'active-tab': selectedTab === 'overview'}" 
+            (click)="selectTab('overview')">
+            Overview
+          </button>
+        </li>
+        <li>
+          <button 
+            [ngClass]="{'active-tab': selectedTab === 'merchant'}" 
+            (click)="selectTab('merchant')">
+            Merchant
+          </button>
+        </li>
+        <li>
+          <button 
+            [ngClass]="{'active-tab': selectedTab === 'terminal'}" 
+            (click)="selectTab('terminal')">
+            Terminal
+          </button>
+        </li>
+      </ul>
+    </div>
+    <hr class="divider">
+    
+    <div>
+      <div *ngIf="selectedTab === 'overview'">
+        <h3>Overview Information</h3>
+        <p>This is the overview content for {{ selectedItem }}.</p>
+      </div>
+      
+      <div *ngIf="selectedTab === 'merchant'">
+        <h3>Merchant Information</h3>
+        <p>This is the merchant content for {{ selectedItem }}.</p>
+      </div>
+
+      <div *ngIf="selectedTab === 'terminal'">
+        <h3>Terminal Information</h3>
+        <p>This is the terminal content for {{ selectedItem }}.</p>
+      </div>
+    </div>
+  </div>
+</div> -->
 <!-- Breadcrumb Area -->
 <div class="breadcrumb-area">
   <h1>Organization</h1>
 </div>
 
 <div class="container">
-    <div class="sidebar">
-      <h2>Organization</h2>
-      <ul>
+  <div class="sidebar">
+    <h2>Organization</h2>
+    <ul>
+      <li *ngFor="let item of sidebarItems">
+        <button 
+          [ngClass]="{'active-sidebar': selectedItem === item}" 
+          (click)="selectItem(item)">
+          {{ item }}
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <div class="header-info">
+        <div class="title-with-image">
+          <img src="assets/img/computer.png" alt="StandardPos" class="circular-image">
+          <h2>{{ selectedItem }}</h2>
+        </div>
+      </div>
+      <ul class="tabs">
         <li>
-          <a href="#">StandardPos</a>
+          <button 
+            [ngClass]="{'active-tab': selectedTab === 'overview'}" 
+            (click)="selectTab('overview')">
+            Overview
+          </button>
+        </li>
+        <li>
+          <button 
+            [ngClass]="{'active-tab': selectedTab === 'merchant'}" 
+            (click)="selectTab('merchant')">
+            Merchant
+          </button>
+        </li>
+        <li>
+          <button 
+            [ngClass]="{'active-tab': selectedTab === 'terminal'}" 
+            (click)="selectTab('terminal')">
+            Terminal
+          </button>
         </li>
       </ul>
     </div>
-  
-    <div class="main-content">
-      <div class="header">
-        <div class="header-info">
-          <div class="title-with-image">
-            <img src="assets/img/computer.png" alt="StandardPos" class="circular-image">
-            <h2>StandardPos</h2>
-          </div>
-        </div>
-        <ul class="tabs">
-          <li>
-            <button 
-               [ngClass]="{'active-tab': selectedTab === 'overview'}" 
-               (click)="selectTab('overview')">
-              Overview
-            </button>
-          </li>
-          <li>
-            <button 
-               [ngClass]="{'active-tab': selectedTab === 'merchant'}" 
-               (click)="selectTab('merchant')">
-              Merchant
-            </button>
-          </li>
-          <li>
-            <button 
-               [ngClass]="{'active-tab': selectedTab === 'terminal'}" 
-               (click)="selectTab('terminal')">
-              Terminal
-            </button>
-          </li>
-        </ul>
-        <!-- Divider below tabs -->
-    </div>
     <hr class="divider">
-  
-      <div>
-        <div *ngIf="selectedTab === 'overview'">
-          <h3>Overview Information</h3>
-          <p>This is the overview content.</p>
-        </div>
-        
-        <div *ngIf="selectedTab === 'merchant'">
-          <h3>Merchant Information</h3>
-          <p>This is the merchant content.</p>
-        </div>
-  
-        <div *ngIf="selectedTab === 'terminal'">
-          <h3>Terminal Information</h3>
-          <p>This is the terminal content.</p>
-        </div>
+    
+    <div *ngIf="data">
+      <div *ngIf="selectedTab === 'overview'">
+        <h3>Overview Information</h3>
+        <p>{{ data.overview }}</p>
+      </div>
+      
+      <div *ngIf="selectedTab === 'merchant'">
+        <h3>Merchant Information</h3>
+        <p>{{ data.merchant }}</p>
+      </div>
+
+      <div *ngIf="selectedTab === 'terminal'">
+        <h3>Terminal Information</h3>
+        <p>{{ data.terminal }}</p>
       </div>
     </div>
   </div>
-  
+</div>

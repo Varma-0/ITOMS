@@ -1,6 +1,12 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+import { TerminalService } from 'src/app/services/terminal/devicelist';
+import { terminalEvent } from 'src/app/services/terminal/body/event-data';
+import { terminalBody } from 'src/app/services/terminal/body/body';
+import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface TerminalElement {
   sn: string;
@@ -55,8 +61,21 @@ export class TerminalComponent implements OnInit, AfterViewInit {
   searchModel: string = '';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  constructor(private terminalService: TerminalService, private router: Router,public dialog: MatDialog) {}
+
 
   ngOnInit() {
+    const event = new terminalEvent('DEVICE', 'SEARCH');
+    const terminalRequest = new terminalBody(event);
+    
+    this.terminalService.terminalData(terminalRequest).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.error('Error:', error);
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -119,9 +138,17 @@ export class TerminalComponent implements OnInit, AfterViewInit {
     // Implement your edit logic here
     console.log('Edit clicked for:', element);
   }
-
-  delete(element: TerminalElement) {
-    // Implement your delete logic here
-    console.log('Delete clicked for:', element);
+  openDeleteDialog(element: any): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      data: { element } // Pass data to the dialog if needed
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Implement delete functionality here
+        console.log('User deleted');
+      }
+    });
   }
+  
 }

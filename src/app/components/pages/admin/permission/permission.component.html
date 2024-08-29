@@ -7,12 +7,12 @@
 
         <li class="item">Administration</li>
 
-        <li class="item">User</li>
+        <li class="item">Permission</li>
     </ol>
 </div>
 <!-- End Breadcrumb Area -->
 <div class="add-user">
-    <button class="btn btn-primary" (click)="openDeleteDialog()">Add User</button>
+    <button class="btn btn-primary" (click)="openDeleteDialog()">Create Permission</button>
 </div>
 <mat-card class="user-card">
     <div class="user-card-header">
@@ -22,23 +22,19 @@
         <p class="month">{{ month }}</p>
       </div>
       <div class="user-info">
-        <p class="user-name">{{ userName }}</p>
-        <p class="user-email">{{ userEmail }}</p>
+        <p class="user-name">{{ alertName }}</p>
+        <p class="user-email">{{ userDetails }}</p>
       </div>
-      <button  color="primary" class="btn btn-primary">{{ userStatus }}</button>
     </div>
     <div class="user-card-actions">
       <button mat-icon-button color="primary" aria-label="Action 1">
         <mat-icon style="color: blue;">view_list</mat-icon>
       </button>
-      <button mat-icon-button color="primary" aria-label="Action 2">
-        <mat-icon style="color: blue;">toggle_on</mat-icon>
-      </button>
       <button mat-icon-button color="primary" aria-label="Action 3">
         <mat-icon style="color: green;">edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn" aria-label="Delete">
-        <mat-icon style="color: red;">toggle_off</mat-icon>
+      <button mat-icon-button color="warn" aria-label="Delete" (click)="openDeleteDialog()">
+        <mat-icon style="color: red;">delete</mat-icon>
       </button>
     </div>
   </mat-card>

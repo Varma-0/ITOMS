@@ -94,6 +94,11 @@ import { AdministrationComponent } from './components/pages/admin/administration
 import { UserComponent } from './components/pages/admin/user/user.component';
 import { RoleComponent } from './components/pages/admin/role/role.component';
 import { AlertComponent } from './components/pages/admin/alerts/alerts.component';
+import { PermissionComponent } from './components/pages/admin/permission/permission.component';
+import { TenantsComponent } from './components/pages/admin/tenants/tenants.component';
+import { HierarchyLevelComponent } from './components/pages/admin/hierarchy-level/hierarchy-level.component';
+import { HierarchyComponent } from './components/pages/admin/hierarchy/hierarchy.component';
+import { MerchantsComponent } from './components/pages/admin/merchants/merchants.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'landing',pathMatch:'full'},
@@ -192,6 +197,11 @@ const routes: Routes = [
       {path: 'user', data: { breadcrumb: 'User' }, component: UserComponent},
       {path: 'role', data: { breadcrumb: 'Role' }, component: RoleComponent},
       {path: 'alert', data: { breadcrumb: 'Alert' }, component: AlertComponent},
+      {path: 'permission', data: { breadcrumb: 'Permission' }, component: PermissionComponent},
+      {path: 'tenants', data: { breadcrumb: 'Tenants' }, component: TenantsComponent},
+      {path: 'hierarchy-level', data: { breadcrumb: 'Hierarchy Level' }, component: HierarchyLevelComponent},
+      {path: 'hierarchy', data: { breadcrumb: 'Hierarchy' }, component: HierarchyComponent},
+      {path: 'merchant', data: { breadcrumb: 'Merchant' }, component: MerchantsComponent},
     ]
   },
   {path: 'merchant', component: MerchantComponent},
