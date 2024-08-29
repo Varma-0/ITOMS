@@ -20,13 +20,24 @@ export class SchedulingComponent {
       { name: 'SP550 TEST', count: 1 },
       // Add more as needed
   ];
-  filteredDeployments = [...this.deployments];
+  filteredDeployments = [];
   selectedItem: any;
 
+  ngOnInit() {
+    // Initialize filteredDeployments with all deployments on load
+    this.filteredDeployments = this.deployments;
+  }
+
   filterDeployments() {
-    this.filteredDeployments = this.deployments.filter(deployment =>
-      deployment.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+    const filterValue = this.searchTerm.trim().toLowerCase();
+    
+    if (filterValue) {
+      this.filteredDeployments = this.deployments.filter(deployment =>
+        deployment.name.toLowerCase().includes(filterValue)
+      );
+    } else {
+      this.filteredDeployments = this.deployments;
+    }
   }
   
 

@@ -11,10 +11,46 @@
     display: inline-flex;
     text-align: left;
     flex: 0 0 35%;
+    width: 100%;
     // margin-bottom: 10%;
     overflow-y: auto;
     margin-top: -15px;
     // align-content: flex-start;
+  }
+
+  .application {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Adjust gap between cards if needed */
+  }
+
+  
+  .card-with-menu {
+    position: relative; /* Make sure the button is positioned relative to the card */
+    width: 300px; /* Adjust the card width as needed */
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .menu-button {
+    position: absolute;
+    top: 8px; /* Adjust as needed */
+    right: 8px; /* Adjust as needed */
+    display: none; /* Hide button by default */
+  }
+  
+  .card-with-menu:hover .menu-button {
+    display: block; /* Show button on hover */
+  }
+  
+
+  .linux {
+    width: 72px;
+    height: 72px
   }
   
 .nolist {
@@ -156,13 +192,56 @@
     }
   }
 
-  .main-container {
+/* Base styles for the main container */
+.main-container {
     flex: 0 0 64%;
+    height: calc(100vh - 50px); /* Full height minus header */
+    overflow-y: auto; /* Enable vertical scrolling */
     border-left: 1px solid rgba(65, 61, 61, 0);
     margin-left: 0.4%;
     margin-top: -15px;
-
   }
+  
+  /* Adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .main-container {
+      /* If needed, adjust height or other properties */
+      height: calc(100vh - 60px); /* Example adjustment for smaller screens */
+    }
+  }
+  
+  /* Adjustments for very small screens */
+  @media (max-width: 480px) {
+    .main-container {
+      /* Further adjustments for very small screens if needed */
+      height: calc(100vh - 70px); /* Example adjustment for very small screens */
+    }
+  }
+  
+  .over-header {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.over-content {
+    display: inline-flex;
+    width: 100%;
+    align-items:center;
+    justify-content: start;
+    // margin-left: 2%;
+}
+
+.over-content1 {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items:center;
+    justify-content: start;
+    // margin-left: 2%;
+}
 
   .tabs {
     display: flex;

@@ -54,23 +54,88 @@
           </button>
         </li>
       </ul>
+      <hr>
     </div>
-    <hr class="divider">
 
     <div class="tab-content">
       <div *ngIf="selectedTab === 'overview'">
-        <h3>Overview Information</h3>
-        <div class="info-grid">
-          <div class="info-item">
-            <i class="fas fa-map-marker-alt"></i> <!-- Example icon -->
-            <span>{{ data.overview.location }}</span>
+        <mat-card class="card">
+          <mat-card-title>
+            <div class="over-header">
+              <span>Information</span>
+              <button mat-icon-button color="accent">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+          </mat-card-title>
+          <hr>
+          <div class="over-content">
+            <span class="material-icons">location_on</span>&nbsp;&nbsp;
+            <span>China</span>
           </div>
-          <div class="info-item">
-            <i class="fas fa-calendar-alt"></i>
-            <span>Creation Time: {{ data.overview.creationTime }}</span>
+          <hr>
+          <div class="over-content1">
+            <span class="material-icons">schedule</span>&nbsp;&nbsp;
+            <div>
+              Creation Time: 10/18/2022<br>
+              Update Time: 10/18/2022
+            </div>
           </div>
-          <!-- Add more items as necessary -->
+        </mat-card>
+        <br>
+        <div class="secondrow">
+          <mat-card>
+            <div class="secondrowFlex">
+              <div class="right">
+                <h4 style="text-align: right;">Merchant</h4>
+                <p>1</p>
+              </div>
+              <img src="../../../../assets/img/shop.png">
+            </div>
+          </mat-card>
+          <mat-card>
+            <div class="secondrowFlex">
+              <div class="right">
+                <h4 style="text-align: right !important;">Terminal</h4>
+                <p>63</p>
+              </div>
+              <img src="../../../../assets/img/terminal.png">
+            </div>
+          </mat-card>
         </div>
+        <br>
+        <mat-card class="card">
+          <mat-card-title>
+            <div class="over-header">
+              <span>Devices Overview</span>
+              <ul class="tabs">
+                <li>
+                  <button [ngClass]="{'active-tab': selectedTabinDevices === 'status'}"
+                    (click)="selectTabinDevices('status')">
+                    Status
+                  </button>
+                </li>
+                <li>
+                  <button [ngClass]="{'active-tab': selectedTabinDevices === 'model'}"
+                    (click)="selectTabinDevices('model')">
+                    Model
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </mat-card-title>
+          <hr>
+          <div class="sub-tab-content">
+            <div *ngIf="selectedTabinDevices === 'status'">
+              <app-multiple-radialbar [series]="series" [labels]="labels" totalLabel="Total Status"
+                [totalValue]="totalValue">
+              </app-multiple-radialbar>
+            </div>
+            <div *ngIf="selectedTabinDevices === 'model'">
+              <app-email-send [labels]="labelsm" [series]="seriesm" [colors]="colors"></app-email-send>
+            </div>
+          </div>
+        </mat-card>
       </div>
 
       <div *ngIf="selectedTab === 'merchant'">
@@ -85,15 +150,10 @@
       </div>
 
       <div *ngIf="selectedTab === 'terminal'">
-        <h3>Terminal Information</h3>
-        <div class="info-grid">
-          <div class="info-item">
-            <i class="fas fa-terminal"></i>
-            <span>{{ data.terminal.model }}</span>
-          </div>
-          <!-- Add more terminal-related items -->
-        </div>
+        <app-terminal></app-terminal>
       </div>
     </div>
+
+
   </div>
 </div>

@@ -58,10 +58,11 @@
     background-color: #ffffff;
     padding: 20px;
     box-sizing: border-box;
-    overflow-y: auto;
+    overflow-y:auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    height: calc(100vh - 60px);
+    // align-items: center;
 
     @media (max-width: 1024px) {
         padding: 15px; /* Reduce padding for tablets */
@@ -119,6 +120,46 @@
     align-items: center;
     justify-content: space-around;
 }
+
+.over-header {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.over-content {
+    display: inline-flex;
+    width: 100%;
+    align-items:center;
+    justify-content: start;
+    // margin-left: 2%;
+}
+
+.over-content1 {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items:center;
+    justify-content: start;
+    // margin-left: 2%;
+}
+
+.secondrow {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  gap: 20px; 
+  text-align: start;
+}
+
+.secondrowFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+
 
 .circular-image {
     margin-right: 15px;
