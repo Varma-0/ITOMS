@@ -125,7 +125,64 @@
                     </li>
                 </ul>
             </li> -->
+            <li class="nav-item" routerLinkActive="active">
+                <a routerLink="/admin/user" class="collapsed-nav-link nav-link" aria-expanded="false">
+                    <span class="icon"><i class='bx bx-group'></i></span>
+                    <span class="menu-title">Administration</span>
+                </a>
 
+                <ul class="sidemenu-nav-second-level">
+
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/admin/user" class="nav-link">
+                            <span class="icon"><i class='bx bx-user'></i></span>
+                            <span class="menu-title">User</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/admin/role" class="nav-link">
+                            <span class="icon"><i class='bx bx-briefcase'></i></span>
+                            <span class="menu-title">Role</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/admin/alert" class="nav-link">
+                            <span class="icon"><i class='bx bxs-bell-plus'></i></span>
+                            <span class="menu-title">Alert</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/admin/permission" class="nav-link">
+                            <span class="icon"><i class='bx bx-bar-chart-square'></i></span>
+                            <span class="menu-title">Permission</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/admin/tenants" class="nav-link">
+                            <span class="icon"><i class='bx bx-color'></i></span>
+                            <span class="menu-title">Tenants</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/admin/hierarchy-level" class="nav-link">
+                            <span class="icon"><i class='bx bx-network-chart'></i></span>
+                            <span class="menu-title">Hierarchy Level</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/admin/hierarchy" class="nav-link">
+                            <span class="icon"><i class='bx bx-network-chart'></i></span>
+                            <span class="menu-title">Hierarchy</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" routerLinkActive="active">
+                        <a routerLink="/admin/merchant" class="nav-link">
+                            <span class="icon"><i class='bx bx-store'></i></span>
+                            <span class="menu-title">Merchant</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li class="nav-item" routerLinkActive="active">
                 <a routerLink="/table/terminal" class="collapsed-nav-link nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-card'></i></span>
@@ -222,7 +279,7 @@
                 </a>
             </li>
 
-            <li class="nav-item" routerLinkActive="active mm-active">
+            <!-- <li class="nav-item" routerLinkActive="active mm-active">
                 <a href="#" class="collapsed-nav-link nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-chart'></i></span>
                     <span class="menu-title">Charts</span>
@@ -243,66 +300,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
-
-            <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/admin/user" class="collapsed-nav-link nav-link" aria-expanded="false">
-                    <span class="icon"><i class='bx bx-group'></i></span>
-                    <span class="menu-title">Administration</span>
-                </a>
-
-                <ul class="sidemenu-nav-second-level">
-
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/admin/user" class="nav-link">
-                            <span class="icon"><i class='bx bx-user'></i></span>
-                            <span class="menu-title">User</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/admin/role" class="nav-link">
-                            <span class="icon"><i class='bx bx-briefcase'></i></span>
-                            <span class="menu-title">Role</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/admin/alert" class="nav-link">
-                            <span class="icon"><i class='bx bxs-bell-plus'></i></span>
-                            <span class="menu-title">Alert</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/admin/permission" class="nav-link">
-                            <span class="icon"><i class='bx bx-bar-chart-square'></i></span>
-                            <span class="menu-title">Permission</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/admin/tenants" class="nav-link">
-                            <span class="icon"><i class='bx bx-color'></i></span>
-                            <span class="menu-title">Tenants</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/admin/hierarchy-level" class="nav-link">
-                            <span class="icon"><i class='bx bx-network-chart'></i></span>
-                            <span class="menu-title">Hierarchy Level</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/admin/hierarchy" class="nav-link">
-                            <span class="icon"><i class='bx bx-network-chart'></i></span>
-                            <span class="menu-title">Hierarchy</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/admin/merchant" class="nav-link">
-                            <span class="icon"><i class='bx bx-store'></i></span>
-                            <span class="menu-title">Merchant</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            </li> -->
 
         </ul>
     </div>

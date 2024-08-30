@@ -7,7 +7,7 @@
 
         <li class="item">Administration</li>
 
-        <li class="item">Alerts</li>
+        <li class="item">Tenants</li>
     </ol>
 </div>
 <!-- End Breadcrumb Area -->
@@ -26,7 +26,7 @@
         <p class="user-email">{{ tenantDetails }}</p>
         <p class="user-email">{{ tenantType }}</p>
       </div>
-      <mat-slide-toggle 
+      <mat-slide-toggle
   color="primary"
   [(ngModel)]="isActive">
   {{ isActive ? 'Active' : 'Inactive' }}
@@ -44,6 +44,5 @@
       </button>
     </div>
   </mat-card>
-  
-  
-  
+
+
