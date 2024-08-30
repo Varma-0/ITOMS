@@ -5,7 +5,7 @@
       <h2 class="mb-0">Terminal <span class="badge bg-grey text-dark fs-6">61</span></h2>
     </div>
   </div>
-  
+
   <!-- Buttons Row -->
   <div class="row align-items-center">
     <div class="col d-flex flex-wrap">
@@ -13,7 +13,7 @@
         <mat-icon>history</mat-icon>  Device Event Log
       </button>
       <button class="btn btn-link me-3">
-        <mat-icon>file_download</mat-icon> 
+        <mat-icon>file_download</mat-icon>
       <mat-icon>arrow_drop_down</mat-icon> Export
       </button>
       <button class="btn btn-link me-3">
@@ -69,18 +69,18 @@
   </div>
   <div class="col text-start">
     <div class="button-group">
-      <button class="btn btn-outline-primary" 
-              [disabled]="getSelectedCount() === 0" 
+      <button class="btn btn-outline-primary"
+              [disabled]="getSelectedCount() === 0"
               [ngClass]="{'btn-active': getSelectedCount() > 0}">
         <mat-icon>lock</mat-icon> Lock
       </button>
-      <button class="btn btn-outline-primary" 
-              [disabled]="getSelectedCount() === 0" 
+      <button class="btn btn-outline-primary"
+              [disabled]="getSelectedCount() === 0"
               [ngClass]="{'btn-active': getSelectedCount() > 0}">
         <mat-icon>lock_open</mat-icon> Unlock
       </button>
-      <button class="btn btn-outline-primary" 
-              [disabled]="getSelectedCount() === 0" 
+      <button class="btn btn-outline-primary"
+              [disabled]="getSelectedCount() === 0"
               [ngClass]="{'btn-active': getSelectedCount() > 0}">
         <mat-icon>group_add</mat-icon> Add to Group
       </button>
@@ -165,3 +165,4 @@
 >
 </mat-paginator>
 </div>
+<div style="height: 50px;"></div>

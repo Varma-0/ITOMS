@@ -1,16 +1,14 @@
    <div class="breadcrumb-area">
     <h1>Scheduling</h1>
   </div>
-  
+
   <div class="container">
     <mat-card class="card">
       <mat-card-title>
         <div class="heading">
           <div class="title-container">
-            <span>Deployment</span>
-            <mat-form-field>
+            <span>Deployment</span> &nbsp;
               <input type="text" class="form-control" aria-label="Deployment Name" placeholder="Deployment Name" [(ngModel)]="searchTerm" (input)="filterDeployments()">
-            </mat-form-field>
           </div>
           <div class="icon-container">
             <button mat-icon-button color="primary" (click)="filterDeployments()">
@@ -22,12 +20,12 @@
           </div>
         </div>
       </mat-card-title>
-  
+
       <ul class="nolist">
         <li *ngFor="let deployment of filteredDeployments" class="deployment-item">
           <div class="grp">
-            <button class="btn btn-light custom-button" 
-                    [ngClass]="{'active-sidebar': selectedItem === deployment}" 
+            <button class="btn btn-light custom-button"
+                    [ngClass]="{'active-sidebar': selectedItem === deployment}"
                     (click)="selectItem(deployment)">
               <span class="deployment-name">{{deployment.name}}</span>
               <div class="right-section">
@@ -41,7 +39,7 @@
         </li>
       </ul>
     </mat-card>
-  
+
     <div class="main-container" *ngIf="selectedItem">
       <div class="header">
           <div class="selected-item">
@@ -63,8 +61,8 @@
           </button>
         </div>
       </div>
-      
-  
+
+
       <div>
         <ul class="tabs">
             <li>
@@ -98,7 +96,7 @@
               </div>
             </mat-card-title>
             <hr>
-            
+
             <div class="application">
                 <mat-card class="card-with-menu">
                   <div class="card-content">
@@ -118,7 +116,7 @@
                     <button mat-menu-item>Option 3</button>
                   </mat-menu>
                 </mat-card>
-              
+
                 <mat-card class="card-with-menu">
                   <div class="card-content">
                     <img class="linux" src="../../../../../assets/img/linux-icon.png">
@@ -138,7 +136,7 @@
                   </mat-menu>
                 </mat-card>
               </div>
-              
+
             <hr>
             <div class="frimware">
                 <mat-card-title>

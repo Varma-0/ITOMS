@@ -11,11 +11,11 @@
       </button>
     </div>
     <ul class="nolist">
-      <li *ngFor="let item of sidebarItems">
-        <button class="butt" [ngClass]="{'active-sidebar': selectedItem === item}" (click)="selectItem(item)">
+      <li class="row" *ngFor="let item of sidebarItems">
+        <button class="butt col-9" [ngClass]="{'active-sidebar': selectedItem === item}" (click)="selectItem(item)">
           <span class="icon"><i class='bx bx-buildings'></i></span>&nbsp;
           {{ item }}
-          <button class="mat-icons" [matMenuTriggerFor]="menu">
+          <button class="mat-icons col-3" [matMenuTriggerFor]="menu">
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
