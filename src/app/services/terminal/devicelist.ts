@@ -16,7 +16,7 @@ export class TerminalService {
     constructor(private http: HttpClient) {
         let token = localStorage.getItem('jwtToken');
         this.httpHeaders = new HttpHeaders()
-            .set('Authorization', `Bearer ${token}`);
+            .set('Authorization', `${token}`);
     }
 
     terminalData(options: terminalBody): Observable<any> {
@@ -24,6 +24,6 @@ export class TerminalService {
     }
 
     merchantData(options:terminalBody): Observable<any> {
-        return this.http.post<any>(`${environment.userApiUrl}/ina/merchant/getTenantMerchants`,options)
+        return this.http.post<any>(`${environment.userApiUrl}/merchant/getTenantMerchants`,options)
     }
 }

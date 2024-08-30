@@ -187,6 +187,7 @@ import { HierarchyComponent } from './components/pages/admin/hierarchy/hierarchy
 import { MerchantsComponent } from './components/pages/admin/merchants/merchants.component';
 import { ConfirmDeleteDialogComponent } from './components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { SchedulingComponent } from './components/pages/table/scheduling/scheduling.component';
+import { FlyparametersComponent } from './components/pages/table/flyparameters/flyparameters.component';
 
 @NgModule({
   declarations: [
@@ -353,7 +354,8 @@ import { SchedulingComponent } from './components/pages/table/scheduling/schedul
     HierarchyComponent,
     MerchantsComponent,
     ConfirmDeleteDialogComponent,
-    SchedulingComponent
+    SchedulingComponent,
+    FlyparametersComponent
   ],
   imports: [
     BrowserModule,

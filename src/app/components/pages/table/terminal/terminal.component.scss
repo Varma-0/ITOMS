@@ -1,146 +1,107 @@
 
-.mat-header-cell {
-  background-color: #909399;
-  font-weight: bold;
+
+.col {
+  gap: 16px;
 }
 
-.bg-light {
-  background-color: #edf2f9 !important;
+.container-fluid {
+  width: 100%;
+  // height: 100vh;
 }
 
-.button-group {
-  display: inline-flex;
-  gap: 8px; /* Adjust gap between buttons */
+
+.pagination .page-item.disabled .page-link {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
-.btn-outline-primary {
-  background-color: grey;
-  color: rgba(0, 0, 0, 0.429);
-  border: 1px solid #cccccc;
-  cursor: not-allowed;
-  padding: 8px 16px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px; /* Adjust gap between icon and text */
-}
-
-.btn-outline-primary.mat-icon {
-  font-size: 18px;
-}
-
-.btn-active {
-  background-color: #007bff;
-  color: #ffffff;
-  border: 1px solid #007bff;
-  cursor: pointer;
-}
-
-.button-group .btn:not(:last-child) {
-  border-right: none; /* Remove right border to create separator effect */
-  justify-content: space-between;
-}
-
-.button-group .btn + .btn {
-  border-left: 1px solid #ffffff; /* Add separator between buttons */
-}
-.mat-mdc-paginator-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 16px;
-  background-color: #f8f9fa;
-  border-top: 1px solid #e0e0e0;
-  border-radius: 0 0 4px 4px;
-}
-
-.mat-paginator-page-size {
-  display: flex;
-  align-items: center;
-}
-
-.mat-paginator-page-size label {
-  margin-right: 8px;
-  font-size: 14px;
-  color: #333;
-}
-
-.mat-paginator-page-size .mat-select {
-  padding: 4px 8px;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  background-color: #ffffff;
-  font-size: 14px;
-  color: #333;
-}
-
-.mat-paginator-range-label {
-  font-size: 14px;
-  color: #333;
-  margin-right: 24px;
-}
-
-.mat-paginator-navigation {
-  display: flex;
-  align-items: center;
-}
-
-.mat-paginator-navigation button {
-  color: #007bff;
-}
-
-.mat-paginator-navigation button[disabled] {
-  color: #cccccc;
-}
-
-.toolbar {
-  background: white;
-  padding: 0 16px;
+.btn-outline-info {
   color: black;
+  border: none;
+  justify-content: space-around;
 }
 
-h2 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  display: inline-flex;
-  align-items: center;
-}
-
-.badge {
-  font-size: 1rem;
-  padding: 0.5em;
-  background-color: #e0e0e0; /* grey background */
-  color: #333; /* dark text */
-  border-radius: 4px;
-  margin-left: 0.5em; /* space between the text and badge */
-}
-
-.btn-link {
-  color: #333; /* dark text color */
-  font-size: 1rem;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  padding: 0;
-}
-
-.btn-link i {
-  margin-right: 0.5em;
-  font-size: 1.25rem;
-}
-
-.btn-link:hover {
-  color: #007bff; /* Bootstrap primary color on hover */
-  text-decoration: underline; /* underline on hover for a more distinct look */
-}
-
-.btn-link .bi-caret-down-fill {
-  margin-left: 0.3em;
-  font-size: 0.75rem;
+.btn-outline-info:hover {
+  color: whitesmoke;
 }
 
 hr {
   border-top: 1px solid #dee2e6; /* Bootstrap's light grey */
   margin-top: 0;
   margin-bottom: 16px;
+}
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  // color: #495057;
+  font-weight: bold;
+  // text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.table td {
+  // padding: 12px 15px;
+  border: none;
+  border-bottom: 1px solid #dee2e6;
+}
+
+thead {
+  border:transparent;
+}
+
+
+th, td {
+  text-align: center; /* Center text horizontally */
+  vertical-align: middle; /* Center text vertically */
+}
+
+.custom-select {
+  padding-right: 30px; /* Make space for the clear icon */
+}
+
+.clear-icon {
+  position: absolute;
+  right: 10px; /* Adjust this value based on your design */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px; /* Adjust size as needed */
+  color: #dc3545; /* Bootstrap danger color for visibility */
+  pointer-events: none; /* Make sure the icon doesn't block clicks on the select */
+}
+
+.custom-select:focus {
+  outline: none; /* Remove default focus outline */
+}
+
+/* Hide the default dropdown arrow */
+.custom-select::-ms-expand {
+  display: none; /* Hide default arrow in IE */
+}
+
+.button-group {
+  display: contents !important;
+}
+
+.sel {
+  text-align: right;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed; /* Change cursor to not-allowed */
+  opacity: 0.6; /* Optional: make it look disabled */
+}
+
+.butt {
+  color: black;
+  border: none;
+  justify-content: space-around;
+}
+
+.butt:hover {
+  color: whitesmoke;
 }

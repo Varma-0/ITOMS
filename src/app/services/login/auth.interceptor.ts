@@ -9,7 +9,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     if (jwtToken) {
       const cloned = req.clone({
-        headers: req.headers.set('Authorization', `Bearer ${jwtToken}`)
+        headers: req.headers.set('Authorization', `${jwtToken}`)
       });
 
       return next.handle(cloned);

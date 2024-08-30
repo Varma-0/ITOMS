@@ -1,168 +1,223 @@
 <div class="container-fluid">
-  <!-- Terminal Title and Badge -->
+  <!-- Header Section -->
   <div class="row align-items-center py-3">
     <div class="col">
       <h2 class="mb-0">Terminal <span class="badge bg-grey text-dark fs-6">61</span></h2>
     </div>
   </div>
 
-  <!-- Buttons Row -->
+  <!-- Buttons Section -->
   <div class="row align-items-center">
     <div class="col d-flex flex-wrap">
-      <button class="btn btn-link me-3">
-        <mat-icon>history</mat-icon>  Device Event Log
-      </button>
-      <button class="btn btn-link me-3">
-        <mat-icon>file_download</mat-icon>
-      <mat-icon>arrow_drop_down</mat-icon> Export
-      </button>
-      <button class="btn btn-link me-3">
-        <mat-icon>location_on</mat-icon> Device Location
-      </button>
-      <button class="btn btn-link">
-        <mat-icon>edit</mat-icon> TID Batch Modification
-      </button>
+      <button class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
+        <span class="material-symbols-outlined">schedule</span>
+        <span>Device Event Log</span>
+      </button> 
+      <button class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
+        <span class="material-symbols-outlined">download</span>
+        <span>Export</span>
+      </button> 
+      <button class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
+        <span class="material-symbols-outlined">location_on</span>
+        <span>Device Location</span>
+      </button>  
+      <button class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
+        <span class="material-symbols-outlined">edit</span>
+        <span>TID Batch Modification</span>
+      </button>      
     </div>
   </div>
 
-  <!-- Divider -->
-  <div class="row">
-    <div class="col">
-      <hr class="my-3">
+  <hr style="border: 1px solid grey; opacity: 0.1;">
+
+  <!-- Filter and Search Section -->
+  <!-- <div class="row mb-4">
+    <div class="col-md-2">
+      <input type="text" class="form-control" placeholder="Device SN / TID" [(ngModel)]="searchText" (input)="applyFilter()">
     </div>
-  </div>
-</div>
+    <div class="col-md-2">
+      <select class="form-select" [(ngModel)]="selectedOption1" (change)="applyFilter()">
+        <option value="" disabled selected>Status</option>
+        <option *ngFor="let option of optionStatus" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <select class="form-select" [(ngModel)]="selectedOption2" (change)="applyFilter()">
+        <option value="" disabled selected>Model</option>
+        <option *ngFor="let option of optionModel" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary">
+        <i class="bx bx-search"></i>
+      </button>
+    </div>
+  </div> -->
 
-<div class="row mb-3">
-  <div class="col-md-3">
-    <input type="text" class="form-control" placeholder="Device SN / TID" [(ngModel)]="searchSn">
+  <!-- Filter and Search Section -->
+<div class="row mb-4">
+  <div class="col-md-2">
+    <input type="text" class="form-control" placeholder="Device SN / TID" [(ngModel)]="searchText" (input)="applyFilter()">
   </div>
-  <div class="col-md-3">
-    <select class="form-control" [(ngModel)]="searchStatus">
-      <option value=""  disabled selected>Status</option>
-      <!-- <option value="Inventory">Inventory</option>
-      <option value="Online">Online</option> -->
-      <option *ngFor="let option of statusOptions"[ngValue]="option">{{ option.name }}</option>
+  <div class="col-md-2">
+    <select class="form-select" [(ngModel)]="selectedOption1" (change)="applyFilter()">
+      <option value="" disabled selected>Status</option>
+      <option *ngFor="let option of optionStatus" [value]="option">{{ option }}</option>
     </select>
   </div>
-  <div class="col-md-3">
-    <select class="form-control" [(ngModel)]="searchModel">
-      <option value=""  disabled selected>Model</option>
-      <!-- <option value="SP630 ECR">SP630 ECR</option>
-      <option value="P180">P180</option>
-      <option value="SP630 Pro">SP630 Pro</option> -->
-      <option *ngFor="let option of modelOptions"[ngValue]="option">{{ option.name }}</option>
-
+  <div class="col-md-2">
+    <select class="form-select" [(ngModel)]="selectedOption2" (change)="applyFilter()">
+      <option value="" disabled selected>Model</option>
+      <option *ngFor="let option of optionModel" [value]="option">{{ option }}</option>
     </select>
   </div>
-  <div class="col-1">
-    <button class="btn btn-primary" (click)="applyFilter()">
-      <mat-icon>search</mat-icon>
+  <div class="col-md-2 d-flex">
+    <button class="btn btn-primary me-2">
+      <i class="bx bx-search"></i>
     </button>
-  </div>
-</div>
-
-
-<div class="row py-3 bg-light align-items-center">
-  <div class="col">
-    <span>{{ getSelectedCount() }} Selected</span>
-  </div>
-  <div class="col text-start">
-    <div class="button-group">
-      <button class="btn btn-outline-primary"
-              [disabled]="getSelectedCount() === 0"
-              [ngClass]="{'btn-active': getSelectedCount() > 0}">
-        <mat-icon>lock</mat-icon> Lock
-      </button>
-      <button class="btn btn-outline-primary"
-              [disabled]="getSelectedCount() === 0"
-              [ngClass]="{'btn-active': getSelectedCount() > 0}">
-        <mat-icon>lock_open</mat-icon> Unlock
-      </button>
-      <button class="btn btn-outline-primary"
-              [disabled]="getSelectedCount() === 0"
-              [ngClass]="{'btn-active': getSelectedCount() > 0}">
-        <mat-icon>group_add</mat-icon> Add to Group
-      </button>
-    </div>
-  </div>
-</div>
-
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" class="mat-table" matSort>
-
-    <!-- Checkbox Column -->
-    <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox
-          [checked]="isAllSelected()"
-          [indeterminate]="isSomeSelected()"
-          (change)="toggleSelectAll()">
+    <button mat-icon-button [matMenuTriggerFor]="filterMenu">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+    <mat-menu #filterMenu="matMenu">
+      <button mat-menu-item *ngFor="let column of columns; let i = index">
+        <mat-checkbox [(ngModel)]="columnsVisibility[i]" (change)="toggleColumn(i)">
+          {{ column }}
         </mat-checkbox>
-      </th>
-      <td mat-cell *matCellDef="let element">
-        <mat-checkbox [(ngModel)]="element.selected" (change)="onCheckboxChange()"></mat-checkbox>
-      </td>
-    </ng-container>
-
-    <!-- Serial Number Column -->
-    <ng-container matColumnDef="sn">
-      <th mat-header-cell *matHeaderCellDef> SN </th>
-      <td mat-cell *matCellDef="let element"> {{element.sn}} </td>
-    </ng-container>
-
-    <!-- Model Column -->
-    <ng-container matColumnDef="model">
-      <th mat-header-cell *matHeaderCellDef> Model </th>
-      <td mat-cell *matCellDef="let element"> {{element.model}} </td>
-    </ng-container>
-
-    <!-- Status Column -->
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="onlineStatus">
-      <th mat-header-cell *matHeaderCellDef> Online Status </th>
-      <td mat-cell *matCellDef="let element"> {{element.onlineStatus}} </td>
-    </ng-container>
-
-    <!-- Activation Time Column -->
-    <ng-container matColumnDef="activationTime">
-      <th mat-header-cell *matHeaderCellDef> Activation Time </th>
-      <td mat-cell *matCellDef="let element"> {{element.activationTime}} </td>
-    </ng-container>
-
-    <!-- Actions Column -->
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef> </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-icon-button [matMenuTriggerFor]="menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="edit(element)">
-            <mat-icon>edit</mat-icon>
-            <span>Edit</span>
-          </button>
-          <button mat-menu-item (click)="openDeleteDialog(element)">
-            <mat-icon>delete</mat-icon>
-            <span>Delete</span>
-          </button>
-        </mat-menu>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-  <mat-paginator
-  [pageSizeOptions]="[5, 10, 20]"
-  showFirstLastButtons
-  aria-label="Select page"
->
-</mat-paginator>
+      </button>
+    </mat-menu>
+  </div>
 </div>
-<div style="height: 50px;"></div>
+
+
+
+  <div class="row align-items-center"
+  [ngClass]="{'bg-light-grey': getSelectedCount() === 0,'cursor-not-allowed': getSelectedCount() === 0}">
+<div class="col-md-2 sel">
+ <span>{{ getSelectedCount() }} Selected</span>
+</div>
+<div class="col d-inline-flex text-start">
+ <div class="button-group">
+   <button class="btn btn-outline-primary"
+           [disabled]="getSelectedCount() === 0"
+           [ngClass]="{'btn-active': getSelectedCount() > 0}">
+     <mat-icon>lock</mat-icon> Lock
+   </button>
+   <button class="btn btn-outline-primary"
+           [disabled]="getSelectedCount() === 0"
+           [ngClass]="{'btn-active': getSelectedCount() > 0}">
+     <mat-icon>lock_open</mat-icon> Unlock
+   </button>
+   <button class="btn btn-outline-primary"
+           [disabled]="getSelectedCount() === 0"
+           [ngClass]="{'btn-active': getSelectedCount() > 0}">
+     <mat-icon>group_add</mat-icon> Add to Group
+   </button>
+ </div>
+</div>
+</div>
+
+ <!-- Table Section -->
+<!-- <div class="table-responsive">
+  <table class="table table-hover table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>
+          <input type="checkbox" id="selectAll" (change)="toggleSelectAll($event)">
+        </th>
+        <th *ngFor="let column of columns">{{ column }}</th>
+      </tr>
+    </thead>
+    <tbody class="dataRowColor">
+      <tr *ngFor="let device of paginatedDevices">
+        <td>
+          <input type="checkbox" [(ngModel)]="device.selected">
+        </td>
+        <td>{{ device.serialNumber }}</td>
+        <td>{{ device.model }}</td>
+        <td>{{ device.status }}</td>
+        <td>Offline</td>
+        <td>N/a</td>
+        <td>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="edit(device)">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item (click)="openDeleteDialog(device)">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->
+
+<!-- Table Section -->
+<div class="table-responsive">
+  <table class="table table-hover table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>
+          <input type="checkbox" id="selectAll" (change)="toggleSelectAll($event)">
+        </th>
+        <th *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">
+          {{ column }}
+        </th>
+      </tr>
+    </thead>
+    <tbody class="dataRowColor">
+      <tr *ngFor="let device of paginatedDevices">
+        <td>
+          <input type="checkbox" [(ngModel)]="device.selected">
+        </td>
+        <td *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">
+          <!-- Ensure the correct data is displayed based on the column -->
+          <ng-container [ngSwitch]="column">
+            <span *ngSwitchCase="'Serial Number'">{{ device.serialNumber || 'N/A' }}</span>
+            <span *ngSwitchCase="'Model'">{{ device.model || 'N/A' }}</span>
+            <span *ngSwitchCase="'Status'">{{ device.status || 'N/A' }}</span>
+            <span *ngSwitchDefault>{{ 'N/A' }}</span>
+          </ng-container>
+        </td>
+        <td>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="edit(device)">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item (click)="openDeleteDialog(device)">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+  <!-- Pagination Section -->
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" href="javascript:void(0);" (click)="previousPage()">Previous</a>
+      </li>
+      <li *ngFor="let page of pages" class="page-item" [class.active]="page === currentPage">
+        <a class="page-link" href="javascript:void(0);" (click)="goToPage(page)">{{ page }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" href="javascript:void(0);" (click)="nextPage()">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>

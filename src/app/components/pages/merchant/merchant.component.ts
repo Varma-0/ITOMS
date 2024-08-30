@@ -78,17 +78,6 @@ export class MerchantComponent implements OnInit {
     this.series = aggregatedData.map(item => item.count);
     this.labels = aggregatedData.map(item => item.status);
     this.totalValue = this.series.reduce((sum, value) => sum + value, 0);
-
-    const event = new terminalEvent('MERCHANT', 'SEARCH');
-    const merchantRequest = new terminalBody(event);
-    this.dataService.merchantData(merchantRequest).subscribe(
-      response=> {
-        console.log(response);
-      },
-      error => {
-        console.error('Error:', error);
-      }
-    )
   }
 
   private prepareChartData() {

@@ -1,36 +1,33 @@
-<!-- Breadcrumb Area -->
 <div class="breadcrumb-area">
-    <h1>Administration</h1>
-
-    <ol class="breadcrumb">
-        <li class="item"><a routerLink="/admin/user"><i class='bx bx-home-alt'></i></a></li>
-
-        <li class="item">Administration</li>
-
-        <li class="item">Merchants</li>
-    </ol>
+  <h1>Administration</h1>
+  <ol class="breadcrumb">
+    <li class="item"><a routerLink="/admin/user"><i class='bx bx-home-alt'></i></a></li>
+    <li class="item">Administration</li>
+    <li class="item">Merchants</li>
+  </ol>
 </div>
-<!-- End Breadcrumb Area -->
+
 <div class="add-user">
-    <button class="btn btn-primary" (click)="openDeleteDialog()">Create Merchant</button>
+  <button class="btn btn-primary">Create Merchant</button>
 </div>
-<mat-card class="user-card">
+
+<div *ngFor="let merchant of merchants" class="mb-4">
+  <mat-card class="user-card">
     <div class="user-card-header">
       <div class="date-info">
-        <p class="date">{{ day }}</p>
+        <p class="date">{{day}}</p>
         <p class="day">{{ date }}</p>
         <p class="month">{{ month }}</p>
       </div>
       <div class="user-info">
-        <p class="user-name">{{ merchantName }}</p>
-        <p class="user-email">{{ merchantDetails }}</p>
-        <p class="user-email">{{ merchantEmail }}</p>
+        <p class="user-name">{{ merchant.name }}</p>
+        <p class="user-email">{{ fulldate }}</p>
+        <p class="user-email">{{ merchant.email }}</p>
       </div>
-      <button  color="primary" class="btn btn-primary">{{ merchantType }}</button>
-
+      <button color="primary" class="btn btn-primary">{{ merchant.contactName }}</button>
     </div>
     <div class="user-card-actions">
-      <button mat-icon-button color="primary" aria-label="Action 1">
+      <button mat-icon-button color="primary" aria-label="View Details">
         <mat-icon style="color: blue;">view_list</mat-icon>
       </button>
       <button mat-icon-button color="warn" aria-label="Delete" (click)="openDeleteDialog()">
@@ -38,5 +35,4 @@
       </button>
     </div>
   </mat-card>
-
-
+</div>
