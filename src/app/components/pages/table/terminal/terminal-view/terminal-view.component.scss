@@ -35,6 +35,10 @@ h4.mb-0::before {
     margin: 10px;
 }
 
+.buttonsHeader {
+    justify-content: space-around;
+}
+
 .buttonsHeader button:hover {
     color: #007bff; /* Blue color for active tab */
     border-bottom: 2px solid #007bff;
@@ -153,4 +157,42 @@ h4.mb-0::before {
     text-decoration: underline;
   }
   
+  .custom-switch {
+    width: 40px;
+    height: 20px;
+    background-color: #dee2e6;
+    border-radius: 34px;
+    position: relative;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .custom-switch:checked {
+    background-color: #007bff;
+  }
+  
+  .custom-switch::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .custom-switch:checked::before {
+    transform: translateX(20px);
+  }
+  
+  .toggle-text {
+    font-size: 14px;
+    // color: #007bff;
+  }
   

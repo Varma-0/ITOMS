@@ -12,6 +12,7 @@ export class TerminalViewComponent {
   @Output() viewChange = new EventEmitter<boolean>();
   @Output() insideviewChange = new EventEmitter<boolean>();
   selectedTab: string = 'overview';
+  toggleText: string = 'Off';
   cards = [
     { header: 'Storage', percentage: 60,icon:'file_present' },
     { header: 'Modules', percentage: 70,icon:'view_module' },
@@ -32,5 +33,11 @@ export class TerminalViewComponent {
 
   abc() {
     console.log("wfwq")
+  }
+
+  onToggleChange(event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    this.toggleText = isChecked ? 'On' : 'Off';
+    console.log('Toggle switch state:', this.toggleText);
   }
 }
