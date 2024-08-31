@@ -155,7 +155,7 @@ export class TerminalComponent implements OnInit {
   selectedDevice:any;
   columns: string[] = ['Serial Number', 'Model', 'Status', 'Online Status', 'Activation Time', 'Actions'];
   columns1: string[] = ['Serial Number', 'Model', 'Status', 'Online Status', 'Activation Time'];
-  columnsVisibility = [true, true, true, true, true];
+  columnsVisibility = [true, true, true, true, true,true];
   filteredData: TerminalElement[] = []; // Your original data
   terminalElements: TerminalElement[] = []; // Data to display
   data: TerminalElement[] = [];
