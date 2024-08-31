@@ -188,6 +188,9 @@ import { MerchantsComponent } from './components/pages/admin/merchants/merchants
 import { ConfirmDeleteDialogComponent } from './components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { SchedulingComponent } from './components/pages/table/scheduling/scheduling.component';
 import { FlyparametersComponent } from './components/pages/table/flyparameters/flyparameters.component';
+import { TerminalViewComponent } from "./components/pages/table/terminal/terminal-view/terminal-view.component";
+import { MatProgressBarModule } from '@angular/material/progress-bar'; 
+import { MapComponent } from './map.component';
 
 @NgModule({
   declarations: [
@@ -355,7 +358,9 @@ import { FlyparametersComponent } from './components/pages/table/flyparameters/f
     MerchantsComponent,
     ConfirmDeleteDialogComponent,
     SchedulingComponent,
-    FlyparametersComponent
+    FlyparametersComponent,
+    TerminalViewComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -380,7 +385,8 @@ import { FlyparametersComponent } from './components/pages/table/flyparameters/f
     MatSortModule,
     MatPaginatorModule,
     MatMenuModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatProgressBarModule
 ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

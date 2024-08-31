@@ -203,8 +203,7 @@ const routes: Routes = [
       {path: 'alert', data: { breadcrumb: 'Alert' }, component: AlertComponent},
       {path: 'permission', data: { breadcrumb: 'Permission' }, component: PermissionComponent},
       {path: 'tenants', data: { breadcrumb: 'Tenants' }, component: TenantsComponent},
-      {path: 'hierarchy-level', data: { breadcrumb: 'Hierarchy Level' }, component: HierarchyLevelComponent},
-      {path: 'hierarchy', data: { breadcrumb: 'Hierarchy' }, component: HierarchyComponent},
+      {path: 'hierarchies', data: { breadcrumb: 'Hierarchies' }, component: HierarchyLevelComponent},
       {path: 'merchant', data: { breadcrumb: 'Merchant' }, component: MerchantsComponent},
     ]
   },

@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="!views">
   <!-- Header Section -->
   <div class="row align-items-center py-3">
     <div class="col">
@@ -171,7 +171,7 @@
       </tr>
     </thead>
     <tbody class="dataRowColor">
-      <tr *ngFor="let device of paginatedDevices">
+      <tr *ngFor="let device of paginatedDevices" (click)="row(device)">
         <td>
           <input type="checkbox" [(ngModel)]="device.selected">
         </td>
@@ -221,3 +221,9 @@
     </ul>
   </nav>
 </div>
+
+<div style="height: 50px;" *ngIf="!views"></div>
+
+<ng-container *ngIf="!insideView">
+  <app-terminal-view [device]="selectedDevice" [view]="views" [insideview]="insideView" (viewChange)="onViewChange($event)" (insideviewChange)="onInsideViewChange($event)"></app-terminal-view>
+</ng-container>
