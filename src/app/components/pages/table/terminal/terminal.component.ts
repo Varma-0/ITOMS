@@ -150,9 +150,12 @@ export interface TerminalElement {
   styleUrls: ['./terminal.component.scss']
 })
 export class TerminalComponent implements OnInit {
+  views = true;
+  insideView = false;
+  selectedDevice:any;
   columns: string[] = ['Serial Number', 'Model', 'Status', 'Online Status', 'Activation Time'];
   columns1: string[] = ['Serial Number', 'Model', 'Status', 'Online Status', 'Activation Time'];
-  columnsVisibility = [true, true, true, true, true];
+  columnsVisibility = [true, true, true, true, true,true];
   filteredData: TerminalElement[] = []; // Your original data
   terminalElements: TerminalElement[] = []; // Data to display
   data: TerminalElement[] = [];
@@ -187,6 +190,15 @@ export class TerminalComponent implements OnInit {
     this.applyFilter();
 }
 
+  row(individualData){
+    this.selectedDevice = individualData;
+    this.views = !this.views;
+    this.insideView = !this.insideView;
+    console.log(this.insideView,"feqqw")
+    console.log("fhgssgd",individualData)
+  }
+
+
   fetchData() {
     const event = new terminalEvent('DEVICE', 'SEARCH');
     const terminalRequest = new terminalBody(event);
@@ -202,6 +214,15 @@ export class TerminalComponent implements OnInit {
         console.error('Error:', error);
       }
     );
+  }
+
+  onViewChange(newView: boolean) {
+    this.views = newView;
+  }
+
+  // Handler for `insideviewChange` event
+  onInsideViewChange(newInsideView: boolean) {
+    this.insideView = newInsideView;
   }
 
   updateOptions() {

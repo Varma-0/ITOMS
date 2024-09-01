@@ -187,6 +187,9 @@ import { MerchantsComponent } from './components/pages/admin/merchants/merchants
 import { ConfirmDeleteDialogComponent } from './components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { SchedulingComponent } from './components/pages/table/scheduling/scheduling.component';
 import { FlyparametersComponent } from './components/pages/table/flyparameters/flyparameters.component';
+import { TerminalViewComponent } from "./components/pages/table/terminal/terminal-view/terminal-view.component";
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MapComponent } from './map.component';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { DesignSelectionComponent } from './components/dialogs/design-selection/design-selection.component';
 import { SelectCfgComponent } from './components/dialogs/select-cfg/select-cfg.component';
@@ -359,6 +362,8 @@ import { AddFormComponent } from './components/dialogs/add-form/add-form.compone
     ConfirmDeleteDialogComponent,
     SchedulingComponent,
     FlyparametersComponent,
+    TerminalViewComponent,
+    MapComponent,
     DesignSelectionComponent,
     SelectCfgComponent,
     ProfileComponent,
@@ -388,6 +393,7 @@ import { AddFormComponent } from './components/dialogs/add-form/add-form.compone
     MatPaginatorModule,
     MatMenuModule,
     MatSlideToggleModule,
+    MatProgressBarModule,
     MatProgressSpinner,
     ReactiveFormsModule
 ],

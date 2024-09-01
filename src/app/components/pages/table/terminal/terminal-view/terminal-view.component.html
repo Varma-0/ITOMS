@@ -1,0 +1,79 @@
+<div class="container-fluid">
+    <div class="d-flex align-items-center">
+        <button class="d-flex align-items-center headerButton" (click)="toggleView()">
+            <span class="material-symbols-outlined">arrow_back_ios_new</span>
+            <span>Back</span>
+        </button>
+        <h4 class="mb-0 fw-bold text-secondary">Terminal</h4>
+        <span class="ms-2 fw-500 text-primary ">SN: {{device.serialNumber}}</span>
+    </div>
+    <hr style="border: 1px solid grey; opacity: 0.1;">
+    <div class="bg-color-darkblue">
+        <img src="../../../../../../assets/img/N950.png" class="N950">
+        <span class="material-symbols-outlined">account_tree</span>
+        <span class="ms-2 fw-500 text-decoration-underline">DEMO</span>
+    </div>
+    <mat-card class="text-align-right overlap-card">
+        <mat-card-header class="buttonsHeader align-items-center justify-content-center">
+            <button [ngClass]="{'active-tab': selectedTab === 'overview'}" (click)="selectTab('overview')">Overview</button>
+            <button [ngClass]="{'active-tab': selectedTab === 'basicinfo'}" (click)="selectTab('basicinfo')">Basic Info</button>
+            <button [ngClass]="{'active-tab': selectedTab === 'app'}" (click)="selectTab('app')">App & Firmware</button>
+            <button [ngClass]="{'active-tab': selectedTab === 'settings'}" (click)="selectTab('settings')">Settings</button>
+            <button [ngClass]="{'active-tab': selectedTab === 'remote'}" (click)="selectTab('remote')">Remote Assistance</button>
+        </mat-card-header>
+    </mat-card>
+    <div> <!-- *ngIf="selectedTab === 'overview'" -->
+        <div class="cards-container" >
+            <div class="card" *ngFor="let card of cards">
+              <div class="card-header">
+                <span>{{ card.header }}</span>
+                <span class="material-symbols-outlined text-primary">
+                    {{card.icon}}
+                    </span> <!-- Replace 'info' with the desired icon -->
+              </div>
+              <div class="card-body">
+                <span class="percentage">{{ card.percentage }}%</span>
+                <mat-progress-bar
+                  mode="determinate"
+                  [value]="card.percentage"
+                  class="progress-bar"
+                ></mat-progress-bar>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Card with 60% width -->
+            <mat-card class="custom-card card-60">
+              <mat-card-header>
+                <span class="card-header-title">Activity (Minutes)</span>
+                <hr style="border: 1px solid red; opacity: 0.4;">
+              </mat-card-header>
+              <div class="card-content">
+                <app-web-analytics></app-web-analytics>
+              </div>
+            </mat-card>
+          
+            <!-- Card with 40% width -->
+            <mat-card class="custom-card card-40">
+              <mat-card-header class="buttonsHeader">
+                <span class="location-button" (click)="abc()">Location (28.592294, 76.992886)</span>
+                    <input 
+                      type="checkbox" 
+                      id="toggleSwitch" 
+                      class="custom-switch ms-2" 
+                      (change)="onToggleChange($event)">
+                <hr style="border: 1px solid grey; opacity: 0.1;">
+              </mat-card-header>
+              <mat-card-content>
+                <!-- <app-map [coordinates]="[28.592294, 76.992886]"></app-map> -->
+              </mat-card-content>
+            </mat-card>
+          </div>
+          
+    </div>
+      
+  
+  
+  
+  
+  <div style="height: 500px;"></div>

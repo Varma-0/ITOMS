@@ -1,47 +1,44 @@
-<!-- Breadcrumb Area -->
-<div class="breadcrumb-area">
+   <div class="breadcrumb-area">
     <h1>Administration</h1>
-
     <ol class="breadcrumb">
-        <li class="item"><a routerLink="/admin/user"><i class='bx bx-home-alt'></i></a></li>
-
-        <li class="item">Administration</li>
-
-        <li class="item">User</li>
+      <li class="item"><a routerLink="/admin/user"><i class='bx bx-home-alt'></i></a></li>
+      <li class="item">Administration</li>
+      <li class="item">Merchants</li>
     </ol>
-</div>
-<!-- End Breadcrumb Area -->
-<div class="add-user">
-    <button class="btn btn-primary" (click)="openDeleteDialog()">Add User</button>
-</div>
-<mat-card class="user-card">
-    <div class="user-card-header">
-      <div class="date-info">
-        <p class="date">{{ day }}</p>
-        <p class="day">{{ date }}</p>
-        <p class="month">{{ month }}</p>
-      </div>
-      <div class="user-info">
-        <p class="user-name">{{ userName }}</p>
-        <p class="user-email">{{ userEmail }}</p>
-      </div>
-      <button  color="primary" class="btn btn-primary">{{ userStatus }}</button>
-    </div>
-    <div class="user-card-actions">
-      <button mat-icon-button color="primary" aria-label="Action 1">
-        <mat-icon style="color: blue;">view_list</mat-icon>
-      </button>
-      <button mat-icon-button color="primary" aria-label="Action 2">
-        <mat-icon style="color: blue;">toggle_on</mat-icon>
-      </button>
-      <button mat-icon-button color="primary" aria-label="Action 3">
-        <mat-icon style="color: green;">edit</mat-icon>
-      </button>
-      <button mat-icon-button color="warn" aria-label="Delete">
-        <mat-icon style="color: red;">toggle_off</mat-icon>
-      </button>
-    </div>
-  </mat-card>
+  </div>
   
+  <div class="add-user" *ngIf="users.length != 0">
+    <button class="btn btn-primary">Create User</button>
+  </div>
   
+  <div *ngFor="let user of users" class="mb-4">
+    <mat-card class="user-card">
+      <div class="user-card-header">
+        <div class="date-info">
+          <p class="date">{{day}}</p>
+          <p class="day">{{ date }}</p>
+          <p class="month">{{ month }}</p>
+        </div>
+        <div class="user-info">
+          <p class="user-name">{{ user.name }}</p>
+          <p class="user-email">{{ user.email }}</p>
+        </div>
+        <button color="primary" class="btn btn-primary">{{ user.status }}</button>
+      </div>
+      <div class="user-card-actions">
+        <button mat-icon-button color="primary" aria-label="View Details">
+          <mat-icon style="color: blue;">view_list</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" aria-label="Action 2">
+          <mat-icon style="color: blue;">toggle_on</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" aria-label="Action 3">
+          <mat-icon style="color: green;">edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" aria-label="Delete">
+          <mat-icon style="color: red;">toggle_off</mat-icon>
+        </button>
+      </div>
+    </mat-card>
+  </div>
   
