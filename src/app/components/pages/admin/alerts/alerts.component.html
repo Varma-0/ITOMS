@@ -6,11 +6,11 @@
       <li class="item">Alerts</li>
     </ol>
   </div>
-  
+
   <div class="add-user" *ngIf="alerts.length != 0">
-    <button class="btn btn-primary">Create Alert</button>
+    <button class="btn btn-primary" (click)="openCreateDialog()">Create Alert</button>
   </div>
-  
+
   <div *ngFor="let alert of alerts" class="mb-4">
     <mat-card class="user-card">
       <div class="user-card-header">
@@ -37,4 +37,3 @@
       </div>
     </mat-card>
   </div>
-  

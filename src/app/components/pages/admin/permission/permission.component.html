@@ -1,4 +1,4 @@
-<!-- 
+<!--
 <div class="breadcrumb-area">
     <h1>Administration</h1>
 
@@ -37,8 +37,8 @@
       </button>
     </div>
   </mat-card>
-  
-  
+
+
    -->
 
    <div class="breadcrumb-area">
@@ -49,11 +49,11 @@
       <li class="item">Permissions</li>
     </ol>
   </div>
-  
+
   <div class="add-user">
-    <button class="btn btn-primary">Create Permission</button>
+    <button class="btn btn-primary" (click)="openCreateDialog()">Create Permission</button>
   </div>
-  
+
   <div *ngFor="let permission of permissions" class="mb-4">
     <mat-card class="user-card">
       <div class="user-card-header">
@@ -80,4 +80,3 @@
       </div>
     </mat-card>
   </div>
-  

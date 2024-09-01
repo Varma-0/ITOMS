@@ -8,7 +8,7 @@
 </div>
 
 <div class="add-user" *ngIf="tenants.length != 0">
-  <button class="btn btn-primary">Create Alert</button>
+  <button class="btn btn-primary" (click)="openCreateDialog()">Create Alert</button>
 </div>
 
 <!-- <div *ngFor="let tenant of tenants" class="mb-4">
@@ -51,9 +51,9 @@
         <p class="user-email">{{ tenant.createdBy.email }}</p>
         <p class="user-name">{{ tenant.type }}</p>
       </div>
-      <mat-slide-toggle 
-        color="primary" 
-        [(ngModel)]="tenant.isActive" 
+      <mat-slide-toggle
+        color="primary"
+        [(ngModel)]="tenant.isActive"
         (change)="toggleStatus(tenant)">
         {{ tenant.isActive ? 'Active' : 'Inactive' }}
       </mat-slide-toggle>

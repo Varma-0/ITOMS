@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
+import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 @Component({
   selector: 'app-role',
@@ -44,13 +45,23 @@ export class RoleComponent {
       }
     )
   }
-  openDeleteDialog(): void {
+  openCreateDialog(): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
         data:{
             title : 'Add Role'
         },
         width: '40%'
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Implement delete functionality here
+        console.log('User deleted');
+      }
+    });
+}
+  openDeleteDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

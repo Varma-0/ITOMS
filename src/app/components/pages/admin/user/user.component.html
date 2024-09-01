@@ -6,11 +6,11 @@
       <li class="item">Merchants</li>
     </ol>
   </div>
-  
+
   <div class="add-user" *ngIf="users.length != 0">
-    <button class="btn btn-primary">Create User</button>
+    <button class="btn btn-primary" (click)="openCreateDialog()">Create User</button>
   </div>
-  
+
   <div *ngFor="let user of users" class="mb-4">
     <mat-card class="user-card">
       <div class="user-card-header">
@@ -41,4 +41,3 @@
       </div>
     </mat-card>
   </div>
-  

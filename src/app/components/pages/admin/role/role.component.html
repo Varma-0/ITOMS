@@ -6,11 +6,11 @@
       <li class="item">Role</li>
     </ol>
   </div>
-  
+
   <div class="add-user" *ngIf="roles.length != 0">
-    <button class="btn btn-primary">Create Role</button>
+    <button class="btn btn-primary" (click)="openCreateDialog()">Create Role</button>
   </div>
-  
+
   <div *ngFor="let role of roles" class="mb-4">
     <mat-card class="user-card">
       <div class="user-card-header">
@@ -37,4 +37,3 @@
       </div>
     </mat-card>
   </div>
-  

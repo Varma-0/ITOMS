@@ -58,13 +58,24 @@ export class AlertComponent {
     )
   }
 
-  openDeleteDialog(): void {
+  openCreateDialog(): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
         data: {
             title:'Add Alert'
         },
         width:'40%'
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Implement delete functionality here
+        console.log('User deleted');
+      }
+    });
+  }
+
+  openDeleteDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
