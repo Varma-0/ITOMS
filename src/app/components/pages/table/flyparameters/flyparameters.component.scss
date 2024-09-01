@@ -18,6 +18,13 @@
     // align-content: flex-start;
   }
 
+  .centered-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20%;
+}
+
   .application {
     display: flex;
     flex-wrap: wrap;
@@ -197,9 +204,9 @@
     flex: 0 0 58%;
     height: calc(100vh - 50px); /* Full height minus header */
     overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden;
     border-left: 1px solid rgba(65, 61, 61, 0);
     margin-left: 0.4%;
-    margin-top: -15px;
   }
 
   /* Adjustments for smaller screens */
@@ -293,3 +300,21 @@
 .tabs li button:hover {
     color: #0056b3;
 }
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    .single td{
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        vertical-align: middle;
+        width: 100%;
+    }
+    td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      vertical-align: middle;
+      width: 50%;
+    }
+  }

@@ -1,0 +1,238 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
+<!-- merchant-form.component.html -->
+<ng-container *ngIf="title == 'Add User'">
+    <form [formGroup]="userForm" class="merchant-form">
+        <div class="form-group">
+          <label for="tenant">Tenant:</label>
+          <select id="tenant" formControlName="tenant">
+            <option value="StandardPos">StandardPos</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="role">Role:</label>
+            <select id="role" formControlName="role">
+              <option value="StandardPos">StandardPos</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="alert">Alert:</label>
+            <select id="alert" formControlName="alert">
+              <option value="StandardPos">StandardPos</option>
+            </select>
+          </div>
+        <div class="form-group">
+          <label for="firstName">First Name:</label>
+          <input id="firstName" type="text" formControlName="firstName">
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name:</label>
+          <input id="lastName" type="text" formControlName="lastName">
+        </div>
+
+        <div class="form-group">
+            <label for="dob">Date of Birth:</label>
+            <input id="db" type="date" formControlName="dob">
+          </div>
+
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input id="email" type="email" formControlName="email">
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number:</label>
+          <input id="phone" type="text" formControlName="phone">
+        </div>
+
+        <div class="form-group">
+            <label for="country">Country:</label>
+            <input id="country" type="text" formControlName="country">
+          </div>
+          <div class="form-group">
+            <label for="altemail">Alternative Email:</label>
+            <input id="altemail" type="text" formControlName="altemail">
+          </div>
+          <div class="form-group">
+            <label for="altphone">Alternative Phone Number:</label>
+            <input id="altphone" type="text" formControlName="altphone">
+          </div>
+          <div class="form-group">
+            <label for="altcountry">Alternative Country:</label>
+            <input id="altcountry" type="text" formControlName="altcountry">
+          </div>
+      </form>
+</ng-container>
+<ng-container *ngIf="title == 'Add Role'">
+    <form [formGroup]="roleForm" class="merchant-form">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input id="name" type="text" formControlName="name">
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <input id="description" type="text" formControlName="description">
+        </div>
+        <div class="form-group">
+            <label for="permission">Permission:</label>
+            <select id="permission" formControlName="permission">
+              <option value="StandardPos">StandardPos</option>
+            </select>
+          </div>
+          <div class="form-group checkbox-group">
+            <label>
+              <input type="checkbox" formControlName="checkbox1"> View
+            </label>
+            <label>
+              <input type="checkbox" formControlName="checkbox2"> Edit
+            </label>
+            <label>
+              <input type="checkbox" formControlName="checkbox3"> Delete
+            </label>
+          </div>
+      </form>
+</ng-container>
+<ng-container *ngIf="title == 'Add Alert'">
+    <form [formGroup]="alertForm" class="merchant-form">
+        <div class="form-group">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input id="name" type="text" formControlName="name">
+              </div>
+          <label for="originator">Originator:</label>
+          <select id="originator" formControlName="originator">
+            <option value="StandardPos">StandardPos</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="alert">Alert:</label>
+            <select id="alert" formControlName="alert">
+              <option value="StandardPos">StandardPos</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="template">Template:</label>
+            <select id="template" formControlName="template">
+              <option value="StandardPos">StandardPos</option>
+            </select>
+          </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <input id="description" type="text" formControlName="description">
+        </div>
+        <div class="checkbox-group1">
+            <label>
+              <input type="checkbox" formControlName="checkbox1"> Thresholed Applicable
+            </label>
+            <label>
+              <input type="checkbox" formControlName="checkbox2"> Custom Alert
+            </label>
+            <label>
+              <input type="checkbox" formControlName="checkbox3"> Allow Auto Close
+            </label>
+          </div>
+
+        <div class="form-group">
+          <label for="tvalue">Thresold Value:</label>
+          <input id="tvalue" type="text" formControlName="tvalue">
+        </div>
+
+        <div class="form-group">
+          <label for="dvalue">Default Value:</label>
+          <input id="dvalue" type="text" formControlName="dvalue">
+        </div>
+
+        <div class="form-group">
+            <label for="minvalue">Min Value:</label>
+            <input id="minvalue" type="text" formControlName="minvalue">
+          </div>
+
+          <div class="form-group">
+            <label for="maxvalue">Max Value:</label>
+            <input id="maxvalue" type="text" formControlName="maxvalue">
+          </div>
+
+          <div class="form-group">
+            <label for="templateId">Template Id:</label>
+            <input id="templateId" type="text" formControlName="templateId">
+          </div>
+      </form>
+</ng-container>
+<ng-container *ngIf="title == 'Add Permission'">
+    <form [formGroup]="permissionForm" class="merchant-form">
+        <div class="form-group">
+          <label for="name">Permission Name:</label>
+          <input id="name" type="text" formControlName="name">
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <input id="description" type="text" formControlName="description">
+        </div>
+        <div class="form-group">
+            <label for="permission">Permission Type:</label>
+            <select id="permission" formControlName="permission">
+              <option value="StandardPos">StandardPos</option>
+            </select>
+          </div>
+          <div class="form-group checkbox-group">
+            <label>
+              <input type="checkbox" formControlName="checkbox1"> Modify View
+            </label>
+            <label>
+              <input type="checkbox" formControlName="checkbox2"> Modify Edit
+            </label>
+            <label>
+              <input type="checkbox" formControlName="checkbox3"> Modify Delete
+            </label>
+          </div>
+      </form>
+</ng-container>
+<ng-container *ngIf="title == 'Add Tenant'">
+    <form [formGroup]="tenantForm" class="merchant-form">
+        <div class="form-group">
+          <label for="name">Tenant Name:</label>
+          <input id="name" type="text" formControlName="name">
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <input id="description" type="text" formControlName="description">
+        </div>
+        <div class="form-group">
+            <label for="type">Tenant Type:</label>
+            <select id="type" formControlName="type">
+              <option value="StandardPos">StandardPos</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="stype">Sub Type:</label>
+            <input id="stype" type="text" formControlName="stype">
+          </div>
+      </form>
+</ng-container>
+<ng-container *ngIf="title == 'Add Merchant'">
+    <form [formGroup]="merchantForm" class="merchant-form">
+        <div class="form-group">
+          <label for="name">Merchant Name:</label>
+          <input id="name" type="text" formControlName="name">
+        </div>
+        <div class="form-group">
+          <label for="cname">Contact Name::</label>
+          <input id="cname" type="text" formControlName="cname">
+        </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" type="text" formControlName="email">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input id="phone" type="text" formControlName="phone">
+          </div>
+      </form>
+</ng-container>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button class="btn btn-secondary" mat-dialog-close>Cancel</button>&nbsp;
+  <button class="btn btn-danger" [mat-dialog-close]="true">Confirm</button>
+</mat-dialog-actions>

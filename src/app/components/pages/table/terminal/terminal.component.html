@@ -2,7 +2,7 @@
   <!-- Header Section -->
   <div class="row align-items-center py-3">
     <div class="col">
-      <h2 class="mb-0">Terminal <span class="badge bg-grey text-dark fs-6">61</span></h2>
+      <h2 class="mb-0">Terminal <span class="badge bg-grey text-dark fs-6">{{data.length}}</span></h2>
     </div>
   </div>
 
@@ -12,19 +12,19 @@
       <button class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
         <span class="material-symbols-outlined">schedule</span>
         <span>Device Event Log</span>
-      </button> 
+      </button>
       <button class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
         <span class="material-symbols-outlined">download</span>
         <span>Export</span>
-      </button> 
+      </button>
       <button class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
         <span class="material-symbols-outlined">location_on</span>
         <span>Device Location</span>
-      </button>  
+      </button>
       <button class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
         <span class="material-symbols-outlined">edit</span>
         <span>TID Batch Modification</span>
-      </button>      
+      </button>
     </div>
   </div>
 
@@ -72,15 +72,15 @@
     </select>
   </div>
   <div class="col-md-2 d-flex">
-    <button class="btn btn-primary me-2">
-      <i class="bx bx-search"></i>
+    <button *ngIf="searchText || selectedOption1 || selectedOption2 " class="btn btn-primary me-2" style="height: 40px;" (click)="clearValues()">
+      <i class="bx bx-x-circle"></i>
     </button>
     <button mat-icon-button [matMenuTriggerFor]="filterMenu">
       <mat-icon>filter_list</mat-icon>
     </button>
     <mat-menu #filterMenu="matMenu">
       <button mat-menu-item *ngFor="let column of columns; let i = index">
-        <mat-checkbox [(ngModel)]="columnsVisibility[i]" (change)="toggleColumn(i)">
+        <mat-checkbox [checked]="columnsVisibility[i]" (change)="toggleColumn(i)">
           {{ column }}
         </mat-checkbox>
       </button>

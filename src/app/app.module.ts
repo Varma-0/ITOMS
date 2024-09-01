@@ -18,14 +18,13 @@ import { GalleryComponent } from './components/pages/gallery/gallery.component';
 import { FaqComponent } from './components/pages/faq/faq.component';
 import { InvoiceComponent } from './components/pages/invoice/invoice.component';
 import { BlankPageComponent } from './components/pages/blank-page/blank-page.component';
-import { ProfileComponent } from './components/pages/profile/profile.component';
 import { GridComponent } from './components/pages/grid/grid.component';
 import { ColorsComponent } from './components/pages/colors/colors.component';
 import { BoxiconsComponent } from './components/pages/icons/boxicons/boxicons.component';
 import { FeathericonsComponent } from './components/pages/icons/feathericons/feathericons.component';
 import { IconsComponent } from './components/pages/icons/icons/icons.component';
 import { CardComponent } from './components/pages/card/card/card.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BasicCardComponent } from './components/pages/card/basic-card/basic-card.component';
 import { ColorsCardComponent } from './components/pages/card/colors-card/colors-card.component';
@@ -188,6 +187,11 @@ import { MerchantsComponent } from './components/pages/admin/merchants/merchants
 import { ConfirmDeleteDialogComponent } from './components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { SchedulingComponent } from './components/pages/table/scheduling/scheduling.component';
 import { FlyparametersComponent } from './components/pages/table/flyparameters/flyparameters.component';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { DesignSelectionComponent } from './components/dialogs/design-selection/design-selection.component';
+import { SelectCfgComponent } from './components/dialogs/select-cfg/select-cfg.component';
+import { ProfileComponent } from './components/pages/table/profile/profile.component';
+import { AddFormComponent } from './components/dialogs/add-form/add-form.component';
 
 @NgModule({
   declarations: [
@@ -207,7 +211,6 @@ import { FlyparametersComponent } from './components/pages/table/flyparameters/f
     FaqComponent,
     InvoiceComponent,
     BlankPageComponent,
-    ProfileComponent,
     GridComponent,
     ColorsComponent,
     BoxiconsComponent,
@@ -355,7 +358,11 @@ import { FlyparametersComponent } from './components/pages/table/flyparameters/f
     MerchantsComponent,
     ConfirmDeleteDialogComponent,
     SchedulingComponent,
-    FlyparametersComponent
+    FlyparametersComponent,
+    DesignSelectionComponent,
+    SelectCfgComponent,
+    ProfileComponent,
+    AddFormComponent
   ],
   imports: [
     BrowserModule,
@@ -380,7 +387,9 @@ import { FlyparametersComponent } from './components/pages/table/flyparameters/f
     MatSortModule,
     MatPaginatorModule,
     MatMenuModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatProgressSpinner,
+    ReactiveFormsModule
 ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

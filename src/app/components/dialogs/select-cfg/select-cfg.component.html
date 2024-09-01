@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Select Cfg File Format</h2>
+<mat-dialog-content>
+    <div class="config-container">
+        <!-- File Format Selection -->
+        <div class="file-format">
+          <label>Terminal Cfg file Format</label>
+          <div class="format-options">
+            <label>
+              <input type="radio" name="fileFormat" value="json" [(ngModel)]="fileFormat" />
+              JSON
+            </label>
+            <label>
+              <input type="radio" name="fileFormat" value="asn.1" [(ngModel)]="fileFormat" />
+              ASN.1
+            </label>
+            <label>
+              <input type="radio" name="fileFormat" value="xml" [(ngModel)]="fileFormat" />
+              XML
+            </label>
+          </div>
+        </div>
+
+        <!-- Authorization Switch -->
+        <div class="authorization-switch">
+          <label for="authSwitch">Authorization Switch</label>
+          <label class="switch">
+            <input type="checkbox" id="authSwitch" [(ngModel)]="authorization">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button class="btn btn-secondary" mat-dialog-close>Cancel</button>&nbsp;
+  <button class="btn btn-danger" [mat-dialog-close]="true">Confirm</button>
+</mat-dialog-actions>

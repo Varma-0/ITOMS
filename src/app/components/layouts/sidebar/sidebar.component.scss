@@ -1,0 +1,9 @@
+.sidebar {
+    width: 250px;
+    transition: opacity 0.3s ease;
+  }
+
+  .sidebar.inactive {
+    opacity: 0.5; /* Example: Make sidebar semi-transparent */
+    pointer-events: none; /* Disable all interaction with sidebar */
+  }

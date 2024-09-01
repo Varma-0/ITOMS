@@ -40,7 +40,7 @@
 //   ngOnInit() {
 //     const event = new terminalEvent('DEVICE', 'SEARCH');
 //     const terminalRequest = new terminalBody(event);
-    
+
 //     this.terminalService.terminalData(terminalRequest).subscribe(
 //       response => {
 //         console.log(response);
@@ -116,7 +116,7 @@
 //     const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
 //       data: { element } // Pass data to the dialog if needed
 //     });
-  
+
 //     dialogRef.afterClosed().subscribe(result => {
 //       if (result) {
 //         // Implement delete functionality here
@@ -124,7 +124,7 @@
 //       }
 //     });
 //   }
-  
+
 // }
 
 import { Component, OnInit } from '@angular/core';
@@ -150,7 +150,7 @@ export interface TerminalElement {
   styleUrls: ['./terminal.component.scss']
 })
 export class TerminalComponent implements OnInit {
-  columns: string[] = ['Serial Number', 'Model', 'Status', 'Online Status', 'Activation Time', 'Actions'];
+  columns: string[] = ['Serial Number', 'Model', 'Status', 'Online Status', 'Activation Time'];
   columns1: string[] = ['Serial Number', 'Model', 'Status', 'Online Status', 'Activation Time'];
   columnsVisibility = [true, true, true, true, true];
   filteredData: TerminalElement[] = []; // Your original data
@@ -169,7 +169,7 @@ export class TerminalComponent implements OnInit {
   isDropdownOpen: string | null = null;
 
   constructor(private http: HttpClient, private terminalService: TerminalService, public dialog: MatDialog) {
-    this.terminalElements = this.filteredData; 
+    this.terminalElements = this.filteredData;
   }
 
   ngOnInit() {
@@ -180,14 +180,21 @@ export class TerminalComponent implements OnInit {
     this.columnsVisibility[index] = !this.columnsVisibility[index];
   }
 
+  clearValues() {
+    this.searchText = '';
+    this.selectedOption1 = '';
+    this.selectedOption2 = ''
+    this.applyFilter();
+}
+
   fetchData() {
     const event = new terminalEvent('DEVICE', 'SEARCH');
     const terminalRequest = new terminalBody(event);
-    
+
     this.terminalService.terminalData(terminalRequest).subscribe(
       response => {
         console.log(response);
-        this.data = response.event.eventData; 
+        this.data = response.event.eventData;
         this.updateOptions();
         this.updatePagination();
       },
@@ -196,7 +203,7 @@ export class TerminalComponent implements OnInit {
       }
     );
   }
-  
+
   updateOptions() {
     this.optionStatus = [...new Set(this.data.map(device => device.status))];
     this.optionModel = [...new Set(this.data.map(device => device.model))];
@@ -214,15 +221,15 @@ export class TerminalComponent implements OnInit {
     if (this.selectedOption1) {
       filteredData = filteredData.filter(device => device.status === this.selectedOption1);
     }
-  
+
     // Filter by model if selected
     if (this.selectedOption2) {
       filteredData = filteredData.filter(device => device.model === this.selectedOption2);
     }
-  
+
     // Update the terminalElements to display the filtered data
     this.terminalElements = filteredData;
-  
+
 
     this.totalPages = Math.ceil(filteredData.length / this.itemsPerPage);
     this.paginatedDevices = filteredData.slice(
@@ -273,7 +280,7 @@ export class TerminalComponent implements OnInit {
     const isChecked = event.target.checked;
     this.paginatedDevices.forEach(device => device.selected = isChecked);
   }
-  
+
   getSelectedCount() {
     return this.paginatedDevices.filter(device => device.selected).length;
   }
@@ -290,9 +297,9 @@ export class TerminalComponent implements OnInit {
 
   openDeleteDialog(element: TerminalElement): void {
     const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
-      data: { element } 
+      data: { element }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('User deleted');

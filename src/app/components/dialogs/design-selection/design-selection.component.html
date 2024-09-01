@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Select Template</h2>
+<mat-dialog-content>
+ <div class="template-container">
+    <!-- Blank Template Box -->
+    <div class="template-box" style="border-color: #007bff;">
+      <div class="add-icon">+</div>
+      <div class="template-text">Blank Template</div>
+    </div>
+
+    <!-- Upload Template Box -->
+    <div class="template-box upload-box">
+      <div class="upload-icon">
+        <i class="fas fa-upload"></i>
+      </div>
+      <div class="upload-text">
+        Create a template by uploading an existing template file.
+        <br />
+        Only .zip files are accepted
+      </div>
+      <input type="file" (change)="onFileSelected($event)" accept=".zip" />
+    </div>
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button class="btn btn-secondary" mat-dialog-close>Cancel</button>&nbsp;
+  <button class="btn btn-danger" [mat-dialog-close]="true">Confirm</button>
+</mat-dialog-actions>

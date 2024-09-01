@@ -1,0 +1,64 @@
+<div class="parameter-config-container">
+  <!-- Header Section -->
+  <div class="header">
+    <button class="back-button">← Back</button>
+    <span class="app-name">App Name: BANKDEMO_NDK</span>
+    <div class="header-icons">
+      <i class="fas fa-save"></i>
+      <i class="fas fa-eye"></i>
+      <i class="fas fa-cog"></i>
+    </div>
+  </div>
+
+  <!-- Tab Section -->
+  <div class="tabs">
+    <button class="tab active">Profile</button>
+    <button class="tab">Design</button>
+    <button class="tab">Parameter List</button>
+  </div>
+
+  <!-- Content Section -->
+  <div class="content">
+    <!-- Left Side -->
+    <div class="parameter-box">
+      <div class="parameter-header">
+        <span>string</span>
+        <button class="close-button">×</button>
+      </div>
+      <input type="text" placeholder="Enter value..." maxlength="255" />
+      <span class="character-count">0/255</span>
+    </div>
+
+    <!-- Right Side -->
+    <div class="properties-box">
+      <h3>Properties</h3>
+      <form>
+        <label for="label">* Label</label>
+        <input type="text" id="label" [(ngModel)]="parameter.label" name="label" />
+
+        <label for="key">* Key</label>
+        <input type="text" id="key" [(ngModel)]="parameter.key" name="key" />
+
+        <label for="type">* Type</label>
+        <select id="type" [(ngModel)]="parameter.type" name="type">
+          <option value="string">String</option>
+          <option value="number">Number</option>
+          <option value="boolean">Boolean</option>
+        </select>
+
+        <label for="defaultValue">Default Value</label>
+        <input type="text" id="defaultValue" [(ngModel)]="parameter.defaultValue" name="defaultValue" />
+
+        <label for="maxLength">Maximum Length</label>
+        <input type="number" id="maxLength" [(ngModel)]="parameter.maxLength" name="maxLength" />
+
+        <label for="mandatory">Mandatory</label>
+        <label class="switch">
+          <input type="checkbox" id="mandatory" [(ngModel)]="parameter.mandatory" name="mandatory" />
+          <span class="slider"></span>
+        </label>
+      </form>
+    </div>
+  </div>
+</div>
+<div style="height: 50px;"></div>

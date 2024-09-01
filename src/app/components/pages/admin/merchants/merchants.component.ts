@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { terminalBody } from 'src/app/services/terminal/body/body';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
@@ -12,10 +13,10 @@ import { TerminalService } from 'src/app/services/terminal/devicelist';
 })
 export class MerchantsComponent {
   // day = 'Tue'
-  // date = '20';  
-  // month = 'Aug'; 
-  // merchantName = 'Big_Sale_Mart'; 
-  // merchantDetails = '2024-06-06'; 
+  // date = '20';
+  // month = 'Aug';
+  // merchantName = 'Big_Sale_Mart';
+  // merchantDetails = '2024-06-06';
   // merchantEmail = 'salebigmart@gmail.com'
   // merchantType = 'BIG CORP';
   merchants: any = []
@@ -55,6 +56,22 @@ export class MerchantsComponent {
         console.error('Error:', error);
       }
     )
+  }
+
+  openCreateDialog(): void {
+    const dialogRef = this.dialog.open(AddFormComponent,{
+        data:{
+            title:'Add Merchant'
+        },
+        width:'40%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Implement delete functionality here
+        console.log('User deleted');
+      }
+    });
   }
 
   openDeleteDialog(): void {

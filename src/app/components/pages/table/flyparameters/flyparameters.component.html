@@ -1,5 +1,5 @@
 <div class="breadcrumb-area">
-    <h1>Scheduling</h1>
+    <h1>DynamiKeys</h1>
   </div>
 
   <div class="container">
@@ -27,7 +27,6 @@
               <span class="deployment-name">{{deployment.name}}</span>
               <div class="right-section">
                 <span class="deployment-count">{{deployment.count}}</span>
-                <!-- <mat-icon>computer</mat-icon> -->
                 <img src="../../../../../assets/img/res.png">
               </div>
             </button>
@@ -37,34 +36,20 @@
       </ul>
     </mat-card>
 
-    <!-- <div class="main-container" *ngIf="selectedItem">
+    <div class="main-container" *ngIf="selectedItem">
       <div class="header">
           <div class="selected-item">
-            <span class="header-text">Deployment</span>
+            <span class="header-text">DynamiKeys</span>
             <h2>{{ selectedItem?.name }}</h2>
           </div>
-        <div class="header-icons">
-          <button mat-icon-button color="primary">
-            <span class="material-icons">qr_code</span>
-          </button>
-          <button mat-icon-button color="accent">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn">
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button mat-icon-button color="warn">
-            <mat-icon>settings</mat-icon>
-          </button>
-        </div>
       </div>
 
 
       <div>
-        <ul class="tabs">
+        <ul class="tabs" *ngIf="false">
             <li>
-              <button [ngClass]="{'active-tab': selectedTab === 'settings'}" (click)="selectTab('settings')">
-                Settings
+              <button [ngClass]="{'active-tab': selectedTab === 'profile'}" (click)="selectTab('profile')">
+                Profile
               </button>
             </li>
             <li>
@@ -72,125 +57,78 @@
                 Terminal
               </button>
             </li>
-            <li>
-              <button [ngClass]="{'active-tab': selectedTab === 'process'}" (click)="selectTab('process')">
-                Process
-              </button>
-            </li>
           </ul>
       </div>
       <div *ngIf="selectedTab === 'terminal'">
         <app-terminal></app-terminal>
       </div>
-      <div *ngIf="selectedTab === 'settings'">
-        <mat-card class="card">
-            <mat-card-title>
-              <div class="over-header">
-                <span>Application</span>
-                <button mat-icon-button color="accent">
-                  <mat-icon>add</mat-icon>
-                </button>
-              </div>
-            </mat-card-title>
-            <hr>
-
-            <div class="application">
-                <mat-card class="card-with-menu">
-                  <div class="card-content">
-                    <img class="linux" src="../../../../../assets/img/linux-icon.png">
-                    <span>BANKDEMO_NDK</span>
-                    <span>0.0.18(gcc4.9.4)</span>
-                    <span>Normal Update</span>
-                  </div>
-                  <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Option 1</button>
-                    <button mat-menu-item>Option 2</button>
-                    <button mat-menu-item>Option 3</button>
-                  </mat-menu>
-                </mat-card>
-
-                <mat-card class="card-with-menu">
-                  <div class="card-content">
-                    <img class="linux" src="../../../../../assets/img/linux-icon.png">
-                    <span>BANKDEMO_NDK</span>
-                    <span>0.0.18(gcc4.9.4)</span>
-                    <span>Normal Update</span>
-                  </div>
-                  <button mat-icon-button [matMenuTriggerFor]="menu2" class="menu-button">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu2="matMenu">
-                    <button mat-menu-item>Change Version</button>
-                    <button mat-menu-item>Change Update Method</button>
-                    <button mat-menu-item>Remove</button>
-                  </mat-menu>
-                </mat-card>
-              </div>
-
-            <hr>
-            <div class="frimware">
-                <mat-card-title>
-                    <span>Firmware</span>
-                </mat-card-title>
-                <hr>
-                <mat-card class="card-with-menu">
-                    <div class="card-content">
-                        <img class="linux" src="../../../../../assets/img/linux-icon.png">
-                        <span>P180(SA2)</span>
-                        <a href="#">3 Versions</a>
-                    </div>
-                    <button mat-icon-button [matMenuTriggerFor]="menufrim" class="menu-button">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menufrim="matMenu">
-                        <button mat-menu-item>Change Version</button>
-                    </mat-menu>
-                </mat-card>
-            </div>
-            <hr>
-            <div class="boot-animation">
-                <mat-card-title>
-                    <span>Boot Animation</span>
-                </mat-card-title>
-                <hr>
-                <mat-card class="card-with-menu">
-                    <div class="card-content">
-                        <img class="linux" src="../../../../../assets/img/linux-icon.png">
-                        <span>P180(SA2)</span>
-                        <a href="#">Empty</a>
-                    </div>
-                    <button mat-icon-button [matMenuTriggerFor]="menufrim" class="menu-button">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menufrim="matMenu">
-                        <button mat-menu-item>Change Version</button>
-                    </mat-menu>
-                </mat-card>
-            </div>
-            <hr>
-            <div class="boot-logo">
-                <mat-card-title>
-                    <span>Boot Logo</span>
-                </mat-card-title>
-                <hr>
-                <mat-card class="card-with-menu">
-                    <div class="card-content">
-                        <img class="linux" src="../../../../../assets/img/linux-icon.png">
-                        <span>P180(SA2)</span>
-                        <a href="#">Empty</a>
-                    </div>
-                    <button mat-icon-button [matMenuTriggerFor]="menufrim" class="menu-button">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menufrim="matMenu">
-                        <button mat-menu-item>Change Version</button>
-                    </mat-menu>
-                </mat-card>
-            </div>
-          </mat-card>
+      <div *ngIf="selectedTab === 'profil'">
+        <div class="centered-div">
+            No parameter template has been configured in this parameter application.
+        </div>
+        <div style="text-align: center;margin-top:5%;">
+            Click <span (click)="designSelection()" style="color: blue;"><u>Design</u></span> to start configuring the parameter template.
+        </div>
       </div>
-    </div> -->
+      <div *ngIf="selectedTab === 'profile'">
+        <div class="row">
+            <b class="col-11">Information</b>
+            <button class="col-1" mat-icon-button>
+                <mat-icon>edit</mat-icon>
+            </button>
+        </div>
+        <div>
+            <table class="info-table">
+                <tr style="background-color: rgb(236, 230, 230);">
+                  <td>Template Mode</td>
+                  <td>Terminal Cfg file Format</td>
+                </tr>
+                <tr>
+                    <td><button mat-button color="primary">Simple</button></td>
+                    <td><button mat-button color="primary">JSON</button></td>
+                  </tr>
+                  <tr style="background-color: rgb(236, 230, 230);">
+                    <td>Creation Time</td>
+                    <td>Last Modification Time</td>
+                  </tr>
+                  <tr>
+                      <td>06/17/2024 17:48:17</td>
+                      <td>06/17/2024 17:48:17</td>
+                  </tr>
+            </table>
+            <table class="info-table">
+                <tr class="single" style="background-color: rgb(236, 230, 230);">
+                    <td>Number of Parameters</td>
+                  </tr>
+                  <tr class="single">
+                      <td>2</td>
+                  </tr>
+            </table>
+            <br>
+            <table class="info-table">
+                <tr class="single" style="background-color: rgb(236, 230, 230);">
+                    <td>Description</td>
+                  </tr>
+                  <tr class="single">
+                      <td></td>
+                  </tr>
+            </table>
+            <br>
+            <div class="row">
+                <mat-card class="col-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h3>Background generation progress of terminal parameter file</h3>
+                    </div>
+                    <app-radialbar-semi-circular-gauge></app-radialbar-semi-circular-gauge>
+                </mat-card>
+            <mat-card class="col-8">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3>Terminal Parameter Update Statistics</h3>
+                </div>
+                <app-email-send [labels]="labelsm" [series]="seriesm" [colors]="colors"></app-email-send>
+            </mat-card>
+            </div>
+        </div>
+      </div>
+    </div>
   </div>

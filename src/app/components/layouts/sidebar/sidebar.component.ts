@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, Event, NavigationEnd } from "@angular/router";
+import { SharedServices } from "src/app/services/shared.service";
 declare let $: any;
 
 @Component({
@@ -8,7 +9,9 @@ declare let $: any;
     styleUrls: ["./sidebar.component.scss"]
 })
 export class SidebarComponent implements OnInit {
-    constructor(private router: Router) {
+    isSidebarActive = true;
+
+    constructor(private router: Router,private shared:SharedServices) {
         router.events.subscribe((event: Event) => {
             if (event instanceof NavigationEnd) {
                 $(".responsive-burger-menu").removeClass("active");
@@ -29,5 +32,8 @@ export class SidebarComponent implements OnInit {
             $(".responsive-burger-menu").toggleClass("active");
             $(".sidemenu-area").toggleClass("active-sidemenu-area");
         });
+        this.shared.sidebarActive$.subscribe(
+            (active: boolean) => (this.isSidebarActive = active)
+          );
     }
 }
