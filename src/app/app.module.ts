@@ -195,6 +195,7 @@ import { DesignSelectionComponent } from './components/dialogs/design-selection/
 import { SelectCfgComponent } from './components/dialogs/select-cfg/select-cfg.component';
 import { ProfileComponent } from './components/pages/table/profile/profile.component';
 import { AddFormComponent } from './components/dialogs/add-form/add-form.component';
+import { PackagesComponent } from './components/pages/table/packages/packages.component';
 
 @NgModule({
   declarations: [
@@ -367,7 +368,8 @@ import { AddFormComponent } from './components/dialogs/add-form/add-form.compone
     DesignSelectionComponent,
     SelectCfgComponent,
     ProfileComponent,
-    AddFormComponent
+    AddFormComponent,
+    PackagesComponent
   ],
   imports: [
     BrowserModule,

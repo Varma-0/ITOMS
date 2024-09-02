@@ -101,6 +101,7 @@ import { HierarchyComponent } from './components/pages/admin/hierarchy/hierarchy
 import { MerchantsComponent } from './components/pages/admin/merchants/merchants.component';
 import { SchedulingComponent } from './components/pages/table/scheduling/scheduling.component';
 import { FlyparametersComponent } from './components/pages/table/flyparameters/flyparameters.component';
+import { PackagesComponent } from './components/pages/table/packages/packages.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'landing',pathMatch:'full'},
@@ -193,6 +194,7 @@ const routes: Routes = [
       {path: 'table-dark', data: { breadcrumb: 'Table Dark' }, component: TableDarkComponent},
       {path: 'scheduling', data: { breadcrumb: 'Scheduling' }, component: SchedulingComponent},
       {path: 'parameters', data: { breadcrumb: 'DynamiKeys' }, component: FlyparametersComponent},
+      {path: 'packages', data: { breadcrumb: 'Packages' }, component: PackagesComponent},
     ]
   },
   {

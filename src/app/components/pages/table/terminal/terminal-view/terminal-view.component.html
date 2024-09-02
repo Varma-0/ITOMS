@@ -1,79 +1,438 @@
 <div class="container-fluid">
-    <div class="d-flex align-items-center">
-        <button class="d-flex align-items-center headerButton" (click)="toggleView()">
-            <span class="material-symbols-outlined">arrow_back_ios_new</span>
-            <span>Back</span>
-        </button>
-        <h4 class="mb-0 fw-bold text-secondary">Terminal</h4>
-        <span class="ms-2 fw-500 text-primary ">SN: {{device.serialNumber}}</span>
-    </div>
-    <hr style="border: 1px solid grey; opacity: 0.1;">
-    <div class="bg-color-darkblue">
-        <img src="../../../../../../assets/img/N950.png" class="N950">
-        <span class="material-symbols-outlined">account_tree</span>
-        <span class="ms-2 fw-500 text-decoration-underline">DEMO</span>
-    </div>
-    <mat-card class="text-align-right overlap-card">
-        <mat-card-header class="buttonsHeader align-items-center justify-content-center">
-            <button [ngClass]="{'active-tab': selectedTab === 'overview'}" (click)="selectTab('overview')">Overview</button>
-            <button [ngClass]="{'active-tab': selectedTab === 'basicinfo'}" (click)="selectTab('basicinfo')">Basic Info</button>
-            <button [ngClass]="{'active-tab': selectedTab === 'app'}" (click)="selectTab('app')">App & Firmware</button>
-            <button [ngClass]="{'active-tab': selectedTab === 'settings'}" (click)="selectTab('settings')">Settings</button>
-            <button [ngClass]="{'active-tab': selectedTab === 'remote'}" (click)="selectTab('remote')">Remote Assistance</button>
-        </mat-card-header>
-    </mat-card>
-    <div> <!-- *ngIf="selectedTab === 'overview'" -->
-        <div class="cards-container" >
-            <div class="card" *ngFor="let card of cards">
-              <div class="card-header">
-                <span>{{ card.header }}</span>
-                <span class="material-symbols-outlined text-primary">
-                    {{card.icon}}
-                    </span> <!-- Replace 'info' with the desired icon -->
-              </div>
-              <div class="card-body">
-                <span class="percentage">{{ card.percentage }}%</span>
-                <mat-progress-bar
-                  mode="determinate"
-                  [value]="card.percentage"
-                  class="progress-bar"
-                ></mat-progress-bar>
-              </div>
-            </div>
+  <div class="d-flex align-items-center">
+    <button class="d-flex align-items-center headerButton" (click)="toggleView()">
+      <span class="material-symbols-outlined">arrow_back_ios_new</span>
+      <span>Back</span>
+    </button>
+    <h4 class="mb-0 fw-bold text-secondary">Terminal</h4>
+    <span class="ms-2 fw-500 text-primary ">SN: {{device.serialNumber}}</span>
+  </div>
+  <hr style="border: 1px solid grey; opacity: 0.1;">
+  <div class="bg-color-darkblue">
+    <img src="../../../../../../assets/img/N950.png" class="N950">
+    <span class="material-symbols-outlined">account_tree</span>
+    <span class="ms-2 fw-500 text-decoration-underline">DEMO</span>
+  </div>
+  <mat-card class="text-align-right overlap-card">
+    <mat-card-header class="buttonsHeader align-items-center justify-content-center">
+      <button [ngClass]="{'active-tab': selectedTab === 'overview'}" (click)="selectTab('overview')">Overview</button>
+      <button [ngClass]="{'active-tab': selectedTab === 'basicinfo'}" (click)="selectTab('basicinfo')">Basic
+        Info</button>
+      <button [ngClass]="{'active-tab': selectedTab === 'app'}" (click)="selectTab('app')">App & Firmware</button>
+      <button [ngClass]="{'active-tab': selectedTab === 'settings'}" (click)="selectTab('settings')">Settings</button>
+      <button [ngClass]="{'active-tab': selectedTab === 'remote'}" (click)="selectTab('remote')">Remote
+        Assistance</button>
+    </mat-card-header>
+  </mat-card>
+  <div *ngIf="selectedTab === 'overview'"> <!-- *ngIf="selectedTab === 'overview'" -->
+    <div class="cards-container">
+      <div class="card" *ngFor="let card of cards">
+        <div class="card-header">
+          <span>{{ card.header }}</span>
+          <span class="material-symbols-outlined text-primary">
+            {{card.icon}}
+          </span> <!-- Replace 'info' with the desired icon -->
         </div>
-        <div class="row">
-            <!-- Card with 60% width -->
-            <mat-card class="custom-card card-60">
-              <mat-card-header>
-                <span class="card-header-title">Activity (Minutes)</span>
-                <hr style="border: 1px solid red; opacity: 0.4;">
-              </mat-card-header>
-              <div class="card-content">
-                <app-web-analytics></app-web-analytics>
-              </div>
-            </mat-card>
-          
-            <!-- Card with 40% width -->
-            <mat-card class="custom-card card-40">
-              <mat-card-header class="buttonsHeader">
-                <span class="location-button" (click)="abc()">Location (28.592294, 76.992886)</span>
-                    <input 
-                      type="checkbox" 
-                      id="toggleSwitch" 
-                      class="custom-switch ms-2" 
-                      (change)="onToggleChange($event)">
-                <hr style="border: 1px solid grey; opacity: 0.1;">
-              </mat-card-header>
-              <mat-card-content>
-                <!-- <app-map [coordinates]="[28.592294, 76.992886]"></app-map> -->
-              </mat-card-content>
-            </mat-card>
-          </div>
-          
+        <div class="card-body">
+          <span class="percentage">{{ card.percentage }}%</span>
+          <mat-progress-bar mode="determinate" [value]="card.percentage" class="progress-bar"></mat-progress-bar>
+        </div>
+      </div>
     </div>
-      
+    <div class="row">
+      <!-- Card with 60% width -->
+      <mat-card class="custom-card card-60">
+        <mat-card-header>
+          <span class="card-header-title">Activity (Minutes)</span>
+        </mat-card-header>
+        <hr style="border: 1px solid grey; opacity: 0.1;">
+        <div class="card-content">
+          <app-web-analytics></app-web-analytics>
+        </div>
+      </mat-card>
+
+      <!-- Card with 40% width -->
+      <mat-card class="custom-card card-38">
+        <mat-card-header class="buttonsHeader">
+          <span class="location-button" (click)="abc()">Location (28.592294, 76.992886)</span>
+          <input type="checkbox" id="toggleSwitch" class="custom-switch ms-2" (change)="onToggleChange($event)">
+        </mat-card-header>
+        <hr style="border: 1px solid grey; opacity: 0.1;">
+        <mat-card-content>
+          <app-map [coordinates]="[28.592294, 76.992886]"></app-map>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="row">
+      <mat-card class="custom-card card-50">
+        <mat-card-header>
+          <span class="card-header-title">Traffic</span>
+          <div class="header-buttons buttonsHeader">
+            <button [ngClass]="{'active-tab': contentCondition === 'Device'}"
+              (click)="changeContent('Device')">Device</button>
+            <button [ngClass]="{'active-tab': contentCondition === 'Application'}"
+              (click)="changeContent('Application')">Application</button>
+          </div>
+        </mat-card-header>
+        <hr style="border: 1px solid grey; opacity: 0.1;">
+        <div class="card-content" *ngIf="contentCondition === 'Device'">
+          <mat-card-content>
+            <p>Content for Condition 1 ewfbw</p>
+          </mat-card-content>
+        </div>
+        <div class="card-content" *ngIf="contentCondition === 'Application'">
+
+
+          <p>Content for Condition 2</p>
+        </div>
+      </mat-card>
+      <mat-card class="custom-card card-50">
+        <mat-card-header>
+          <span class="card-header-title">Card Method (Current Month)</span>
+        </mat-card-header>
+        <hr style="border: 1px solid grey; opacity: 0.1;">
+        <div class="card-content">
+          <!-- <app-web-analytics></app-web-analytics> -->
+        </div>
+      </mat-card>
+    </div>
+
+  </div>
+  <div class="container" *ngIf="selectedTab === 'basicinfo'">
+    <mat-card class="cards">
+      <mat-card-header>
+        <mat-card-title>Terminal Details</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="details-row">
+          <div class="detail-item">
+            <span>Creation Time</span><span>08/26/2024 15:07:18</span>
+          </div>
+          <div class="detail-item">
+            <span>Last Boot Time(Device Time)</span><span>08/28/2024 14:24:15</span>
+          </div>
+          <div class="detail-item">
+            <span>Current Running Time</span><span>0:00:39</span>
+          </div>
+          <div class="detail-item">
+            <span>MCC</span><span>-</span>
+          </div>
+        </div>
+        <div class="details-row">
+          <div class="detail-item">
+            <span>Manager Email</span><span>-</span>
+          </div>
+          <div class="detail-item">
+            <span>Address</span><span>-</span>
+          </div>
+          <div class="detail-item">
+            <span>Remark</span><span>-</span>
+          </div>
+          <div class="detail-item">
+            <span>Manager</span><span>-</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="cards">
+      <mat-card-header>
+        <mat-card-title>Network</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="details-row">
+          <div class="detail-item">
+            <span>SIM Card SN</span><span>89300000000015563131|8927000009718513820</span>
+          </div>
+          <div class="detail-item">
+            <span>Mobile Network Operator</span><span>South Africa MTN</span>
+          </div>
+        </div>
+        <div class="details-row">
+          <div class="detail-item">
+            <span>APN</span><span>-</span>
+          </div>
+          <div class="detail-item">
+            <span>Phone number</span><span>-</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="cards">
+      <mat-card-header>
+        <mat-card-title>Battery</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="details-row">
+          <div class="detail-item">
+            <span>Terminal Red Alert</span><span>Off</span>
+          </div>
+          <div class="detail-item">
+            <span>Terminal Yellow Alert</span><span>Off</span>
+          </div>
+          <div class="detail-item">
+            <span>Health</span><span>Unknown</span>
+          </div>
+          <div class="detail-item">
+            <span>Battery Cycle</span><span>-</span>
+          </div>
+          <div class="detail-item">
+            <span>Screen Dim</span><span>Off</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div style="display: flex;" *ngIf="selectedTab === 'app'">
+    <div style="flex: 1; margin-right: 10px; width:80%">
+      <div class="containers mt-3">
+        <h2>Deployment</h2>
+        <mat-card class="mb-3">
+          <mat-card-content>
+            <div class="d-flex justify-content-between align-items-center">
+              <span>Anil</span>
+              <span class="text-muted">
+                <mat-icon style="vertical-align: middle;">access_time</mat-icon>
+                08/26/2024 15:14
+              </span>
+
+              <button mat-icon-button style="color: red; opacity: 0.8; cursor: pointer;">
+                <mat-icon>delete</mat-icon>
+              </button>
+
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <div class="d-flex justify-content-between align-items-center">
+          <!-- Firmware Section -->
+          <h2>Firmware</h2>
+          <button class="btn btn-primary btn-sm">Push</button>
+        </div>
+
+        <mat-card class="mb-3">
+          <mat-card-content>
+            <div class="d-flex justify-content-between align-items-center">
+              <span>Current Version: D1.0.11</span>
+              <span class="text-muted">
+                <mat-icon style="vertical-align: middle;">access_time</mat-icon>
+                08/26/2024 16:44</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Application</h2>
+          <button class="btn btn-primary btn-sm">Push</button>
+        </div>
+        <mat-card>
+          <mat-card-header class="buttonsHeader align-items-center justify-content-center">
+            <button [ngClass]="{'active-tab': selectedTabApp === 'deployment'}" (click)="selectTabApp('deployment')">Deployment</button>
+            <button [ngClass]="{'active-tab': selectedTabApp === 'thirdparty'}" (click)="selectTabApp('thirdparty')">Thirdparty</button>
+            <button [ngClass]="{'active-tab': selectedTabApp === 'system'}" (click)="selectTabApp('system')">System</button>
+            <button [ngClass]="{'active-tab': selectedTabApp === 'parameter'}" (click)="selectTabApp('parameter')">Parameter</button>
+          </mat-card-header>
+          <hr style="border: 1px solid grey; opacity: 0.1;">
+          <mat-card-content *ngIf="selectedTabApp === 'deployment'">
+            <div><strong>Installed</strong></div>
+            <hr style="border: 1px solid grey; opacity: 0.1;">
+            <div>
+              <strong>Not Installed</strong>
+            </div>
+          </mat-card-content>
+          <mat-card-content *ngIf="selectedTabApp === 'thirdparty'">
+            <div class="d-flex align-items-center justify-content-around">
+              <span class="material-symbols-outlined" style="color:green;">android</span>
+              ECR Service (1.0)
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" class="d-flex align-items-center">
+                <button mat-menu-item >
+                  <span class="material-symbols-outlined">play_circle</span>
+                  Run
+                </button>
+                <button mat-menu-item >
+                  <span class="material-symbols-outlined">cancel</span>
+                  Close
+                </button>
+                <button mat-menu-item >
+                  <span class="material-symbols-outlined">delete_forever</span>
+                  Uninstall
+                </button>
+                <hr style="border: 1px solid grey; opacity: 0.1;">
+                <button mat-menu-item >
+                  <span class="material-symbols-outlined">settings</span>
+                  App Settings
+                </button>
+              </mat-menu>
+            </div>
+          </mat-card-content>
+          <mat-card-content *ngIf="selectedTabApp === 'system'">
+            <div><strong>Installed</strong></div>
+            <hr style="border: 1px solid grey; opacity: 0.1;">
+            <div class="d-flex align-items-center justify-content-around">
+              <span class="material-symbols-outlined">function</span>
+              ITOMS (3..5.2)
+              15.24MB
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" class="d-flex align-items-center">
+                <button mat-menu-item >
+                  <span class="material-symbols-outlined">info</span>
+                  App Permission
+                </button>
+              </mat-menu>
+            </div>
+            <hr style="border: 1px solid grey; opacity: 0.1;">
+            <div>
+              <strong>Not Installed</strong>
+            </div>
+          </mat-card-content><mat-card-content *ngIf="selectedTabApp === 'parameter'">
+            <table mat-table [dataSource]="dataSource" style="width: 100%;">
+        
+              <!-- App Column -->
+              <ng-container matColumnDef="app">
+                <th mat-header-cell *matHeaderCellDef> App </th>
+                <td mat-cell *matCellDef="let element"> {{element.app}} </td>
+              </ng-container>
+        
+              <!-- Package Name Column -->
+              <ng-container matColumnDef="packageName">
+                <th mat-header-cell *matHeaderCellDef> Package Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.packageName}} </td>
+              </ng-container>
+        
+              <!-- Application Installation Information Column -->
+              <ng-container matColumnDef="applicationInstallationInfo">
+                <th mat-header-cell *matHeaderCellDef> Application Installation Information </th>
+                <td mat-cell *matCellDef="let element">
+                  <span class="label">{{element.applicationInstallationInfo}}</span>
+                </td>
+              </ng-container>
+        
+              <!-- Parameter File Version Column -->
+              <ng-container matColumnDef="parameterFileVersion">
+                <th mat-header-cell *matHeaderCellDef> Parameter File Version </th>
+                <td mat-cell *matCellDef="let element"> {{element.parameterFileVersion}} </td>
+              </ng-container>
+        
+              <!-- Parameter File Status Column -->
+              <ng-container matColumnDef="parameterFileStatus">
+                <th mat-header-cell *matHeaderCellDef> Parameter File Status </th>
+                <td mat-cell *matCellDef="let element">
+                  <span class="label">{{element.parameterFileStatus}}</span>
+                </td>
+              </ng-container>
+        
+              <!-- Publish Column -->
+              <ng-container matColumnDef="publish">
+                <th mat-header-cell *matHeaderCellDef> Publish </th>
+                <td mat-cell *matCellDef="let element"> {{element.publish}} </td>
+              </ng-container>
+        
+              <!-- Operation Column -->
+              <ng-container matColumnDef="operation">
+                <th mat-header-cell *matHeaderCellDef> Operation </th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button>
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+        
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>          
+          </mat-card-content>
+        </mat-card>
+
+
+      </div>
+    </div>
+    <div class="d-flex flex-column gap-3" style="flex: 1;margin-top: 4rem">
+      <mat-card >
+        <mat-card-header class="d-flex align-items-center justify-content-between">
+            <strong>Push History</strong>
+          <button mat-icon-button class="d-flex align-items-end">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </mat-card-header>
+        <hr style="border: 1px solid grey; opacity: 0.1;">
+        <mat-card-content class="contente">
+          No Data
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header class="d-flex align-items-center justify-content-between">
+          <strong>Device Event Log</strong>
+          <div>
+            <button mat-icon-button>
+              <mat-icon>download</mat-icon>
+            </button>
+            <button mat-icon-button>
+              <mat-icon>refresh</mat-icon>
+            </button>
+          </div>
+        </mat-card-header>
+        <hr style="border: 1px solid grey; opacity: 0.1;">
+        <mat-card-content class="contente">
+          No Data
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </div>
+  <div *ngIf="selectedTab === 'remote'">
+    <div class="buttonsHeader align-items-center w-100">
+      <div class="col d-flex">
+        <button [ngClass]="{'active-tab': selectedTabRemote === 'diagnosis'}" (click)="selectTabRemote('diagnosis')" class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
+          <span>Diagnosis</span>
+        </button>
+        <button [ngClass]="{'active-tab': selectedTabRemote === 'management'}" (click)="selectTabRemote('management')" class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
+          <span>Management</span>
+        </button>
+        <button [ngClass]="{'active-tab': selectedTabRemote === 'more'}" (click)="selectTabRemote('more')" class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
+          <span>More</span>
+        </button>
+        <button [ngClass]="{'active-tab': selectedTabRemote === 'file'}" (click)="selectTabRemote('file')" class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
+          <span>File Download</span>
+        </button>
+      </div>
+      <hr style="border: 1px solid grey; opacity: 0.1;">
+    </div>
+    <div class="card-container" *ngIf="selectedTabRemote === 'diagnosis'">
+      <mat-card *ngFor="let item of cards_remote" 
+              (click)="onCardClick(item)" 
+              class="clickable-card" 
+              [ngClass]="{'active-card': item.isActive}">
+      <mat-card-header>
+        <mat-icon class="icon">{{item.icon}}</mat-icon>
+      </mat-card-header>
+      <mat-card-title>{{item.title}}</mat-card-title>
+      <mat-card-content>
+        <p>{{item.description}}</p>
+      </mat-card-content>
+      <div class="card-footer">
+        <hr class="divider-line">
+        <mat-card-footer>
+          <p class="execution-time">Last Execution Time: {{item.executionTime || '-'}}</p>
+        </mat-card-footer>
+      </div>
+    </mat-card>
+
+    </div>
+     
+  </div>
   
-  
-  
-  
-  <div style="height: 500px;"></div>
+</div>
+
+
+
+
+
+
+<div style="height: 100px;"></div>

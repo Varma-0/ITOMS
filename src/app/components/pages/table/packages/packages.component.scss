@@ -1,0 +1,139 @@
+.resources-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .resources-title {
+    margin-bottom: 20px;
+  }
+  
+  .search-bar {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+  
+    input {
+      padding: 8px;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  
+    .results-count {
+      margin-right: 10px;
+    }
+  
+    button {
+      padding: 8px 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  
+    .add-button {
+      background-color: #28a745;
+  
+      &:hover {
+        background-color: #218838;
+      }
+    }
+  }
+  
+  .view-toggle {
+    margin-bottom: 20px;
+  
+    button {
+      padding: 8px 12px;
+      background-color: #f8f9fa;
+      border: 1px solid #ccc;
+      cursor: pointer;
+  
+      &.active {
+        background-color: #007bff;
+        color: white;
+      }
+    }
+  }
+  
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .resources-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .resource-item {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  
+    .menu-dots {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      cursor: pointer;
+    }
+  
+    .resource-icon {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 10px;
+    }
+  
+    .resource-details {
+      text-align: center;
+  
+      h3 {
+        margin: 0 0 5px 0;
+      }
+  
+      p {
+        margin: 0;
+        font-size: 0.9em;
+        color: #666;
+      }
+    }
+  
+    .database-button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      background-color: #f8f9fa;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: #e2e6ea;
+      }
+    }
+  }
+  
+  .resources-list .resource-item {
+    flex-direction: row;
+    justify-content: space-between;
+  
+    .resource-icon {
+      margin-bottom: 0;
+      margin-right: 15px;
+    }
+  
+    .resource-details {
+      flex-grow: 1;
+      text-align: left;
+    }
+  }

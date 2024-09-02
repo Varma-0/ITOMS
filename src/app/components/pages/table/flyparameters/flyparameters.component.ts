@@ -11,7 +11,7 @@ import { SharedServices } from 'src/app/services/shared.service';
 })
 export class FlyparametersComponent {
   searchTerm: string = '';
-  selectedTab: string = 'profil'; // Default tab
+  selectedTab: string = 'profile'; // Default tab
   deployments = [
       { name: 'P180', count: 2 },
       { name: 'U1000', count: 0 },

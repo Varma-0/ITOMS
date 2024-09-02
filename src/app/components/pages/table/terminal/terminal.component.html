@@ -111,7 +111,6 @@
           <input type="checkbox" [(ngModel)]="device.selected">
         </td>
         <td *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">
-          <!-- Ensure the correct data is displayed based on the column -->
           <ng-container [ngSwitch]="column">
             <span *ngSwitchCase="'Serial Number'">{{ device.serialNumber || 'N/A' }}</span>
             <span *ngSwitchCase="'Model'">{{ device.model || 'N/A' }}</span>
@@ -120,7 +119,7 @@
           </ng-container>
         </td>
         <td>
-          <button mat-icon-button [matMenuTriggerFor]="menu">
+          <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
