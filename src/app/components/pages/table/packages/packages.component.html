@@ -6,24 +6,24 @@
       <span class="results-count">{{filteredResources.length}}/{{resources.length}}</span>
       <input [(ngModel)]="flyParameterApp" placeholder="FlyParameter App">
       <button class="search-button" (click)="search()">
-        <i class="fas fa-search"></i>
+        <span class="material-icons">search</span>
       </button>
       <button class="add-button" (click)="addNew()">+</button>
     </div>
   
     <div class="view-toggle">
       <button [ngClass]="{'active': viewMode === 'grid'}" (click)="setViewMode('grid')">
-        <i class="fas fa-th"></i>
+        <span class="material-icons">grid_view</span>
       </button>
       <button [ngClass]="{'active': viewMode === 'list'}" (click)="setViewMode('list')">
-        <i class="fas fa-list"></i>
+        <span class="material-icons">view_list</span>
       </button>
     </div>
   
     <div [ngClass]="{'resources-grid': viewMode === 'grid', 'resources-list': viewMode === 'list'}">
       <div *ngFor="let resource of filteredResources" class="resource-item">
         <div class="menu-dots">
-          <i class="fas fa-ellipsis-v"></i>
+          <span class="material-icons">more_vert</span>
         </div>
         <img [src]="resource.icon" [alt]="resource.name" class="resource-icon">
         <div class="resource-details">
@@ -31,7 +31,7 @@
           <p>{{resource.version}}</p>
         </div>
         <button class="database-button">
-          <i class="fas fa-database"></i>
+          <span class="material-icons">storage</span>
         </button>
       </div>
     </div>

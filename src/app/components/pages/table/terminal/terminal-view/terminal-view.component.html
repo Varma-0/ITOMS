@@ -58,8 +58,8 @@
           <input type="checkbox" id="toggleSwitch" class="custom-switch ms-2" (change)="onToggleChange($event)">
         </mat-card-header>
         <hr style="border: 1px solid grey; opacity: 0.1;">
-        <mat-card-content>
-          <app-map [coordinates]="[28.592294, 76.992886]"></app-map>
+        <mat-card-content style="height: 300px;">
+          <app-leaflet-map [latitude]="28.592294" [longitude]="76.992886"></app-leaflet-map>
         </mat-card-content>
       </mat-card>
     </div>

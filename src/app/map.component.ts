@@ -1,42 +1,27 @@
-import { Component, Input, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
 
 @Component({
-  selector: 'app-map',
-  template: `<div class="map-container"></div>`,
-  styles: [
-    `
-      .map-container {
-        height: 100%;
-        width: 100%;
-        border-radius: 10px;
-      }
-    `,
-  ],
+  selector: 'app-leaflet-map',
+  template: '<div id="map" style="height: 100%; width: 100%;"></div>',
+  styles: [':host { display: block; height: 100%; width: 100%; }']
 })
-export class MapComponent implements OnInit, AfterViewInit {
-  @Input() coordinates: [number, number];
+export class MapComponent implements AfterViewInit {
+  @Input() latitude: number = 28.592294;
+  @Input() longitude: number = 76.992886;
+  private map: L.Map | undefined;
 
-  constructor(private el: ElementRef) {}
+  ngAfterViewInit() {
+    this.initMap();
+  }
 
-  ngOnInit(): void {}
-
-  ngAfterViewInit(): void {
-    const map = L.map(this.el.nativeElement.querySelector('.map-container'), {
-      center: this.coordinates,
-      zoom: 13,
-      zoomControl: false,
-      dragging: false,
-      scrollWheelZoom: false,
-      doubleClickZoom: false,
-      boxZoom: false,
-      touchZoom: false,
-    });
+  private initMap(): void {
+    this.map = L.map('map').setView([this.latitude, this.longitude], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors',
-    }).addTo(map);
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(this.map);
 
-    L.marker(this.coordinates).addTo(map);
+    L.marker([this.latitude, this.longitude]).addTo(this.map);
   }
 }
