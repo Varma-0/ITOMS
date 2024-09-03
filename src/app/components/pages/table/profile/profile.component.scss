@@ -1,136 +1,90 @@
-.parameter-config-container {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    font-family: Arial, sans-serif;
+.textarea-container {
+    margin: 0 0 30px 10px;
+    border: 1px dotted #ccc; /* Dotted border around the entire container */
+    padding: 10px;           /* Padding inside the container */
+    border-radius: 5px;      /* Rounded corners */
+    position: relative;      /* To position the close icon */
+    display: inline-block;   /* Keeps the textarea and close button together */
+    width: auto;             /* Let the container width adjust based on the textarea */
+    max-width: 100%;         /* Prevent the container from exceeding the width of its parent */
+    box-sizing: border-box;  /* Include padding and border in width */
   }
 
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .back-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    color: #007bff;
-  }
-
-  .app-name {
-    font-weight: bold;
-    margin-left: 10px;
-  }
-
-  .header-icons {
-    display: flex;
-    gap: 10px;
-  }
-
-  .header-icons i {
-    cursor: pointer;
-    font-size: 18px;
-  }
-
-  .tabs {
-    display: flex;
-    border-bottom: 1px solid #ddd;
-    margin-top: 20px;
-  }
-
-  .tab {
-    padding: 10px 20px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-  }
-
-  .tab.active {
-    border-bottom-color: #007bff;
-    font-weight: bold;
-  }
-
-  .content {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-
-  .parameter-box {
-    width: 50%;
-    padding: 10px;
-    border: 1px dashed #007bff;
-    position: relative;
-  }
-
-  .parameter-header {
-    display: flex;
-    justify-content: space-between;
+  .form-group{
     margin-bottom: 10px;
   }
 
-  .close-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    color: #007bff;
+  .textarea-container.active-form {
+    border-color: #007bff; /* Blue border for the active form */
+    border-width: 2px; /* Thicker border for better visibility */
   }
 
-  .parameter-box input[type="text"] {
-    width: 100%;
+  .add-textarea-button {
+    width: 95%; /* Adjust width to match textarea width minus margins */
+    height: 50px; /* Same height as text areas */
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 4px;
-  }
-
-  .character-count {
-    display: block;
-    text-align: right;
-    font-size: 12px;
-    color: #999;
-    margin-top: 5px;
-  }
-
-  .properties-box {
-    width: 45%;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-  }
-
-  .properties-box h3 {
-    margin-bottom: 15px;
-    font-size: 16px;
-    font-weight: bold;
-  }
-
-  .properties-box form {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .properties-box label {
-    margin-bottom: 5px;
+    box-sizing: border-box;
+    color: black;
     font-size: 14px;
+    text-align: center;
+    line-height: 34px; /* Center the text vertically */
+    cursor: pointer;
   }
 
-  .properties-box input,
-  .properties-box select {
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  .textarea-label {
+    display: block;          /* Ensure the label is on a new line */
+    font-size: 14px;         /* Font size for the label */
+    margin-bottom: 5px;      /* Space between the label and textarea */
+    color: #333;             /* Label color */
+  }
+
+  .textarea-container textarea {
+    width: 100%;             /* Full width of the container */
+    padding: 8px;            /* Padding inside the textarea */
+    border: 1px solid #ddd;  /* Solid border for the textarea itself */
+    border-radius: 4px;      /* Rounded corners */
+    box-sizing: border-box;  /* Include padding in width */
+    resize: both;            /* Allow resizing in both directions */
+    overflow: auto;          /* Handle overflow when resizing */
+  }
+
+  .textarea-container input {
+    width: 100%;             /* Full width of the container */
+    padding: 8px;            /* Padding inside the textarea */
+    border: 1px solid #ddd;  /* Solid border for the textarea itself */
+    border-radius: 4px;      /* Rounded corners */
+    box-sizing: border-box;  /* Include padding in width */
+    margin-bottom: 5px;
+  }
+
+  .boolean {
+    width: 100%;             /* Full width of the container */
+    padding: 8px;            /* Padding inside the textarea */
+    border: 1px solid #ddd;  /* Solid border for the textarea itself */
+    border-radius: 4px;      /* Rounded corners */
+    box-sizing: border-box;  /* Include padding in width */
+    margin-bottom: 10px;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .mode-toggle {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
   }
 
   .switch {
     position: relative;
     display: inline-block;
-    width: 40px;
-    height: 20px;
+    width: 60px;
+    height: 34px;
+    margin: 0 10px;
   }
 
   .switch input {
@@ -147,26 +101,171 @@
     right: 0;
     bottom: 0;
     background-color: #ccc;
-    transition: 0.4s;
-    border-radius: 15px;
+    transition: .4s;
   }
 
   .slider:before {
     position: absolute;
     content: "";
-    height: 12px;
-    width: 12px;
+    height: 26px;
+    width: 26px;
     left: 4px;
     bottom: 4px;
     background-color: white;
-    transition: 0.4s;
-    border-radius: 50%;
+    transition: .4s;
   }
 
   input:checked + .slider {
-    background-color: #007bff;
+    background-color: #2196F3;
   }
 
   input:checked + .slider:before {
-    transform: translateX(20px);
+    transform: translateX(26px);
+  }
+
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  .editable-content {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .editable-content input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+  }
+
+  input[type="checkbox"] {
+    width: auto;
+  }
+
+  .textarea-container .close-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 14px;         /* Size of the close icon */
+  }
+
+  .char-count {
+    text-align: right;
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+  }
+
+  /* simple-layout.component.scss */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .header-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .header-icons {
+    font-size: 1.25rem;
+  }
+
+  .main-container {
+    display: flex;
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    overflow-x: hidden; /* Prevent horizontal scrolling if not needed */
+    height: calc(100vh - 60px); /* Adjust height to fit the view */
+  }
+
+  .left-body {
+    flex: 3; /* 75% of the width */
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  .right-body {
+    flex: 1; /* 25% of the width */
+    padding: 20px;
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  /* For WebKit-based browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 12px;  /* Width of the scrollbar */
+    height: 12px; /* Height of the scrollbar (for horizontal scrollbars) */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background of the scrollbar track */
+    border-radius: 10px;  /* Roundness of the scrollbar track */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar thumb */
+    border-radius: 10px;    /* Roundness of the scrollbar thumb */
+    border: 3px solid #f1f1f1; /* Padding around the scrollbar thumb */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color of the scrollbar thumb when hovered */
+  }
+
+  /* For Firefox */
+  * {
+    scrollbar-width: thin; /* Width of the scrollbar */
+    scrollbar-color: #888 #f1f1f1; /* Thumb color and track color */
+  }
+
+  /* Optional: Apply styles to specific element */
+  .custom-scrollbar {
+    overflow-y: scroll; /* Enables vertical scrollbar */
+    scrollbar-width: thin; /* Width of the scrollbar */
+    scrollbar-color: #888 #f1f1f1; /* Thumb color and track color */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+    border: 3px solid #f1f1f1;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
   }

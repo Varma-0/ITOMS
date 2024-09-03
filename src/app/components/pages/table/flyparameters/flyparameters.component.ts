@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { DesignSelectionComponent } from 'src/app/components/dialogs/design-selection/design-selection.component';
 import { SelectCfgComponent } from 'src/app/components/dialogs/select-cfg/select-cfg.component';
 import { SharedServices } from 'src/app/services/shared.service';
@@ -26,6 +27,7 @@ export class FlyparametersComponent {
   labelsm: string[] = ['Pending Publish','Published','Downloaded','Updated','Update failed'];
   seriesm: number[] = [20,30,17,13,20];
   colors: string[] = ['#6956CE', '#1CD3D2', '#4788ff','#3657ff','#2456ff'];
+  showDynamicKeys = true;
 
   ngOnInit() {
     // Initialize filteredDeployments with all deployments on load
@@ -49,6 +51,7 @@ export class FlyparametersComponent {
 
   selectItem(deployment: any) {
     this.selectedItem = deployment;
+    this.selectedTab = deployment.count > 0 ? 'profile' : 'emptyData';
   }
 
   selectTab(tab: string) {
@@ -57,18 +60,16 @@ export class FlyparametersComponent {
 
   designSelection() {
     const dialogRef = this.dialog.open(DesignSelectionComponent, {
-        data: { },
         height: '80%',
         width: '40%'
       });
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-            const dialogRef = this.dialog.open(SelectCfgComponent, {
-                data: { },
-              });
+            const dialogRef = this.dialog.open(SelectCfgComponent);
               dialogRef.afterClosed().subscribe(result => {
                 if (result) {
+                    this.showDynamicKeys = false;
                 }
               });
         }

@@ -12,7 +12,6 @@ import { PricingComponent } from './components/pages/pricing/pricing.component';
 import { FaqComponent } from './components/pages/faq/faq.component';
 import { InvoiceComponent } from './components/pages/invoice/invoice.component';
 import { BlankPageComponent } from './components/pages/blank-page/blank-page.component';
-import { ProfileComponent } from './components/pages/profile/profile.component';
 import { GridComponent } from './components/pages/grid/grid.component';
 import { ColorsComponent } from './components/pages/colors/colors.component';
 import { IconsComponent } from './components/pages/icons/icons/icons.component';
@@ -101,6 +100,7 @@ import { HierarchyComponent } from './components/pages/admin/hierarchy/hierarchy
 import { MerchantsComponent } from './components/pages/admin/merchants/merchants.component';
 import { SchedulingComponent } from './components/pages/table/scheduling/scheduling.component';
 import { FlyparametersComponent } from './components/pages/table/flyparameters/flyparameters.component';
+import { ProfileComponent } from './components/pages/table/profile/profile.component';
 import { PackagesComponent } from './components/pages/table/packages/packages.component';
 
 const routes: Routes = [

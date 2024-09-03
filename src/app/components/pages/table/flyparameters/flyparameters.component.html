@@ -1,134 +1,147 @@
-<div class="breadcrumb-area">
-    <h1>DynamiKeys</h1>
-  </div>
-
-  <div class="container">
-    <mat-card class="card">
-      <mat-card-title>
-        <div class="heading">
-          <div class="title-container">
-            <span>DynamiKeys</span> &nbsp;
-              <input type="text" class="form-control" aria-label="Deployment Name" placeholder="App Name/Package Name" [(ngModel)]="searchTerm" (input)="filterDeployments()">
-          </div>
-          <div class="icon-container">
-            <button mat-icon-button class="btn btn-primary" color="primary" (click)="filterDeployments()">
-              <mat-icon>search</mat-icon>
-            </button>
-          </div>
-        </div>
-      </mat-card-title>
-
-      <ul class="nolist">
-        <li *ngFor="let deployment of filteredDeployments" class="deployment-item">
-          <div class="grp">
-            <button class="btn btn-light custom-button"
-                    [ngClass]="{'active-sidebar': selectedItem === deployment}"
-                    (click)="selectItem(deployment)">
-              <span class="deployment-name">{{deployment.name}}</span>
-              <div class="right-section">
-                <span class="deployment-count">{{deployment.count}}</span>
-                <img src="../../../../../assets/img/res.png">
-              </div>
-            </button>
-            <br>
-          </div>
-        </li>
-      </ul>
-    </mat-card>
-
-    <div class="main-container" *ngIf="selectedItem">
-      <div class="header">
-          <div class="selected-item">
-            <span class="header-text">DynamiKeys</span>
-            <h2>{{ selectedItem?.name }}</h2>
-          </div>
+<ng-container *ngIf="showDynamicKeys">
+    <div class="breadcrumb-area">
+        <h1>DynamiKeys</h1>
       </div>
 
+      <div class="container">
+        <mat-card class="card">
+          <mat-card-title>
+            <div class="heading">
+              <div class="title-container">
+                <span>DynamiKeys</span> &nbsp;
+                  <input type="text" class="form-control" aria-label="Deployment Name" placeholder="App Name/Package Name" [(ngModel)]="searchTerm" (input)="filterDeployments()">
+              </div>
+              <div class="icon-container">
+                <button mat-icon-button class="btn btn-primary" color="primary" (click)="filterDeployments()">
+                  <mat-icon>search</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-card-title>
 
-      <div>
-        <ul class="tabs" *ngIf="false">
-            <li>
-              <button [ngClass]="{'active-tab': selectedTab === 'profile'}" (click)="selectTab('profile')">
-                Profile
-              </button>
-            </li>
-            <li>
-              <button [ngClass]="{'active-tab': selectedTab === 'terminal'}" (click)="selectTab('terminal')">
-                Terminal
-              </button>
+          <ul class="nolist">
+            <li *ngFor="let deployment of filteredDeployments" class="deployment-item">
+              <div class="grp">
+                <button class="btn btn-light custom-button"
+                        [ngClass]="{'active-sidebar': selectedItem === deployment}"
+                        (click)="selectItem(deployment)">
+                  <span class="deployment-name">{{deployment.name}}</span>
+                  <div class="right-section">
+                    <span class="deployment-count">{{deployment.count}}</span>
+                    <img src="../../../../../assets/img/res.png">
+                  </div>
+                </button>
+                <br>
+              </div>
             </li>
           </ul>
-      </div>
-      <div *ngIf="selectedTab === 'terminal'">
-        <app-terminal></app-terminal>
-      </div>
-      <div *ngIf="selectedTab === 'profil'">
-        <div class="centered-div">
-            No parameter template has been configured in this parameter application.
-        </div>
-        <div style="text-align: center;margin-top:5%;">
-            Click <span (click)="designSelection()" style="color: blue;"><u>Design</u></span> to start configuring the parameter template.
-        </div>
-      </div>
-      <div *ngIf="selectedTab === 'profile'">
-        <div class="row">
-            <b class="col-11">Information</b>
-            <button class="col-1" mat-icon-button>
-                <mat-icon>edit</mat-icon>
-            </button>
-        </div>
-        <div>
-            <table class="info-table">
-                <tr style="background-color: rgb(236, 230, 230);">
-                  <td>Template Mode</td>
-                  <td>Terminal Cfg file Format</td>
-                </tr>
-                <tr>
-                    <td><button mat-button color="primary">Simple</button></td>
-                    <td><button mat-button color="primary">JSON</button></td>
-                  </tr>
-                  <tr style="background-color: rgb(236, 230, 230);">
-                    <td>Creation Time</td>
-                    <td>Last Modification Time</td>
-                  </tr>
-                  <tr>
-                      <td>06/17/2024 17:48:17</td>
-                      <td>06/17/2024 17:48:17</td>
-                  </tr>
-            </table>
-            <table class="info-table">
-                <tr class="single" style="background-color: rgb(236, 230, 230);">
-                    <td>Number of Parameters</td>
-                  </tr>
-                  <tr class="single">
-                      <td>2</td>
-                  </tr>
-            </table>
-            <br>
-            <table class="info-table">
-                <tr class="single" style="background-color: rgb(236, 230, 230);">
-                    <td>Description</td>
-                  </tr>
-                  <tr class="single">
-                      <td></td>
-                  </tr>
-            </table>
-            <br>
-            <div class="row">
-                <mat-card class="col-4">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h3>Background generation progress of terminal parameter file</h3>
-                    </div>
-                    <app-radialbar-semi-circular-gauge></app-radialbar-semi-circular-gauge>
-                </mat-card>
-            <mat-card class="col-8">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3>Terminal Parameter Update Statistics</h3>
-                </div>
-                <app-email-send [labels]="labelsm" [series]="seriesm" [colors]="colors"></app-email-send>
-            </mat-card>
+        </mat-card>
+
+        <div class="main-container" *ngIf="selectedItem">
+          <div class="header">
+              <div class="selected-item">
+                <span class="header-text">DynamiKeys</span>
+                <h2>{{ selectedItem?.name }}</h2>
+              </div>
+          </div>
+
+
+          <div>
+            <ul class="tabs" *ngIf="selectedTab != 'emptyData'">
+                <li>
+                  <button [ngClass]="{'active-tab': selectedTab === 'profile'}" (click)="selectTab('profile')">
+                    Profile
+                  </button>
+                </li>
+                <li>
+                  <button [ngClass]="{'active-tab': selectedTab === 'terminal'}" (click)="selectTab('terminal')">
+                    Terminal
+                  </button>
+                </li>
+              </ul>
+          </div>
+          <div *ngIf="selectedTab === 'terminal'">
+            <app-terminal></app-terminal>
+          </div>
+          <div *ngIf="selectedTab === 'emptyData'">
+            <div class="centered-div">
+                No parameter template has been configured in this parameter application.
             </div>
+            <div style="text-align: center;margin-top:5%;">
+                Click <span (click)="designSelection()" style="color: blue;"><u>Design</u></span> to start configuring the parameter template.
+            </div>
+          </div>
+          <div *ngIf="selectedTab === 'profile'">
+            <div class="row">
+                <b class="col-11">Information</b>
+                <button class="col-1" mat-icon-button>
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+            <div>
+                <table class="info-table">
+                    <tr style="background-color: rgb(236, 230, 230);">
+                      <td>Template Mode</td>
+                      <td>Terminal Cfg file Format</td>
+                    </tr>
+                    <tr>
+                        <td><button mat-button color="primary">Simple</button></td>
+                        <td><button mat-button color="primary">JSON</button></td>
+                      </tr>
+                      <tr style="background-color: rgb(236, 230, 230);">
+                        <td>Creation Time</td>
+                        <td>Last Modification Time</td>
+                      </tr>
+                      <tr>
+                          <td>06/17/2024 17:48:17</td>
+                          <td>06/17/2024 17:48:17</td>
+                      </tr>
+                </table>
+                <table class="info-table">
+                    <tr class="single" style="background-color: rgb(236, 230, 230);">
+                        <td>Number of Parameters</td>
+                      </tr>
+                      <tr class="single">
+                          <td>2</td>
+                      </tr>
+                </table>
+                <br>
+                <table class="info-table">
+                    <tr class="single" style="background-color: rgb(236, 230, 230);">
+                        <td>Description</td>
+                      </tr>
+                      <tr class="single">
+                          <td></td>
+                      </tr>
+                </table>
+                <br>
+                <div class="row">
+                    <mat-card class="col-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3>Background generation progress of terminal parameter file</h3>
+                        </div>
+                        <app-radialbar-semi-circular-gauge></app-radialbar-semi-circular-gauge>
+                    </mat-card>
+                <mat-card class="col-8">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h3>Terminal Parameter Update Statistics</h3>
+                    </div>
+                    <app-email-send [labels]="labelsm" [series]="seriesm" [colors]="colors"></app-email-send>
+                </mat-card>
+                </div>
+            </div>
+          </div>
         </div>
       </div>
+</ng-container>
+<ng-container *ngIf="!showDynamicKeys">
+    <div class="row">
+        <div class="col-2" (click)="showDynamicKeys = true">
+            < back
+        </div>
+        <div class="col-10">
+            <h2>{{ selectedItem?.name }}</h2>
+        </div>
     </div>
-  </div>
+    <app-profile></app-profile>
+</ng-container>
