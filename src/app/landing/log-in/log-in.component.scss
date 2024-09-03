@@ -41,6 +41,7 @@ $transitions: .5s;
     &:focus {
       color: $mains-color;
       background-color: $whites-color;
+      cursor: pointer;
         // box-shadow: 0px 5px 28.5px 1.5px rgba(19, 196, 161, 0.3) !important;
     } 
 }

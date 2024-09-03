@@ -59,42 +59,125 @@
         </mat-card-header>
         <hr style="border: 1px solid grey; opacity: 0.1;">
         <mat-card-content style="height: 300px;">
-          <app-leaflet-map [latitude]="28.592294" [longitude]="76.992886"></app-leaflet-map>
+          <!-- <app-leaflet-map [latitude]="28.592294" [longitude]="76.992886"></app-leaflet-map> -->
         </mat-card-content>
       </mat-card>
     </div>
-    <div class="row">
-      <mat-card class="custom-card card-50">
+    <div class="cards-container">
+      <mat-card class="custom-cards">
         <mat-card-header>
-          <span class="card-header-title">Traffic</span>
-          <div class="header-buttons buttonsHeader">
-            <button [ngClass]="{'active-tab': contentCondition === 'Device'}"
-              (click)="changeContent('Device')">Device</button>
-            <button [ngClass]="{'active-tab': contentCondition === 'Application'}"
-              (click)="changeContent('Application')">Application</button>
+          <div class="d-flex align-items-center justify-content-between">
+            <span>Traffic</span>
+            <div class="header-buttons buttonsHeader">
+              <button [ngClass]="{'active-tab': contentCondition === 'Device'}"
+                (click)="changeContent('Device')">Device</button>
+              <button [ngClass]="{'active-tab': contentCondition === 'Application'}"
+                (click)="changeContent('Application')">Application</button>
+            </div>
           </div>
         </mat-card-header>
-        <hr style="border: 1px solid grey; opacity: 0.1;">
-        <div class="card-content" *ngIf="contentCondition === 'Device'">
+        <hr class="card-divider">
+        <div *ngIf="contentCondition === 'Device'">
           <mat-card-content>
-            <p>Content for Condition 1 ewfbw</p>
+            <app-dashed-line></app-dashed-line>
           </mat-card-content>
         </div>
-        <div class="card-content" *ngIf="contentCondition === 'Application'">
-
-
-          <p>Content for Condition 2</p>
+        <div *ngIf="contentCondition === 'Application'">
+          <mat-card-content>
+            <app-traffic-source></app-traffic-source>
+          </mat-card-content>
         </div>
       </mat-card>
-      <mat-card class="custom-card card-50">
+      
+      <mat-card class="custom-cards">
         <mat-card-header>
           <span class="card-header-title">Card Method (Current Month)</span>
         </mat-card-header>
-        <hr style="border: 1px solid grey; opacity: 0.1;">
-        <div class="card-content">
-          <!-- <app-web-analytics></app-web-analytics> -->
-        </div>
+        <hr class="card-divider">
+        <mat-card-content>
+          <app-activity-timeline></app-activity-timeline>
+        </mat-card-content>
       </mat-card>
+    </div>
+    <div>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            Average Signal Strength
+            <mat-icon matTooltip="Information about signal strength">info</mat-icon>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <app-area-datetime-x-axis></app-area-datetime-x-axis>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div>
+      <div class="last-container">
+        <mat-card class="history-card">
+          <mat-card-header>
+            <mat-card-title>Command History</mat-card-title>
+            <mat-form-field>
+              <mat-label>Command Type</mat-label>
+              <mat-select>
+                <mat-option value="">All</mat-option>
+                <mat-option value="check">Check Update</mat-option>
+                <!-- Add more options as needed -->
+              </mat-select>
+            </mat-form-field>
+          </mat-card-header>
+          <mat-card-content>
+            <table mat-table class="last-table" [dataSource]="commandDataSource">
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <td mat-cell *matCellDef="let element">{{element.date}}</td>
+              </ng-container>
+              <ng-container matColumnDef="command">
+                <th mat-header-cell *matHeaderCellDef>Command</th>
+                <td mat-cell *matCellDef="let element">{{element.command}}</td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let element">{{element.status}}</td>
+              </ng-container>
+              <ng-container matColumnDef="info">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon style="cursor: pointer;"  (click)="demo(element)">info</mat-icon>
+                </td>
+              </ng-container>
+  
+              <tr mat-header-row *matHeaderRowDef="commandColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: commandColumns;"></tr>
+            </table>
+            <mat-paginator #commandPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+                           showFirstLastButtons></mat-paginator>
+          </mat-card-content>
+        </mat-card>
+  
+        <mat-card class="history-card">
+          <mat-card-header>
+            <mat-card-title>Estate Lifecycle</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <table mat-table [dataSource]="estateDataSource">
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>Action</th>
+                <td mat-cell *matCellDef="let element">{{element.action}}</td>
+              </ng-container>
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <td mat-cell *matCellDef="let element">{{element.date}}</td>
+              </ng-container>
+  
+              <tr mat-header-row *matHeaderRowDef="estateColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: estateColumns;"></tr>
+            </table>
+            <mat-paginator #estatePaginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10]"
+                           showFirstLastButtons></mat-paginator>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
 
   </div>
@@ -424,6 +507,61 @@
       </div>
     </mat-card>
 
+    </div>
+    <div class="card-container" *ngIf="selectedTabRemote === 'management'">
+      <mat-card *ngFor="let item of cards_remote" 
+              (click)="onCardClick(item)" 
+              class="clickable-card" 
+              [ngClass]="{'active-card': item.isActive}">
+      <mat-card-header>
+        <mat-icon class="icon">{{item.icon}}</mat-icon>
+      </mat-card-header>
+      <mat-card-title>{{item.title}}</mat-card-title>
+      <mat-card-content>
+        <p>{{item.description}}</p>
+      </mat-card-content>
+      <div class="card-footer">
+        <hr class="divider-line">
+        <mat-card-footer>
+          <p class="execution-time">Last Execution Time: {{item.executionTime || '-'}}</p>
+        </mat-card-footer>
+      </div>
+    </mat-card>
+
+    </div>
+    <div class="card-container" *ngIf="selectedTabRemote === 'more'">
+      <mat-card *ngFor="let item of cards_remote" 
+              (click)="onCardClick(item)" 
+              class="clickable-card" 
+              [ngClass]="{'active-card': item.isActive}">
+      <mat-card-header>
+        <mat-icon class="icon">{{item.icon}}</mat-icon>
+      </mat-card-header>
+      <mat-card-title>{{item.title}}</mat-card-title>
+      <mat-card-content>
+        <p>{{item.description}}</p>
+      </mat-card-content>
+      <div class="card-footer">
+        <hr class="divider-line">
+        <mat-card-footer>
+          <p class="execution-time">Last Execution Time: {{item.executionTime || '-'}}</p>
+        </mat-card-footer>
+      </div>
+    </mat-card>
+
+    </div>
+    <div class="card-container" *ngIf="selectedTabRemote === 'file'">
+      <mat-card class="d-flex w-100 align-items-center">
+        <div>
+          <div class="icon-container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icons">
+              <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+              <polyline points="13 2 13 9 20 9"></polyline>
+            </svg>
+          </div>
+          <p class="text">No Data</p>
+        </div>  
+      </mat-card>
     </div>
      
   </div>

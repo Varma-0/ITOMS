@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
@@ -17,11 +17,14 @@ export class UserComponent {
   day:any = '';
   date: any='';
   month: any = '';
-  constructor(public dialog: MatDialog, private dataService: TerminalService) {}
+  loginData: any;
+  constructor(public dialog: MatDialog, private dataService: TerminalService,private shared:SharedServices) {}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+    this.loginData = this.shared.getLoginData();
+    console.log("uigfiqw",this.loginData);
     this.dataService.userData().subscribe(
       response => {
         console.log(response);

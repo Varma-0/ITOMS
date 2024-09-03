@@ -108,7 +108,7 @@
     <tbody class="dataRowColor">
       <tr *ngFor="let device of paginatedDevices" (click)="row(device)">
         <td>
-          <input type="checkbox" [(ngModel)]="device.selected">
+          <input type="checkbox" [(ngModel)]="device.selected" (click)="$event.stopPropagation()">
         </td>
         <td *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">
           <ng-container [ngSwitch]="column">

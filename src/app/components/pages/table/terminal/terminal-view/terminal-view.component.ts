@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 export interface AppData {
@@ -9,6 +11,17 @@ export interface AppData {
   parameterFileStatus: string;
   publish: string;
   operation: string;
+}
+
+interface CommandHistory {
+  date: string;
+  command: string;
+  status: string;
+}
+
+interface EstateLifecycle {
+  action: string;
+  date: string;
 }
 
 @Component({
@@ -22,6 +35,14 @@ export class TerminalViewComponent {
   @Input() insideview: any;
   @Output() viewChange = new EventEmitter<boolean>();
   @Output() insideviewChange = new EventEmitter<boolean>();
+  @ViewChild('commandPaginator') commandPaginator!: MatPaginator;
+  @ViewChild('estatePaginator') estatePaginator!: MatPaginator;
+
+  commandColumns: string[] = ['date', 'command', 'status', 'info'];
+  estateColumns: string[] = ['action', 'date'];
+
+  commandDataSource!: MatTableDataSource<CommandHistory>;
+  estateDataSource!: MatTableDataSource<EstateLifecycle>;
   selectedTab: string = 'overview';
   selectedTabApp:string =  'deployment';
   selectedTabRemote:string = 'diagnosis';
@@ -82,6 +103,29 @@ export class TerminalViewComponent {
       isActive: false
     }
   ];
+  ngOnInit() {
+    // Sample data - replace with your actual data fetching logic
+    const commandHistory: CommandHistory[] = [
+      { date: '07/29/2024 18:59', command: 'Check Update', status: 'Success' },
+      { date: '07/29/2024 16:52', command: 'Check Update', status: 'Success' },
+      { date: '07/29/2024 16:43', command: 'Check Update', status: 'Terminal Offline' },
+      // ... add more data
+    ];
+
+    const estateLifecycle: EstateLifecycle[] = [
+      { action: 'Import Device', date: '07/15/2024 16:59:39' },
+      { action: 'Delete Device', date: '02/22/2024 22:45:38' },
+      { action: 'Import Device', date: '02/19/2024 13:43:31' },
+    ];
+
+    this.commandDataSource = new MatTableDataSource(commandHistory);
+    this.estateDataSource = new MatTableDataSource(estateLifecycle);
+  }
+
+  ngAfterViewInit() {
+    this.commandDataSource.paginator = this.commandPaginator;
+    this.estateDataSource.paginator = this.estatePaginator;
+  }
 
   onCardClick(item: any) {
     this.cards_remote.forEach(card => card.isActive = false);
@@ -110,6 +154,9 @@ export class TerminalViewComponent {
     console.log("wfwq")
   }
 
+  demo(ele) {
+    console.log("fkw",ele)
+  }
   
   
   changeContent(condition: string) {

@@ -11,7 +11,7 @@
           <div class="d-table-cell">
             <div class="login-form">
               <h3>Welcome back</h3>
-              <form *ngIf="!showPasswordField && !showDropdown" (ngSubmit)="onSubmitEmail()">
+              <form *ngIf="!showPasswordField && !showDropdown && !forgotPassword && !enterOtp && !enterNewPass" (ngSubmit)="onSubmitEmail()">
                 <div class="form-group mb-3">
                   <input 
                     type="email" 
@@ -23,10 +23,6 @@
                     required
                     email>
                 </div>
-
-                <!-- <div class="form-group mt-3 d-flex justify-content-end">
-                  <a class="log" (click)="onForgotEmailClick()">Forgot Email?</a>
-                </div> -->
 
                 <button type="submit" class="default-btn" *ngIf="!loadingEmail">
                   <i class="bx bxs-hot me-2"></i>
@@ -69,41 +65,81 @@
               </form>
               
               <!-- New Password Form -->
-              <form *ngIf="forgotPassword" (ngSubmit)="onSubmitNewPassword()">
+              <form *ngIf="forgotPassword" (ngSubmit)="onSubmitEmailforOtp()">
+                <div class="form-group mb-3">
+                  <input 
+                  type="email" 
+                  id="usernameforgot" 
+                  [(ngModel)]="usernameforgot" 
+                  name="usernameforgot"
+                  placeholder="Your email address" 
+                  class="form-control" 
+                  required
+                  emailpassforgot>
+                </div>
+                
+                
+                <button type="submit" class="default-btn" *ngIf="!loadingOtp">
+                  <i class="bx bxs-hot me-2"></i>
+                  Send Verification Code<span></span>
+                </button>
+                
+                <button class="loading-btn" type="button" disabled *ngIf="loadingOtp">
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Loading...
+                </button>
+              </form>
+
+              <!-- Otp Confirmation -->
+              <form *ngIf="enterOtp" (ngSubmit)="onSubmitOtp()">
+                <div class="form-group mb-3">
+                  <input 
+                  type="text" 
+                  id="getotp" 
+                  [(ngModel)]="getotp" 
+                  name="getotp"
+                  placeholder="Your email otp" 
+                  class="form-control" 
+                  required
+                  textotp>
+                </div>
+                
+                
+                <button type="submit" class="default-btn" *ngIf="!validateOtp">
+                  <i class="bx bxs-hot me-2"></i>
+                 Validate Otp<span></span>
+                </button>
+                
+                <button class="loading-btn" type="button" disabled *ngIf="validateOtp">
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Loading...
+                </button>
+              </form>
+              
+              <!-- Enter New Password -->
+              <form *ngIf="enterNewPass" (ngSubmit)="onSubmitNewPass()">
                 <div class="form-group mb-3">
                   <input 
                     type="password" 
                     id="newPassword" 
                     [(ngModel)]="newPassword" 
                     name="newPassword"
-                    placeholder="New password" 
+                    placeholder="Your New password" 
                     class="form-control" 
                     required>
                 </div>
                 
-                <div class="form-group mb-3">
-                  <input 
-                    type="password" 
-                    id="confirmNewPassword" 
-                    [(ngModel)]="confirmNewPassword" 
-                    name="confirmNewPassword"
-                    placeholder="Confirm new password" 
-                    class="form-control" 
-                    required>
-                </div>
                 
-                <button type="submit" class="default-btn" *ngIf="!loadingNewPassword">
+                <button type="submit" class="default-btn" *ngIf="!validatePass">
                   <i class="bx bxs-hot me-2"></i>
-                  Update Password<span></span>
+                 Reset Password<span></span>
                 </button>
                 
-                <button class="loading-btn" type="button" disabled *ngIf="loadingNewPassword">
+                <button class="loading-btn" type="button" disabled *ngIf="validatePass">
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   Loading...
                 </button>
               </form>
-              
-
 
               <form *ngIf="showDropdown" (ngSubmit)="onSubmitDropdown()">
                 <div class="form-group mb-3">
