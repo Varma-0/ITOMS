@@ -369,7 +369,7 @@ import { PackagesComponent } from './components/pages/table/packages/packages.co
     SelectCfgComponent,
     ProfileComponent,
     AddFormComponent,
-    PackagesComponent
+    PackagesComponent,
   ],
   imports: [
     BrowserModule,

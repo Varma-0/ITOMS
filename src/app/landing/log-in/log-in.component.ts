@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { dropBody, emailBody, passBody } from 'src/app/services/login/body/body';
 import {  dropEvent, emailEvent, passEvent } from 'src/app/services/login/body/event';
-import {  dropData, emailData, passData } from 'src/app/services/login/body/event-data';
+import {  dropData, emailData, passData, verifyEmailData } from 'src/app/services/login/body/event-data';
 import { AuthService } from 'src/app/services/login/login';
 import { NavigationEnd, Router } from '@angular/router';
+import { SharedServices } from 'src/app/services/shared.service';
 
 
 @Component({
@@ -13,24 +14,32 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class DLogInComponent implements OnInit{
   username: string = '';
+  usernameforgot: string = '';
+  getotp: number = null;
   password: string = '';
   newPassword: string = '';
   confirmNewPassword: string = '';
   showPasswordField: boolean = false;
   showDropdown: boolean = false;
+  enterOtp: boolean = false;
+  enterNewPass: boolean = false;
   dropdownOptions: Array<string> = [];
   selectedOption: string = '';
   errorMessage: string = '';
   uid: string ='';
+  superAdmin: boolean = false;
+  uidVerify: string ='';
   inasecretkey: string='';
   errorApiMessage: string='';
   loadingEmail: boolean = false;
   loadingPassword: boolean = false;
   loadingDropdown: boolean = false;
   forgotPassword: boolean = false;
-  loadingNewPassword: boolean = false;
+  loadingOtp: boolean = false;
+  validateOtp: boolean = false;
+  validatePass: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router,private shared:SharedServices) {}
 
   ngOnInit(): void {
     this.router.events.subscribe(event => {
@@ -105,31 +114,88 @@ export class DLogInComponent implements OnInit{
   }
 
   onForgotPasswordClick() {
+    this.showPasswordField = false;
     this.forgotPassword = true; 
-    const eventData = new passData(this.uid,this.password);
+  }
+
+  onSubmitEmailforOtp() {
+    this.loadingOtp = true;
+    const eventData = new emailData(this.usernameforgot,'EMAIL');
     console.log(eventData)
-    const event = new passEvent(eventData, 'USER', 'CRD_RESET');
-    const updatePassRequest = new passBody(event);
+    const event = new emailEvent(eventData, 'USER', 'FORGOT_CRED');
+    const updatePassRequest = new emailBody(event);
     
-    this.authService.updatePassword(updatePassRequest).subscribe(
+    this.authService.emailVerificationforPassReset(updatePassRequest).subscribe(
       response => {
         if(response.status == 200) {
-          this.showDropdown = true;
+          console.log("EmailforOtp",response);
+          this.forgotPassword = false;
+          this.enterOtp = true;
         } else {
           this.errorApiMessage = response.message;
         }
-        this.loadingNewPassword = false;
+        this.loadingOtp = false;
       },
       error => {
         this.errorMessage = this.errorApiMessage;
         // console.error('Password validation failed', error);
-        this.loadingNewPassword = false;
+        this.loadingOtp = false;
       }
     );
   }
 
-  onSubmitNewPassword() {
+  onSubmitOtp() {
+    this.validateOtp = true; 
+    const eventData = new verifyEmailData(this.usernameforgot,this.getotp,'EMAIL');
+    console.log(eventData)
+    const event = new emailEvent(eventData, 'USER', 'VERIFY_OTP');
+    const updatePassRequest = new emailBody(event);
+    
+    this.authService.otpConfirmationforPassReset(updatePassRequest).subscribe(
+      response => {
+        if(response.status == 200) {
+          console.log("Otp",response)
+           this.uidVerify = response.event.eventData.uid;
+           this.enterOtp = false;
+           this.enterNewPass = true;
+        } else {
+          this.errorApiMessage = response.message;
+        }
+        this.validateOtp = false;
+      },
+      error => {
+        this.errorMessage = this.errorApiMessage;
+        // console.error('Password validation failed', error);
+        this.validateOtp = false;
+      }
+    );
+  }
 
+  onSubmitNewPass() {
+    this.validatePass = true;
+    const eventData = new passData(this.uidVerify,this.newPassword);
+    console.log(eventData)
+    const event = new passEvent(eventData, 'USER', 'CRD_RESET');
+    const updatePassRequest = new passBody(event);
+    
+    this.authService.resetPass(updatePassRequest).subscribe(
+      response => {
+        if(response.status == 200) {
+          console.log("Otp",response)
+           this.uid = response.event.eventData.uid;
+           this.enterNewPass = false;
+           this.showDropdown = true;
+        } else {
+          this.errorApiMessage = response.message;
+        }
+        this.validateOtp = false;
+      },
+      error => {
+        this.errorMessage = this.errorApiMessage;
+        // console.error('Password validation failed', error);
+        this.validateOtp = false;
+      }
+    );
   }
 
   onSubmitDropdown(): void {
@@ -141,7 +207,10 @@ export class DLogInComponent implements OnInit{
 
     this.authService.loginWithOption(loginRequest).subscribe(
       response => {
-        const jwtToken = response.event.eventData.jwtToken; // Assume the token is in response.token
+        const jwtToken = response.event.eventData.jwtToken;
+        response.event.eventData.userType == "SA"? this.superAdmin = true : this.superAdmin = false;
+        const data = this.superAdmin;
+        this.shared.setLoginData(data);
         localStorage.setItem('jwtToken', jwtToken);
         this.router.navigate(['/dashboard/analytics']);
         this.loadingDropdown = false;

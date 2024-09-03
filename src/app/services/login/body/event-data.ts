@@ -2,8 +2,20 @@ export class emailData {
     loginId: string;
     loginType: string;
   
-    constructor(loginId: string, loginType: string) {
+    constructor(loginId: string,loginType: string) {
       this.loginId = loginId;
+      this.loginType = loginType;
+    }
+  }
+
+  export class verifyEmailData {
+    loginId: string;
+    otp: number;
+    loginType: string;
+  
+    constructor(loginId: string, otp: number,loginType: string ) {
+      this.loginId = loginId;
+      this.otp = otp;
       this.loginType = loginType;
     }
   }

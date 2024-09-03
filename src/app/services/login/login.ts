@@ -23,7 +23,15 @@ export class AuthService {
     return this.http.post<any>(`${environment.userApiUrl}/login/token`, options);
   }
 
-  updatePassword(options: passBody): Observable<any> {
+  emailVerificationforPassReset(options: emailBody): Observable<any> {
+    return this.http.post<any>(`${environment.userApiUrl}/cred/forgotCred`, options);
+  }
+
+  otpConfirmationforPassReset(options: emailBody): Observable<any> {
+    return this.http.post<any>(`${environment.userApiUrl}/cred/verifyEmailOtp`, options);
+  }
+
+  resetPass(options: passBody): Observable<any> {
     return this.http.post<any>(`${environment.userApiUrl}/cred/reset`, options);
   }
 }
