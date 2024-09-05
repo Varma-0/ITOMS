@@ -119,9 +119,9 @@
       <tr *ngFor="let device of paginatedDevices" (click)="row(device)">
         <td>
           <!-- <input type="checkbox" [(ngModel)]="device.selected" (click)="$event.stopPropagation()"> -->
-          <div class="checkbox">
-            <input class="inp-cbx" id="cbx" type="checkbox" style="display: none;"  [(ngModel)]="device.selected" (click)="$event.stopPropagation()"/>
-            <label class="cbx" for="cbx">
+          <div class="checkbox" (click)="$event.stopPropagation()">
+            <input class="inp-cbx" id="cbx{{device.id}}" type="checkbox" style="display: none;"  [(ngModel)]="device.selected"/>
+            <label class="cbx" for="cbx{{device.id}}">
                 <span>
                     <svg width="12px" height="10px" viewbox="0 0 12 10">
                         <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
