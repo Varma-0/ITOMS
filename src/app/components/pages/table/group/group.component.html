@@ -1,0 +1,140 @@
+<div class="breadcrumb-area">
+    <h1>Group</h1>
+  </div>
+
+  <div class="container">
+    <mat-card class="card">
+      <mat-card-title>
+        <div class="heading">
+          <div class="title-container">
+            <span>Group</span> &nbsp;
+              <input type="text" class="form-control" aria-label="Group Name" placeholder="Group Name" [(ngModel)]="searchTerm" (input)="filterDeployments()">
+          </div>
+          <div class="icon-container">
+            <button mat-icon-button color="primary" (click)="filterDeployments()">
+              <mat-icon>search</mat-icon>
+            </button>
+            <button mat-icon-button color="accent">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-card-title>
+
+      <ul class="nolist">
+        <li *ngFor="let deployment of filteredDeployments" class="deployment-item">
+          <div class="grp">
+            <button class="btn btn-light custom-button"
+                    [ngClass]="{'active-sidebar': selectedItem === deployment}"
+                    (click)="selectItem(deployment)">
+              <span class="deployment-name">{{deployment.name}}</span>
+              <div class="right-section">
+                <span class="deployment-count">{{deployment.count}}</span>
+                <!-- <mat-icon>computer</mat-icon> -->
+                <img src="../../../../../assets/img/res.png">
+              </div>
+            </button>
+            <br>
+          </div>
+        </li>
+      </ul>
+    </mat-card>
+
+    <div class="main-container" *ngIf="selectedItem">
+      <div class="header">
+          <div class="selected-item">
+            <span class="header-text">Deployment</span>
+            <h2>{{ selectedItem?.name }}</h2>
+          </div>
+        <div class="header-icons">
+            <button mat-icon-button color="warn">
+                <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button color="accent">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </div>
+      </div>
+
+
+      <div>
+        <ul class="tabs">
+            <li>
+              <button [ngClass]="{'active-tab': selectedTab === 'task'}" (click)="selectTab('task')">
+                Task
+              </button>
+            </li>
+            <li>
+              <button [ngClass]="{'active-tab': selectedTab === 'terminal'}" (click)="selectTab('terminal')">
+                Terminal
+              </button>
+            </li>
+          </ul>
+      </div>
+      <div *ngIf="selectedTab === 'terminal'">
+        <app-terminal></app-terminal>
+      </div>
+      <div *ngIf="selectedTab === 'task'">
+        <div class="containers">
+            <div class="search-bar">
+              <input type="text" placeholder="Remarks Search" [(ngModel)]="searchText">
+              <button class="btn-primary btn-icon">
+                <i class="bx bx-search"></i>
+              </button>
+              <button class="btn-primary btn-icon">
+                <i class="bx bx-plus"></i>
+              </button>
+            </div>
+            <div class="action-bar">
+              <span>{{ selectedCount }} Selected</span>
+              <button class="btn-danger" [disabled]="selectedCount === 0">
+                <i class='bx bx-trash'></i>  Delete
+              </button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    <!-- <input type="checkbox" (change)="masterToggle()" [checked]="isAllSelected()"> -->
+                    <div class="checkbox">
+                        <input class="inp-cbx" id="cbx" type="checkbox" style="display: none;" (change)="masterToggle()" [checked]="isAllSelected()"/>
+                        <label class="cbx" for="cbx">
+                            <span>
+                                <svg width="12px" height="10px" viewbox="0 0 12 10">
+                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                </svg>
+                            </span>
+                        </label>
+                    </div>
+                  </th>
+                  <th>Command Type</th>
+                  <th>Remark</th>
+                  <th>Device Number</th>
+                  <th>Creation Time</th>
+                  <th>Progress</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="groups.length === 0">
+                  <td colspan="5" class="no-data">No Data</td>
+                </tr>
+                <tr *ngFor="let grp of groups">
+                  <td>
+                    <input type="checkbox" 
+                           (change)="toggleSelection(grp)"
+                           [checked]="isSelected(grp)">
+                  </td>
+                  <td>{{ grp.command }}</td>
+                  <td>{{ grp.remark }}</td>
+                  <td>{{ grp.device }}</td>
+                  <td>{{ grp.creation }}</td>
+                  <td>{{ grp.progress }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        
+          <div style="height: 50px;"></div>
+      </div>
+    </div>
+  </div>

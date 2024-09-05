@@ -1,0 +1,62 @@
+<div class="container">
+    <h1>
+      <i class="bx bx-calendar"></i>
+      Update Schedule
+    </h1>
+    <div class="search-bar">
+      <input type="text" placeholder="Schedule Name" [(ngModel)]="searchText">
+      <button class="btn-primary btn-icon">
+        <i class="bx bx-search"></i>
+      </button>
+      <button class="btn-primary btn-icon">
+        <i class="bx bx-plus"></i>
+      </button>
+    </div>
+    <div class="action-bar">
+      <span>{{ selectedCount }} Selected</span>
+      <button class="btn-danger" [disabled]="selectedCount === 0">
+        <i class='bx bx-trash'></i>  Delete
+      </button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <!-- <input type="checkbox" (change)="masterToggle()" [checked]="isAllSelected()"> -->
+            <div class="checkbox">
+                <input class="inp-cbx" id="cbx" type="checkbox" style="display: none;" (change)="masterToggle()" [checked]="isAllSelected()"/>
+                <label class="cbx" for="cbx">
+                    <span>
+                        <svg width="12px" height="10px" viewbox="0 0 12 10">
+                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                        </svg>
+                    </span>
+                </label>
+            </div>
+          </th>
+          <th>Schedule Name</th>
+          <th>Schedule Description</th>
+          <th>Begin Time</th>
+          <th>End Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="schedules.length === 0">
+          <td colspan="5" class="no-data">No Data</td>
+        </tr>
+        <tr *ngFor="let schedule of schedules">
+          <td>
+            <input type="checkbox" 
+                   (change)="toggleSelection(schedule)"
+                   [checked]="isSelected(schedule)">
+          </td>
+          <td>{{ schedule.name }}</td>
+          <td>{{ schedule.description }}</td>
+          <td>{{ schedule.beginTime }}</td>
+          <td>{{ schedule.endTime }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="height: 50px;"></div>

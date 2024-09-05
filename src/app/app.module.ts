@@ -198,6 +198,9 @@ import { AddFormComponent } from './components/dialogs/add-form/add-form.compone
 import { PackagesComponent } from './components/pages/table/packages/packages.component';
 import {MatSliderModule} from '@angular/material/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { DevicesComponent } from './components/pages/device/devices/devices.component';
+import { UpdateScheduleComponent } from './components/pages/table/update-schedule/update-schedule.component';
+import { GroupComponent } from './components/pages/table/group/group.component';
 
 @NgModule({
   declarations: [
@@ -372,6 +375,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
     ProfileComponent,
     AddFormComponent,
     PackagesComponent,
+    DevicesComponent,
+    UpdateScheduleComponent,
+    GroupComponent,
   ],
   imports: [
     BrowserModule,

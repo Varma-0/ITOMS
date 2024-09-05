@@ -102,6 +102,9 @@ import { SchedulingComponent } from './components/pages/table/scheduling/schedul
 import { FlyparametersComponent } from './components/pages/table/flyparameters/flyparameters.component';
 import { ProfileComponent } from './components/pages/table/profile/profile.component';
 import { PackagesComponent } from './components/pages/table/packages/packages.component';
+import { DevicesComponent } from './components/pages/device/devices/devices.component';
+import { UpdateScheduleComponent } from './components/pages/table/update-schedule/update-schedule.component';
+import { GroupComponent } from './components/pages/table/group/group.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'landing',pathMatch:'full'},
@@ -195,12 +198,26 @@ const routes: Routes = [
       {path: 'scheduling', data: { breadcrumb: 'Scheduling' }, component: SchedulingComponent},
       {path: 'parameters', data: { breadcrumb: 'DynamiKeys' }, component: FlyparametersComponent},
       {path: 'packages', data: { breadcrumb: 'Packages' }, component: PackagesComponent},
+      {path: 'update-schedule', data: { breadcrumb: 'Update Schedule' }, component: UpdateScheduleComponent},
+      {path: 'group', data: { breadcrumb: 'Group' }, component: GroupComponent},
     ]
   },
   {
     path: 'admin', component: AdministrationComponent,
     children: [
       {path: 'user', data: { breadcrumb: 'User' }, component: UserComponent},
+      {path: 'role', data: { breadcrumb: 'Role' }, component: RoleComponent},
+      {path: 'alert', data: { breadcrumb: 'Alert' }, component: AlertComponent},
+      {path: 'permission', data: { breadcrumb: 'Permission' }, component: PermissionComponent},
+      {path: 'tenants', data: { breadcrumb: 'Tenants' }, component: TenantsComponent},
+      {path: 'hierarchies', data: { breadcrumb: 'Hierarchies' }, component: HierarchyLevelComponent},
+      {path: 'merchant', data: { breadcrumb: 'Merchant' }, component: MerchantsComponent},
+    ]
+  },
+  {
+    path: 'device', component: AdministrationComponent,
+    children: [
+      {path: 'device', data: { breadcrumb: 'Device' }, component: DevicesComponent},
       {path: 'role', data: { breadcrumb: 'Role' }, component: RoleComponent},
       {path: 'alert', data: { breadcrumb: 'Alert' }, component: AlertComponent},
       {path: 'permission', data: { breadcrumb: 'Permission' }, component: PermissionComponent},
