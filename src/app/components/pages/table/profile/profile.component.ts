@@ -15,9 +15,16 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   ifDate = ['Time','Date','DateTime']
   maxVal = ['String','Number','Hex']
   showProfile = true;
+  activeTab: string = 'Design';
   isEditing = false;
   toggleEditMode() {
     this.isEditing = !this.isEditing;
+  }
+
+  setActiveTab(tab: string): void {
+    this.activeTab = tab;
+    this.showProfile = tab == 'Design' ? true : false;
+
   }
 
   constructor(private fb: FormBuilder, private renderer: Renderer2) {}

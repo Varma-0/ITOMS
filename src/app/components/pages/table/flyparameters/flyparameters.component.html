@@ -1,6 +1,6 @@
 <ng-container *ngIf="showDynamicKeys">
     <div class="breadcrumb-area">
-        <h1>DynamiKeys</h1>
+        <h1>Parameters</h1>
       </div>
 
       <div class="container">
@@ -8,7 +8,7 @@
           <mat-card-title>
             <div class="heading">
               <div class="title-container">
-                <span>DynamiKeys</span> &nbsp;
+                <span>Parameters</span> &nbsp;
                   <input type="text" class="form-control" aria-label="Deployment Name" placeholder="App Name/Package Name" [(ngModel)]="searchTerm" (input)="filterDeployments()">
               </div>
               <div class="icon-container">
@@ -40,7 +40,7 @@
         <div class="main-container" *ngIf="selectedItem">
           <div class="header">
               <div class="selected-item">
-                <span class="header-text">DynamiKeys</span>
+                <span class="header-text">Parameters</span>
                 <h2>{{ selectedItem?.name }}</h2>
               </div>
           </div>
@@ -135,13 +135,26 @@
       </div>
 </ng-container>
 <ng-container *ngIf="!showDynamicKeys">
-    <div class="row">
-        <div class="col-2" (click)="showDynamicKeys = true">
-            < back
-        </div>
-        <div class="col-10">
-            <h2>{{ selectedItem?.name }}</h2>
-        </div>
-    </div>
+    <div class="headerButton d-flex align-items-center justify-content-between">
+      <div class="left-section d-flex align-items-center">
+        <button class="d-flex align-items-center" (click)="showDynamicKeys = true">
+          <span class="material-symbols-outlined">arrow_back</span>
+          <span class="ms-2">Back</span>
+        </button>
+        <span class="app-name ms-3">App Name: {{selectedItem?.name}}</span>
+      </div>
+    
+      <div class="right-section d-flex align-items-center">
+        <button class="icon-button">
+          <span class="material-symbols-outlined" style="color: #007bff;">save</span>
+        </button>
+        <button class="icon-button ms-3">
+          <span class="material-symbols-outlined" style="color: #3cf855;">visibility</span>
+        </button>
+        <button class="icon-button ms-3">
+          <span class="material-symbols-outlined" style="color: #777a7e;">settings</span>
+        </button>
+      </div>
+    </div>    
     <app-profile></app-profile>
 </ng-container>

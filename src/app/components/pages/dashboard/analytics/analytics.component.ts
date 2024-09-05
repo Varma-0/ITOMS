@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 declare let $: any;
 
 @Component({
@@ -8,6 +8,12 @@ declare let $: any;
 })
 export class AnalyticsComponent implements OnInit {
     constructor() {}
+    @Input() title: string = 'Demo';
+    showFilter: boolean = false;
+
+  toggleFilter() {
+    this.showFilter = !this.showFilter;
+  }
 
     ngOnInit() {
         

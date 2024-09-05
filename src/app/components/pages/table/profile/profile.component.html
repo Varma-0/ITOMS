@@ -1,182 +1,184 @@
 <!-- simple-layout.component.html -->
-<div class="header">
-    <div class="header-title" style="visibility: hidden;">Title</div>
-    <div class="header-icons">
-        <span class="fas fa-home mr-3" (click)="viewParameters('design')">Design</span>
-        <span class="fas fa-user mr-3" (click)="viewParameters('params')">Parameter List</span>
-    </div>
+<div class="containers">
+  <div class="tab-bar d-flex align-items-end">
+    <span class="tab active" [class.active]="activeTab === 'Design'" (click)="setActiveTab('Design')">
+      Design
+    </span>
+    <span class="tab" [class.active]="activeTab === 'Parameter List'" (click)="setActiveTab('Parameter List')">
+      Parameter List
+    </span>
+  </div>
 </div>
 <ng-container *ngIf="showProfile">
 
-    <div class="main-container">
-        <div class="left-body">
-            <div *ngFor="let formGroup of formsArray.controls; let i = index" [formGroup]="formGroup"
-                class="textarea-container" [ngClass]="{ 'active-form': activeForm === formGroup }"
-                (click)="setActiveForm(formGroup)">
-                <label [for]="'textarea-input-' + i" class="textarea-label"
-                    [ngStyle]=" {visibility : formGroup.get('type')?.value == 'Boolean' ? 'hidden' : 'visible'} ">{{
-                    formGroup.get('label')?.value }}</label>
-                <ng-container [ngSwitch]="formGroup.get('type')?.value">
-                    <textarea *ngSwitchCase="'String'" [id]="'textarea-input-' + i" #textarea
-                        [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
-                        [attr.maxlength]="formGroup.get('maxvalue')?.value" placeholder="Enter your text here..."
-                        name="default-{{i}}"></textarea>
-                    <input *ngSwitchCase="'Time'" (click)="triggerPicker($event)" [id]="'date-input-' + i" type="time" #textarea
-                        [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
-                        name="default-{{i}}">
-                    <input *ngSwitchCase="'Date'" (click)="triggerPicker($event)" [id]="'date-input-' + i" type="date" #textarea
-                        [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
-                        name="default-{{i}}">
-                    <input *ngSwitchCase="'DateTime'" (click)="triggerPicker($event)" [id]="'date-input-' + i" type="datetime-local" #textarea
-                        [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
-                        name="default-{{i}}">
-                    <textarea *ngSwitchCase="'Number'" [id]="'date-input-' + i" (input)="onInput($event)" #textarea
-                        [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
-                        name="default-{{i}}"></textarea>
-                    <textarea *ngSwitchCase="'Hex'" [id]="'date-input-' + i" (input)="onInput($event)" #textarea
-                        [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
-                        [attr.maxlength]="formGroup.get('maxvalue')?.value" name="default-{{i}}"></textarea>
-                    <textarea *ngSwitchCase="'String Text'" [id]="'date-input-' + i" #textarea
-                        [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
-                        name="default-{{i}}"></textarea>
-                    <textarea *ngSwitchCase="'Hex Text'" [id]="'date-input-' + i" (input)="onInput($event)" #textarea
-                        [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
-                         name="default-{{i}}"></textarea>
-                    <div class="boolean" *ngSwitchCase="'Boolean'" #textarea>
-                        <div class="row" style="padding: 5px;">
-                            <div class="col-2">
-                                <input [id]="'date-input-' + i" type="checkbox"
-                                    [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
-                                    name="default-{{i}}">
-                            </div>
-                            <div class="col-10">{{ formGroup.get('label')?.value }}</div>
-                        </div>
-                    </div>
-                </ng-container>
-                <div class="char-count"
-                    [ngStyle]=" {visibility : (formGroup.get('type')?.value == 'String' || formGroup.get('type')?.value == 'Hex') ? 'visible' : 'hidden'} ">
-                    {{ formGroup.get('default')?.value.length || 0 }}/{{ formGroup.get('maxvalue')?.value || 255 }}</div>
-                <span class="close-icon" (click)="removeForm(i)">×</span>
+  <div class="main-container">
+    <div class="left-body">
+      <div *ngFor="let formGroup of formsArray.controls; let i = index" [formGroup]="formGroup"
+        class="textarea-container" [ngClass]="{ 'active-form': activeForm === formGroup }"
+        (click)="setActiveForm(formGroup)">
+        <label [for]="'textarea-input-' + i" class="textarea-label"
+          [ngStyle]=" {visibility : formGroup.get('type')?.value == 'Boolean' ? 'hidden' : 'visible'} ">{{
+          formGroup.get('label')?.value }}</label>
+        <ng-container [ngSwitch]="formGroup.get('type')?.value">
+          <textarea *ngSwitchCase="'String'" [id]="'textarea-input-' + i" #textarea
+            [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
+            [attr.maxlength]="formGroup.get('maxvalue')?.value" placeholder="Enter your text here..."
+            name="default-{{i}}"></textarea>
+          <input *ngSwitchCase="'Time'" (click)="triggerPicker($event)" [id]="'date-input-' + i" type="time" #textarea
+            [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
+            name="default-{{i}}">
+          <input *ngSwitchCase="'Date'" (click)="triggerPicker($event)" [id]="'date-input-' + i" type="date" #textarea
+            [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
+            name="default-{{i}}">
+          <input *ngSwitchCase="'DateTime'" (click)="triggerPicker($event)" [id]="'date-input-' + i"
+            type="datetime-local" #textarea [(ngModel)]="formGroup.controls['default'].value"
+            [ngModelOptions]="{standalone: true}" name="default-{{i}}">
+          <textarea *ngSwitchCase="'Number'" [id]="'date-input-' + i" (input)="onInput($event)" #textarea
+            [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
+            name="default-{{i}}"></textarea>
+          <textarea *ngSwitchCase="'Hex'" [id]="'date-input-' + i" (input)="onInput($event)" #textarea
+            [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
+            [attr.maxlength]="formGroup.get('maxvalue')?.value" name="default-{{i}}"></textarea>
+          <textarea *ngSwitchCase="'String Text'" [id]="'date-input-' + i" #textarea
+            [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
+            name="default-{{i}}"></textarea>
+          <textarea *ngSwitchCase="'Hex Text'" [id]="'date-input-' + i" (input)="onInput($event)" #textarea
+            [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
+            name="default-{{i}}"></textarea>
+          <div class="boolean" *ngSwitchCase="'Boolean'" #textarea>
+            <div class="row" style="padding: 5px;">
+              <div class="col-2">
+                <input [id]="'date-input-' + i" type="checkbox" [(ngModel)]="formGroup.controls['default'].value"
+                  [ngModelOptions]="{standalone: true}" name="default-{{i}}">
+              </div>
+              <div class="col-10">{{ formGroup.get('label')?.value }}</div>
             </div>
-            <button class="add-textarea-button" (click)="createNewForm()">New Parameter</button>
-        </div>
+          </div>
+        </ng-container>
+        <div class="char-count"
+          [ngStyle]=" {visibility : (formGroup.get('type')?.value == 'String' || formGroup.get('type')?.value == 'Hex') ? 'visible' : 'hidden'} ">
+          {{ formGroup.get('default')?.value.length || 0 }}/{{ formGroup.get('maxvalue')?.value || 255 }}</div>
+        <span class="close-icon" (click)="removeForm(i)">×</span>
+      </div>
+      <button class="add-textarea-button" (click)="createNewForm()">New Parameter</button>
+    </div>
 
-        <div class="right-body custom-scrollbar" *ngIf="activeForm">
-            <form [formGroup]="activeForm">
-                <div class="form-group">
-                    <label for="input1">Label</label>
-                    <input id="input1" type="text" class="form-control" formControlName="label">
-                </div>
-                <div class="form-group">
-                    <label for="input2">Key</label>
-                    <input id="input2" type="text" class="form-control" formControlName="key">
-                </div>
-                <div class="form-group">
-                    <label for="input3">Type</label>
-                    <select id="input3" class="form-control" formControlName="type" (change)="typeChange()">
-                        <option *ngFor="let i of types" [value]="i">{{i}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="input4">Default Value</label>
-                    <input id="input4" type="text" class="form-control"
-                        (input)="activeForm.get('type')?.value == 'Number' ? onInput($event) : ''"
-                        [(ngModel)]="activeForm.controls['default'].value" [ngModelOptions]="{standalone: true}">
-                </div>
-                <!-- <div class="form-group" *ngIf="ifDate.includes(activeForm.get('type')?.value)">
+    <div class="right-body custom-scrollbar" *ngIf="activeForm">
+      <form [formGroup]="activeForm">
+        <div class="form-group">
+          <label for="input1">Label</label>
+          <input id="input1" type="text" class="form-control" formControlName="label">
+        </div>
+        <div class="form-group">
+          <label for="input2">Key</label>
+          <input id="input2" type="text" class="form-control" formControlName="key">
+        </div>
+        <div class="form-group">
+          <label for="input3">Type</label>
+          <select id="input3" class="form-control" formControlName="type" (change)="typeChange()">
+            <option *ngFor="let i of types" [value]="i">{{i}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="input4">Default Value</label>
+          <input id="input4" type="text" class="form-control"
+            (input)="activeForm.get('type')?.value == 'Number' ? onInput($event) : ''"
+            [(ngModel)]="activeForm.controls['default'].value" [ngModelOptions]="{standalone: true}">
+        </div>
+        <!-- <div class="form-group" *ngIf="ifDate.includes(activeForm.get('type')?.value)">
                     <label for="input5">Date Format</label>
                     <input id="input5" type="text" class="form-control" formControlName="dateformat">
                 </div> -->
-                <div class="form-group" *ngIf="maxVal.includes(activeForm.get('type')?.value)">
-                    <label for="input6">{{activeForm.get('type')?.value == "String" ? "Maximum Length" : "Maximum Value"
-                        }}</label>
-                    <input id="input6" type="number" class="form-control" formControlName="maxvalue">
-                </div>
-                <div class="form-group" *ngIf="activeForm.get('type')?.value == 'Number'">
-                    <label for="input7">Minimum Value</label>
-                    <input id="input7" type="number" class="form-control" formControlName="minvalue">
-                </div>
-                <div class="form-group">
-                    <label for="input8">Manadatory</label> <br>
-                    <mat-slide-toggle id="input8" formControlName="manadatroy" color="primary">
-                    </mat-slide-toggle>
-                </div>
-                <div class="form-group">
-                    <label for="input9">Description</label>
-                    <textarea id="input9" type="number" class="form-control" formControlName="description"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+        <div class="form-group" *ngIf="maxVal.includes(activeForm.get('type')?.value)">
+          <label for="input6">{{activeForm.get('type')?.value == "String" ? "Maximum Length" : "Maximum Value"
+            }}</label>
+          <input id="input6" type="number" class="form-control" formControlName="maxvalue">
         </div>
+        <div class="form-group" *ngIf="activeForm.get('type')?.value == 'Number'">
+          <label for="input7">Minimum Value</label>
+          <input id="input7" type="number" class="form-control" formControlName="minvalue">
+        </div>
+        <div class="form-group">
+          <label for="input8">Manadatory</label> <br>
+          <mat-slide-toggle id="input8" formControlName="manadatroy" color="primary">
+          </mat-slide-toggle>
+        </div>
+        <div class="form-group">
+          <label for="input9">Description</label>
+          <textarea id="input9" type="number" class="form-control" formControlName="description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
     </div>
+  </div>
 </ng-container>
 <ng-container *ngIf="!showProfile">
-    <div class="container">
-        <div class="mode-toggle">
-          <span>Readonly Mode</span>
-          <label class="switch">
-            <input type="checkbox" (change)="toggleEditMode()">
-            <span class="slider round"></span>
-          </label>
-          <span>Editing Mode</span>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Label</th>
-              <th>Key</th>
-              <th>Type</th>
-              <th>Default Value</th>
-              <th>Maximum Length</th>
-              <th>Mandatory</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of formsArray.controls; let i = index" [formGroup]="row">
-              <td>
-                <span class="editable-content">
-                  <input *ngIf="isEditing" formControlName="label">
-                  <span *ngIf="!isEditing">{{ row.get('label').value || ' ' }}</span>
-                </span>
-              </td>
-              <td>
-                <span class="editable-content">
-                  <input *ngIf="isEditing" formControlName="key">
-                  <span *ngIf="!isEditing">{{ row.get('key').value || ' ' }}</span>
-                </span>
-              </td>
-              <td>
-                <span class="editable-content">
-                  <span>{{ row.get('type').value }}</span>
-                </span>
-              </td>
-              <td>
-                <span class="editable-content">
-                  <input *ngIf="isEditing" formControlName="default">
-                  <span *ngIf="!isEditing">{{ row.get('default').value || ' ' }}</span>
-                </span>
-              </td>
-              <td>
-                <span class="editable-content">
-                  <span>{{ row.get('maxvalue').value || ' ' }}</span>
-                </span>
-              </td>
-              <td>
-                <span class="editable-content">
-                  <input *ngIf="isEditing" type="checkbox" formControlName="manadatroy">
-                  <span *ngIf="!isEditing">{{ row.get('manadatroy').value ? 'Yes' : 'No' }}</span>
-                </span>
-              </td>
-              <td>
-                <span class="editable-content">
-                  <span >{{ row.get('description').value || ' ' }}</span>
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="container">
+    <div class="mode-toggle">
+      <span>Readonly Mode</span>
+      <label class="switch">
+        <input type="checkbox" (change)="toggleEditMode()">
+        <span class="slider round"></span>
+      </label>
+      <span>Editing Mode</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Label</th>
+          <th>Key</th>
+          <th>Type</th>
+          <th>Default Value</th>
+          <th>Maximum Length</th>
+          <th>Mandatory</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of formsArray.controls; let i = index" [formGroup]="row">
+          <td>
+            <span class="editable-content">
+              <input *ngIf="isEditing" formControlName="label">
+              <span *ngIf="!isEditing">{{ row.get('label').value || ' ' }}</span>
+            </span>
+          </td>
+          <td>
+            <span class="editable-content">
+              <input *ngIf="isEditing" formControlName="key">
+              <span *ngIf="!isEditing">{{ row.get('key').value || ' ' }}</span>
+            </span>
+          </td>
+          <td>
+            <span class="editable-content">
+              <span>{{ row.get('type').value }}</span>
+            </span>
+          </td>
+          <td>
+            <span class="editable-content">
+              <input *ngIf="isEditing" formControlName="default">
+              <span *ngIf="!isEditing">{{ row.get('default').value || ' ' }}</span>
+            </span>
+          </td>
+          <td>
+            <span class="editable-content">
+              <span>{{ row.get('maxvalue').value || ' ' }}</span>
+            </span>
+          </td>
+          <td>
+            <span class="editable-content">
+              <input *ngIf="isEditing" type="checkbox" formControlName="manadatroy">
+              <span *ngIf="!isEditing">{{ row.get('manadatroy').value ? 'Yes' : 'No' }}</span>
+            </span>
+          </td>
+          <td>
+            <span class="editable-content">
+              <span>{{ row.get('description').value || ' ' }}</span>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
 </ng-container>
 <div style="height: 50px;"></div>

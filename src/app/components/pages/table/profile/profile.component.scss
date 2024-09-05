@@ -177,18 +177,20 @@
   }
 
   /* simple-layout.component.scss */
-.header {
+  .containers {
+    font-family: Arial, sans-serif;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #ddd;
+    width: 100%;
+    justify-content: flex-end;
+    border-bottom: 1px solid #979797;
   }
-
-  .header-title {
-    font-size: 1.5rem;
-    font-weight: bold;
+  .tab {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  .tab.active {
+    color: #1890ff;
+    border-bottom: 2px solid #1890ff;
   }
 
   .header-icons {

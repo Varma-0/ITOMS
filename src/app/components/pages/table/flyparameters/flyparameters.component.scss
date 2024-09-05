@@ -291,6 +291,49 @@
     }
 }
 
+// .headerButton {
+//   border-bottom: 2px solid lightgrey;
+//   height: 15vh;
+// }
+
+// .headerButton  button{
+//   border: none;
+//   cursor: pointer;
+//   background: transparent;
+// }
+.headerButton {
+  background-color: white;
+  height: 8vh;
+  padding: 0 20px;
+}
+
+.headerButton button {
+  border: none;
+  cursor: pointer;
+  background: transparent;
+}
+
+.left-section .app-name {
+  font-weight:normal;
+  font-size: 1.2rem;
+}
+
+.right-section .icon-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px; /* Adjust size of the icons */
+}
+
+.ms-2 {
+  margin-left: 8px;
+}
+
+.ms-3 {
+  margin-left: 16px;
+}
+
+
 /* Style for the active tab */
 .tabs li button.active-tab {
     color: #007bff; /* Blue color for active tab */
