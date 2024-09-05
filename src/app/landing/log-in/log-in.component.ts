@@ -149,8 +149,7 @@ export class DLogInComponent implements OnInit{
     const eventData = new verifyEmailData(this.usernameforgot,this.getotp,'EMAIL');
     console.log(eventData)
     const event = new emailEvent(eventData, 'USER', 'VERIFY_OTP');
-    const updatePassRequest = new emailBody(event);
-    
+    const updatePassRequest = new emailBody(event); 
     this.authService.otpConfirmationforPassReset(updatePassRequest).subscribe(
       response => {
         if(response.status == 200) {
@@ -177,14 +176,13 @@ export class DLogInComponent implements OnInit{
     console.log(eventData)
     const event = new passEvent(eventData, 'USER', 'CRD_RESET');
     const updatePassRequest = new passBody(event);
-    
     this.authService.resetPass(updatePassRequest).subscribe(
       response => {
         if(response.status == 200) {
           console.log("Otp",response)
-           this.uid = response.event.eventData.uid;
-           this.enterNewPass = false;
-           this.showDropdown = true;
+          this.uid = response.event.eventData.uid;
+          this.enterNewPass = false;
+          this.forgotPassword = false;
         } else {
           this.errorApiMessage = response.message;
         }
@@ -211,6 +209,7 @@ export class DLogInComponent implements OnInit{
         response.event.eventData.userType == "SA"? this.superAdmin = true : this.superAdmin = false;
         const data = this.superAdmin;
         this.shared.setLoginData(data);
+        localStorage.setItem("SA",`${this.superAdmin}`);
         localStorage.setItem('jwtToken', jwtToken);
         this.router.navigate(['/dashboard/analytics']);
         this.loadingDropdown = false;

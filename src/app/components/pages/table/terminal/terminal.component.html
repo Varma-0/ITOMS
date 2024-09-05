@@ -98,7 +98,17 @@
     <thead class="table-light">
       <tr>
         <th>
-          <input type="checkbox" id="selectAll" (change)="toggleSelectAll($event)">
+          <!-- <input type="checkbox" id="selectAll" (change)="toggleSelectAll($event)"> -->
+          <div class="checkbox">
+            <input class="inp-cbx" id="cbx" type="checkbox" style="display: none;" (change)="toggleSelectAll($event)"/>
+            <label class="cbx" for="cbx">
+                <span>
+                    <svg width="12px" height="10px" viewbox="0 0 12 10">
+                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                    </svg>
+                </span>
+            </label>
+        </div>
         </th>
         <th *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">
           {{ column }}
@@ -108,7 +118,17 @@
     <tbody class="dataRowColor">
       <tr *ngFor="let device of paginatedDevices" (click)="row(device)">
         <td>
-          <input type="checkbox" [(ngModel)]="device.selected" (click)="$event.stopPropagation()">
+          <!-- <input type="checkbox" [(ngModel)]="device.selected" (click)="$event.stopPropagation()"> -->
+          <div class="checkbox">
+            <input class="inp-cbx" id="cbx" type="checkbox" style="display: none;"  [(ngModel)]="device.selected" (click)="$event.stopPropagation()"/>
+            <label class="cbx" for="cbx">
+                <span>
+                    <svg width="12px" height="10px" viewbox="0 0 12 10">
+                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                    </svg>
+                </span>
+            </label>
+        </div>
         </td>
         <td *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">
           <ng-container [ngSwitch]="column">

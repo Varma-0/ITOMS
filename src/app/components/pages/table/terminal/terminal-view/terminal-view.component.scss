@@ -412,3 +412,37 @@ h4.mb-0::before {
   width: 40px;
   text-align: center;
 }
+
+.two-cards {
+  width: 30%;
+}
+
+.second-half-card {
+  width: 70%;
+}
+
+.checks {
+  gap: 10px !important;
+}
+
+.settings-ico {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: none;
+  background: none;
+}
+
+.settings-ico:hover {
+  color: #007bff;
+  background-color: transparent;
+}
+
+.active-tab {
+  color: #007bff;
+  background-color: transparent;
+}
+
+mat-slider {
+  width: 70%;
+}

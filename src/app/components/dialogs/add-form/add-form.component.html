@@ -2,67 +2,79 @@
 <mat-dialog-content>
 <!-- merchant-form.component.html -->
 <ng-container *ngIf="title == 'Add User'">
-    <form [formGroup]="userForm" class="merchant-form">
-        <div class="form-group">
-          <label for="tenant">Tenant:</label>
-          <select id="tenant" formControlName="tenant">
-            <option value="StandardPos">StandardPos</option>
-          </select>
-        </div>
-        <div class="form-group">
-            <label for="role">Role:</label>
-            <select id="role" formControlName="role">
-              <option value="StandardPos">StandardPos</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="alert">Alert:</label>
-            <select id="alert" formControlName="alert">
-              <option value="StandardPos">StandardPos</option>
-            </select>
-          </div>
-        <div class="form-group">
-          <label for="firstName">First Name:</label>
-          <input id="firstName" type="text" formControlName="firstName">
-        </div>
+  <form [formGroup]="userForm" class="merchant-form">
+    <div class="form-group" *ngIf="loginData === 'true'">
+      <label for="tenant">Tenant:</label>
+      <select id="tenant" formControlName="tenant">
+        <option *ngFor="let tenant of tenantOptionNames" value="tenant">{{ tenant }}</option>
+      </select>
+    </div>
 
-        <div class="form-group">
-          <label for="lastName">Last Name:</label>
-          <input id="lastName" type="text" formControlName="lastName">
-        </div>
+    <div class="form-group">
+      <label for="role">Role:</label>
+      <select id="role" formControlName="role">
+        <option *ngFor="let role of roleOptionNames" value="role">{{ role }}</option>
+      </select>
+    </div>
 
-        <div class="form-group">
-            <label for="dob">Date of Birth:</label>
-            <input id="db" type="date" formControlName="dob">
-          </div>
+    <div class="form-group">
+      <label for="alert">Alert:</label>
+      <select id="alert" formControlName="alert">
+        <option *ngFor="let alert of alertOptionNames" value="alert">{{ alert }}</option>
+      </select>
+    </div>
 
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input id="email" type="email" formControlName="email">
-        </div>
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="firstName">First Name:</label>
+        <input id="firstName" type="text" formControlName="firstName" />
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="lastName">Last Name:</label>
+        <input id="lastName" type="text" formControlName="lastName" />
+      </div>
+    </div>
 
-        <div class="form-group">
-          <label for="phone">Phone Number:</label>
-          <input id="phone" type="text" formControlName="phone">
-        </div>
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="dob">Date of Birth:</label>
+        <input id="dob" type="date" formControlName="dob" />
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="email">Email:</label>
+        <input id="email" type="email" formControlName="email" />
+      </div>
+    </div>
 
-        <div class="form-group">
-            <label for="country">Country:</label>
-            <input id="country" type="text" formControlName="country">
-          </div>
-          <div class="form-group">
-            <label for="altemail">Alternative Email:</label>
-            <input id="altemail" type="text" formControlName="altemail">
-          </div>
-          <div class="form-group">
-            <label for="altphone">Alternative Phone Number:</label>
-            <input id="altphone" type="text" formControlName="altphone">
-          </div>
-          <div class="form-group">
-            <label for="altcountry">Alternative Country:</label>
-            <input id="altcountry" type="text" formControlName="altcountry">
-          </div>
-      </form>
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="phone">Phone Number:</label>
+        <input id="phone" type="text" formControlName="phone" />
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="country">Country:</label>
+        <input id="country" type="text" formControlName="country" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="altemail">Alternative Email:</label>
+        <input id="altemail" type="text" formControlName="altemail" />
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="altphone">Alternative Phone Number:</label>
+        <input id="altphone" type="text" formControlName="altphone" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="altcountry">Alternative Country:</label>
+        <input id="altcountry" type="text" formControlName="altcountry" />
+      </div>
+    </div>
+  </form>
 </ng-container>
 <ng-container *ngIf="title == 'Add Role'">
     <form [formGroup]="roleForm" class="merchant-form">
@@ -72,12 +84,13 @@
         </div>
         <div class="form-group">
           <label for="description">Description:</label>
-          <input id="description" type="text" formControlName="description">
+          <textarea class="form-control" rows="3" style="resize: none;" id="description" type="text" formControlName="description"></textarea>
         </div>
         <div class="form-group">
             <label for="permission">Permission:</label>
             <select id="permission" formControlName="permission">
-              <option value="StandardPos">StandardPos</option>
+              <option *ngFor="let permission of permissionOptionNames" value="permission">{{ permission }}</option>
+
             </select>
           </div>
           <div class="form-group checkbox-group">
@@ -102,24 +115,27 @@
               </div>
           <label for="originator">Originator:</label>
           <select id="originator" formControlName="originator">
-            <option value="StandardPos">StandardPos</option>
+            <option value="Server">Server</option>
+            <option value="Device">Device</option>
           </select>
         </div>
         <div class="form-group">
             <label for="alert">Alert:</label>
             <select id="alert" formControlName="alert">
-              <option value="StandardPos">StandardPos</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
             </select>
           </div>
           <div class="form-group">
             <label for="template">Template:</label>
             <select id="template" formControlName="template">
-              <option value="StandardPos">StandardPos</option>
+              <option value="Email">Email</option>
             </select>
           </div>
         <div class="form-group">
           <label for="description">Description:</label>
-          <input id="description" type="text" formControlName="description">
+          <textarea class="form-control" rows="3" style="resize: none;" id="description" type="text" formControlName="description"></textarea>
         </div>
         <div class="checkbox-group1">
             <label>
@@ -167,12 +183,13 @@
         </div>
         <div class="form-group">
           <label for="description">Description:</label>
-          <input id="description" type="text" formControlName="description">
+          <textarea class="form-control" rows="3" style="resize: none;" id="description" type="text" formControlName="description"></textarea>
         </div>
         <div class="form-group">
             <label for="permission">Permission Type:</label>
             <select id="permission" formControlName="permission">
-              <option value="StandardPos">StandardPos</option>
+              <option value="Default">Default</option>
+              <option value="Custom">Custom</option>
             </select>
           </div>
           <div class="form-group checkbox-group">
@@ -196,12 +213,15 @@
         </div>
         <div class="form-group">
           <label for="description">Description:</label>
-          <input id="description" type="text" formControlName="description">
+          <textarea class="form-control" rows="3" style="resize: none;" id="description" type="text" formControlName="description"></textarea>
         </div>
         <div class="form-group">
             <label for="type">Tenant Type:</label>
             <select id="type" formControlName="type">
-              <option value="StandardPos">StandardPos</option>
+              <option value="Individual">Individual</option>
+              <option value="Company">Company</option>
+              <option value="Organization">Organization</option>
+              <option value="SA">SA</option>
             </select>
           </div>
           <div class="form-group">
@@ -232,7 +252,7 @@
 </ng-container>
 
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button class="btn btn-secondary" mat-dialog-close>Cancel</button>&nbsp;
-  <button class="btn btn-danger" [mat-dialog-close]="true">Confirm</button>
+<mat-dialog-actions align="end" class="d-flex justify-content-evenly">
+  <button class="btn btn-secondary" mat-dialog-close>Cancel</button>
+  <button class="btn btn-primary" [mat-dialog-close]="true">Confirm</button>
 </mat-dialog-actions>

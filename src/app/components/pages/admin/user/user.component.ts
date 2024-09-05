@@ -12,6 +12,12 @@ import { SharedServices } from 'src/app/services/shared.service';
 })
 export class UserComponent {
   users: any = []
+  tenantsData:any;
+  rolesData:any;
+  alertsData:any;
+  tenantsNames: any = [];
+  rolesNames: any = [];
+  alertsNames: any = [];
   time: any = '';
   fulldate:any = '';
   day:any = '';
@@ -23,7 +29,8 @@ export class UserComponent {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.loginData = this.shared.getLoginData();
+    // this.loginData = this.shared.getLoginData();
+    this.loginData = localStorage.getItem("SA");
     console.log("uigfiqw",this.loginData);
     this.dataService.userData().subscribe(
       response => {
@@ -48,13 +55,59 @@ export class UserComponent {
       error => {
         console.error('Error:', error);
       }
+    );
+    this.loginData === 'true' ? this.tenantsApiResponse() : console.log("check");
+    this.roleApiResponse();
+    this.alertApiResponse();
+  }
+
+  tenantsApiResponse() {
+    this.dataService.tenantData().subscribe(
+      response => {
+        this.tenantsData = response.event.eventData.tenants
+        this.tenantsData.forEach(name => {
+          console.log("ythefuckisObje",name.name);
+          this.tenantsNames.push(name.name);
+        });
+      }
+    )
+  }
+
+  roleApiResponse() {
+    this.dataService.roleData().subscribe(
+      response => {
+        this.rolesData = response.event.eventData.tenantRoles
+        this.rolesData.forEach(name => {
+          console.log("ythefuckisObje",name.name);
+          this.rolesNames.push(name.name);
+          console.log("ythefuckisObje",this.rolesNames);
+
+        });
+      }
+    )
+  }
+
+  alertApiResponse() {
+    this.dataService.alertData().subscribe(
+      response => {
+        this.alertsData = response.event.eventData.alerts
+        this.alertsData.forEach(name => {
+          console.log("ythefuckisObje",name.name);
+          this.alertsNames.push(name.name);
+          console.log("ythefuckisObje",this.alertsNames);
+
+        });
+      }
     )
   }
 
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
      data : {
-        title : 'Add User'
+        title : 'Add User',
+        tenantOptionNames : this.tenantsNames,
+        roleOptionNames : this.rolesNames,
+        alertOptionNames : this.alertsNames,
      },
      width : '60%'
     });

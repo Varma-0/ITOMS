@@ -196,6 +196,8 @@ import { SelectCfgComponent } from './components/dialogs/select-cfg/select-cfg.c
 import { ProfileComponent } from './components/pages/table/profile/profile.component';
 import { AddFormComponent } from './components/dialogs/add-form/add-form.component';
 import { PackagesComponent } from './components/pages/table/packages/packages.component';
+import {MatSliderModule} from '@angular/material/slider';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -392,12 +394,14 @@ import { PackagesComponent } from './components/pages/table/packages/packages.co
     MatInputModule,
     MatCheckboxModule,
     MatSortModule,
+    MatSliderModule,
     MatPaginatorModule,
     MatMenuModule,
     MatSlideToggleModule,
     MatProgressBarModule,
     MatProgressSpinner,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MultiSelectModule
 ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

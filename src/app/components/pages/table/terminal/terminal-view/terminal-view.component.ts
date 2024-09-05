@@ -46,6 +46,7 @@ export class TerminalViewComponent {
   selectedTab: string = 'overview';
   selectedTabApp:string =  'deployment';
   selectedTabRemote:string = 'diagnosis';
+  selectedTabInSettings:string = 'Basic Settings'
   toggleText: string = 'Off';
   contentCondition: string = 'Device'; // Default content condition
   displayedColumns: string[] = ['app', 'packageName', 'applicationInstallationInfo', 'parameterFileVersion', 'parameterFileStatus', 'publish', 'operation'];
@@ -53,6 +54,13 @@ export class TerminalViewComponent {
     { app: 'NEDBANK POS', packageName: 'com.ar.nedbankpos', applicationInstallationInfo: 'Installed/In Deployment', parameterFileVersion: '1.0.0', parameterFileStatus: 'Pending publish', publish: '', operation: '' }
     // Add more data objects as needed
   ];
+  lists = [
+    {icon:'build',header: 'Basic Settings'},
+    {icon:'link',header: 'Connect Settings'},
+    {icon:'tune',header: 'APN Settings'},
+    {icon:'lock',header: 'Payment Modules'},
+    {icon:'battery_full',header: 'Battery'},
+  ]
   cards = [
     { header: 'Storage', percentage: 60,icon:'file_present' },
     { header: 'Modules', percentage: 70,icon:'view_module' },
@@ -148,6 +156,9 @@ export class TerminalViewComponent {
    }
    selectTabRemote(tab:string) {
     this.selectedTabRemote = tab;
+   }
+   selectTabInSettings(tab:string) {
+    this.selectedTabInSettings = tab;
    }
 
   abc() {

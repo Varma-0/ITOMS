@@ -117,14 +117,12 @@
         <mat-card class="history-card">
           <mat-card-header>
             <mat-card-title>Command History</mat-card-title>
-            <mat-form-field>
-              <mat-label>Command Type</mat-label>
-              <mat-select>
-                <mat-option value="">All</mat-option>
-                <mat-option value="check">Check Update</mat-option>
-                <!-- Add more options as needed -->
-              </mat-select>
-            </mat-form-field>
+            <div class="col-md-5">
+              <select class="form-select" > <!-- [(ngModel)]="selectedOption2" (change)="applyFilter()" -->
+                <option value="" disabled selected>Check Update</option>
+                <!-- <option *ngFor="let option of optionModel" [value]="option">{{ option }}</option> -->
+              </select>
+            </div>
           </mat-card-header>
           <mat-card-content>
             <table mat-table class="last-table" [dataSource]="commandDataSource">
@@ -464,6 +462,197 @@
         <hr style="border: 1px solid grey; opacity: 0.1;">
         <mat-card-content class="contente">
           No Data
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </div>
+  <div class="d-flex checks" *ngIf="selectedTab === 'settings'">
+    <div class="two-cards">
+      <mat-card>
+        <mat-card-header>
+          <span class="fw-bold">Settings</span>
+        </mat-card-header>
+        <hr style="border: 1px solid grey; opacity: 0.1;">
+        <mat-card-content *ngFor="let list of lists">
+          <button 
+            [ngClass]="{'active-tab': selectedTabInSettings === list.header}" 
+            class="btn btn-outline-light settings-ico" 
+            (click)="selectTabInSettings(list.header)">
+            <span class="material-symbols-outlined">
+              {{ list.icon }}
+            </span>
+            {{ list.header }}
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="second-half-card" *ngIf="selectedTabInSettings === 'Basic Settings'">
+      <mat-card>
+        <mat-card-header class="d-flex justify-content-between align-items-center">
+          <span class="fw-bold">Basic Settings</span>
+          <button class="btn btn-primary">Push</button>
+        </mat-card-header>
+        <hr style="border: 1px solid grey; opacity: 0.1;">
+        <mat-card-content style="display:flex;flex-direction: column;row-gap: 1em;">
+          <div class="d-flex align-items-center justify-content-between">
+            <span>Screen Brightness</span>
+            <span class="material-symbols-outlined">
+              light_mode
+              </span>
+              <mat-slider min="1" max="100" step="1">
+                <input matSliderThumb value="0">
+              </mat-slider>
+              <span class="material-symbols-outlined">
+                brightness_high
+                </span>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <span>Media Volume</span>
+            <span class="material-symbols-outlined" style="margin-left: 20px;">volume_mute</span>
+              <mat-slider min="1" max="100" step="1">
+                <input matSliderThumb value="0" color="grey">
+              </mat-slider>
+              <span class="material-symbols-outlined">volume_up</span>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <span>Ring Volume</span>
+            <span class="material-symbols-outlined" style="margin-left: 30px;">volume_mute</span>
+              <mat-slider min="1" max="100" step="1">
+                <input matSliderThumb value="0">
+              </mat-slider>
+              <span class="material-symbols-outlined">volume_up</span>
+          </div>
+          <div class="d-flex align-items-center">
+            <span>Time Zone (GMT)</span>
+            <div class="col-md-2"  style="margin-left: 3%;">
+              <select class="form-select">  <!-- [(ngModel)]="selectedOption2" (change)="applyFilter()" -->
+                <option value="" disabled selected>Select</option>
+                <!-- <option *ngFor="let option of optionModel" [value]="option">{{ option }}</option> -->
+              </select>
+            </div>
+          </div>
+          <div class="d-flex align-items-center">
+            <span>Language</span>
+            <div class="col-md-2"  style="margin-left: 9%;">
+              <select class="form-select">  <!-- [(ngModel)]="selectedOption2" (change)="applyFilter()" -->
+                <option value="" disabled selected>Select</option>
+                <!-- <option *ngFor="let option of optionModel" [value]="option">{{ option }}</option> -->
+              </select>
+            </div>
+          </div>
+          <div class="d-flex align-items-center">
+            <span>Sleep Time</span>
+            <div class="col-md-2"  style="margin-left: 8%;">
+              <select class="form-select">  <!-- [(ngModel)]="selectedOption2" (change)="applyFilter()" -->
+                <option value="" disabled selected>Select</option>
+                <!-- <option *ngFor="let option of optionModel" [value]="option">{{ option }}</option> -->
+              </select>
+            </div>
+          </div>
+          <div class="d-flex align-items-center">
+            <span>Status Bar</span>
+            <span class="material-symbols-outlined" style="margin-left: 1%; color:chocolate;">help</span>
+            <input type="checkbox" id="toggleSwitch" class="custom-switch" style="margin-left: 4.5%;" (change)="onToggleChange($event)">
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="second-half-card" *ngIf="selectedTabInSettings === 'Connect Settings'">
+      <mat-card>
+        <mat-card-header class="d-flex justify-content-between align-items-center">
+          <span class="fw-bold">Connect Settings</span>
+          <button class="btn btn-primary">Push</button>
+        </mat-card-header>
+        <hr style="border: 1px solid grey; opacity: 0.1;">
+        <mat-card-content style="display:flex;flex-direction: column;row-gap: 1em;">
+          <div class="d-flex align-items-center">
+            <span>Cellular Network</span>
+            <input type="checkbox" id="toggleSwitch" class="custom-switch" style="margin-left: 4.5%;" (change)="onToggleChange($event)">
+          </div>
+          <div class="d-flex align-items-center">
+            <span>GPS</span>
+            <input type="checkbox" id="toggleSwitch" class="custom-switch" style="margin-left: 14.2%;" (change)="onToggleChange($event)">
+          </div>
+          <div class="d-flex align-items-center">
+            <span>BlueTooth</span>
+            <input type="checkbox" id="toggleSwitch" class="custom-switch" style="margin-left: 9.4%;" (change)="onToggleChange($event)">
+          </div>
+          <div class="d-flex align-items-center">
+            <span>Hotspot Menu</span>
+            <span class="material-symbols-outlined" style="margin-left: 1%; color:chocolate;">help</span>
+            <input type="checkbox" id="toggleSwitch" class="custom-switch" style="margin-left: 2.2%;" (change)="onToggleChange($event)">
+          </div>
+          <div class="d-flex align-items-center">
+            <span>Forgot Wi-Fi</span>
+            <div class="col-md-3"  style="margin-left: 8%;">
+              <select class="form-select">  <!-- [(ngModel)]="selectedOption2" (change)="applyFilter()" -->
+                <option value="" disabled selected>Please select</option>
+                <!-- <option *ngFor="let option of optionModel" [value]="option">{{ option }}</option> -->
+              </select>
+            </div>
+          </div>
+          <div class="d-flex align-items-center">
+            <span>Wi-Fi Switch</span>
+            <input type="checkbox" id="toggleSwitch" class="custom-switch" style="margin-left: 8%;" (change)="onToggleChange($event)">
+            <span class="material-symbols-outlined" style="margin-left: 1%;">wifi_off</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="second-half-card" *ngIf="selectedTabInSettings === 'APN Settings'">
+      <mat-card>
+        <mat-card-header class="d-flex justify-content-between align-items-center">
+          <span class="fw-bold">APN Settings</span>
+          <input type="checkbox" id="toggleSwitch" class="custom-switch" style="margin-left: 2.2%;" (change)="onToggleChange($event)">
+          <button class="btn btn-primary">Push</button>
+        </mat-card-header>
+        <hr style="border: 1px solid grey; opacity: 0.1;">
+      </mat-card>
+    </div>
+
+    <div class="second-half-card" *ngIf="selectedTabInSettings === 'Payment Modules'">
+      <mat-card>
+        <mat-card-header class="d-flex justify-content-between align-items-center">
+          <span class="fw-bold">Payment Modules</span>
+          <button class="btn btn-primary">Push</button>
+        </mat-card-header>
+        <hr style="border: 1px solid grey; opacity: 0.1;">
+        <mat-card-content style="display:flex;flex-direction: column;row-gap: 1em;">
+          <div class="d-flex align-items-center">
+            <span>Magnetic Card</span>
+            <input type="checkbox" id="toggleSwitch" class="custom-switch" style="margin-left: 4.5%;" (change)="onToggleChange($event)">
+          </div>
+          <div class="d-flex align-items-center">
+            <span>RF Card</span>
+            <input type="checkbox" id="toggleSwitch" class="custom-switch" style="margin-left: 9.6%;" (change)="onToggleChange($event)">
+          </div>
+          <div class="d-flex align-items-center">
+            <span>IC Card</span>
+            <input type="checkbox" id="toggleSwitch" class="custom-switch" style="margin-left: 9.8%;" (change)="onToggleChange($event)">
+          </div>
+          <div class="d-flex align-items-center">
+            <span>Printer</span>
+            <input type="checkbox" id="toggleSwitch" class="custom-switch" style="margin-left: 10.3%;" (change)="onToggleChange($event)">
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="second-half-card" *ngIf="selectedTabInSettings === 'Battery'">
+      <mat-card>
+        <mat-card-header class="d-flex justify-content-between align-items-center">
+          <span class="fw-bold">Battery</span>
+          <button class="btn btn-primary">Push</button>
+        </mat-card-header>
+        <hr style="border: 1px solid grey; opacity: 0.1;">
+        <mat-card-content style="display:flex;flex-direction: column;row-gap: 1em;">
+          <div class="d-flex align-items-center">
+            <span>Battery Protection</span>
+            <input type="checkbox" id="toggleSwitch" class="custom-switch" style="margin-left: 4.5%;" (change)="onToggleChange($event)">
+          </div>
         </mat-card-content>
       </mat-card>
     </div>

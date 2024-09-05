@@ -39,6 +39,7 @@ export class MerchantComponent implements OnInit {
   colors: string[] = ['#6956CE', '#1CD3D2', '#4788ff'];
   ELEMENT_DATA: any[] = [
     { sn: 'JCA100615093', model: 'SP630 ECR', status: 'Inventory', onlineStatus: 'Offline', activationTime: 'N/A' },
+    { sn: 'JCA100615093', model: 'SP630 ECR2423', status: 'Inventory', onlineStatus: 'Offline', activationTime: 'N/A' },
     { sn: 'PLB400003968', model: 'P180', status: 'Locked', onlineStatus: 'Offline', activationTime: 'N/A' },
     { sn: 'PLB400003945', model: 'P180', status: 'Inventory', onlineStatus: 'Offline', activationTime: 'N/A' },
     { sn: 'JC9500232565', model: 'SP630 Pro', status: 'Inventory', onlineStatus: 'Offline', activationTime: 'N/A' },

@@ -10,6 +10,8 @@ import { TerminalService } from 'src/app/services/terminal/devicelist';
 })
 export class RoleComponent {
   roles: any = []
+  permissionsData: any
+  permissionsNames: any = [];
   time: any = '';
   fulldate:any = '';
   day:any = '';
@@ -43,12 +45,29 @@ export class RoleComponent {
       error => {
         console.error('Error:', error);
       }
+    );
+    this.permissionApiResponse();
+  }
+
+  permissionApiResponse() {
+    this.dataService.permissionData().subscribe(
+      response => {
+        this.permissionsData = response.event.eventData.permissions
+        this.permissionsData.forEach(name => {
+          console.log("ythefuckisObje",name.name);
+          this.permissionsNames.push(name.name);
+          console.log("ythefuckisObje",this.permissionsNames);
+
+        });
+      }
     )
   }
+
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
         data:{
-            title : 'Add Role'
+            title : 'Add Role',
+            permissionOptionNames : this.permissionsNames
         },
         width: '40%'
     });

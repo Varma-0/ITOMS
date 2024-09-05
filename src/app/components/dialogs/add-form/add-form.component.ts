@@ -13,6 +13,12 @@ import { SharedServices } from 'src/app/services/shared.service';
 })
 export class AddFormComponent {
   title = '';
+  loginData:any;
+  tenantOptionNames:any = [];
+  roleOptionNames:any = [];
+  alertOptionNames:any = [];
+  permissionOptionNames:any = [];
+  selectedTenants!: [];
   userForm: FormGroup;
   roleForm: FormGroup;
   alertForm: FormGroup;
@@ -21,14 +27,20 @@ export class AddFormComponent {
   merchantForm: FormGroup;
   constructor(public dialogRef: MatDialogRef<AddFormComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private shared:SharedServices) {
     this.title = data.title
+    this.tenantOptionNames = data.tenantOptionNames
+    this.roleOptionNames = data.roleOptionNames;
+    this.alertOptionNames = data.alertOptionNames;
+    this.permissionOptionNames = data.permissionOptionNames;
     this.shared.setSidebarState(false);
   }
 
   ngOnInit(){
+    this.loginData = localStorage.getItem("SA");
+    const isSAValue = localStorage.getItem('SA') === 'true';
     this.userForm = this.fb.group({
-        tenant: [''],
-        role: [''],
-        alert: [''],
+        tenant: [[]],
+        role: isSAValue ? [[]] : [''],
+        alert: isSAValue ? [[]] : [''],
         firstName: [''],
         lastName: [''],
         dob: [''],
@@ -42,7 +54,7 @@ export class AddFormComponent {
       this.roleForm = this.fb.group({
         name: [''],
         description: [''],
-        permission: [''],
+        permission: isSAValue ? [[]] : [''],
         checkbox1: [''],
         checkbox2: [''],
         checkbox3: [''],
