@@ -105,6 +105,9 @@ import { PackagesComponent } from './components/pages/table/packages/packages.co
 import { DevicesComponent } from './components/pages/device/devices/devices.component';
 import { UpdateScheduleComponent } from './components/pages/table/update-schedule/update-schedule.component';
 import { GroupComponent } from './components/pages/table/group/group.component';
+import { ModelComponent } from './components/pages/device/model/model.component';
+import { ScheduleComponent } from './components/pages/device/schedule/schedule.component';
+import { PackageComponent } from './components/pages/device/package/package.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'landing',pathMatch:'full'},
@@ -218,12 +221,9 @@ const routes: Routes = [
     path: 'device', component: AdministrationComponent,
     children: [
       {path: 'device', data: { breadcrumb: 'Device' }, component: DevicesComponent},
-      {path: 'role', data: { breadcrumb: 'Role' }, component: RoleComponent},
-      {path: 'alert', data: { breadcrumb: 'Alert' }, component: AlertComponent},
-      {path: 'permission', data: { breadcrumb: 'Permission' }, component: PermissionComponent},
-      {path: 'tenants', data: { breadcrumb: 'Tenants' }, component: TenantsComponent},
-      {path: 'hierarchies', data: { breadcrumb: 'Hierarchies' }, component: HierarchyLevelComponent},
-      {path: 'merchant', data: { breadcrumb: 'Merchant' }, component: MerchantsComponent},
+      {path: 'model', data: { breadcrumb: 'Model' }, component: ModelComponent},
+      {path: 'package', data: { breadcrumb: 'Package' }, component: PackageComponent},
+      {path: 'schedule', data: { breadcrumb: 'Schedule' }, component: ScheduleComponent},
     ]
   },
   {path: 'merchant', component: MerchantComponent},

@@ -8,11 +8,11 @@ import { terminalEvent } from 'src/app/services/terminal/body/event-data';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 
 @Component({
-  selector: 'app-devices',
-  templateUrl: './devices.component.html',
-  styleUrl: './devices.component.scss'
+  selector: 'app-schedule',
+  templateUrl: './schedule.component.html',
+  styleUrl: './schedule.component.scss'
 })
-export class DevicesComponent {
+export class ScheduleComponent {
   device: any = []
   tenantsData:any;
   rolesData:any;

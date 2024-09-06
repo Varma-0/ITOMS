@@ -2,13 +2,13 @@
     <h1>Device Management</h1>
     <ol class="breadcrumb">
       <li class="item"><a routerLink="/admin/user"><i class='bx bx-home-alt'></i></a></li>
-      <li class="item">Device</li>
-      <li class="item">Device</li>
+      <li class="item">Device Management</li>
+      <li class="item">Model</li>
     </ol>
   </div>
 
   <div class="add-user" *ngIf="device.length != 0">
-    <button class="btn btn-primary" (click)="openCreateDialog()">Add Device</button>
+    <button class="btn btn-primary" (click)="openCreateDialog()">Add Model</button>
   </div>
 
   <div *ngFor="let user of device" class="mb-4">
@@ -23,12 +23,6 @@
           <p class="user-name">{{ user.serialNumber }}</p>
           <p class="user-email">{{ fulldate }}</p>
         </div>
-        <mat-slide-toggle
-        color="primary"
-        [(ngModel)]="user.status"
-        (change)="toggleStatus(user.status == 'ACTIVE')">
-        {{ user.status == 'ACTIVE' ? 'Active' : 'Inactive' }}
-      </mat-slide-toggle>
       </div>
       <div class="user-card-actions">
         <button mat-icon-button color="primary" aria-label="View Details">
