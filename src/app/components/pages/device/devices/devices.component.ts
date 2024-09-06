@@ -28,13 +28,12 @@ export class DevicesComponent {
   month: any = '';
   loginData: any;
   isActive: boolean;
+  filteredDevices = this.device;
+  searchTerm = '';
 
   constructor(public dialog: MatDialog, private dataService: TerminalService,private shared:SharedServices) {}
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    // this.loginData = this.shared.getLoginData();
     this.loginData = localStorage.getItem("SA");
     console.log("uigfiqw",this.loginData);
     const event = new terminalEvent('DEVICE', 'SEARCH');
@@ -42,43 +41,20 @@ export class DevicesComponent {
     this.dataService.terminalData(terminalRequest).subscribe(
       response => {
         console.log(response);
-
-        // Process each device in the eventData array
         this.device = response.event.eventData.map(data => {
-          // Determine if the device is active
-          const isActive = data.status === 'ACTIVE';
-
-          // Extract date and time information from createdBy timestamp
           const time = data.createdBy.ts;
-          const fulldate = time.split('T')[0];
-
-          // Parse the full date string into a Date object
-          const dateObject = new Date(fulldate);
-
-          // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-          const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-          const day = daysOfWeek[dateObject.getUTCDay()];
-
-          // Extract the day of the month
-          const date = fulldate.split('-')[2];
-
-          // Get the month name from the date
-          const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-          const month = monthNames[dateObject.getUTCMonth()];
-
-          // Return each device with additional date-related info and status
+          const fulldate = time.split('T')[0];  // Get the full date (YYYY-MM-DD)
+          
           return {
-            ...data,
-            isActive,     // Active status of the device
-            time,         // Original timestamp
-            fulldate,     // Full date in YYYY-MM-DD format
-            day,          // Day of the week (e.g., 'Fri')
-            date,         // Day of the month (e.g., '20')
-            month         // Month (e.g., 'Jun')
+            serialNumber: data.serialNumber,
+            model: data.model,
+            status: data.status,
+            fulldate: fulldate,
           };
         });
-
-        // Log the updated device array with all additional info
+        this.filteredDevices = this.device;
+    
+        // Log the updated device array
         console.log('Updated device data:', this.device);
       },
       error => {
@@ -88,13 +64,15 @@ export class DevicesComponent {
 
   }
 
-
-
-
-  toggleStatus(isActive: boolean) {
-    // Update user status based on the toggle position
-    isActive ? 'ACTIVE' : 'INACTIVE';
+  search() {
+    this.filteredDevices = this.device.filter(devi =>
+      devi.serialNumber.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
+
+
+
+
 
   openCreateDialog(edit?): void {
     const dialogRef = this.dialog.open(DevicesFormComponent,{
@@ -119,14 +97,4 @@ export class DevicesComponent {
     });
   }
 
-  openDeleteDialog(): void {
-    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // Implement delete functionality here
-        console.log('User deleted');
-      }
-    });
-  }
 }

@@ -106,8 +106,6 @@ import { DevicesComponent } from './components/pages/device/devices/devices.comp
 import { UpdateScheduleComponent } from './components/pages/table/update-schedule/update-schedule.component';
 import { GroupComponent } from './components/pages/table/group/group.component';
 import { ModelComponent } from './components/pages/device/model/model.component';
-import { ScheduleComponent } from './components/pages/device/schedule/schedule.component';
-import { PackageComponent } from './components/pages/device/package/package.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'landing',pathMatch:'full'},
@@ -222,8 +220,6 @@ const routes: Routes = [
     children: [
       {path: 'device', data: { breadcrumb: 'Device' }, component: DevicesComponent},
       {path: 'model', data: { breadcrumb: 'Model' }, component: ModelComponent},
-      {path: 'package', data: { breadcrumb: 'Package' }, component: PackageComponent},
-      {path: 'schedule', data: { breadcrumb: 'Schedule' }, component: ScheduleComponent},
     ]
   },
   {path: 'merchant', component: MerchantComponent},

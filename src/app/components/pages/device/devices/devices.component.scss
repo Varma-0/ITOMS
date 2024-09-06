@@ -1,64 +1,42 @@
-.user-card {
-    margin: 8px 0;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  .user-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .date-info {
-    text-align: center;
-    margin-right: 18px;
-  }
-  
-  .day {
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  .month,.date{
-    font-size: 14px;
-    color: gray;
-  }
-  
-  .user-info {
-    flex-grow: 1;
-  }
-  
-  .user-name {
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0;
-  }
-  
-  .user-email {
-    font-size: 14px;
-    color: gray;
-    margin: 0;
-  }
-  
-  .status-btn {
-    font-size: 12px;
-    padding: 2px 8px;
-  }
-  
-  .user-card-actions {
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 8px;
-  }
+.search-container {
+  margin-bottom: 20px;
+}
+input {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+button {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:first-of-type {
+  border-radius: 0 4px 4px 0;
+}
+button:last-of-type {
+  border-radius: 4px;
+  margin-left: 10px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  // border-spacing: 0 15px;
+}
 
-  .add-user {
-   text-align: right;
-   margin-bottom: 10px;
-  }
-  
+th, td {
+  border: none;
+  padding: 8px;
+  text-align: left;
+}
+th{
+  background-color: rgb(248, 248, 255);
+}
+
+td{
+  background-color: white;
+  // border-bottom: 1px solid rgb(255, 249, 249);
+}

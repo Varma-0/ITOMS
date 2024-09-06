@@ -201,10 +201,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DevicesComponent } from './components/pages/device/devices/devices.component';
 import { UpdateScheduleComponent } from './components/pages/table/update-schedule/update-schedule.component';
 import { GroupComponent } from './components/pages/table/group/group.component';
-import { FolderComponent } from './components/pages/device/folder/folder.component';
 import { ModelComponent } from './components/pages/device/model/model.component';
-import { PackageComponent } from './components/pages/device/package/package.component';
-import { ScheduleComponent } from './components/pages/device/schedule/schedule.component';
 import { AddPermissionComponent } from './components/dialogs/add-permission/add-permission.component';
 import { ActiveComponent } from './components/dialogs/active/active.component';
 import { DevicesFormComponent } from './components/dialogs/device-form/device-form.component';
@@ -385,10 +382,7 @@ import { DevicesFormComponent } from './components/dialogs/device-form/device-fo
     DevicesComponent,
     UpdateScheduleComponent,
     GroupComponent,
-    FolderComponent,
     ModelComponent,
-    PackageComponent,
-    ScheduleComponent,
     AddPermissionComponent,
     ActiveComponent,
     DevicesFormComponent

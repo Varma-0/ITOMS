@@ -36,7 +36,7 @@ export class DevicesFormComponent {
       });
       if(this.title == 'Edit Device'){
         this.deviceForm.patchValue(this.data.form);
-      }else if(this.title == 'Edit Modal'){
+      }else if(this.title == 'Edit Model'){
         this.modalForm.patchValue(this.data.form);
       }
   }

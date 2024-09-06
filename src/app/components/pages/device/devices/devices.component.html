@@ -1,42 +1,32 @@
 <div class="breadcrumb-area">
-    <h1>Device Management</h1>
-    <ol class="breadcrumb">
-      <li class="item"><a routerLink="/admin/user"><i class='bx bx-home-alt'></i></a></li>
-      <li class="item">Device</li>
-      <li class="item">Device</li>
-    </ol>
-  </div>
+  <h1>Device Management</h1>
+  <ol class="breadcrumb">
+    <li class="item"><a routerLink="/admin/user"><i class='bx bx-home-alt'></i></a></li>
+    <li class="item">Device Management</li>
+    <li class="item">Model</li>
+  </ol>
+</div>
 
-  <div class="add-user" *ngIf="device.length != 0">
-    <button class="btn btn-primary" (click)="openCreateDialog()">Add Device</button>
-  </div>
-
-  <div *ngFor="let user of device" class="mb-4">
-    <mat-card class="user-card">
-      <div class="user-card-header">
-        <div class="date-info">
-          <p class="date">{{user.day}}</p>
-          <p class="day">{{ user.date }}</p>
-          <p class="month">{{ user.month }}</p>
-        </div>
-        <div class="user-info">
-          <p class="user-name">{{ user.serialNumber }}</p>
-          <p class="user-email">{{ user.fulldate }}</p>
-        </div>
-        <mat-slide-toggle
-        color="primary"
-        [(ngModel)]="user.status"
-        (change)="toggleStatus(user.status == 'ACTIVE')">
-        {{ user.status == 'ACTIVE' ? 'Active' : 'Inactive' }}
-      </mat-slide-toggle>
-      </div>
-      <div class="user-card-actions">
-        <button mat-icon-button color="primary" aria-label="View Details">
-          <mat-icon style="color: blue;">view_list</mat-icon>
-        </button>
-        <button mat-icon-button color="primary" aria-label="Action 3" (click)="openCreateDialog(true)">
-          <mat-icon style="color: green;">edit</mat-icon>
-        </button>
-      </div>
-    </mat-card>
-  </div>
+<div class="search-container">
+  <input [(ngModel)]="searchTerm" placeholder="Device SN" (input)="search()">
+  <button (click)="search()"><i class="bx bx-search"></i></button>
+  <button (click)="openCreateDialog()"><i class="bx bx-plus"></i></button>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>Serial Number</th>
+      <th>Model</th>
+      <th>Status</th>
+      <th>Created Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let device of filteredDevices">
+      <td>{{ device.serialNumber }}</td>
+      <td>{{ device.model }}</td>
+      <td>{{ device.status }}</td>
+      <td>{{ device.fulldate }}</td>
+    </tr>
+  </tbody>
+</table>

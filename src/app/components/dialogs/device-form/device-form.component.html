@@ -30,7 +30,7 @@
     </div>
   </form>
 </ng-container>
-<ng-container *ngIf="title == 'Add Modal' || title == 'Edit Modal'">
+<ng-container *ngIf="title == 'Add Model' || title == 'Edit Model'">
     <form [formGroup]="modalForm" class="merchant-form">
         <div class="form-group">
           <label for="name">Name:</label>
@@ -38,7 +38,7 @@
         </div>
         <div class="form-group">
           <label for="description">Description:</label>
-          <textarea class="form-control" rows="3" style="resize: none;" id="description" type="text" formControlName="description"></textarea>
+          <input id="description" type="text" formControlName="description">
         </div>
       </form>
 </ng-container>

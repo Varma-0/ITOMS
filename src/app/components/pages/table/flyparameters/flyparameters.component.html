@@ -61,7 +61,49 @@
               </ul>
           </div>
           <div *ngIf="selectedTab === 'terminal'">
-            <app-terminal></app-terminal>
+            <div class="controls">
+              <input [(ngModel)]="searchTerm" placeholder="Device SN" (input)="search()">
+              <select [(ngModel)]="statusFilter" (change)="search()">
+                <option value="">Parameter File Status</option>
+                <option value="Pending publish">Pending publish</option>
+                <option value="Published">Published</option>
+              </select>
+              <button class="icon-button"><i class="bx bx-search"></i></button>
+              <button class="icon-button"><i class="bx bx-plus"></i></button>
+              <button class="icon-button"><i class="bx bx-download"></i></button>
+              <button class="icon-button"><i class="bx bx-bar-chart-alt-2"></i></button>
+              <button class="menu-button"><i class="bx bx-menu"></i></button>
+            </div>
+        
+            <table class="device-table">
+              <thead>
+                <tr>
+                  <th class="th-device-sn">Device SN</th>
+                  <th class="th-organization">Organization</th>
+                  <th class="th-file-version">Parameter File Version</th>
+                  <th class="th-file-status">Parameter File Status</th>
+                  <th class="th-publish-time">Parameter File Publish Time</th>
+                  <th class="th-operation">Operation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let device of filteredDevices">
+                  <td class="td-device-sn">{{ device.deviceSN }}</td>
+                  <td class="td-organization">{{ device.organization }}</td>
+                  <td class="td-file-version">{{ device.parameterFileVersion }}</td>
+                  <td class="td-file-status">
+                    <span [ngClass]="{'status-pending': device.parameterFileStatus === 'Pending publish',
+                                      'status-published': device.parameterFileStatus === 'Published'}">
+                      {{ device.parameterFileStatus }}
+                    </span>
+                  </td>
+                  <td class="td-publish-time">{{ device.parameterFilePublishTime }}</td>
+                  <td class="td-operation">
+                    <button class="icon-button"><i class="bx bx-dots-vertical-rounded"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div *ngIf="selectedTab === 'emptyData'">
             <div class="centered-div">
@@ -115,14 +157,14 @@
                       </tr>
                 </table>
                 <br>
-                <div class="row">
-                    <mat-card class="col-4">
+                <div class="w-100">
+                    <!-- <mat-card class="col-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3>Background generation progress of terminal parameter file</h3>
                         </div>
                         <app-radialbar-semi-circular-gauge></app-radialbar-semi-circular-gauge>
-                    </mat-card>
-                <mat-card class="col-8">
+                    </mat-card> -->
+                <mat-card>
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h3>Terminal Parameter Update Statistics</h3>
                     </div>

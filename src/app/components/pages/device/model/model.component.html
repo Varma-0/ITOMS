@@ -7,34 +7,107 @@
     </ol>
   </div>
 
-  <div class="add-user" *ngIf="device.length != 0">
-    <button class="btn btn-primary" (click)="openCreateDialog()">Add Model</button>
+  <div class="search-container">
+    <input [(ngModel)]="searchTerm" placeholder="Device SN" (input)="search()">
+    <button (click)="search()"><i class="bx bx-search"></i></button>
+    <button (click)="openCreateDialog()"><i class="bx bx-plus"></i></button>
   </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Created Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let device of filteredDevices">
+        <td>{{ device.name }}</td>
+        <td>{{ device.description }}</td>
+        <td>{{ device.fulldate }}</td>
+      </tr>
+    </tbody>
+  </table>
+<!-- styling good no funtionality-->
+      <!-- <div class="file-manager">
+        <div class="search-bar">
+          <input [(ngModel)]="searchTerm" placeholder="Enter keywords to filter" (input)="applyFilter()">
+        </div>
+  
+        <div class="file-list">
+          <div class="file-header">
+            <div class="checkbox-column"><input type="checkbox" (change)="toggleAllSelection($event)"></div>
+            <div class="name-column">File Name</div>
+            <div class="type-column">Type</div>
+            <div class="size-column">Size (byte)</div>
+            <div class="date-column">
+              <span>Search</span>
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
+  
+          <div class="file-item" *ngFor="let item of paginatedFiles">
+            <div class="checkbox-column">
+              <input type="checkbox" [(ngModel)]="item.isSelected" (change)="updateSelection()">
+            </div>
+            <div class="name-column">
+              <i [class]="item.isDirectory ? 'fas fa-folder' : 'far fa-file'"></i>
+              {{ item.name }}
+            </div>
+            <div class="type-column">{{ item.type }}</div>
+            <div class="size-column">{{ item.size }}</div>
+            <div class="date-column">{{ item.date }}</div>
+          </div>
+        </div>
+  
+        <div class="pagination">
+          <button (click)="prevPage()" [disabled]="currentPage === 1">← Prev</button>
+          <span>Total {{ filteredFiles.length }} {{ currentPage }}</span>
+          <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next →</button>
+        </div>
+      </div> -->
 
-  <div *ngFor="let user of device" class="mb-4">
-    <mat-card class="user-card">
-      <div class="user-card-header">
-        <div class="date-info">
-          <p class="date">{{user.day}}</p>
-          <p class="day">{{ user.date }}</p>
-          <p class="month">{{ user.month }}</p>
-        </div>
-        <div class="user-info">
-          <p class="user-name">{{ user.name }}</p>
-          <p class="user-email">{{ user.fulldate }}</p>
-          <p class="user-name">{{ user.description }}</p>
-        </div>
-      </div>
-      <div class="user-card-actions">
-        <button mat-icon-button color="primary" aria-label="View Details">
-          <mat-icon style="color: blue;">view_list</mat-icon>
-        </button>
-        <button mat-icon-button color="primary" aria-label="Action 3" (click)="openCreateDialog(true)">
-          <mat-icon style="color: green;">edit</mat-icon>
-        </button>
-        <button mat-icon-button color="primary" aria-label="Action 3" (click)="openDeleteDialog()">
-            <mat-icon style="color: red;">delete</mat-icon>
+      <!--without pagination-->
+      <!-- <div class="file-manager">
+        <div class="action-buttons">
+          <button [disabled]="!hasSelection" (click)="onRefresh()">
+            <i class="bx bx-refresh"></i> 
           </button>
-      </div>
-    </mat-card>
-  </div>
+          <button [disabled]="!hasSelection" (click)="onDelete()">
+            <i class="bx bx-trash"></i> Delete
+          </button>
+          <button [disabled]="!hasSelection" (click)="onDownload()">
+            <i class="bx bx-download"></i> Download
+          </button>
+          <button [disabled]="!hasSelection" (click)="onUpload()">
+            <i class="bx bx-upload"></i> Upload
+          </button>
+        </div>
+  
+        <div class="search-bar">
+          <input [(ngModel)]="searchTerm" placeholder="Enter keywords to filter" (input)="applyFilter()">
+        </div>
+  
+        <div class="file-list">
+          <div class="file-header">
+            <div class="checkbox-column"><input type="checkbox" (change)="toggleAllSelection($event)"></div>
+            <div class="name-column">File Name</div>
+            <div class="type-column">Type</div>
+            <div class="size-column">Size (byte)</div>
+            <div class="date-column">Date</div>
+          </div>
+  
+          <div class="file-item" *ngFor="let item of filteredFiles">
+            <div class="checkbox-column">
+              <input type="checkbox" [(ngModel)]="item.isSelected" (change)="updateSelection()">
+            </div>
+            <div class="name-column">
+              <i [class]="item.isDirectory ? 'fas fa-folder' : 'fas fa-file'"></i>
+              {{ item.name }}
+            </div>
+            <div class="type-column">{{ item.type }}</div>
+            <div class="size-column">{{ item.size }}</div>
+            <div class="date-column">{{ item.date }}</div>
+          </div>
+        </div>
+      </div> -->

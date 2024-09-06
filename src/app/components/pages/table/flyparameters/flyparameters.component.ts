@@ -5,6 +5,14 @@ import { DesignSelectionComponent } from 'src/app/components/dialogs/design-sele
 import { SelectCfgComponent } from 'src/app/components/dialogs/select-cfg/select-cfg.component';
 import { SharedServices } from 'src/app/services/shared.service';
 
+interface Device {
+  deviceSN: string;
+  organization: string;
+  parameterFileVersion: string;
+  parameterFileStatus: string;
+  parameterFilePublishTime: string;
+}
+
 @Component({
   selector: 'app-flyparameters',
   templateUrl: './flyparameters.component.html',
@@ -24,14 +32,39 @@ export class FlyparametersComponent {
   ];
   filteredDeployments = [];
   selectedItem: any;
-  labelsm: string[] = ['Pending Publish','Published','Downloaded','Updated','Update failed'];
-  seriesm: number[] = [20,30,17,13,20];
-  colors: string[] = ['#6956CE', '#1CD3D2', '#4788ff','#3657ff','#2456ff'];
+  labelsm: string[] = ['Pending Publish','Published','Downloaded','Download failed'];
+  seriesm: number[] = [20,30,17,13];
+  colors: string[] = [
+    '#FF6B6B',  // Bright Red
+    '#4ECDC4',  // Teal
+    '#FFA500',  // Orange
+    '#9B59B6'   // Purple
+  ];
   showDynamicKeys = true;
+  filteredDevices: Device[] = [];
+  statusFilter = '';
+  devices: Device[] = [
+    {
+      deviceSN: 'NCA700083597',
+      organization: 'DEMOQZRNAXTpjSgS',
+      parameterFileVersion: '',
+      parameterFileStatus: 'Pending publish',
+      parameterFilePublishTime: ''
+    },
+    {
+      deviceSN: 'NCA700083598',
+      organization: 'DEMOQZRNAXTpjSgS',
+      parameterFileVersion: '1',
+      parameterFileStatus: 'Published',
+      parameterFilePublishTime: '09/06/2024 12:15:27'
+    }
+  ];
 
   ngOnInit() {
     // Initialize filteredDeployments with all deployments on load
     this.filteredDeployments = this.deployments;
+    this.filteredDevices = this.devices;
+
   }
 
   constructor(public dialog: MatDialog, private shared:SharedServices){}
@@ -74,6 +107,13 @@ export class FlyparametersComponent {
               });
         }
       });
-  }
+    }
+  
 
-}
+      search() {
+        this.filteredDevices = this.devices.filter(device =>
+          device.deviceSN.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
+          (this.statusFilter === '' || device.parameterFileStatus === this.statusFilter)
+        );
+      }
+  }
