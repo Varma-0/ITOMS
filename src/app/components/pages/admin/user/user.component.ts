@@ -4,6 +4,7 @@ import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.c
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 import { SharedServices } from 'src/app/services/shared.service';
+import { ActiveComponent } from 'src/app/components/dialogs/active/active.component';
 
 @Component({
   selector: 'app-user',
@@ -66,7 +67,6 @@ export class UserComponent {
       response => {
         this.tenantsData = response.event.eventData.tenants
         this.tenantsData.forEach(name => {
-          console.log("ythefuckisObje",name.name);
           this.tenantsNames.push(name.name);
         });
       }
@@ -78,10 +78,7 @@ export class UserComponent {
       response => {
         this.rolesData = response.event.eventData.tenantRoles
         this.rolesData.forEach(name => {
-          console.log("ythefuckisObje",name.name);
           this.rolesNames.push(name.name);
-          console.log("ythefuckisObje",this.rolesNames);
-
         });
       }
     )
@@ -92,26 +89,58 @@ export class UserComponent {
       response => {
         this.alertsData = response.event.eventData.alerts
         this.alertsData.forEach(name => {
-          console.log("ythefuckisObje",name.name);
           this.alertsNames.push(name.name);
-          console.log("ythefuckisObje",this.alertsNames);
-
         });
       }
     )
   }
 
-  openCreateDialog(): void {
+  openCreateDialog(edit?): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
      data : {
-        title : 'Add User',
+        title : edit ? 'Edit User' : 'Add User',
         tenantOptionNames : this.tenantsNames,
         roleOptionNames : this.rolesNames,
         alertOptionNames : this.alertsNames,
+        form : {
+            tenant: ['PAYQ'],
+            role: ['IT_ADMIN'],
+            alert: 'DEVICE SWAPPED',
+            firstName: 'Sandeep',
+            lastName: 'Reddy',
+            dob: '2000-06-06',
+            email: 'sandeep@gmail.com',
+            phone: '1234567891',
+            country: 'INDIA',
+            altemail: 'sandy@gmail.com',
+            altphone: '2211221122',
+            altcountry: 'INDIA',
+          }
      },
      width : '60%'
     });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Implement delete functionality here
+        console.log('User deleted');
+      }
+    });
+  }
+
+  openActiveDialog(data): void {
+    const dialogRef = this.dialog.open(ActiveComponent,{
+        data : {
+            title : data == 'active' ? 'In Active Tenants' : 'Active Tenants',
+            items: [
+                { label: 'Option 1', checked: false },
+                { label: 'Option 2', checked: false },
+                { label: 'Option 3', checked: false },
+                { label: 'Option 4', checked: false }
+              ]
+        },
+        width : '25%'
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // Implement delete functionality here

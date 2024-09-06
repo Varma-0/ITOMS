@@ -1,10 +1,12 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
+  MatDialog,
   MatDialogRef,
 } from '@angular/material/dialog';
 import { SharedServices } from 'src/app/services/shared.service';
+import { AddPermissionComponent } from '../add-permission/add-permission.component';
 
 @Component({
   selector: 'app-add-form',
@@ -25,22 +27,29 @@ export class AddFormComponent {
   permissionForm: FormGroup;
   tenantForm: FormGroup;
   merchantForm: FormGroup;
-  constructor(public dialogRef: MatDialogRef<AddFormComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private shared:SharedServices) {
+  form: FormGroup;
+  userData:any;
+    isSAValue: boolean;
+  constructor(public dialog: MatDialog,public dialogRef: MatDialogRef<AddFormComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private shared:SharedServices) {
     this.title = data.title
     this.tenantOptionNames = data.tenantOptionNames
     this.roleOptionNames = data.roleOptionNames;
     this.alertOptionNames = data.alertOptionNames;
     this.permissionOptionNames = data.permissionOptionNames;
     this.shared.setSidebarState(false);
+    this.userData = data;
   }
 
   ngOnInit(){
     this.loginData = localStorage.getItem("SA");
-    const isSAValue = localStorage.getItem('SA') === 'true';
+    this.isSAValue = localStorage.getItem('SA') === 'true';
+    this.form = this.fb.group({
+        items: this.fb.array([])
+      });
     this.userForm = this.fb.group({
         tenant: [[]],
-        role: isSAValue ? [[]] : [''],
-        alert: isSAValue ? [[]] : [''],
+        role: this.isSAValue ? [[]] : [''],
+        alert: this.isSAValue ? [[]] : [''],
         firstName: [''],
         lastName: [''],
         dob: [''],
@@ -54,10 +63,7 @@ export class AddFormComponent {
       this.roleForm = this.fb.group({
         name: [''],
         description: [''],
-        permission: isSAValue ? [[]] : [''],
-        checkbox1: [''],
-        checkbox2: [''],
-        checkbox3: [''],
+        roles: this.fb.array([])
       });
       this.alertForm = this.fb.group({
         name: [''],
@@ -94,6 +100,61 @@ export class AddFormComponent {
         email: [''],
         phone: [''],
       });
+      if(this.title == 'Edit User'){
+        this.userForm.patchValue(this.userData.form);
+      }else if(this.title == 'Edit Role'){
+        this.roleForm.patchValue(this.userData.form);
+        this.userData.form.roles.forEach(roleData => {
+            this.items.push(this.fb.group({
+                label : roleData.label,
+                view : [{value : roleData.view,disabled:true}],
+                edit : [{value : roleData.edit,disabled:true}],
+                delete : [{value : roleData.delete,disabled:true}]
+            }));
+          });
+      }else if(this.title == 'Edit Alert'){
+        this.alertForm.patchValue(this.userData.form);
+      }else if(this.title == 'Edit Permission'){
+        this.permissionForm.patchValue(this.userData.form);
+      }else if(this.title == 'Edit Tenant'){
+        this.tenantForm.patchValue(this.userData.form);
+      }else if(this.title == 'Edit Merchant'){
+        this.merchantForm.patchValue(this.userData.form);
+      }
+  }
+
+  get items(): FormArray {
+    return this.roleForm.get('roles') as FormArray;
+  }
+
+  createItem(data): FormGroup {
+    return this.fb.group({
+      label: [data.permission],
+      view: [{value : data.checkbox1, disabled:true}],
+      edit: [{value : data.checkbox2, disabled:true}],
+      delete: [{value : data.checkbox3, disabled:true}]
+    });
+  }
+
+  addItem(data): void {
+    this.items.push(this.createItem(data));
+  }
+
+  removeItem(index: number): void {
+    this.items.removeAt(index);
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddPermissionComponent,{
+        data : {
+            permissionOptionNames : this.permissionOptionNames
+        }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != true && result != false) {
+        this.addItem(result);
+      }
+    });
   }
 
   onCancel(): void {

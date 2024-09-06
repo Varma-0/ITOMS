@@ -63,11 +63,28 @@ export class RoleComponent {
     )
   }
 
-  openCreateDialog(): void {
+  openCreateDialog(edit?): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
         data:{
-            title : 'Add Role',
-            permissionOptionNames : this.permissionsNames
+            title : edit ? 'Edit Role' : 'Add Role',
+            permissionOptionNames : this.permissionsNames,
+            form:{
+                name: ['Test'],
+                description: ['Test'],
+                roles: [{
+                    label : 'Dashboard',
+                    view : true,
+                    edit : false,
+                    delete : false
+                },
+                {
+                    label : 'Admin',
+                    view : true,
+                    edit : true,
+                    delete : true
+                }
+            ]
+            }
         },
         width: '40%'
     });

@@ -58,10 +58,25 @@ export class AlertComponent {
     )
   }
 
-  openCreateDialog(): void {
+  openCreateDialog(edit?): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
         data: {
-            title:'Add Alert'
+            title: edit ? 'Edit Alert' : 'Add Alert',
+            form : {
+                name: 'Test',
+                originator: 'Server',
+                alert: 'Low',
+                template: 'Email',
+                description: 'Test',
+                checkbox1: 'true',
+                checkbox2: 'true',
+                checkbox3: 'true',
+                tvalue: '121',
+                dvalue: '112',
+                minvalue: '11',
+                maxvalue: '12',
+                templateId: '11',
+              }
         },
         width:'40%'
     });

@@ -58,10 +58,18 @@ export class PermissionComponent {
     )
   }
 
-  openCreateDialog(): void {
+  openCreateDialog(edit?): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
         data:{
-            title:'Add Permission'
+            title: edit ? 'Edit Permission' : 'Add Permission',
+            form : {
+                name: ['test'],
+                description: ['Test'],
+                permission: ['Default'],
+                checkbox1: ['true'],
+                checkbox2: ['true'],
+                checkbox3: ['true'],
+            }
         },
         width:'40%'
     });

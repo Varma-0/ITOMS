@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Add Permission</h2>
+<mat-dialog-content>
+    <form [formGroup]="permissionForm" class="merchant-form">
+        <div class="form-group">
+            <label for="permission">Permission:</label>
+            <select id="permission" formControlName="permission">
+              <option *ngFor="let permission of permissionOptionNames" [value]="permission">{{ permission }}</option>
+            </select>
+          </div>
+          <div class="form-group checkbox-group">
+            <label>
+              <input type="checkbox" formControlName="checkbox1"> View
+            </label>
+            <label>
+              <input type="checkbox" formControlName="checkbox2"> Edit
+            </label>
+            <label>
+              <input type="checkbox" (change)="change()" formControlName="checkbox3"> Delete
+            </label>
+          </div>
+      </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="d-flex justify-content-evenly">
+  <button class="btn btn-secondary" mat-dialog-close>Cancel</button>
+  <button class="btn btn-primary" (click)="onConfirm()" [mat-dialog-close]="true">Confirm</button>
+</mat-dialog-actions>

@@ -66,10 +66,16 @@ export class TenantsComponent {
     console.log(`${tenant.name} status is now: ${tenant.status}`);
   }
 
-  openCreateDialog(): void {
+  openCreateDialog(edit?): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
         data:{
-            title:'Add Tenant'
+            title:edit ? 'Edit Tenant' : 'Add Tenant',
+            form : {
+                name: ['Test'],
+                description: ['Test'],
+                type: ['SA'],
+                stype: ['Test'],
+            }
         },
         width:'40%'
     });

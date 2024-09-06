@@ -205,6 +205,8 @@ import { FolderComponent } from './components/pages/device/folder/folder.compone
 import { ModelComponent } from './components/pages/device/model/model.component';
 import { PackageComponent } from './components/pages/device/package/package.component';
 import { ScheduleComponent } from './components/pages/device/schedule/schedule.component';
+import { AddPermissionComponent } from './components/dialogs/add-permission/add-permission.component';
+import { ActiveComponent } from './components/dialogs/active/active.component';
 
 @NgModule({
   declarations: [
@@ -385,7 +387,9 @@ import { ScheduleComponent } from './components/pages/device/schedule/schedule.c
     FolderComponent,
     ModelComponent,
     PackageComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    AddPermissionComponent,
+    ActiveComponent
   ],
   imports: [
     BrowserModule,

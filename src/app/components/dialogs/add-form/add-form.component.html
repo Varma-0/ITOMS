@@ -1,22 +1,22 @@
 <h2 mat-dialog-title>{{title}}</h2>
 <mat-dialog-content>
 <!-- merchant-form.component.html -->
-<ng-container *ngIf="title == 'Add User'">
+<ng-container *ngIf="title == 'Add User' || title == 'Edit User'">
   <form [formGroup]="userForm" class="merchant-form">
     <div class="form-group" *ngIf="loginData === 'true'">
       <label for="tenant">Tenant:</label>
       <!-- <select id="tenant" formControlName="tenant">
         <option *ngFor="let tenant of tenantOptionNames" value="tenant">{{ tenant }}</option>
       </select> -->
-      <mat-select formControlName="tenant" multiple>
-        <mat-option *ngFor="let tenant of tenantOptionNames" value="tenant">{{ tenant }}</mat-option>
+      <mat-select formControlName="tenant" [multiple]="isSAValue">
+        <mat-option *ngFor="let tenant of tenantOptionNames" [value]="tenant">{{ tenant }}</mat-option>
      </mat-select>
     </div>
 
     <div class="form-group">
       <label for="role">Role:</label>
-      <mat-select id="role" formControlName="role">
-        <mat-option *ngFor="let role of roleOptionNames" value="role">{{ role }}</mat-option>
+      <mat-select id="role" formControlName="role" [multiple]="isSAValue">
+        <mat-option *ngFor="let role of roleOptionNames" [value]="role">{{ role }}</mat-option>
       </mat-select>
     </div>
 
@@ -79,7 +79,7 @@
     </div>
   </form>
 </ng-container>
-<ng-container *ngIf="title == 'Add Role'">
+<ng-container *ngIf="title == 'Add Role' || title == 'Edit Role'">
     <form [formGroup]="roleForm" class="merchant-form">
         <div class="form-group">
           <label for="name">Name:</label>
@@ -89,27 +89,27 @@
           <label for="description">Description:</label>
           <textarea class="form-control" rows="3" style="resize: none;" id="description" type="text" formControlName="description"></textarea>
         </div>
-        <div class="form-group">
-            <label for="permission">Permission:</label>
-            <select id="permission" formControlName="permission">
-              <option *ngFor="let permission of permissionOptionNames" value="permission">{{ permission }}</option>
-
-            </select>
+        <div class="button-container">
+            <button class="clean-button" (click)="openDialog()">Add Permission</button>
           </div>
-          <div class="form-group checkbox-group">
-            <label>
-              <input type="checkbox" formControlName="checkbox1"> View
-            </label>
-            <label>
-              <input type="checkbox" formControlName="checkbox2"> Edit
-            </label>
-            <label>
-              <input type="checkbox" formControlName="checkbox3"> Delete
-            </label>
-          </div>
+            <div formArrayName="roles">
+              <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-box">
+                <div class="header">
+                  <span>{{ item.controls.label.value }}</span>
+                  <button mat-icon-button color="warn" (click)="removeItem(i)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+                <div class="checkboxes">
+                  <mat-checkbox formControlName="view">View</mat-checkbox>
+                  <mat-checkbox formControlName="edit">Edit</mat-checkbox>
+                  <mat-checkbox formControlName="delete">Delete</mat-checkbox>
+                </div>
+              </div>
+            </div>
       </form>
 </ng-container>
-<ng-container *ngIf="title == 'Add Alert'">
+<ng-container *ngIf="title == 'Add Alert' || title == 'Edit Alert'">
     <form [formGroup]="alertForm" class="merchant-form">
         <div class="form-group">
             <div class="form-group">
@@ -178,7 +178,7 @@
           </div>
       </form>
 </ng-container>
-<ng-container *ngIf="title == 'Add Permission'">
+<ng-container *ngIf="title == 'Add Permission' || title == 'Edit Permission'">
     <form [formGroup]="permissionForm" class="merchant-form">
         <div class="form-group">
           <label for="name">Permission Name:</label>
@@ -208,7 +208,7 @@
           </div>
       </form>
 </ng-container>
-<ng-container *ngIf="title == 'Add Tenant'">
+<ng-container *ngIf="title == 'Add Tenant' || title == 'Edit Tenant'">
     <form [formGroup]="tenantForm" class="merchant-form">
         <div class="form-group">
           <label for="name">Tenant Name:</label>
@@ -233,7 +233,7 @@
           </div>
       </form>
 </ng-container>
-<ng-container *ngIf="title == 'Add Merchant'">
+<ng-container *ngIf="title == 'Add Merchant' || title == 'Edit Merchant'">
     <form [formGroup]="merchantForm" class="merchant-form">
         <div class="form-group">
           <label for="name">Merchant Name:</label>

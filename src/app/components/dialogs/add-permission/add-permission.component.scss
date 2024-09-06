@@ -116,46 +116,4 @@ select {
     margin-right: 8px; /* Space between the checkbox and the label text */
   }
 
-  .button-container {
-    text-align: right;
-  }
-
-  .clean-button {
-    background: none;
-    border: none;
-    color: #007bff;
-    padding: 0;
-    font-size: 16px;
-    cursor: pointer;
-  }
-
-  .clean-button:hover {
-    text-decoration: underline;
-  }
-
-  .clean-button:focus {
-    outline: none;
-  }
-
-  .item-box {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding-left: 10px ;
-    background-color: #f9f9f9;
-    margin-bottom: 16px;
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: bold;
-    }
-
-    .checkboxes {
-      display: flex;
-      gap: 16px;
-    }
-  }
-
-
 

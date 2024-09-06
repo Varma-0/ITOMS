@@ -1,0 +1,92 @@
+/* Style the dialog title */
+mat-dialog-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: red;
+    border-bottom: 1px solid #ddd;
+  }
+
+  h2{
+    border-bottom: 1px solid #ddd;
+  }
+
+  /* Style the dialog content */
+  mat-dialog-content {
+    font-size: 1rem;
+    color: #666;
+  }
+
+  /* Style the dialog actions container */
+  mat-dialog-actions {
+    padding: 16px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+  }
+
+  .config-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .file-format,
+  .authorization-switch {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .format-options {
+    display: flex;
+    gap: 15px;
+  }
+
+  label {
+    font-size: 14px;
+    color: #333;
+  }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 15px;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+
+  input:checked + .slider {
+    background-color: #007bff;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(20px);
+  }
