@@ -41,32 +41,50 @@ export class DevicesComponent {
     this.dataService.terminalData(terminalRequest).subscribe(
       response => {
         console.log(response);
-        // this.device = response.event.eventData
-        this.device = response.event.eventData
-        this.device.forEach(data => {
-          this.isActive = data.status === 'ACTIVE';
-          console.log("eweq",data);
-          this.time = data.createdBy.ts
-          this.fulldate = this.time.split('T')[0];
-          console.log("eweq",this.fulldate);
-          // Parse the date string to a Date object
-          const dateObject = new Date(this.fulldate);
-
+        
+        // Process each device in the eventData array
+        this.device = response.event.eventData.map(data => {
+          // Determine if the device is active
+          const isActive = data.status === 'ACTIVE';
+    
+          // Extract date and time information from createdBy timestamp
+          const time = data.createdBy.ts;
+          const fulldate = time.split('T')[0];
+    
+          // Parse the full date string into a Date object
+          const dateObject = new Date(fulldate);
+    
           // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
           const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-          this.day = daysOfWeek[dateObject.getUTCDay()];
-          console.log('Day of the week:', this.day); // For example, "Friday"
-          this.date = this.fulldate.split('-')[2];
-          console.log(this.date);
-          const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-          this.month = monthNames[dateObject.getUTCMonth()];
-          console.log('Month:', this.month);
+          const day = daysOfWeek[dateObject.getUTCDay()];
+    
+          // Extract the day of the month
+          const date = fulldate.split('-')[2];
+    
+          // Get the month name from the date
+          const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          const month = monthNames[dateObject.getUTCMonth()];
+    
+          // Return each device with additional date-related info and status
+          return {
+            ...data,
+            isActive,     // Active status of the device
+            time,         // Original timestamp
+            fulldate,     // Full date in YYYY-MM-DD format
+            day,          // Day of the week (e.g., 'Fri')
+            date,         // Day of the month (e.g., '20')
+            month         // Month (e.g., 'Jun')
+          };
         });
+    
+        // Log the updated device array with all additional info
+        console.log('Updated device data:', this.device);
       },
       error => {
         console.error('Error:', error);
       }
     );
+    
   }
 
 

@@ -36,37 +36,47 @@ export class ModelComponent {
     // this.loginData = this.shared.getLoginData();
     this.loginData = localStorage.getItem("SA");
     console.log("uigfiqw",this.loginData);
-    const event = new terminalEvent('DEVICE', 'SEARCH');
+    const event = new terminalEvent('MODEL', 'SEARCH');
     const terminalRequest = new terminalBody(event);
-    this.dataService.terminalData(terminalRequest).subscribe(
+    this.dataService.modelData(terminalRequest).subscribe(
       response => {
         console.log(response);
-        // this.device = response.event.eventData
-        this.device = response.event.eventData
-        this.device.forEach(data => {
-          this.isActive = data.status === 'ACTIVE';
-          console.log("eweq",data);
-          this.time = data.createdBy.ts
-          this.fulldate = this.time.split('T')[0];
-          console.log("eweq",this.fulldate);
+        this.device = response.event.eventData.map(data => {
+          // Extract date and time info from createdBy timestamp
+          const time = data.createdBy.ts;
+          const fulldate = time.split('T')[0];
+    
           // Parse the date string to a Date object
-          const dateObject = new Date(this.fulldate);
-
-          // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+          const dateObject = new Date(fulldate);
+    
+          // Get the day of the week
           const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-          this.day = daysOfWeek[dateObject.getUTCDay()];
-          console.log('Day of the week:', this.day); // For example, "Friday"
-          this.date = this.fulldate.split('-')[2];
-          console.log(this.date);
-          const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-          this.month = monthNames[dateObject.getUTCMonth()];
-          console.log('Month:', this.month);
+          const day = daysOfWeek[dateObject.getUTCDay()];
+          this.day = day;
+    
+          // Get the date and month
+          const date = fulldate.split('-')[2];
+          this.date = date;
+          const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          const month = monthNames[dateObject.getUTCMonth()];
+          this.month = month;
+    
+          // Return each device with additional date-related information
+          return {
+            ...data,
+            time,         // Original timestamp
+            fulldate,     // Full date in YYYY-MM-DD format
+            day,          // Day of the week (e.g., 'Fri')
+            date,         // Day of the month (e.g., '20')
+            month         // Month (e.g., 'Jun')
+          };
         });
+        console.log('Updated device data:', this.device);
       },
       error => {
         console.error('Error:', error);
       }
-    );
+    );    
   }
 
 

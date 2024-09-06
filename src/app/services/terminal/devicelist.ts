@@ -23,6 +23,10 @@ export class TerminalService {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/device/search`, options, { headers: this.httpHeaders });
     }
 
+    modelData(options: terminalBody): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/model/search`, options, { headers: this.httpHeaders });
+    }
+
     merchantData(options:terminalBody): Observable<any> {
         return this.http.post<any>(`${environment.userApiUrl}/merchant/getTenantMerchants`,options)
     }

@@ -15,13 +15,13 @@
     <mat-card class="user-card">
       <div class="user-card-header">
         <div class="date-info">
-          <p class="date">{{day}}</p>
-          <p class="day">{{ date }}</p>
-          <p class="month">{{ month }}</p>
+          <p class="date">{{user.day}}</p>
+          <p class="day">{{ user.date }}</p>
+          <p class="month">{{ user.month }}</p>
         </div>
         <div class="user-info">
           <p class="user-name">{{ user.serialNumber }}</p>
-          <p class="user-email">{{ fulldate }}</p>
+          <p class="user-email">{{ user.fulldate }}</p>
         </div>
         <mat-slide-toggle
         color="primary"
