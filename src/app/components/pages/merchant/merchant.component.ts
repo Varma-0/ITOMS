@@ -3,6 +3,15 @@ import { terminalBody } from 'src/app/services/terminal/body/body';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 
+interface Merchant {
+  name: string;
+  country: string;
+  organization: string;
+  status: string;
+  creationTime: string;
+}
+
+
 
 
 function aggregateDataByStatus(data: any[]): { status: string, count: number }[] {
@@ -29,6 +38,13 @@ function aggregateDataByStatus(data: any[]): { status: string, count: number }[]
 
 
 export class MerchantComponent implements OnInit {
+  merchants: Merchant[] = [
+    { name: 'Merchant 1', country: 'South Africa', organization: 'Dashpay', status: 'Valid', creationTime: '10/31/2022' },
+    { name: 'Dashpay 2', country: 'South Africa', organization: 'DEMOQZRNAXTpjSgS', status: 'Valid', creationTime: '09/28/2022' },
+  ];
+
+  selectedOrganization = 'DEMOQZRNAXTpjSgS';
+  subOrganization = false;
   sidebarItems: string[] = ['StandardPos1', 'StandardPos2']; // List of sidebar items
   selectedItem: string = this.sidebarItems[0]; // Default selected item
   selectedTab: string = 'overview'; // Default tab

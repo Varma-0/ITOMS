@@ -139,13 +139,44 @@
       </div>
 
       <div *ngIf="selectedTab === 'merchant'">
-        <h3>Merchant Information</h3>
-        <div class="info-grid">
-          <div class="info-item">
-            <i class="fas fa-user"></i>
-            <span>{{ data.merchant.name }}</span>
+        <div class="merchant-list">
+          <div class="controls">
+            <input type="text" placeholder="Name/MID" class="input">
+            <div class="select-wrapper">
+              <select [(ngModel)]="selectedOrganization" class="select">
+                <option>DEMOQZRNAXTpjSgS</option>
+              </select>
+            </div>
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="subOrganization">
+              Sub-Organization
+            </label>
+            <button class="btn btn-icon"><i class="bx bx-search"></i></button>
+            <button class="btn btn-icon"><i class="bx bx-plus"></i></button>
+            <button class="btn btn-icon"><i class="bx bx-filter"></i></button>
           </div>
-          <!-- Add more merchant-related items -->
+          <table class="merchant-table">
+            <thead>
+              <tr>
+                <th>Merchant</th>
+                <th>Country/Region</th>
+                <th>Organization</th>
+                <th>Status</th>
+                <th>Creation Time</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let merchant of merchants">
+                <td class="merchant-name"><span class="merchant-icon">🏪</span>{{merchant.name}}</td>
+                <td>{{merchant.country}}</td>
+                <td>{{merchant.organization}}</td>
+                <td><span class="status-badge">{{merchant.status}}</span></td>
+                <td>{{merchant.creationTime}}</td>
+                <td><button style="background-color: transparent;border: none"><mat-icon>more_vert</mat-icon></button></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 

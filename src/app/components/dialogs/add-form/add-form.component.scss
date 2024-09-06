@@ -16,6 +16,15 @@ mat-dialog-title {
     color: #666;
   }
 
+  mat-select{
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+  }
+
   /* Style the dialog actions container */
   mat-dialog-actions {
     padding: 16px;

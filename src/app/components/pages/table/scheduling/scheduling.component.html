@@ -199,5 +199,94 @@
             </div>
           </mat-card>
       </div>
+      <div *ngIf="selectedTab === 'process'">
+        <div class="dashboard">
+          <div class="card">
+            <div class="card-header">
+              <h2>Connected terminals/Unconnected terminals</h2>
+              <span class="info-icon">i</span>
+            </div>
+            <div class="chart">
+              <div class="semi-circle" [style.background-image]="'conic-gradient(#4285F4 0deg, #4285F4 ' + connectedPercentage * 3.6 + 'deg, #F8F9FA ' + connectedPercentage * 3.6 + 'deg)'"></div>
+              <div class="chart-labels">
+                <span class="label connected">Connected terminals</span>
+                <span class="label unconnected">Un...</span>
+              </div>
+            </div>
+            <div class="stats">
+              <div class="stat">
+                <span class="dot blue"></span>
+                <span class="percentage">{{connectedPercentage.toFixed(2)}}% ({{connectedTerminals}})</span>
+                <span class="label">Connected terminals</span>
+              </div>
+              <div class="stat">
+                <span class="dot red"></span>
+                <span class="percentage">{{unconnectedPercentage.toFixed(2)}}% ({{unconnectedTerminals}})</span>
+                <span class="label">Unconnected terminals</span>
+              </div>
+            </div>
+          </div>
+        
+          <div class="card">
+            <div class="card-header">
+              <h2>Number of active terminals</h2>
+              <span class="info-icon">i</span>
+            </div>
+            <div class="chart">
+              <div class="semi-circle" [style.background-image]="'conic-gradient(#EA4335 0deg, #EA4335 ' + inactivePercentage * 3.6 + 'deg, #F8F9FA ' + inactivePercentage * 3.6 + 'deg)'"></div>
+              <div class="chart-labels">
+                <span class="label active">Ac...</span>
+                <span class="label inactive">Inactive terminals</span>
+              </div>
+            </div>
+            <div class="stats">
+              <div class="stat">
+                <span class="dot blue"></span>
+                <span class="percentage">{{activePercentage.toFixed(2)}}% ({{activeTerminals}})</span>
+                <span class="label">Active terminals</span>
+              </div>
+              <div class="stat">
+                <span class="dot red"></span>
+                <span class="percentage">{{inactivePercentage.toFixed(2)}}% ({{inactiveTerminals}})</span>
+                <span class="label">Inactive terminals</span>
+              </div>
+            </div>
+          </div>
+        </div>        
+        <div class="statistics-card">
+          <h2 class="overall-progress">Overall progress {{overallProgress}}% (0/0)</h2>
+          
+          <div class="info-box">
+            <p>The following statistics only include connected terminals, the unconnected terminal does not know the specific installation version of the terminal, so it is not included in the statistics.</p>
+          </div>
+          
+          <h3>Statistics of updates</h3>
+          
+          <div class="chart-container">
+            <svg width="100%" height="200">
+              <!-- Y-axis -->
+              <line x1="40" y1="10" x2="40" y2="180" stroke="#ccc" />
+              <text x="30" y="15" text-anchor="end">1</text>
+              <text x="30" y="180" text-anchor="end">0</text>
+              
+              <!-- X-axis -->
+              <line x1="40" y1="180" x2="700" y2="180" stroke="#ccc" />
+              
+              <!-- Data points and line -->
+              <polyline
+                [attr.points]="getPolylinePoints()"
+                fill="none"
+                stroke="#4285F4"
+                stroke-width="2"
+              />
+              
+              <!-- X-axis labels -->
+              <ng-container *ngFor="let stat of updateStatistics; let i = index">
+                <text [attr.x]="40 + i * 100" y="195" text-anchor="middle">{{stat.date | date:'yyyy-MM-dd'}}</text>
+              </ng-container>
+            </svg>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
