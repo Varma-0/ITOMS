@@ -207,6 +207,7 @@ import { PackageComponent } from './components/pages/device/package/package.comp
 import { ScheduleComponent } from './components/pages/device/schedule/schedule.component';
 import { AddPermissionComponent } from './components/dialogs/add-permission/add-permission.component';
 import { ActiveComponent } from './components/dialogs/active/active.component';
+import { DevicesFormComponent } from './components/dialogs/device-form/device-form.component';
 
 @NgModule({
   declarations: [
@@ -389,7 +390,8 @@ import { ActiveComponent } from './components/dialogs/active/active.component';
     PackageComponent,
     ScheduleComponent,
     AddPermissionComponent,
-    ActiveComponent
+    ActiveComponent,
+    DevicesFormComponent
   ],
   imports: [
     BrowserModule,

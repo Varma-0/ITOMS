@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
+import { DevicesFormComponent } from 'src/app/components/dialogs/device-form/device-form.component';
 import { SharedServices } from 'src/app/services/shared.service';
 import { terminalBody } from 'src/app/services/terminal/body/body';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
@@ -45,22 +46,22 @@ export class ModelComponent {
           // Extract date and time info from createdBy timestamp
           const time = data.createdBy.ts;
           const fulldate = time.split('T')[0];
-    
+
           // Parse the date string to a Date object
           const dateObject = new Date(fulldate);
-    
+
           // Get the day of the week
           const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
           const day = daysOfWeek[dateObject.getUTCDay()];
           this.day = day;
-    
+
           // Get the date and month
           const date = fulldate.split('-')[2];
           this.date = date;
           const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
           const month = monthNames[dateObject.getUTCMonth()];
           this.month = month;
-    
+
           // Return each device with additional date-related information
           return {
             ...data,
@@ -76,26 +77,27 @@ export class ModelComponent {
       error => {
         console.error('Error:', error);
       }
-    );    
+    );
   }
 
 
-  
+
 
   toggleStatus(isActive: boolean) {
     // Update user status based on the toggle position
     isActive ? 'ACTIVE' : 'INACTIVE';
   }
 
-  openCreateDialog(): void {
-    const dialogRef = this.dialog.open(AddFormComponent,{
+  openCreateDialog(edit?): void {
+    const dialogRef = this.dialog.open(DevicesFormComponent,{
      data : {
-        title : 'Add User',
-        tenantOptionNames : this.tenantsNames,
-        roleOptionNames : this.rolesNames,
-        alertOptionNames : this.alertsNames,
+        title : edit ? 'Edit Modal' : 'Add Modal',
+        form:{
+            name: ['Test'],
+            description: ['Testing done'],
+        }
      },
-     width : '60%'
+     width : '40%'
     });
 
     dialogRef.afterClosed().subscribe(result => {

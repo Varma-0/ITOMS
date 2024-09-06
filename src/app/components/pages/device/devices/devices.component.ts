@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
+import { DevicesFormComponent } from 'src/app/components/dialogs/device-form/device-form.component';
 import { SharedServices } from 'src/app/services/shared.service';
 import { terminalBody } from 'src/app/services/terminal/body/body';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
@@ -41,30 +42,30 @@ export class DevicesComponent {
     this.dataService.terminalData(terminalRequest).subscribe(
       response => {
         console.log(response);
-        
+
         // Process each device in the eventData array
         this.device = response.event.eventData.map(data => {
           // Determine if the device is active
           const isActive = data.status === 'ACTIVE';
-    
+
           // Extract date and time information from createdBy timestamp
           const time = data.createdBy.ts;
           const fulldate = time.split('T')[0];
-    
+
           // Parse the full date string into a Date object
           const dateObject = new Date(fulldate);
-    
+
           // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
           const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
           const day = daysOfWeek[dateObject.getUTCDay()];
-    
+
           // Extract the day of the month
           const date = fulldate.split('-')[2];
-    
+
           // Get the month name from the date
           const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
           const month = monthNames[dateObject.getUTCMonth()];
-    
+
           // Return each device with additional date-related info and status
           return {
             ...data,
@@ -76,7 +77,7 @@ export class DevicesComponent {
             month         // Month (e.g., 'Jun')
           };
         });
-    
+
         // Log the updated device array with all additional info
         console.log('Updated device data:', this.device);
       },
@@ -84,26 +85,30 @@ export class DevicesComponent {
         console.error('Error:', error);
       }
     );
-    
+
   }
 
 
-  
+
 
   toggleStatus(isActive: boolean) {
     // Update user status based on the toggle position
     isActive ? 'ACTIVE' : 'INACTIVE';
   }
 
-  openCreateDialog(): void {
-    const dialogRef = this.dialog.open(AddFormComponent,{
+  openCreateDialog(edit?): void {
+    const dialogRef = this.dialog.open(DevicesFormComponent,{
      data : {
-        title : 'Add User',
-        tenantOptionNames : this.tenantsNames,
-        roleOptionNames : this.rolesNames,
-        alertOptionNames : this.alertsNames,
+        title : edit ? 'Edit Device' : 'Add Device',
+        hierarchy : ['Test','New','Ok'],
+        form:{
+            sno: ['8821'],
+            skey: ['1281891'],
+            modal: ['TH28'],
+            hierarchy: ['Test'],
+        }
      },
-     width : '60%'
+     width : '40%'
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -1,0 +1,49 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
+<!-- merchant-form.component.html -->
+<ng-container *ngIf="title == 'Add Device' || title == 'Edit Device'">
+  <form [formGroup]="deviceForm" class="merchant-form">
+
+    <div class="form-group">
+      <label for="alert">Hierarchy:</label>
+      <select id="alert" formControlName="hierarchy">
+        <option *ngFor="let i of options" value="i">{{ i }}</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="firstName">Serial Number:</label>
+        <input id="firstName" type="text" formControlName="sno" />
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="lastName">Software Key:</label>
+        <input id="lastName" type="text" formControlName="skey" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="email">Device Modal:</label>
+        <input id="email" type="text" formControlName="modal" />
+      </div>
+    </div>
+  </form>
+</ng-container>
+<ng-container *ngIf="title == 'Add Modal' || title == 'Edit Modal'">
+    <form [formGroup]="modalForm" class="merchant-form">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input id="name" type="text" formControlName="name">
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea class="form-control" rows="3" style="resize: none;" id="description" type="text" formControlName="description"></textarea>
+        </div>
+      </form>
+</ng-container>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="d-flex justify-content-evenly">
+  <button class="btn btn-secondary" mat-dialog-close>Cancel</button>
+  <button class="btn btn-primary" [mat-dialog-close]="true">Confirm</button>
+</mat-dialog-actions>
