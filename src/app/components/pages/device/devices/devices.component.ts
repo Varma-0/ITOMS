@@ -20,7 +20,7 @@ export class DevicesComponent {
   alertsData:any;
   tenantsNames: any = [];
   rolesNames: any = [];
-  alertsNames: any = [];
+  modelsList: any = [];
   time: any = '';
   fulldate:any = '';
   day:any = '';
@@ -46,10 +46,13 @@ export class DevicesComponent {
           const fulldate = time.split('T')[0];  // Get the full date (YYYY-MM-DD)
           
           return {
+            deviceId: data.id,
             serialNumber: data.serialNumber,
             model: data.model,
             status: data.status,
             fulldate: fulldate,
+            sk: data.softwareKey,
+            hierarchy: data.hierarchy
           };
         });
         this.filteredDevices = this.device;
@@ -61,7 +64,33 @@ export class DevicesComponent {
         console.error('Error:', error);
       }
     );
+    this.deviceDropdown();
+  }
 
+  deviceDropdown() {
+    const event = new terminalEvent('MODEL', 'SEARCH');
+    const terminalRequest = new terminalBody(event);
+    this.dataService.modelData(terminalRequest).subscribe(
+      response => {
+        console.log(response);
+        this.device = response.event.eventData.map(data => {
+          const time = data.createdBy.ts;
+          const fulldate = time.split('T')[0];  // Get the full date (YYYY-MM-DD)
+          this.modelsList.push(data.name);
+          return {
+            name: data.name,
+            description: data.description,
+            fulldate: fulldate,
+            
+          };
+        });
+        // this.filteredDevices = this.device;
+        console.log('Updated device data:', this.device);
+      },
+      error => {
+        console.error('Error:', error);
+      }
+    );
   }
 
   search() {
@@ -71,19 +100,28 @@ export class DevicesComponent {
   }
 
 
+  openDeleteDialog(device): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        
+      }
+    });
+  }
 
 
-
-  openCreateDialog(edit?): void {
+  openCreateDialog(data?,edit?): void {
+    console.log("checking",data);
     const dialogRef = this.dialog.open(DevicesFormComponent,{
      data : {
         title : edit ? 'Edit Device' : 'Add Device',
-        hierarchy : ['Test','New','Ok'],
+        // hierarchy : ['Test','New','Ok'],
+        modals : this.modelsList,
         form:{
-            sno: ['8821'],
-            skey: ['1281891'],
-            modal: ['TH28'],
-            hierarchy: ['Test'],
+            sno: data.serialNumber,
+            skey: data.sk,
+            modal: data.model,
+            hierarchy: data.hierarchy,
         }
      },
      width : '40%'
@@ -92,7 +130,7 @@ export class DevicesComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // Implement delete functionality here
-        console.log('User deleted');
+        console.log('User edited',result);
       }
     });
   }

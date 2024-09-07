@@ -8,6 +8,7 @@ import { BehaviorSubject } from "rxjs";
 export class SharedServices{
     private sidebarActive = new BehaviorSubject<boolean>(true);
     private loginData: any;
+    modelsList=[];
 
     // Observable to expose sidebar state
     sidebarActive$ = this.sidebarActive.asObservable();

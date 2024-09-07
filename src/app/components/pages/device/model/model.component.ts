@@ -3,6 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { DevicesFormComponent } from 'src/app/components/dialogs/device-form/device-form.component';
+import { createBody, emailBody } from 'src/app/services/login/body/body';
+import { createModelEvent, deleteModelEvent, emailEvent, updateModelEvent } from 'src/app/services/login/body/event';
+import { createData, modelUpdateData } from 'src/app/services/login/body/event-data';
 import { SharedServices } from 'src/app/services/shared.service';
 import { terminalBody } from 'src/app/services/terminal/body/body';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
@@ -53,8 +56,9 @@ export class ModelComponent implements OnInit {
         this.device = response.event.eventData.map(data => {
           const time = data.createdBy.ts;
           const fulldate = time.split('T')[0];  // Get the full date (YYYY-MM-DD)
-          
+          this.shared.modelsList = data.name;
           return {
+            modelId: data.id,
             name: data.name,
             description: data.description,
             fulldate: fulldate,
@@ -76,13 +80,13 @@ export class ModelComponent implements OnInit {
   }
 
 
-  openCreateDialog(edit?): void {
+  openCreateDialog(data?,edit?): void {
     const dialogRef = this.dialog.open(DevicesFormComponent,{
      data : {
         title : edit ? 'Edit Model' : 'Add Model',
         form:{
-            name: ['Test'],
-            description: ['Testing done'],
+            name: data.name,
+            description: data.description,
         }
      },
      width : '40%'
@@ -90,19 +94,43 @@ export class ModelComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Implement delete functionality here
-        console.log('User deleted');
+        if(edit) {
+          const updateModelRequest = new modelUpdateData(data.modelId,data.name,data.description);
+          const event = new updateModelEvent(updateModelRequest,'MODEL', 'CREATE');
+          console.log("response",event)
+          this.dataService.updateModel(event).subscribe(
+            response => {
+              console.log("response",response)
+            }
+          );
+        }
+        else if(!edit) {
+          const eventData = new createData(result.name,result.description);
+          const createModel = new createModelEvent(eventData,'MODEL', 'CREATE');
+          const create = new createBody(createModel);
+          console.log("responseCreate",createModel)
+          this.dataService.createModel(create).subscribe(
+            response => {
+              console.log("responseCreate",response)
+            }
+          );
+        }
       }
     });
   }
 
-  openDeleteDialog(): void {
+  openDeleteDialog(device): void {
     const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Implement delete functionality here
-        console.log('User deleted');
+        const event = new deleteModelEvent(device.modelId,'MODEL', 'DELETE');
+        console.log("response",event)
+        this.dataService.deleteModel(event).subscribe(
+          response => {
+            console.log("response",response)
+          }
+        );
       }
     });
   }

@@ -1,16 +1,14 @@
 <div class="breadcrumb-area">
   <h1>Device Management</h1>
   <ol class="breadcrumb">
-    <li class="item"><a routerLink="/admin/user"><i class='bx bx-home-alt'></i></a></li>
-    <li class="item">Device Management</li>
-    <li class="item">Model</li>
+    <li class="item">Device</li>
   </ol>
 </div>
 
 <div class="search-container">
   <input [(ngModel)]="searchTerm" placeholder="Device SN" (input)="search()">
-  <button (click)="search()"><i class="bx bx-search"></i></button>
-  <button (click)="openCreateDialog()"><i class="bx bx-plus"></i></button>
+  <button class="headerIcons" (click)="search()"><i class="bx bx-search"></i></button>
+  <button class="headerIcons" (click)="openCreateDialog(false)"><i class="bx bx-plus"></i></button>
 </div>
 <table>
   <thead>
@@ -19,14 +17,34 @@
       <th>Model</th>
       <th>Status</th>
       <th>Created Date</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let device of filteredDevices">
       <td>{{ device.serialNumber }}</td>
       <td>{{ device.model }}</td>
-      <td>{{ device.status }}</td>
+      <td>
+        <span [ngClass]="{'status-active': device.status === 'ACTIVE','status-inactive': device.status === 'INACTIVE'}">
+          {{ device.status }}
+        </span>
+      </td>
       <td>{{ device.fulldate }}</td>
+      <td>
+        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openCreateDialog(device,true)">
+          <mat-icon>edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item (click)="openDeleteDialog(device)">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </td>
     </tr>
   </tbody>
 </table>

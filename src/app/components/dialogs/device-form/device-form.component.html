@@ -4,13 +4,7 @@
 <ng-container *ngIf="title == 'Add Device' || title == 'Edit Device'">
   <form [formGroup]="deviceForm" class="merchant-form">
 
-    <div class="form-group">
-      <label for="alert">Hierarchy:</label>
-      <select id="alert" formControlName="hierarchy">
-        <option *ngFor="let i of options" value="i">{{ i }}</option>
-      </select>
-    </div>
-
+    
     <div class="row">
       <div class="col-md-6 form-group">
         <label for="firstName">Serial Number:</label>
@@ -21,12 +15,19 @@
         <input id="lastName" type="text" formControlName="skey" />
       </div>
     </div>
-
+    
     <div class="row">
       <div class="col-md-6 form-group">
-        <label for="email">Device Modal:</label>
-        <input id="email" type="text" formControlName="modal" />
+        <label for="modal">Device Modal:</label>
+        <select class="form-select" id="modal" formControlName="modal">
+          <option value="" selected disabled>Select Model</option>
+          <option *ngFor="let i of modals" [value]="i">{{ i }}</option>
+        </select>
       </div>
+    </div>
+    <div class="form-group">
+      <label for="hierarchy">Hierarchy:</label>
+      <input id="hierarchy" type="text" formControlName="hierarchy" />
     </div>
   </form>
 </ng-container>
@@ -45,5 +46,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end" class="d-flex justify-content-evenly">
   <button class="btn btn-secondary" mat-dialog-close>Cancel</button>
-  <button class="btn btn-primary" [mat-dialog-close]="true">Confirm</button>
+  <button class="btn btn-primary" [mat-dialog-close]="true" (click)="onConfirm()">Confirm</button>
 </mat-dialog-actions>

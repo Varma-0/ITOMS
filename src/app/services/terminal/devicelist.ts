@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { terminalBody } from './body/body';
 import { environment } from 'src/environments/environment';
+import { createModelEvent, deleteModelEvent, updateModelEvent } from '../login/body/event';
+import { createBody } from '../login/body/body';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +27,18 @@ export class TerminalService {
 
     modelData(options: terminalBody): Observable<any> {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/model/search`, options, { headers: this.httpHeaders });
+    }
+
+    deleteModel(options:deleteModelEvent): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/model/delete`, options, { headers: this.httpHeaders });
+    }
+
+    updateModel(options:updateModelEvent): Observable<any> {
+        return this.http.put<any>(`${environment.tmsApiUrl}/tms/model`, options);
+    }
+
+    createModel(options:createBody): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/model`, options, { headers: this.httpHeaders });
     }
 
     merchantData(options:terminalBody): Observable<any> {
