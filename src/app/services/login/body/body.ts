@@ -1,5 +1,5 @@
-import { createModelEvent, deleteModelEvent, dropEvent, emailEvent, midEvent, passEvent, updateDeviceEvent, updateModelEvent } from './event';
-import { createDevice, midDevice } from './event-data';
+import { createModelEvent, createUserEvent, deleteModelEvent, dropEvent, emailEvent, midEvent, passEvent, updateDeviceEvent, updateModelEvent } from './event';
+import { createDevice, createUserData, midDevice } from './event-data';
 
 export class emailBody {
   event: emailEvent;
@@ -61,6 +61,14 @@ export class midHeirarchy {
   event: midEvent;
 
   constructor(event: midEvent) {
+    this.event = event;
+  }
+}
+
+export class createUser {
+  event: createUserEvent;
+
+  constructor(event: createUserEvent) {
     this.event = event;
   }
 }

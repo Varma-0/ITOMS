@@ -30,6 +30,14 @@ export class passData {
     }
 }
 
+export class createUserData {
+  uid: string;
+
+  constructor(uid: string) {
+      this.uid = uid;
+  }
+}
+
 export class dropData {
     tid: string;
     uid: string;

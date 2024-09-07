@@ -5,6 +5,9 @@ import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 import { SharedServices } from 'src/app/services/shared.service';
 import { ActiveComponent } from 'src/app/components/dialogs/active/active.component';
+import { createUserData } from 'src/app/services/login/body/event-data';
+import { createUserEvent } from 'src/app/services/login/body/event';
+import { createUser } from 'src/app/services/login/body/body';
 
 @Component({
   selector: 'app-user',
@@ -13,6 +16,8 @@ import { ActiveComponent } from 'src/app/components/dialogs/active/active.compon
 })
 export class UserComponent {
   users: any = []
+  filteredusers: any[] = [];
+  paginatedusers: any[] = [];
   tenantsData:any;
   rolesData:any;
   alertsData:any;
@@ -21,45 +26,40 @@ export class UserComponent {
   alertsNames: any = [];
   time: any = '';
   fulldate:any = '';
-  day:any = '';
-  date: any='';
-  month: any = '';
+  searchTerm = '';
+  currentPage = 1;
+  itemsPerPage = 5;
+  totalPages = 1;
+  itemsPerPageOptions = [5, 10, 15];
   loginData: any;
   constructor(public dialog: MatDialog, private dataService: TerminalService,private shared:SharedServices) {}
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    // this.loginData = this.shared.getLoginData();
     this.loginData = localStorage.getItem("SA");
     console.log("uigfiqw",this.loginData);
+    this.loadDevices();
+    this.loginData === 'true' ? this.tenantsApiResponse() : console.log("check");
+    this.roleApiResponse();
+    this.alertApiResponse();
+  }
+
+  loadDevices() {
     this.dataService.userData().subscribe(
       response => {
-        console.log(response);
-        this.users = response.event.eventData.users
-        this.time = response.timestamp
-        this.fulldate = this.time.split('T')[0];
-
-        // Parse the date string to a Date object
-        const dateObject = new Date(this.fulldate);
-
-        // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-        const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        this.day = daysOfWeek[dateObject.getUTCDay()];
-        console.log('Day of the week:', this.day); // For example, "Friday"
-        this.date = this.fulldate.split('-')[2];
-        console.log(this.date);
-        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        this.month = monthNames[dateObject.getUTCMonth()];
-        console.log('Month:', this.month);
+        this.users = response.event.eventData.users.map(data => ({
+          userId: data.uid,
+          name: data.name,
+          email: data.email,
+          fulldate: data.createdBy.ts.split('T')[0],
+          status: data.status
+        }));
+        console.log(this.users);
+        this.search();
       },
       error => {
         console.error('Error:', error);
       }
     );
-    this.loginData === 'true' ? this.tenantsApiResponse() : console.log("check");
-    this.roleApiResponse();
-    this.alertApiResponse();
   }
 
   tenantsApiResponse() {
@@ -95,7 +95,7 @@ export class UserComponent {
     )
   }
 
-  openCreateDialog(edit?): void {
+  openCreateDialog(data?,edit?): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
      data : {
         title : edit ? 'Edit User' : 'Add User',
@@ -122,10 +122,51 @@ export class UserComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Implement delete functionality here
-        console.log('User deleted');
+        if(edit) {
+          const event = new createUserData(result.uid); //pass uid based on user selected 
+          const eventType = new createUserEvent(event,'USER','SEARCH');
+          const eventData = new createUser(eventType);
+          this.dataService.editUser(eventData).subscribe(
+            response => {
+              console.log(response);
+            }
+          )
+        }
       }
     });
+  }
+
+  search(): void {
+    this.filteredusers = this.users.filter(device =>
+      device.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+    this.updatePagination();
+  }
+
+  updatePagination(): void {
+    this.totalPages = Math.ceil(this.filteredusers.length / this.itemsPerPage);
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  updateItemsPerPage(): void {
+    this.currentPage = 1;
+    this.updatePagination();
+  }
+
+  get paginatedDevices(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredusers.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
   openActiveDialog(data): void {
@@ -149,7 +190,7 @@ export class UserComponent {
     });
   }
 
-  openDeleteDialog(): void {
+  openDeleteDialog(device): void {
     const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
