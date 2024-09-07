@@ -83,7 +83,10 @@ export class DevicesComponent {
         this.device = response.event.eventData.map(data => {
           const time = data.createdBy.ts;
           const fulldate = time.split('T')[0];  // Get the full date (YYYY-MM-DD)
-          this.modelsList.push(data.name);
+          this.modelsList.push(
+            {name:data.name,
+            id:data.id}
+          );
           return {
             modelId: data.id,
             name: data.name,
@@ -138,7 +141,7 @@ export class DevicesComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
        if(edit) {
-        const event = new createDevice(data.deviceId,result.sno, result.modelId);
+        const event = new createDevice(data.deviceId,result.sno, result.modal);
         const terminalRequest = new updateDeviceEvent(event,'DEVICE','UPDATE');
         const editDevice = new updateDevice(terminalRequest);
         console.log("cwicw",editDevice);

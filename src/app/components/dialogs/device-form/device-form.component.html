@@ -21,7 +21,7 @@
         <label for="modal">Device Modal:</label>
         <select class="form-select" id="modal" formControlName="modal">
           <option value="" selected disabled>Select Model</option>
-          <option *ngFor="let i of modals" [value]="i">{{ i }}</option>
+          <option *ngFor="let i of modals" [value]="i.id">{{ i.name }}</option>
         </select>
       </div>
     </div>
