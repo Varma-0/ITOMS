@@ -5,7 +5,11 @@ import {
   MatDialog,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { midHeirarchy } from 'src/app/services/login/body/body';
+import { midEvent } from 'src/app/services/login/body/event';
+import { midDevice } from 'src/app/services/login/body/event-data';
 import { SharedServices } from 'src/app/services/shared.service';
+import { TerminalService } from 'src/app/services/terminal/devicelist';
 
 @Component({
   selector: 'app-device-form',
@@ -18,10 +22,13 @@ export class DevicesFormComponent {
   modalForm: FormGroup;
   options:'';
   modals: [];
-  constructor(public dialog: MatDialog,public dialogRef: MatDialogRef<DevicesFormComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private shared:SharedServices) {
+  merchants: [];
+  hirearchies = [];
+  constructor(public dialog: MatDialog,public dialogRef: MatDialogRef<DevicesFormComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private shared:SharedServices,private dataService: TerminalService) {
     this.title = data.title
     this.options = data.hierarchy
     this.modals = data.modals
+    this.merchants = data.merchants
     this.shared.setSidebarState(false);
   }
 
@@ -30,6 +37,7 @@ export class DevicesFormComponent {
         sno: [''],
         skey: [''],
         modal: [''],
+        merchant : [''],
         hierarchy: [''],
       });
       this.modalForm = this.fb.group({
@@ -41,6 +49,19 @@ export class DevicesFormComponent {
       }else if(this.title == 'Edit Model'){
         this.modalForm.patchValue(this.data.form);
       }
+  }
+
+  getHierarchy(){
+    const merchantId = new midDevice(this.deviceForm.get('merchant').value);
+    const merchantEvent = new midEvent(merchantId,'HIERARCHY','SEARCH');
+    const mrHierarchy = new midHeirarchy(merchantEvent);
+    this.dataService.getHierarchyFromMerchant(mrHierarchy).subscribe(
+      response =>  {
+        response.event.eventData.forEach(name => {
+          this.hirearchies.push(name.name)
+        });;
+      }
+    )
   }
 
   onCancel(): void {

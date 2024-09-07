@@ -5,8 +5,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { terminalBody } from './body/body';
 import { environment } from 'src/environments/environment';
-import { createModelEvent, deleteModelEvent, updateModelEvent } from '../login/body/event';
-import { createBody, deleteBody, updateBody, updateDevice } from '../login/body/body';
+import { createModelEvent, deleteModelEvent, midEvent, updateModelEvent } from '../login/body/event';
+import { createBody, deleteBody, midHeirarchy, updateBody, updateDevice } from '../login/body/body';
+import { midDevice } from '../login/body/event-data';
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +39,12 @@ export class TerminalService {
     }
 
     updateDevice(options:updateDevice): Observable<any> {
-        return this.http.put<any>(`${environment.tmsApiUrl}/tms/model`, options, { headers: this.httpHeaders });
+        return this.http.put<any>(`${environment.tmsApiUrl}/tms/device/update`, options, { headers: this.httpHeaders });
 
+    }
+
+    getHierarchyFromMerchant(options: midHeirarchy):Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/hierarchy/search`, options, { headers: this.httpHeaders });
     }
 
     createModel(options:createBody): Observable<any> {

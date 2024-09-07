@@ -70,10 +70,20 @@ export class createDevice {
   deviceId: string;
   serialNumber: string;
   model: string;
+  hierarchy: string;
 
-  constructor(deviceId: string, serialNumber: string,model: string) {
+  constructor(deviceId: string, serialNumber: string,model: string,hierarchy: string) {
       this.deviceId = deviceId;
       this.serialNumber = serialNumber;
       this.model = model;
+      this.hierarchy = hierarchy;
+  }
+}
+
+export class midDevice {
+  mid: string;
+
+  constructor(mid: string) {
+      this.mid = mid;
   }
 }

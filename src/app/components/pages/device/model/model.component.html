@@ -10,7 +10,7 @@
     <button class="headerIcons" (click)="search()"><i class="bx bx-search"></i></button>
     <button class="headerIcons" (click)="openCreateDialog(false)"><i class="bx bx-plus"></i></button>
   </div>
-  <table>
+  <table >
     <thead>
       <tr>
         <th>Device Model</th>
@@ -19,7 +19,7 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody *ngFor="let device of filteredDevices">
+    <tbody *ngFor="let device of paginatedDevices">
       <tr *ngIf="!device.delete">
         <td>{{ device.name }}</td>
         <td>{{ device.description }}</td>
@@ -42,6 +42,20 @@
       </tr>
     </tbody>
   </table>
+  <div class="pagination-container">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+      <i class="bx bx-chevron-left"></i> Previous
+    </button>
+    <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">
+      Next <i class="bx bx-chevron-right"></i>
+    </button>
+    <select class="pagination-select" [(ngModel)]="itemsPerPage" (change)="updatePagination()">
+      <option [ngValue]="5">5 per page</option>
+      <option [ngValue]="10">10 per page</option>
+      <option [ngValue]="20">15 per page</option>
+    </select>
+  </div>
 <!-- styling good no funtionality-->
       <!-- <div class="file-manager">
         <div class="search-bar">

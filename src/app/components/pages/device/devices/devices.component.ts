@@ -33,6 +33,12 @@ export class DevicesComponent {
   isActive: boolean;
   filteredDevices = this.device;
   searchTerm = '';
+  currentPage = 1;
+  itemsPerPage = 5;
+  totalPages = 1;
+  itemsPerPageOptions = [5, 10, 15];
+  paginatedDevices = [];
+  merchants = [];
 
   constructor(public dialog: MatDialog, private dataService: TerminalService,private shared:SharedServices) {}
 
@@ -41,6 +47,8 @@ export class DevicesComponent {
     console.log("uigfiqw",this.loginData);
     this.deviceData();
     this.deviceDropdown();
+    this.updatePagination();
+    this.getMerchants();
   }
 
   deviceData() {
@@ -63,7 +71,9 @@ export class DevicesComponent {
             hierarchy: data.hierarchy
           };
         });
-        this.filteredDevices = this.device;
+        // this.filteredDevices = this.device;
+        this.search();
+        // this.paginatedDevices = this.device;
     
         // Log the updated device array
         console.log('Updated device data:', this.device);
@@ -108,6 +118,47 @@ export class DevicesComponent {
     this.filteredDevices = this.device.filter(devi =>
       devi.serialNumber.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
+    this.updatePagination();
+  }
+
+  getMerchants(){
+    const event = new terminalEvent('MERCHANT', 'SEARCH');
+    const merchantRequest = new terminalBody(event);
+    this.dataService.merchantData(merchantRequest).subscribe(
+      response => {
+        this.merchants = response.event.eventData
+      },
+      error => {
+        console.error('Error:', error);
+      }
+    )
+  }
+
+  
+  updatePagination() {
+    this.totalPages = Math.ceil(this.filteredDevices.length / this.itemsPerPage);
+    this.currentPage = 1;
+    this.paginate();
+  }
+
+  paginate() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedDevices = this.filteredDevices.slice(startIndex, endIndex);
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.paginate();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.paginate();
+    }
   }
 
 
@@ -128,6 +179,7 @@ export class DevicesComponent {
         title : edit ? 'Edit Device' : 'Add Device',
         // hierarchy : ['Test','New','Ok'],
         modals : this.modelsList,
+        merchants : this.merchants,
         form:{
             sno: data.serialNumber,
             skey: data.sk,
@@ -141,7 +193,7 @@ export class DevicesComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
        if(edit) {
-        const event = new createDevice(data.deviceId,result.sno, result.modal);
+        const event = new createDevice(data.deviceId,result.sno, result.modal,data.hierarchy);
         const terminalRequest = new updateDeviceEvent(event,'DEVICE','UPDATE');
         const editDevice = new updateDevice(terminalRequest);
         console.log("cwicw",editDevice);

@@ -24,10 +24,20 @@
           <option *ngFor="let i of modals" [value]="i.id">{{ i.name }}</option>
         </select>
       </div>
+      <div class="col-md-6 form-group">
+        <label for="modal">Merchant Name:</label>
+        <select class="form-select" id="modal" (change)="getHierarchy()" formControlName="merchant">
+          <option *ngFor="let i of merchants" [value]="i.id">{{ i.name }}</option>
+        </select>
+      </div>
     </div>
     <div class="form-group">
       <label for="hierarchy">Hierarchy:</label>
-      <input id="hierarchy" type="text" formControlName="hierarchy" />
+      <!-- <input id="hierarchy" type="text" formControlName="hierarchy" /> -->
+      <select class="form-select" id="hierarchy" formControlName="hierarchy">
+        <option value="" selected disabled>Select Hierarchy</option>
+        <option *ngFor="let i of hirearchies" [value]="i">{{ i }}</option>
+      </select>
     </div>
   </form>
 </ng-container>
