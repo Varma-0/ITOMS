@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { DevicesFormComponent } from 'src/app/components/dialogs/device-form/device-form.component';
-import { createBody, emailBody } from 'src/app/services/login/body/body';
+import { createBody, deleteBody, emailBody, updateBody } from 'src/app/services/login/body/body';
 import { createModelEvent, deleteModelEvent, emailEvent, updateModelEvent } from 'src/app/services/login/body/event';
 import { createData, modelUpdateData } from 'src/app/services/login/body/event-data';
 import { SharedServices } from 'src/app/services/shared.service';
@@ -66,6 +66,7 @@ export class ModelComponent implements OnInit {
             name: data.name,
             description: data.description,
             fulldate: fulldate,
+            delete: data.delete
           };
         });
         this.filteredDevices = this.device;
@@ -99,12 +100,15 @@ export class ModelComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if(edit) {
-          const updateModelRequest = new modelUpdateData(data.modelId,data.name,data.description);
+          const updateModelRequest = new modelUpdateData(data.modelId,result.name,result.description);
           const event = new updateModelEvent(updateModelRequest,'MODEL', 'CREATE');
-          console.log("response",event)
-          this.dataService.updateModel(event).subscribe(
+          const update = new updateBody(event);
+
+          console.log("response",update)
+          this.dataService.updateModel(update).subscribe(
             response => {
               console.log("response",response)
+              this.fetchData();
             }
           );
         }
@@ -130,10 +134,12 @@ export class ModelComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const event = new deleteModelEvent(device.modelId,'MODEL', 'DELETE');
+        const deletes = new deleteBody(event);
         console.log("response",event)
-        this.dataService.deleteModel(event).subscribe(
+        this.dataService.deleteModel(deletes).subscribe(
           response => {
             console.log("response",response)
+            this.fetchData();
           }
         );
       }

@@ -64,3 +64,16 @@ export class createData {
       this.description = description;
   }
 }
+
+
+export class createDevice {
+  deviceId: string;
+  serialNumber: string;
+  model: string;
+
+  constructor(deviceId: string, serialNumber: string,model: string) {
+      this.deviceId = deviceId;
+      this.serialNumber = serialNumber;
+      this.model = model;
+  }
+}

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { terminalBody } from './body/body';
 import { environment } from 'src/environments/environment';
 import { createModelEvent, deleteModelEvent, updateModelEvent } from '../login/body/event';
-import { createBody } from '../login/body/body';
+import { createBody, deleteBody, updateBody, updateDevice } from '../login/body/body';
 
 @Injectable({
   providedIn: 'root'
@@ -29,12 +29,17 @@ export class TerminalService {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/model/search`, options, { headers: this.httpHeaders });
     }
 
-    deleteModel(options:deleteModelEvent): Observable<any> {
-        return this.http.post<any>(`${environment.tmsApiUrl}/tms/model/delete`, options, { headers: this.httpHeaders });
+    deleteModel(options:deleteBody): Observable<any> {
+        return this.http.patch<any>(`${environment.tmsApiUrl}/tms/model/delete`, options, { headers: this.httpHeaders });
     }
 
-    updateModel(options:updateModelEvent): Observable<any> {
-        return this.http.put<any>(`${environment.tmsApiUrl}/tms/model`, options);
+    updateModel(options:updateBody): Observable<any> {
+        return this.http.put<any>(`${environment.tmsApiUrl}/tms/model`, options, { headers: this.httpHeaders });
+    }
+
+    updateDevice(options:updateDevice): Observable<any> {
+        return this.http.put<any>(`${environment.tmsApiUrl}/tms/model`, options, { headers: this.httpHeaders });
+
     }
 
     createModel(options:createBody): Observable<any> {

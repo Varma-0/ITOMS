@@ -6,7 +6,7 @@
   </div>
 
   <div class="search-container">
-    <input [(ngModel)]="searchTerm" placeholder="Device SN" (input)="search()">
+    <input [(ngModel)]="searchTerm" placeholder="Device Model" (input)="search()">
     <button class="headerIcons" (click)="search()"><i class="bx bx-search"></i></button>
     <button class="headerIcons" (click)="openCreateDialog(false)"><i class="bx bx-plus"></i></button>
   </div>
@@ -19,8 +19,8 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let device of filteredDevices">
+    <tbody *ngFor="let device of filteredDevices">
+      <tr *ngIf="!device.delete">
         <td>{{ device.name }}</td>
         <td>{{ device.description }}</td>
         <td>{{ device.fulldate }}</td>

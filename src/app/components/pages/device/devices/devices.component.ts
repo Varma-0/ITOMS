@@ -3,6 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { DevicesFormComponent } from 'src/app/components/dialogs/device-form/device-form.component';
+import { updateDevice } from 'src/app/services/login/body/body';
+import { updateDeviceEvent } from 'src/app/services/login/body/event';
+import { createDevice } from 'src/app/services/login/body/event-data';
 import { SharedServices } from 'src/app/services/shared.service';
 import { terminalBody } from 'src/app/services/terminal/body/body';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
@@ -36,6 +39,11 @@ export class DevicesComponent {
   ngOnInit(): void {
     this.loginData = localStorage.getItem("SA");
     console.log("uigfiqw",this.loginData);
+    this.deviceData();
+    this.deviceDropdown();
+  }
+
+  deviceData() {
     const event = new terminalEvent('DEVICE', 'SEARCH');
     const terminalRequest = new terminalBody(event);
     this.dataService.terminalData(terminalRequest).subscribe(
@@ -64,7 +72,6 @@ export class DevicesComponent {
         console.error('Error:', error);
       }
     );
-    this.deviceDropdown();
   }
 
   deviceDropdown() {
@@ -78,6 +85,7 @@ export class DevicesComponent {
           const fulldate = time.split('T')[0];  // Get the full date (YYYY-MM-DD)
           this.modelsList.push(data.name);
           return {
+            modelId: data.id,
             name: data.name,
             description: data.description,
             fulldate: fulldate,
@@ -129,8 +137,21 @@ export class DevicesComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Implement delete functionality here
-        console.log('User edited',result);
+       if(edit) {
+        const event = new createDevice(data.deviceId,result.sno, result.modelId);
+        const terminalRequest = new updateDeviceEvent(event,'DEVICE','UPDATE');
+        const editDevice = new updateDevice(terminalRequest);
+        console.log("cwicw",editDevice);
+        this.dataService.updateDevice(editDevice).subscribe(
+          response => {
+            console.log(response);
+            this.deviceData();
+          },
+          error => {
+            console.error('Error:', error);
+          }
+        );
+       }
       }
     });
   }
