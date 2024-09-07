@@ -84,7 +84,6 @@ import { Errorv3Component } from './components/pages/error/errorv3/errorv3.compo
 import { Errorv4Component } from './components/pages/error/errorv4/errorv4.component';
 import { MapsComponent } from './components/pages/maps/maps.component';
 import { ApexChartsComponent } from './components/pages/apex-charts/apex-charts.component';
-import { ChartjsComponent } from './components/pages/chartjs/chartjs.component';
 import { LandingComponent } from './landing/dashboard/dashboard.component';
 import { DLogInComponent } from './landing/log-in/log-in.component';
 import { AuthGuard } from './services/login/auth.guard';
@@ -266,7 +265,6 @@ const routes: Routes = [
     ]
   },
   {path: 'apex-charts', component: ApexChartsComponent},
-  {path: 'chartjs', component: ChartjsComponent},
   {path: 'maps', component: MapsComponent},
 ];
 

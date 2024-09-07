@@ -142,13 +142,6 @@ import { RadialbarsWithImageComponent } from './components/charts/radialbars-wit
 import { BasicRadarChartComponent } from './components/charts/basic-radar-chart/basic-radar-chart.component';
 import { RadarMultipleSeriesComponent } from './components/charts/radar-multiple-series/radar-multiple-series.component';
 import { RadarWithPolygonFillComponent } from './components/charts/radar-with-polygon-fill/radar-with-polygon-fill.component';
-import { ChartjsComponent } from './components/pages/chartjs/chartjs.component';
-import { BasicBarChartv2Component } from './components/charts/basic-bar-chartv2/basic-bar-chartv2.component';
-import { BasicLineChartv2Component } from './components/charts/basic-line-chartv2/basic-line-chartv2.component';
-import { BasicPieChartComponent } from './components/charts/basic-pie-chart/basic-pie-chart.component';
-import { BasicRadarChartv2Component } from './components/charts/basic-radar-chartv2/basic-radar-chartv2.component';
-import { BasicHorizontalBarComponent } from './components/charts/basic-horizontal-bar/basic-horizontal-bar.component';
-import { BarWithLineComponent } from './components/charts/bar-with-line/bar-with-line.component';
 import { LandingComponent } from './landing/dashboard/dashboard.component';
 import { LandingFooterComponent } from './landing/layouts/footer/footer.component';
 import { LandingHeaderComponent } from './landing/layouts/header/header.component';
@@ -350,13 +343,6 @@ import { DevicesFormComponent } from './components/dialogs/device-form/device-fo
     BasicRadarChartComponent,
     RadarMultipleSeriesComponent,
     RadarWithPolygonFillComponent,
-    ChartjsComponent,
-    BasicBarChartv2Component,
-    BasicLineChartv2Component,
-    BasicPieChartComponent,
-    BasicRadarChartv2Component,
-    BasicHorizontalBarComponent,
-    BarWithLineComponent,
     LandingComponent,
     LandingFooterComponent,
     LandingHeaderComponent,
