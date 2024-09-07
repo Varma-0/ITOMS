@@ -7,23 +7,23 @@ input {
   border: 1px solid #ccc;
   border-radius: 4px 0 0 4px;
 }
-button {
+.headerIcons {
   padding: 8px 12px;
   background-color: #007bff;
   color: white;
   border: none;
   cursor: pointer;
 }
-button:first-of-type {
+.headerIcons:first-of-type {
   border-radius: 0 4px 4px 0;
 }
-button:last-of-type {
+.headerIcons:last-of-type {
   border-radius: 4px;
   margin-left: 10px;
 }
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse:collapse;
   // border-spacing: 0 15px;
 }
 
@@ -38,5 +38,23 @@ th{
 
 td{
   background-color: white;
-  // border-bottom: 1px solid rgb(255, 249, 249);
+}
+
+tr {
+  border-bottom: 2px solid rgb(255, 249, 249);
+  
+}
+
+.status-active {
+  background-color: #E8F5E9;
+    color: #4CAF50;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.status-inactive {
+  background-color: #E3F2FD;
+    color: #1976D2;
+    padding: 4px 8px;
+    border-radius: 4px;
 }

@@ -1,4 +1,4 @@
-import { dropEvent, emailEvent, passEvent } from './event';
+import { createModelEvent, dropEvent, emailEvent, passEvent } from './event';
 
 export class emailBody {
   event: emailEvent;
@@ -20,6 +20,14 @@ export class dropBody {
   event: dropEvent;
 
   constructor(event: dropEvent) {
+    this.event = event;
+  }
+}
+
+export class createBody {
+  event: createModelEvent;
+
+  constructor(event: createModelEvent) {
     this.event = event;
   }
 }

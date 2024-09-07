@@ -16,10 +16,12 @@ export class DevicesFormComponent {
   title = '';
   deviceForm: FormGroup;
   modalForm: FormGroup;
-  options:[];
+  options:'';
+  modals: [];
   constructor(public dialog: MatDialog,public dialogRef: MatDialogRef<DevicesFormComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private shared:SharedServices) {
     this.title = data.title
     this.options = data.hierarchy
+    this.modals = data.modals
     this.shared.setSidebarState(false);
   }
 
@@ -46,7 +48,11 @@ export class DevicesFormComponent {
   }
 
   onConfirm(): void {
-    this.dialogRef.close(true);
+    if(this.title == 'Add Device' || this.title == 'Edit Device') {
+      this.dialogRef.close(this.deviceForm.value);
+    } else {
+      this.dialogRef.close(this.modalForm.value);
+    }
   }
 
   ngOnDestroy(){
