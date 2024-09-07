@@ -48,6 +48,10 @@ export class ModelComponent implements OnInit {
   ngOnInit(): void {
     this.loginData = localStorage.getItem("SA");
     console.log("uigfiqw",this.loginData);
+    this.fetchData();
+  }
+
+  fetchData() {
     const event = new terminalEvent('MODEL', 'SEARCH');
     const terminalRequest = new terminalBody(event);
     this.dataService.modelData(terminalRequest).subscribe(
@@ -112,6 +116,7 @@ export class ModelComponent implements OnInit {
           this.dataService.createModel(create).subscribe(
             response => {
               console.log("responseCreate",response)
+              this.fetchData();
             }
           );
         }
