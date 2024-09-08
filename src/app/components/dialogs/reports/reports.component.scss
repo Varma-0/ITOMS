@@ -5,23 +5,24 @@ mat-dialog-title {
     color: red;
     border-bottom: 1px solid #ddd;
   }
-
-  h2{
+  
+  h2 {
     border-bottom: 1px solid #ddd;
   }
-
+  
   /* Style the dialog content */
   mat-dialog-content {
     font-size: 1rem;
     color: #666;
   }
-
+  
   /* Style the dialog actions container */
   mat-dialog-actions {
     padding: 16px;
     background-color: #f5f5f5;
     border-top: 1px solid #ddd;
   }
+  
   .styled-table {
     width: 100%;
     border-collapse: collapse;
@@ -29,26 +30,27 @@ mat-dialog-title {
     font-size: 18px;
     text-align: left;
   }
-
+  
   .styled-table thead {
     background-color: #f4f4f4;
   }
-
+  
   .styled-table th,
   .styled-table td {
     padding: 12px 15px;
     border: 1px solid #ddd;
   }
-
+  
   .styled-table th {
     background-color: #4CAF50;
     color: white;
   }
-
+  
   .styled-table tbody tr:nth-child(even) {
     background-color: #f2f2f2;
   }
-
+  
   .styled-table tbody tr:hover {
     background-color: #ddd;
   }
+  

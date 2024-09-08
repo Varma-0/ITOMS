@@ -4,6 +4,7 @@ import { TerminalService } from 'src/app/services/terminal/devicelist';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HierarchySelectionComponent } from 'src/app/components/dialogs/hierarchy-selection/hierarchy-selection.component';
 import { HierarchyFormComponent } from 'src/app/components/dialogs/hierarchy-form/hierarchy-form.component';
+import { Router } from '@angular/router';
 
 interface HierarchyItem {
   id: string;
@@ -35,7 +36,7 @@ export class HierarchyLevelComponent implements OnInit {
   selectedPath: string = ''; // New property for selected path
   itemForm: FormGroup;
 
-  constructor(private dataService: TerminalService, public dialog: MatDialog,private fb: FormBuilder) {}
+  constructor(private router: Router, public dialog: MatDialog,private fb: FormBuilder) {}
 
   ngOnInit() {
     this.itemForm = this.fb.group({
@@ -298,7 +299,28 @@ export class HierarchyLevelComponent implements OnInit {
     data.push(this.itemForm.value)
     const string = JSON.stringify(data);
     localStorage.setItem('hier',string);
+    this.loadInitialData();
+    this.itemForm.reset();
+    this.resetComponentState();
   }
+
+  resetComponentState() {
+    // Clear the form
+    this.itemForm.reset();
+
+    // Reset hierarchy levels
+    this.hierarchyLevels.forEach(level => {
+        level.items = [];
+        level.selectedItem = null;
+    });
+
+    // Reload initial data
+    this.loadInitialData();
+
+    // Clear the selected item and path
+    this.selectedItem = null;
+    this.selectedPath = '';
+}
 
   updateItemInHierarchy(updatedItem: HierarchyItem) {
     const updateRecursive = (items: HierarchyItem[]) => {
