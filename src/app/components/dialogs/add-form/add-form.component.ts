@@ -160,9 +160,21 @@ export class AddFormComponent {
   onCancel(): void {
     this.dialogRef.close(false);
   }
-
   onConfirm(): void {
-    this.dialogRef.close(true);
+    if(this.title == 'Add User' || this.title == 'Edit User'){
+        this.dialogRef.close(this.userForm.value);
+      }else if(this.title == 'Add Role' || this.title == 'Edit Role'){
+        this.dialogRef.close(this.roleForm.value);
+      }else if(this.title == 'Add Alert' || this.title == 'Edit Alert'){
+        this.dialogRef.close(this.alertForm.value);
+      }else if(this.title == 'Add Permission' || this.title == 'Edit Permission'){
+        this.dialogRef.close(this.permissionForm.value);
+      }else if(this.title == 'Add Tenant' || this.title == 'Edit Tenant'){
+        this.dialogRef.close(this.tenantForm.value);
+      }else if(this.title == 'Add Merchant' || this.title == 'Edit Merchant'){
+        this.dialogRef.close(this.merchantForm.value);
+      }
+
   }
 
   ngOnDestroy(){
