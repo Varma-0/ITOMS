@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
+import { merchantAdd, merchantDelete } from 'src/app/services/login/body/body';
+import { addMerchantBody, deleteMerchantEVent } from 'src/app/services/login/body/event';
+import { addMerchantData } from 'src/app/services/login/body/event-data';
 import { terminalBody } from 'src/app/services/terminal/body/body';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
@@ -44,6 +47,7 @@ export class MerchantsComponent {
     this.merchants = this.dataService.merchantData(merchantRequest).subscribe(
       response => {
         this.merchants = response.event.eventData.map(data => ({
+          merchantId: data.id,
           fulldate: data.createdBy.ts.split("T")[0],
           name: data.name,
           email: data.email,
@@ -96,17 +100,29 @@ export class MerchantsComponent {
   openCreateDialog(data?): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
         data:{
-            title:'Add Merchant'
+            title: 'Add Merchant',
+            form : {
+              name: data.name,
+              email:data.email,
+              phone: data.permission,
+              contactName: data.contactName,
+          }
         },
         width:'40%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // Implement delete functionality here
-        console.log('User deleted');
+      if(result) {
+        const event = new addMerchantData(result.name,result.email,result.phone,result.contactName);
+        const eventType = new addMerchantBody(event,'MERCHANT','CREATE');
+        const finals = new merchantAdd(eventType);
+        this.dataService.addMerchant(finals).subscribe(
+          response => [
+            console.log("response",response)
+          ]
+        )
       }
-    });
+  });
   }
 
   openDeleteDialog(merchant): void {
@@ -114,9 +130,14 @@ export class MerchantsComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Implement delete functionality here
-        console.log('User deleted');
-      }
+        const eventType = new deleteMerchantEVent(merchant.merchantId,'MERCHANT','SEARCH');
+        const finals = new merchantDelete(eventType);
+        this.dataService.deleteMerchant(finals).subscribe(
+          response => {
+            console.log("respoonse",response);
+          }
+        )
+    }
     });
   }
 }

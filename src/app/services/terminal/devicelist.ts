@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { terminalBody } from './body/body';
 import { environment } from 'src/environments/environment';
-import { createModelEvent, createNewUserBody, deleteModelEvent, midEvent, updateModelEvent } from '../login/body/event';
-import { addDeviceBody, createBody, createNewUser, createUser, deleteBody, midHeirarchy, updateBody, updateDevice } from '../login/body/body';
+import { createModelEvent, createNewUserBody, deleteModelEvent, midEvent, updateModelEvent, updateRoleBody } from '../login/body/event';
+import { addDeviceBody, createBody, createNewUser, createUser, deleteBody, merchantAdd, merchantDelete, midHeirarchy, permissionAdd, permissionDelete, permissionUpdate, roleAdd, roleUpdate, tenantAdd, tenantDelete, tenantUpdate, updateBody, updateDevice } from '../login/body/body';
 import { midDevice, addDevice } from '../login/body/event-data';
 
 @Injectable({
@@ -47,6 +47,39 @@ export class TerminalService {
 
     }
 
+    updatePermission(options:permissionUpdate): Observable<any> {
+        return this.http.put<any>(`${environment.userApiUrl}/permission/`, options, { headers: this.httpHeaders });
+    }
+
+    deletePermission(options:permissionDelete): Observable<any> {
+        return this.http.patch<any>(`${environment.userApiUrl}/permission/`, options, { headers: this.httpHeaders });
+    }
+
+    addPermission(options:permissionAdd): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/permission/`, options, { headers: this.httpHeaders });
+    }
+
+    updateTenant(options:tenantUpdate): Observable<any> {
+        return this.http.put<any>(`${environment.userApiUrl}/tenant/`, options, { headers: this.httpHeaders });
+    }
+
+    deleteTenant(options:tenantDelete): Observable<any> {
+        return this.http.patch<any>(`${environment.userApiUrl}/tenant/`, options, { headers: this.httpHeaders });
+    }
+
+    addTenant(options:tenantAdd): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/tenant/`, options, { headers: this.httpHeaders });
+    }
+
+    addMerchant(options:merchantAdd): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}tms/merchant/add`, options, { headers: this.httpHeaders });
+    }
+
+    deleteMerchant(options:merchantDelete): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}tms/merchant/delete`, options, { headers: this.httpHeaders });
+    }
+
+
     getHierarchyFromMerchant(options: midHeirarchy):Observable<any> {
         return this.http.post<any>(`${environment.userApiUrl}/hierarchy/search`, options, { headers: this.httpHeaders });
     }
@@ -69,6 +102,14 @@ export class TerminalService {
 
     addNewUser(options: createNewUser): Observable<any> {
         return this.http.post<any>(`${environment.userApiUrl}/user/`,options, {headers: this.httpHeaders});
+    }
+
+    updateRoles(options: roleUpdate): Observable<any> {
+        return this.http.put<any>(`${environment.userApiUrl}/role/`,options, {headers: this.httpHeaders});
+    }
+
+    addRoles(options: roleAdd): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/role/`,options, {headers: this.httpHeaders});
     }
 
     userData(): Observable<any> {

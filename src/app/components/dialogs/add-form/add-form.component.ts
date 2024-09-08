@@ -151,6 +151,7 @@ export class AddFormComponent {
         }
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log("122",result)
       if (result != true && result != false) {
         this.addItem(result);
       }
@@ -164,6 +165,7 @@ export class AddFormComponent {
     if(this.title == 'Add User' || this.title == 'Edit User'){
         this.dialogRef.close(this.userForm.value);
       }else if(this.title == 'Add Role' || this.title == 'Edit Role'){
+        this.roleForm.get('roles').setValue(this.items);
         this.dialogRef.close(this.roleForm.value);
       }else if(this.title == 'Add Alert' || this.title == 'Edit Alert'){
         this.dialogRef.close(this.alertForm.value);

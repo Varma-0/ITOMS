@@ -1,5 +1,5 @@
-import { addDeviceEvent, createModelEvent, createNewUserBody, createUserEvent, deleteModelEvent, dropEvent, emailEvent, midEvent, passEvent, updateDeviceEvent, updateModelEvent } from './event';
-import { createDevice, createNewUserEvent, createUserData, midDevice } from './event-data';
+import { addDeviceEvent, addMerchantBody, addPermissionBody, addRoleBody, addTenantBody, createModelEvent, createNewUserBody, createUserEvent, deleteMerchantEVent, deleteModelEvent, deletePermissionEVent, deleteTenantEVent, dropEvent, editPermissionBody, editTenantBody, emailEvent, midEvent, passEvent, updateDeviceEvent, updateModelEvent, updateRoleBody } from './event';
+import { createDevice, createNewUserEvent, createUserData, midDevice, updateRoleData } from './event-data';
 
 export class emailBody {
   event: emailEvent;
@@ -85,6 +85,88 @@ export class createNewUser {
   event: createNewUserBody;
 
   constructor(event: createNewUserBody) {
+    this.event = event;
+  }
+}
+
+export class roleUpdate {
+  event: updateRoleBody;
+
+  constructor(event: updateRoleBody) {
+    this.event = event;
+  }
+}
+
+export class permissionUpdate {
+  event: editPermissionBody;
+
+  constructor(event: editPermissionBody) {
+    this.event = event;
+  }
+}
+
+export class tenantUpdate {
+  event: editTenantBody;
+
+  constructor(event: editTenantBody) {
+    this.event = event;
+  }
+}
+
+
+export class tenantAdd {
+  event: addTenantBody;
+
+  constructor(event: addTenantBody) {
+    this.event = event;
+  }
+}
+
+export class merchantAdd {
+  event: addMerchantBody;
+
+  constructor(event: addMerchantBody) {
+    this.event = event;
+  }
+}
+
+export class permissionAdd {
+  event: addPermissionBody;
+
+  constructor(event: addPermissionBody) {
+    this.event = event;
+  }
+}
+
+
+export class permissionDelete {
+  event: deletePermissionEVent;
+
+  constructor(event: deletePermissionEVent) {
+    this.event = event;
+  }
+}
+
+export class tenantDelete {
+  event: deleteTenantEVent;
+
+  constructor(event: deleteTenantEVent) {
+    this.event = event;
+  }
+}
+
+export class merchantDelete {
+  event: deleteMerchantEVent;
+
+  constructor(event: deleteMerchantEVent) {
+    this.event = event;
+  }
+}
+
+export class roleAdd {
+  event: addRoleBody;
+
+  constructor(event: addRoleBody) {
     this.event = event;
   }
 }

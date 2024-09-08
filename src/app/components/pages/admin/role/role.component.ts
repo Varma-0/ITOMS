@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
+import { roleAdd, roleUpdate } from 'src/app/services/login/body/body';
+import { addRoleBody, updateRoleBody } from 'src/app/services/login/body/event';
+import { addRoleData, updateRoleData } from 'src/app/services/login/body/event-data';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 @Component({
   selector: 'app-role',
@@ -35,6 +38,7 @@ export class RoleComponent {
       response => {
         console.log(response);
         this.roles = response.event.eventData.tenantRoles.map(data => ({
+          roleId: data.id,
           fulldate: data.createdBy.ts.split('T')[0],
           name: data.name,
         }));
@@ -99,21 +103,9 @@ export class RoleComponent {
             title : edit ? 'Edit Role' : 'Add Role',
             permissionOptionNames : this.permissionsNames,
             form:{
-                name: ['Test'],
-                description: ['Test'],
-                roles: [{
-                    label : 'Dashboard',
-                    view : true,
-                    edit : false,
-                    delete : false
-                },
-                {
-                    label : 'Admin',
-                    view : true,
-                    edit : true,
-                    delete : true
-                }
-            ]
+                name: data.name,
+                description: data.description,
+                roles: data.roles
             }
         },
         width: '40%'
@@ -121,8 +113,26 @@ export class RoleComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Implement delete functionality here
-        console.log('User deleted');
+        if(edit) {
+          const event = new updateRoleData(data.roleId,result.roles);
+          const eventType = new updateRoleBody(event,'ROLE','UPDATE');
+          const finals = new roleUpdate(eventType);
+          this.dataService.updateRoles(finals).subscribe(
+            response => {
+              console.log("resssss",response);
+            }
+          )
+        }
+        else if(!edit) {
+          const event = new addRoleData(result.name,result.description,result.roles);
+          const eventType = new addRoleBody(event,'ROLE','CREATE');
+          const finals = new roleAdd(eventType);
+          this.dataService.addRoles(finals).subscribe(
+            response => {
+              console.log("resssss",response);
+            }
+          )
+        }
       }
     });
 }

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
+import { tenantUpdate, permissionAdd, tenantAdd, tenantDelete } from 'src/app/services/login/body/body';
+import { editTenantBody, addPermissionBody, addTenantBody, deleteTenantEVent } from 'src/app/services/login/body/event';
+import { editTenantData, addPermissionData, addTenantData } from 'src/app/services/login/body/event-data';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 
 @Component({
@@ -43,6 +46,7 @@ export class TenantsComponent {
       response => {
         console.log(response);
         this.tenants = response.event.eventData.tenants.map(data => ({
+          tenantId: data.id,
           fulldate: data.createdBy.ts.split('T')[0],
           userName: data.createdBy.name,
           name: data.name,
@@ -101,10 +105,10 @@ export class TenantsComponent {
         data:{
             title:edit ? 'Edit Tenant' : 'Add Tenant',
             form : {
-                name: ['Test'],
-                description: ['Test'],
-                type: ['SA'],
-                stype: ['Test'],
+                name: data.name,
+                description: data.description,
+                type: data.type,
+                stype: data.stype,
             }
         },
         width:'40%'
@@ -112,8 +116,26 @@ export class TenantsComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Implement delete functionality here
-        console.log('User deleted');
+        if(edit) {
+          const event = new editTenantData(data.tenantId,result.name,result.description,result.type,result.stype);
+          const eventType = new editTenantBody(event,'TENANT','UPDATE');
+          const finals = new tenantUpdate(eventType);
+          this.dataService.updateTenant(finals).subscribe(
+            response => [
+              console.log("response",response)
+            ]
+          )
+        }
+        else if(!edit) {
+          const event = new addTenantData(result.name,result.description,result.type,result.stype);
+          const eventType = new addTenantBody(event,'TENANT','CREATE');
+          const finals = new tenantAdd(eventType);
+          this.dataService.addTenant(finals).subscribe(
+            response => [
+              console.log("response",response)
+            ]
+          )
+        }
       }
     });
   }
@@ -123,9 +145,14 @@ export class TenantsComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Implement delete functionality here
-        console.log('User deleted');
-      }
+        const eventType = new deleteTenantEVent(tenants.tenantId,'PERMISSION','ACTIVATE');
+        const finals = new tenantDelete(eventType);
+        this.dataService.deleteTenant(finals).subscribe(
+          response => {
+            console.log("respoonse",response);
+          }
+        )
+    }
     });
   }
 }

@@ -41,6 +41,18 @@ export class createUserData {
   }
 }
 
+
+export class deletePermission {
+  uid: string;
+
+  constructor(uid: string) {
+      this.uid = uid;
+  }
+}
+
+
+
+
 export class createNewUserEvent {
   firstName: string;
   lastName: string;
@@ -66,6 +78,114 @@ export class createNewUserEvent {
       this.countryAlt = countryAlt;
       this.userLinkDataList = userLinkDataList;
   }
+}
+
+export class updateRoleData {
+  id: string;
+  rolePermissions: any[];
+
+  constructor(id: string,rolePermissions: any[]) {
+    this.id = id;
+    this.rolePermissions = rolePermissions;
+}
+}
+
+export class editPermissionData {
+  id: string;
+  name: string;
+  description: string;
+  type: string;
+  hideDelete: string;
+  hideEdit: string;
+  hideView: string;
+
+  constructor(id: string,name: string,description: string,type: string,hideDelete: string,hideView: string,hideEdit: string) {
+    this.id = id;
+    this.name = name,
+    this.description = description,
+    this.type = type,
+    this.hideDelete = hideDelete;
+    this.hideView = hideView;
+    this.hideEdit = hideEdit;
+}
+}
+
+
+export class editTenantData {
+  id: string;
+  name: string;
+  description: string;
+  type: string;
+  subType: string;
+
+  constructor(id: string,name: string,description: string,type: string,subType: string) {
+    this.id = id;
+    this.name = name,
+    this.description = description,
+    this.type = type,
+    this.subType = subType;
+}
+}
+
+export class addTenantData {
+  name: string;
+  description: string;
+  type: string;
+  subType: string;
+
+  constructor(name: string,description: string,type: string,subType: string) {
+    this.name = name,
+    this.description = description,
+    this.type = type,
+    this.subType = subType;
+}
+}
+
+
+
+
+export class addMerchantData {
+  name: string;
+  email: string;
+  phone: string;
+  contactName: string;
+
+  constructor(name: string,email: string,phone: string,contactName: string) {
+    this.name = name,
+    this.email = email,
+    this.phone = phone,
+    this.contactName = contactName;
+}
+}
+
+export class addPermissionData {
+  name: string;
+  description: string;
+  type: string;
+  hideDelete: string;
+  hideEdit: string;
+  hideView: string;
+
+  constructor(name: string,description: string,type: string,hideDelete: string,hideView: string,hideEdit: string) {
+    this.name = name,
+    this.description = description,
+    this.type = type,
+    this.hideDelete = hideDelete;
+    this.hideView = hideView;
+    this.hideEdit = hideEdit;
+}
+}
+
+export class addRoleData {
+  name: string;
+  description: string;
+  rolePermissions: any[];
+
+  constructor(name: string,description: string,rolePermissions: any[]) {
+    this.name = name;
+    this.description = description;
+    this.rolePermissions = rolePermissions;
+}
 }
 
 export class dropData {

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
+import { permissionAdd, permissionDelete, permissionUpdate, roleUpdate } from 'src/app/services/login/body/body';
+import { addPermissionBody, deletePermissionEVent, editPermissionBody, updateRoleBody } from 'src/app/services/login/body/event';
+import { addPermissionData, deletePermission, editPermissionData } from 'src/app/services/login/body/event-data';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 
 @Component({
@@ -41,6 +44,7 @@ export class PermissionComponent {
       response => {
         console.log(response);
         this.permissions = response.event.eventData.permissions.map(data => ({
+          permissionId: data.id,
           fulldate: data.createdBy.ts.split('T')[0],
           userName: data.createdBy.name,
           name: data.name
@@ -91,12 +95,12 @@ export class PermissionComponent {
         data:{
             title: edit ? 'Edit Permission' : 'Add Permission',
             form : {
-                name: ['test'],
-                description: ['Test'],
-                permission: ['Default'],
-                checkbox1: ['true'],
-                checkbox2: ['true'],
-                checkbox3: ['true'],
+                name: data.name,
+                description:data.description,
+                permission: data.permission,
+                checkbox1: data.checkbox1,
+                checkbox2: data.checkbox2,
+                checkbox3: data.checkbox3,
             }
         },
         width:'40%'
@@ -104,8 +108,26 @@ export class PermissionComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Implement delete functionality here
-        console.log('User deleted');
+        if(edit) {
+          const event = new editPermissionData(data.permissionId,result.name,result.description,result.permission,result.checbox1,result.checbox2,result.checbox3);
+          const eventType = new editPermissionBody(event,'PERMISSION','UPDATE');
+          const finals = new permissionUpdate(eventType);
+          this.dataService.updatePermission(finals).subscribe(
+            response => [
+              console.log("response",response)
+            ]
+          )
+        }
+        else if(!edit) {
+          const event = new addPermissionData(result.name,result.description,result.permission,result.checbox1,result.checbox2,result.checbox3);
+          const eventType = new addPermissionBody(event,'PERMISSION','CREATE');
+          const finals = new permissionAdd(eventType);
+          this.dataService.addPermission(finals).subscribe(
+            response => [
+              console.log("response",response)
+            ]
+          )
+        }
       }
     });
   }
@@ -115,8 +137,14 @@ export class PermissionComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Implement delete functionality here
-        console.log('User deleted');
+          const event = new deletePermission(permission.permissionId);
+          const eventType = new deletePermissionEVent(event,'PERMISSION','DEACTIVATE');
+          const finals = new permissionDelete(eventType);
+          this.dataService.deletePermission(finals).subscribe(
+            response => {
+              console.log("respoonse",response);
+            }
+          )
       }
     });
   }
