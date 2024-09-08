@@ -124,6 +124,22 @@ export class TerminalService {
         return this.http.post<any>(`${environment.userApiUrl}/role/`,options, {headers: this.httpHeaders});
     }
 
+    getSearchReport(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/getDeviceSearchReport`,options, {headers: this.httpHeaders});
+    }
+
+    getStatusReport(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/getDeviceStatusReport`,options, {headers: this.httpHeaders});
+    }
+
+    getHeartReport(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/getDeviceHeartBeatHistoryReport`,options, {headers: this.httpHeaders});
+    }
+
+    getHeartViewReport(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/getDeviceHeartBeatHistoryViewReport`,options, {headers: this.httpHeaders});
+    }
+
     userData(): Observable<any> {
         return this.http.get<any>(`${environment.userApiUrl}/user/getTenantUsers`, {headers: this.httpHeaders});
     }

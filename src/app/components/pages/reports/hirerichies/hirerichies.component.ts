@@ -2,15 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
 
 interface Device {
-  serialNumber: string;
-  deviceId: string;
-  model: string;
-  deviceStatus: string;
-  hierarchy: string;
-  lastHeartbeat: string;
-  groupNames: string;
-  ipAddress: string;
-  view?:Boolean
+    name: string;               
+    path: string;           
+    description: string;         
+    ipStartAddress: string;      
+    ipEndAddress: string;        
+    locationIdentifier: string;  
+    timeZone: string;  
 }
 
 interface Column {
@@ -25,27 +23,18 @@ interface Column {
   styleUrls: ['./hirerichies.component.scss']
 })
 export class HirerichiesReportComponent implements OnInit {
-    devices: Device[] = [
-        { serialNumber: '111-111-111', deviceId: '', model: 'VX 520', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed', lastHeartbeat: '', groupNames: '', ipAddress: '',view:true },
-        { serialNumber: '1212121', deviceId: '0837823782378', model: '640P 1', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed >> Girmiti', lastHeartbeat: '', groupNames: '', ipAddress: '' },
-        { serialNumber: '237984329843289', deviceId: '0837823782378', model: '640P 2', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed', lastHeartbeat: '', groupNames: '', ipAddress: '' },
-        { serialNumber: '261-025-797', deviceId: '', model: 'VX 520', deviceStatus: 'Inactive', hierarchy: 'BankMed >> Girmiti', lastHeartbeat: '25/Nov/2020 09:49:...', groupNames: '', ipAddress: '192.168.1.1' },
-        // Add more device data here...
-      ];
+    devices: Device[] = [];
 
   filteredDevices: Device[] = [];
   searchTerm: string = '';
   columns: Column[] = [
-    { key: 'serialNumber', label: 'Serial Number', visible: true },
-    { key: 'deviceId', label: 'Device ID', visible: true },
-    { key: 'model', label: 'Merchant Name', visible: true },
-    { key: 'hierarchy', label: 'Merchant Hierarchy', visible: true },
-    { key: 'deviceStatus', label: 'Model', visible: true },
-    { key: 'lastHeartbeat', label: 'Device Current Status', visible: true },
-    { key: 'deviceStatus', label: 'Last Heart Beat', visible: true },
-    { key: 'lastHeartbeat', label: 'Org ID', visible: true },
-    { key: 'deviceStatus', label: 'OS Vresion Details', visible: true },
-    { key: 'lastHeartbeat', label: 'Battery Status', visible: true },
+    { key: 'name', label: 'Hierarchy Name', visible: true },
+    { key: 'path', label: 'Full Path', visible: true },
+    { key: 'description', label: 'Description', visible: true },
+    { key: 'ipStartAddress', label: 'IP Start Range', visible: true },
+    { key: 'ipEndAddress', label: 'IP End Range', visible: true },
+    { key: 'locationIdentifier', label: 'Location ID', visible: true },
+    { key: 'timeZone', label: 'Time Zone', visible: true },
   ];
 
   currentPage = 1;
@@ -54,6 +43,7 @@ export class HirerichiesReportComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.devices = JSON.parse(localStorage.getItem('hier'));
     this.applyFilter();
   }
 

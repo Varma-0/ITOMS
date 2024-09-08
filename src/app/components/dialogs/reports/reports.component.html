@@ -1,19 +1,24 @@
-
 <mat-dialog-content>
-    <table class="styled-table">
+    <div *ngIf="hasData; else noData">
+      <table class="styled-table">
         <thead>
           <tr>
             <th *ngFor="let key of keys" style="font-weight: normal !important;">{{ key }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td *ngFor="let value of values">{{ value }}</td>
+          <tr *ngFor="let item of dataArray">
+            <td *ngFor="let key of keys">{{ item[key] }}</td>
           </tr>
         </tbody>
       </table>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button class="btn btn-secondary" mat-dialog-close>Cancel</button>&nbsp;
-  <button class="btn btn-danger" [mat-dialog-close]="true">Confirm</button>
-</mat-dialog-actions>
+    </div>
+    <ng-template #noData>
+      <p>No data available</p>
+    </ng-template>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions align="end">
+    <button class="btn btn-danger" [mat-dialog-close]="true">OK</button>
+  </mat-dialog-actions>
+  

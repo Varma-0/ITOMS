@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { TerminalService } from 'src/app/services/terminal/devicelist';
 import * as XLSX from 'xlsx';
 
 interface Device {
-  serialNumber: string;
-  deviceId: string;
-  model: string;
-  deviceStatus: string;
-  hierarchy: string;
-  lastHeartbeat: string;
-  groupNames: string;
-  ipAddress: string;
-  view?:Boolean
-}
+    serialNumber: string;
+    deviceId: string;
+    merchantName: string;
+    merchantHierarchy: string;
+    deviceModel: string;
+    deviceCurrentStatus: string;
+    lastHeartBeat: string;
+    orgId: string;
+    osVersion: string;
+    batteryStatus: string;
+  }  
 
 interface Column {
   key: keyof Device;
@@ -25,36 +27,49 @@ interface Column {
   styleUrls: ['./search.component.scss']
 })
 export class SearchReportComponent implements OnInit {
-    devices: Device[] = [
-        { serialNumber: '111-111-111', deviceId: '', model: 'VX 520', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed', lastHeartbeat: '', groupNames: '', ipAddress: '',view:true },
-        { serialNumber: '1212121', deviceId: '0837823782378', model: '640P 1', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed >> Girmiti', lastHeartbeat: '', groupNames: '', ipAddress: '' },
-        { serialNumber: '237984329843289', deviceId: '0837823782378', model: '640P 2', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed', lastHeartbeat: '', groupNames: '', ipAddress: '' },
-        { serialNumber: '261-025-797', deviceId: '', model: 'VX 520', deviceStatus: 'Inactive', hierarchy: 'BankMed >> Girmiti', lastHeartbeat: '25/Nov/2020 09:49:...', groupNames: '', ipAddress: '192.168.1.1' },
-        // Add more device data here...
-      ];
+    devices: Device[] = [];
 
   filteredDevices: Device[] = [];
   searchTerm: string = '';
   columns: Column[] = [
     { key: 'serialNumber', label: 'Serial Number', visible: true },
     { key: 'deviceId', label: 'Device ID', visible: true },
-    { key: 'model', label: 'Merchant Name', visible: true },
-    { key: 'hierarchy', label: 'Merchant Hierarchy', visible: true },
-    { key: 'deviceStatus', label: 'Model', visible: true },
-    { key: 'lastHeartbeat', label: 'Device Current Status', visible: true },
-    { key: 'deviceStatus', label: 'Last Heart Beat', visible: true },
-    { key: 'lastHeartbeat', label: 'Org ID', visible: true },
-    { key: 'deviceStatus', label: 'OS Vresion Details', visible: true },
-    { key: 'lastHeartbeat', label: 'Battery Status', visible: true },
+    { key: 'merchantName', label: 'Merchant Name', visible: true },
+    { key: 'merchantHierarchy', label: 'Merchant Hierarchy', visible: true },
+    { key: 'deviceModel', label: 'Model', visible: true },
+    { key: 'deviceCurrentStatus', label: 'Device Current Status', visible: true },
+    { key: 'lastHeartBeat', label: 'Last Heart Beat', visible: true },
+    { key: 'orgId', label: 'Org ID', visible: true },
+    { key: 'osVersion', label: 'OS Vresion Details', visible: true },
+    { key: 'batteryStatus', label: 'Battery Status', visible: true },
   ];
 
   currentPage = 1;
   itemsPerPage = 10;
 
-  constructor() { }
+  constructor(private dataService: TerminalService) { }
 
   ngOnInit(): void {
-    this.applyFilter();
+    this.getData();
+  }
+
+  getData(){
+    const data = {
+        "event": {
+          "eventType": "REPORT",
+          "eventSubType": "SEARCH"
+        }
+      }
+    this.dataService.getSearchReport(data).subscribe(
+        response => {
+            console.log(response);
+            this.devices = response.event.eventData.responseData[0];
+            this.applyFilter();
+        },
+        error => {
+            console.error('Error:', error);
+        }
+    )
   }
 
   applyFilter(): void {
