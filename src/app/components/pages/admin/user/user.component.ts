@@ -123,7 +123,7 @@ export class UserComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if(edit) {
-          const event = new createUserData(result.uid); //pass uid based on user selected 
+          const event = new createUserData(result.uid); //pass uid based on user selected
           const eventType = new createUserEvent(event,'USER','SEARCH');
           const eventData = new createUser(eventType);
           this.dataService.editUser(eventData).subscribe(
@@ -133,7 +133,8 @@ export class UserComponent {
           )
         }
         else if(!edit) {
-          const event = new createNewUserEvent(result.firstName,result.lastName,result.dob,result.email,result.phone,result.country,result.emailAlt,result.phoneAlt,result.countryAlt,result.userLinkDataList); //pass uid based on user selected 
+          console.log(result);
+          const event = new createNewUserEvent(result.firstName,result.lastName,result.dob,result.email,result.phone,result.country,result.emailAlt,result.phoneAlt,result.countryAlt,result.userLinkDataList); //pass uid based on user selected
           const eventData = new createNewUserBody(event,'USER','CREATE');
           const eventType = new createNewUser(eventData);
           console.log("1212",eventType);
