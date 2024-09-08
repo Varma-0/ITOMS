@@ -212,6 +212,7 @@ import { StatusReportComponent } from './components/pages/reports/status/status.
 import { BasicLineChart1Component } from './components/charts/basic-line-chart1/basic-line-chart1.component';
 import { BasicLineChart2Component } from './components/charts/basic-line-chart2/basic-line-chart2.component';
 import { GoogleMapComponent } from './components/pages/table/terminal/google-map/google-map.component';
+import { TerminalProfileComponent } from './components/dialogs/terminal-profile/terminal-profile.component';
 
 @NgModule({
   declarations: [
@@ -399,7 +400,8 @@ import { GoogleMapComponent } from './components/pages/table/terminal/google-map
     DevicesFormComponent,
     HierarchySelectionComponent,
     HierarchyFormComponent,
-    GoogleMapComponent
+    GoogleMapComponent,
+    TerminalProfileComponent
   ],
   imports: [
     BrowserModule,
