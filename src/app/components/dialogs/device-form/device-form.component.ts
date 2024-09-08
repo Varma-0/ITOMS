@@ -85,7 +85,7 @@ export class DevicesFormComponent {
     if(this.title == 'Add Device' || this.title == 'Edit Device') {
       this.deviceForm.get('modalName').setValue(this.getObjectById(this.deviceForm.get('modal').value,this.modals).name)
       this.deviceForm.get('merchantName').setValue(this.getObjectById(this.deviceForm.get('merchant').value,this.merchants).name)
-      this.deviceForm.get('hierarchyName').setValue(this.getObjectById(this.deviceForm.get('hierarchy').value,this.hirearchies).name)
+      this.deviceForm.get('hierarchyName').setValue(this.deviceForm.get('hierarchy').value,this.hirearchies);
       this.dialogRef.close(this.deviceForm.value);
     } else {
       this.dialogRef.close(this.modalForm.value);
@@ -96,16 +96,97 @@ export class DevicesFormComponent {
     const dialogRef = this.dialog.open(HierarchySelectionComponent,{
         data : {
             title : 'Select Hierarchy',
-            list : [
-                { name: 'Merchant', values: [], selectedValue: '' },
-                { name: 'Level 0', values: [], selectedValue: '' },
-                { name: 'Level 1', values: [], selectedValue: '' },
-                { name: 'Level 2', values: [], selectedValue: '' },
-              ]
+            list : {
+                "merchants": [
+                  {
+                    "id": "m1",
+                    "name": "MegaMart",
+                    "countries": [
+                      {
+                        "id": "c1",
+                        "name": "United States",
+                        "states": [
+                          {
+                            "id": "s1",
+                            "name": "California",
+                            "cities": [
+                              {
+                                "id": "city1",
+                                "name": "Los Angeles"
+                              },
+                              {
+                                "id": "city2",
+                                "name": "San Francisco"
+                              }
+                            ]
+                          },
+                          {
+                            "id": "s2",
+                            "name": "New York",
+                            "cities": [
+                              {
+                                "id": "city3",
+                                "name": "New York City"
+                              },
+                              {
+                                "id": "city4",
+                                "name": "Buffalo"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "c2",
+                        "name": "Canada",
+                        "states": [
+                          {
+                            "id": "s3",
+                            "name": "Ontario",
+                            "cities": [
+                              {
+                                "id": "city5",
+                                "name": "Toronto"
+                              },
+                              {
+                                "id": "city6",
+                                "name": "Ottawa"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "m2",
+                    "name": "TechWorld",
+                    "countries": [
+                      {
+                        "id": "c3",
+                        "name": "Germany",
+                        "states": [
+                          {
+                            "id": "s4",
+                            "name": "Bavaria",
+                            "cities": [
+                              {
+                                "id": "city7",
+                                "name": "Munich"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
         },
         width:'50%',
     });
     dialogRef.afterClosed().subscribe(result => {
+        this.deviceForm.get('hierarchy').setValue(result);
     });
   }
 

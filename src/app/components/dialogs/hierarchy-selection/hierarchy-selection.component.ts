@@ -10,44 +10,41 @@ import { terminalBody } from 'src/app/services/terminal/body/body';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 
+interface HierarchyItem {
+    id: string;
+    name: string;
+    [key: string]: any;
+  }
+
+  interface HierarchyLevel {
+    name: string;
+    items: HierarchyItem[];
+    selectedItem: HierarchyItem | null;
+  }
 @Component({
   selector: 'app-hierarchy-selection',
   templateUrl: './hierarchy-selection.component.html',
   styleUrls: ['./hierarchy-selection.component.scss'],
 })
 export class HierarchySelectionComponent {
+  hierarchyLevelsList: HierarchyLevel[] = [
+    { name: 'Merchant', items: [], selectedItem: null },
+    { name: 'Country', items: [], selectedItem: null },
+    { name: 'State', items: [], selectedItem: null },
+    { name: 'City', items: [], selectedItem: null },
+  ];
     hierarchyLevels = [];
       title="";
+    selectedPath: string;
 
       constructor(public dialogRef: MatDialogRef<HierarchySelectionComponent>,private dataService: TerminalService,@Inject(MAT_DIALOG_DATA) public data: any){
         this.title = data.title
         this.hierarchyLevels = data.list
+        this.hierarchyLevelsList[0].items = data.list.merchants;
       }
       ngOnInit() {
-        this.getData();
       }
 
-      getData(){
-          const event = new terminalEvent('MERCHANT', 'SEARCH');
-          const merchantRequest = new terminalBody(event);
-          this.dataService.merchantData(merchantRequest).subscribe(
-              response => {
-                response.event.eventData.forEach(element => {
-                    this.hierarchyLevels[0].values.push({
-                        name:element.name,
-                        id:element.id
-                    })
-                });
-              },
-              error => {
-                  console.error('Error:', error);
-              }
-          )
-      }
-
-      getSelectedList(){
-
-      }
 
       addLevel() {
           this.hierarchyLevels.push({
@@ -69,27 +66,40 @@ export class HierarchySelectionComponent {
         }
       }
 
-      selectItem(levelIndex: number, item) {
-        this.hierarchyLevels[levelIndex].selectedValue = item;
-        const merchantId = new midDevice(item.id);
-        const merchantEvent = new midEvent(merchantId,'HIERARCHY','SEARCH');
-        const mrHierarchy = new midHeirarchy(merchantEvent);
-        this.dataService.getHierarchyFromMerchant(mrHierarchy).subscribe(
-          response =>  {
-            console.log(response.event.eventData);
-            response.event.eventData.forEach(res => {
-                this.hierarchyLevels[levelIndex + 1].values.push({
-                    name: res.name,
-                    id: res.id
-                })
-            });;
-          }
-        )
+      selectItem(levelIndex: number, item: HierarchyItem) {
+        this.hierarchyLevelsList[levelIndex].selectedItem = item;
+        // this.selectedItem = item;
 
         // Reset all subsequent levels
-        for (let i = levelIndex + 1; i < this.hierarchyLevels.length; i++) {
-          this.hierarchyLevels[i].selectedValue = '';
-          this.hierarchyLevels[i].values = [];
+        for (let i = levelIndex + 1; i < this.hierarchyLevelsList.length; i++) {
+          this.hierarchyLevelsList[i].selectedItem = null;
+          this.hierarchyLevelsList[i].items = [];
+        }
+
+        // Load children for the next level
+        if (levelIndex < this.hierarchyLevelsList.length - 1) {
+          this.loadChildrenForLevel(levelIndex + 1, item);
+        }
+
+        this.updateSelectedPath(); // New method call
+      }
+
+      updateSelectedPath() {
+        this.selectedPath = this.hierarchyLevelsList
+          .filter(level => level.selectedItem)
+          .map(level => level.selectedItem!.name)
+          .join(' >> ');
+      }
+
+
+      loadChildrenForLevel(levelIndex: number, parentItem: HierarchyItem) {
+        const childrenKeys = ['countries', 'states', 'cities'];
+        const childKey = childrenKeys[levelIndex - 1];
+
+        if (parentItem[childKey]) {
+          this.hierarchyLevelsList[levelIndex].items = parentItem[childKey];
+        } else {
+          this.hierarchyLevelsList[levelIndex].items = [];
         }
       }
 
@@ -98,7 +108,11 @@ export class HierarchySelectionComponent {
   }
 
   onConfirm(): void {
-    this.dialogRef.close(this.hierarchyLevels);
+    if(this.title == 'Select Hierarchy'){
+        this.dialogRef.close(this.selectedPath);
+    }else{
+        this.dialogRef.close(this.hierarchyLevels);
+    }
   }
 
 }

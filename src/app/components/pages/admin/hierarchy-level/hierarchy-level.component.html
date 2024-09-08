@@ -16,9 +16,9 @@
                [class.selected]="item === level.selectedItem"
                (click)="selectItem(i, item)">
             {{ item.name }}
-            <div class="item-actions" (click)="$event.stopPropagation()">
-              <button class="icon-btn add" (click)="addNewItem(i,$event)">+</button>
-              <button class="icon-btn delete" (click)="deleteItem(i, item,$event)">×</button>
+            <div class="item-actions">
+              <button class="icon-btn add" (click)="addNewItem(i)">+</button>
+              <button class="icon-btn delete" *ngIf="i >= 2 " (click)="deleteItem(i, item)">×</button>
             </div>
           </div>
         </div>
@@ -62,13 +62,5 @@
           <button type="submit" class="btn primary">Save</button>
         </div>
       </form>
-    </div>
-
-    <div class="hierarchy-path">
-      <h2>Selected Hierarchy Path</h2>
-      <p>{{ selectedPath }}</p>
-      <div class="button-group">
-        <button class="btn primary" (click)="saveHierarchyPath()">Save Path</button>
-      </div>
     </div>
   </div>
