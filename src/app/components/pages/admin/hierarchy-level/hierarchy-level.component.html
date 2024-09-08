@@ -1,61 +1,74 @@
 <div class="hierarchy-container">
     <div class="header">
-      <h1>Manage Hierarchy</h1>
-      <div class="header-buttons">
-        <button class="btn primary" (click)="openDialog()" >Manage Hierarchy Level</button>
-        <button class="btn secondary">Upload Hierarchy File</button>
+        <h1>Manage Hierarchy</h1>
+        <div class="header-buttons">
+          <button class="btn primary" (click)="openDialog()" >Manage Hierarchy Level</button>
+          <button class="btn secondary">Upload Hierarchy File</button>
+        </div>
       </div>
-    </div>
 
     <div class="hierarchy-values">
       <div *ngFor="let level of hierarchyLevels; let i = index" class="hierarchy-column">
         <h3>{{ level.name }}</h3>
         <div class="hierarchy-items">
-          <div *ngFor="let item of level.values"
+          <div *ngFor="let item of level.items"
                class="hierarchy-item"
-               [class.selected]="item === level.selectedValue"
+               [class.selected]="item === level.selectedItem"
                (click)="selectItem(i, item)">
             {{ item.name }}
+            <div class="item-actions" (click)="$event.stopPropagation()">
+              <button class="icon-btn add" (click)="addNewItem(i,$event)">+</button>
+              <button class="icon-btn delete" (click)="deleteItem(i, item,$event)">×</button>
+            </div>
           </div>
         </div>
-        <button *ngIf="i < 2" class="btn icon-btn add" (click)="addLevel()">+</button>
-        <button *ngIf="i >= 2" class="btn icon-btn remove" (click)="removeLevel(i)">×</button>
       </div>
     </div>
 
-    <div class="hierarchy-properties">
+    <div class="hierarchy-properties" *ngIf="itemForm">
       <h2>Hierarchy Value Properties</h2>
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="hierarchyName">Hierarchy name: *</label>
-          <input id="hierarchyName" type="text" [(ngModel)]="hierarchyLevels[0].selectedValue">
+      <form [formGroup]="itemForm" (ngSubmit)="saveHierarchyItem()">
+        <div class="form-grid">
+         <div class="form-group">
+                <label for="hierarchyName">Hierarchy name: *</label>
+                <input id="hierarchyName" type="text" formControlName="name">
+            </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <input id="description" formControlName="description">
+          </div>
+          <div class="form-group">
+            <label for="ipStartAddress">IP starting address:</label>
+            <input id="ipStartAddress" formControlName="ipStartAddress">
+          </div>
+          <div class="form-group">
+            <label for="ipEndAddress">IP ending address:</label>
+            <input id="ipEndAddress" formControlName="ipEndAddress">
+          </div>
+          <div class="form-group">
+            <label for="locationIdentifier">Location identifier:</label>
+            <input id="locationIdentifier" formControlName="locationIdentifier">
+          </div>
+          <div class="form-group">
+            <label for="timeZone">Time zone:</label>
+            <select id="timeZone" formControlName="timeZone">
+              <option value="UTC+01:00">(UTC+01:00) Dublin, Edinburgh, Lisbon, London</option>
+              <!-- Add more time zone options as needed -->
+            </select>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="description">Description:</label>
-          <input id="description" type="text">
+        <div class="button-group">
+          <button type="button" class="btn secondary" (click)="itemForm.reset()">Cancel</button>
+          <button type="submit" class="btn primary">Save</button>
         </div>
-        <div class="form-group">
-          <label for="ipStart">IP starting address:</label>
-          <input id="ipStart" type="text">
-        </div>
-        <div class="form-group">
-          <label for="ipEnd">IP ending address:</label>
-          <input id="ipEnd" type="text">
-        </div>
-        <div class="form-group">
-          <label for="locationId">Location identifier:</label>
-          <input id="locationId" type="text">
-        </div>
-        <div class="form-group">
-          <label for="timezone">Time zone:</label>
-          <select id="timezone">
-            <option>(UTC+01:00) Dublin, Edinburgh, Lisbon, London</option>
-          </select>
-        </div>
-      </div>
+      </form>
+    </div>
+
+    <div class="hierarchy-path">
+      <h2>Selected Hierarchy Path</h2>
+      <p>{{ selectedPath }}</p>
       <div class="button-group">
-        <button class="btn primary">Save</button>
-        <button class="btn secondary">Cancel</button>
+        <button class="btn primary" (click)="saveHierarchyPath()">Save Path</button>
       </div>
     </div>
   </div>
