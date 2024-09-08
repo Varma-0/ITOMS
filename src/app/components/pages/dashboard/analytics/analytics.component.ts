@@ -4,6 +4,11 @@ import { chartsEvent } from "src/app/services/login/body/event";
 import { TerminalService } from "src/app/services/terminal/devicelist";
 declare let $: any;
 
+interface ChartData {
+  date: string;
+  value: number;
+}
+
 @Component({
     selector: "app-analytics",
     templateUrl: "./analytics.component.html",
@@ -13,11 +18,18 @@ export class AnalyticsComponent implements OnInit {
   terminalCount: any;
   merchantCount: any;
   apkCount: any;
+  // activatedData: any;
     constructor(private dataService: TerminalService) {}
     @Input() title: string = 'Demo';
     showFilter: boolean = false;
     welcome: string;
     data: any;
+
+    activatedData: ChartData[] = [];
+    deviceOnlineData: any[] = [
+      {"2024-09-08": 2},
+       { "2024-09-06": 1}
+    ];
   toggleFilter() {
     this.showFilter = !this.showFilter;
   }
@@ -28,6 +40,8 @@ export class AnalyticsComponent implements OnInit {
       this.terminalCountData();
       this.merchantCountData();
       this.apkCountData();
+      this.newActivatedGraph();
+      this.deviceOnline();
     }
 
     pieChart() {
@@ -74,6 +88,30 @@ export class AnalyticsComponent implements OnInit {
           console.log("pie",response);
           this.apkCount = response.event.eventData.total;
           console.log("pie",this.apkCount);
+        }
+      )
+    }
+
+    newActivatedGraph() {
+      const charts = new chartsEvent('REPORT','SEARCH');
+      const chartData = new devicePie(charts);
+      this.dataService.newActivatedGraphInfo(chartData).subscribe(
+        response => {
+          console.log("pie",response);
+          this.activatedData = response.event.eventData.data;
+          console.log("dqoefqoq",this.activatedData);
+        }
+      )
+    }
+
+    deviceOnline() {
+      const charts = new chartsEvent('REPORT','SEARCH');
+      const chartData = new devicePie(charts);
+      this.dataService.deviceOnlineGraphInfo(chartData).subscribe(
+        response => {
+          console.log("pie",response);
+          this.deviceOnlineData.push(response.event.eventData);
+          console.log("pie",this.deviceOnlineData);
         }
       )
     }
