@@ -25,8 +25,8 @@
         </select>
       </div>
       <div class="col-md-6 form-group">
-        <label for="modal">Merchant Name:</label>
-        <select class="form-select" id="modal" (change)="getHierarchy()" formControlName="merchant">
+        <label for="merchant">Merchant Name:</label>
+        <select class="form-select" id="merchant" (change)="getHierarchy()" formControlName="merchant">
           <option *ngFor="let i of merchants" [value]="i.id">{{ i.name }}</option>
         </select>
       </div>
@@ -48,7 +48,11 @@
           <input id="name" type="text" formControlName="name">
         </div>
         <div class="form-group">
-          <label for="description">OEM:</label>
+          <label for="oem">OEM:</label>
+          <input id="oem" type="text" formControlName="oem">
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
           <input id="description" type="text" formControlName="description">
         </div>
       </form>

@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 import { terminalBody } from './body/body';
 import { environment } from 'src/environments/environment';
 import { createModelEvent, deleteModelEvent, midEvent, updateModelEvent } from '../login/body/event';
-import { createBody, createUser, deleteBody, midHeirarchy, updateBody, updateDevice } from '../login/body/body';
-import { midDevice } from '../login/body/event-data';
+import { addDeviceBody, createBody, createUser, deleteBody, midHeirarchy, updateBody, updateDevice } from '../login/body/body';
+import { midDevice, addDevice } from '../login/body/event-data';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +53,10 @@ export class TerminalService {
 
     editUser(options:createUser): Observable<any> {
         return this.http.post<any>(`${environment.userApiUrl}/user/getUser`,options, {headers: this.httpHeaders});
+    }
+
+    addNewDevice(options: addDeviceBody): Observable<any> {
+        return this.http.post(`${environment.userApiUrl}/tms/device`,options, { headers: this.httpHeaders});
     }
 
     merchantData(options:terminalBody): Observable<any> {

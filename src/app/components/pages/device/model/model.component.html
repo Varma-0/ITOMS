@@ -15,6 +15,7 @@
       <tr>
         <th>Device Model</th>
         <th>OEM</th>
+        <th>Description</th>
         <th>Created Date</th>
         <th>Actions</th>
       </tr>
@@ -22,6 +23,7 @@
     <tbody *ngFor="let device of paginatedDevices">
       <tr *ngIf="!device.delete">
         <td>{{ device.name }}</td>
+        <td>{{ device.oem }}</td>
         <td>{{ device.description }}</td>
         <td>{{ device.fulldate }}</td>
         <td>

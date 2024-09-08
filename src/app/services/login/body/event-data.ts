@@ -55,21 +55,25 @@ export class modelUpdateData {
   id: string;
   name: string;
   description: string;
+  oem: string;
 
-  constructor(id: string,name: string, description: string) {
+  constructor(id: string,name: string, description: string,oem: string) {
       this.id = id;
       this.name = name;
       this.description = description;
+      this.oem = oem;
   }
 }
 
 export class createData {
   name: string;
   description: string;
+  oem: string;
 
-  constructor(name: string, description: string) {
+  constructor(name: string, description: string,oem: string) {
       this.name = name;
       this.description = description;
+      this.oem = oem;
   }
 }
 
@@ -77,14 +81,48 @@ export class createData {
 export class createDevice {
   deviceId: string;
   serialNumber: string;
+  softwareKey: string;
+  modelName: string;
   model: string;
+  hierarchyName: string;
   hierarchy: string;
+  merchantName: string;
+  merchant: string;
 
-  constructor(deviceId: string, serialNumber: string,model: string,hierarchy: string) {
+  constructor(deviceId: string, serialNumber: string,softwareKey: string,modelName: string,model: string,hierarchyName: string,hierarchy: string,merchantName: string,merchant: string) {
       this.deviceId = deviceId;
       this.serialNumber = serialNumber;
+      this.softwareKey = softwareKey;
+      this.modelName = modelName;
       this.model = model;
+      this.hierarchyName = hierarchyName;
       this.hierarchy = hierarchy;
+      this.merchantName = merchantName;
+      this.merchant = merchant;
+  }
+}
+
+export class addDevice {
+  serialNumber: string;
+  softwareKey: string;
+  modelName: string;
+  model: string;
+  status: string;
+  hierarchyName: string;
+  hierarchy: string;
+  merchantName: string;
+  merchantId: string;
+
+  constructor(serialNumber: string,status: string,softwareKey: string,modelName: string,model: string,hierarchyName: string,hierarchy: string,merchantName: string,merchantId: string) {
+      this.serialNumber = serialNumber;
+      this.softwareKey = softwareKey;
+      this.status = status;
+      this.modelName = modelName;
+      this.model = model;
+      this.hierarchyName = hierarchyName;
+      this.hierarchy = hierarchy;
+      this.merchantName = merchantName;
+      this.merchantId = merchantId;
   }
 }
 

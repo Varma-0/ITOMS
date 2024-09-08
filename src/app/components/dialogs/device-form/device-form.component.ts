@@ -27,7 +27,9 @@ export class DevicesFormComponent {
   constructor(public dialog: MatDialog,public dialogRef: MatDialogRef<DevicesFormComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private shared:SharedServices,private dataService: TerminalService) {
     this.title = data.title
     this.options = data.hierarchy
+    console.log("gvbx",this.options);
     this.modals = data.modals
+    console.log("iugd",this.modals);
     this.merchants = data.merchants
     this.shared.setSidebarState(false);
   }
@@ -42,6 +44,7 @@ export class DevicesFormComponent {
       });
       this.modalForm = this.fb.group({
         name: [''],
+        oem: [''],
         description: [''],
       });
       if(this.title == 'Edit Device'){

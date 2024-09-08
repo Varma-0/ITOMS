@@ -3,9 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { DevicesFormComponent } from 'src/app/components/dialogs/device-form/device-form.component';
-import { updateDevice } from 'src/app/services/login/body/body';
-import { updateDeviceEvent } from 'src/app/services/login/body/event';
-import { createDevice } from 'src/app/services/login/body/event-data';
+import { addDeviceBody, updateDevice } from 'src/app/services/login/body/body';
+import { addDeviceEvent, updateDeviceEvent } from 'src/app/services/login/body/event';
+import { addDevice, createDevice } from 'src/app/services/login/body/event-data';
 import { SharedServices } from 'src/app/services/shared.service';
 import { terminalBody } from 'src/app/services/terminal/body/body';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
@@ -65,10 +65,14 @@ export class DevicesComponent {
             deviceId: data.id,
             serialNumber: data.serialNumber,
             model: data.model,
+            modelName: data.modelName,
             status: data.status,
             fulldate: fulldate,
             sk: data.softwareKey,
-            hierarchy: data.hierarchy
+            hierarchyName: data.hierarchyName,
+            hierarchy: data.hierarchy,
+            merchantName: data.merchantName,
+            merchantId: data.merchantId
           };
         });
         // this.filteredDevices = this.device;
@@ -181,19 +185,25 @@ export class DevicesComponent {
         modals : this.modelsList,
         merchants : this.merchants,
         form:{
+          deviceId: data.id,
             sno: data.serialNumber,
             skey: data.sk,
-            modal: data.model,
+            modal: data.model, 
+            modalName: data.modelName,
             hierarchy: data.hierarchy,
+            hierarchyName: data.hierarchyName,
+            merchantName: data.merchantName,
+            merchant: data.merchantId
         }
      },
      width : '40%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log("dufgq",result);
       if (result) {
        if(edit) {
-        const event = new createDevice(data.deviceId,result.sno, result.modal,data.hierarchy);
+        const event = new createDevice(data.deviceId,result.sno,result.skey,result.modal,result.hierarchy,result.modelName,result.hierarchyName,result.merchantName,result.merchant);
         const terminalRequest = new updateDeviceEvent(event,'DEVICE','UPDATE');
         const editDevice = new updateDevice(terminalRequest);
         console.log("cwicw",editDevice);
@@ -207,6 +217,21 @@ export class DevicesComponent {
           }
         );
        }
+       else if (!edit) {
+          const event = new addDevice(result.sno,result.skey,result.modal,result.modalName,result.hierarchy,result.hierarchyName,result.merchantName,result.merchant,result.status)
+          const terminalRequest = new addDeviceEvent(event,'DEVICE','CREATE');
+          const editDevice = new addDeviceBody(terminalRequest);
+          console.log("cwicw",editDevice);
+          this.dataService.addNewDevice(editDevice).subscribe(
+            response => {
+              console.log(response);
+              this.deviceData();
+            },
+            error => {
+              console.error('Error:', error);
+            }
+          );
+        }
       }
     });
   }

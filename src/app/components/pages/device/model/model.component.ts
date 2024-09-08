@@ -222,6 +222,7 @@ export class ModelComponent implements OnInit {
         this.devices = response.event.eventData.map(data => ({
           modelId: data.id,
           name: data.name,
+          oem: data.oem,
           description: data.description,
           fulldate: data.createdBy.ts.split('T')[0],
           delete: data.delete
@@ -292,7 +293,7 @@ export class ModelComponent implements OnInit {
   }
 
   updateModel(modelId: string, formData: any) {
-    const updateModelRequest = new modelUpdateData(modelId, formData.name, formData.description);
+    const updateModelRequest = new modelUpdateData(modelId, formData.name, formData.description,formData.oem);
     const event = new updateModelEvent(updateModelRequest, 'MODEL', 'CREATE');
     const update = new updateBody(event);
 
@@ -305,7 +306,7 @@ export class ModelComponent implements OnInit {
   }
 
   createModel(formData: any) {
-    const eventData = new createData(formData.name, formData.description);
+    const eventData = new createData(formData.name, formData.description,formData.oem);
     const createModel = new createModelEvent(eventData, 'MODEL', 'CREATE');
     const create = new createBody(createModel);
 

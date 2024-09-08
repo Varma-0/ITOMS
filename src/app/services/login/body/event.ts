@@ -1,4 +1,4 @@
-import { emailData,passData,dropData, modelUpdateData, createData, createDevice, midDevice, createUserData } from './event-data';
+import { emailData,passData,dropData, modelUpdateData, createData, createDevice, midDevice, createUserData, addDevice } from './event-data';
 
 export class emailEvent {
   eventData: emailData;
@@ -90,6 +90,18 @@ export class passEvent {
     eventSubType: string;
   
     constructor(eventData: createDevice, eventType: string, eventSubType: string) {
+      this.eventData = eventData;
+      this.eventType = eventType;
+      this.eventSubType = eventSubType;
+    }
+  }
+
+  export class addDeviceEvent {
+    eventData: addDevice;
+    eventType: string;
+    eventSubType: string;
+  
+    constructor(eventData: addDevice, eventType: string, eventSubType: string) {
       this.eventData = eventData;
       this.eventType = eventType;
       this.eventSubType = eventSubType;

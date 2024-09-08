@@ -1,4 +1,4 @@
-import { createModelEvent, createUserEvent, deleteModelEvent, dropEvent, emailEvent, midEvent, passEvent, updateDeviceEvent, updateModelEvent } from './event';
+import { addDeviceEvent, createModelEvent, createUserEvent, deleteModelEvent, dropEvent, emailEvent, midEvent, passEvent, updateDeviceEvent, updateModelEvent } from './event';
 import { createDevice, createUserData, midDevice } from './event-data';
 
 export class emailBody {
@@ -53,6 +53,14 @@ export class updateDevice {
   event: updateDeviceEvent;
 
   constructor(event: updateDeviceEvent) {
+    this.event = event;
+  }
+}
+
+export class addDeviceBody {
+  event: addDeviceEvent;
+
+  constructor(event: addDeviceEvent) {
     this.event = event;
   }
 }
