@@ -26,6 +26,7 @@ export class DevicesFormComponent {
   modals = [];
   merchants = [];
   hirearchies = [];
+  dsn:any;
   constructor(public dialog: MatDialog,public dialogRef: MatDialogRef<DevicesFormComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private shared:SharedServices,private dataService: TerminalService) {
     this.title = data.title
     this.options = data.hierarchy
@@ -87,7 +88,10 @@ export class DevicesFormComponent {
       this.deviceForm.get('merchantName').setValue(this.getObjectById(this.deviceForm.get('merchant').value,this.merchants).name)
       this.deviceForm.get('hierarchyName').setValue(this.deviceForm.get('hierarchy').value,this.hirearchies);
       this.dialogRef.close(this.deviceForm.value);
-    } else {
+    } else if (this.title == 'New Terminal') {
+      this.dialogRef.close(this.dsn);
+    } 
+    else {
       this.dialogRef.close(this.modalForm.value);
     }
   }

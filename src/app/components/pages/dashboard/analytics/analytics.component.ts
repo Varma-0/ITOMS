@@ -27,6 +27,7 @@ export class AnalyticsComponent implements OnInit {
 
     activatedData: ChartData[] = [];
     deviceOnlineData: any[] = [];
+    deviceOnlineData1: any;
   toggleFilter() {
     this.showFilter = !this.showFilter;
   }
@@ -107,7 +108,7 @@ export class AnalyticsComponent implements OnInit {
       this.dataService.deviceOnlineGraphInfo(chartData).subscribe(
         response => {
           console.log("pie",response);
-          this.deviceOnlineData.push(response.event.eventData);
+          this.deviceOnlineData = response.event.eventData.data;
           console.log("pie",this.deviceOnlineData);
         }
       )

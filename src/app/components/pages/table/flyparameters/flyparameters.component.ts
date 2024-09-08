@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DesignSelectionComponent } from 'src/app/components/dialogs/design-selection/design-selection.component';
+import { DevicesFormComponent } from 'src/app/components/dialogs/device-form/device-form.component';
 import { SelectCfgComponent } from 'src/app/components/dialogs/select-cfg/select-cfg.component';
 import { SharedServices } from 'src/app/services/shared.service';
 
@@ -79,6 +80,24 @@ export class FlyparametersComponent {
     } else {
       this.filteredDeployments = this.deployments;
     }
+  }
+
+  openCreateDialog(data?: any): void {
+    const dialogRef = this.dialog.open(DevicesFormComponent, {
+      data: {
+        title: 'New Terminal',
+        form: {
+          name: data?.name,
+        }
+      },
+      width: '40%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      
+      }
+    });
   }
 
 

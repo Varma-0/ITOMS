@@ -8,123 +8,124 @@ import ApexCharts from 'apexcharts';
 })
 export class BasicLineChartComponent implements OnInit {
 
-  @Input() data: any[] = [];  // Input property for data
-
-  private chart: ApexCharts | null = null;
-
-  constructor() { }
-
-  ngOnInit() {
-    this.renderChart();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['data']) {
+    @Input() data: any[] = [];
+    private chart: ApexCharts | null = null;
+  
+    constructor() { }
+  
+    ngOnInit() {
       this.renderChart();
     }
-  }
-
-  // Render or update the chart based on input data
-  private renderChart() {
-    const { dates, dataSeries } = this.processData();
-
-    const options = {
-      chart: {
-        height: 360,
-        type: 'line',
-        zoom: {
-          enabled: false
-        }
-      },
-      series: [{
-        name: "Values",
-        data: dataSeries
-      }],
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: 'smooth'
-      },
-      title: {
-        text: dataSeries.length === 0 ? 'No Data Available' : '',
-        align: 'left',
-        style: {
-          fontSize: "13px",
-          color: '#666'
-        }
-      },
-      grid: {
-        row: {
-          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-          opacity: 0.5
-        },
-      },
-      xaxis: {
-        categories: dates.length > 0 ? dates : ['No Data'],  // Dynamic dates or 'No Data'
-      },
-      yaxis: {
-        title: {
-          text: ''
-        }
+  
+    ngOnChanges(changes: SimpleChanges) {
+      if (changes['data']) {
+        this.renderChart();
       }
-    };
-
-    if (this.chart) {
-      this.chart.updateOptions(options);
-    } else {
-      this.chart = new ApexCharts(
-        document.querySelector("#apex-basic-line-chart"),
-        options
-      );
-      this.chart.render();
     }
-  }
-
-  // Process the API data to fit ChartData format
-  private processData(): { dates: string[], dataSeries: number[] } {
-    const dates: string[] = this.getLastWeekDates();
-    const dataSeries: number[] = new Array(dates.length).fill(0); // Initialize with 0
-
-    if (!this.data || this.data.length === 0) {
+  
+    private renderChart() {
+      const { dates, dataSeries } = this.processData();
+  
+      const options = {
+        chart: {
+          height: 350,
+          type: 'line',
+          zoom: { enabled: false },
+          toolbar: { show: false }
+        },
+        series: [{
+          name: "Values",
+          data: dataSeries
+        }],
+        colors: ['#2196F3'],
+        dataLabels: { enabled: false },
+        stroke: { 
+          curve: 'smooth',
+          width: 4
+        },
+        grid: {
+          borderColor: '#e7e7e7',
+          row: {
+            colors: ['#f3f3f3', 'transparent'],
+            opacity: 0.5
+          },
+        },
+        xaxis: {
+          categories: dates,
+          labels: {
+            style: {
+              colors: '#333',
+              fontSize: '11px',
+            }
+          },
+          axisBorder: { show: false },
+          axisTicks: { show: false },
+        },
+        yaxis: {
+          min: 0,
+          max: Math.max(...dataSeries) + 1,
+          tickAmount: 9,
+          labels: {
+            style: {
+              colors: '#333',
+              fontSize: '11px',
+            },
+            formatter: (value) => value.toFixed(0)
+          }
+        },
+        legend: { show: false },
+        tooltip: {
+          y: {
+            formatter: (value) => value.toFixed(0)
+          }
+        }
+      };
+  
+      if (this.chart) {
+        this.chart.updateOptions(options);
+      } else {
+        this.chart = new ApexCharts(document.querySelector("#apex-basic-line-chart"), options);
+        this.chart.render();
+      }
+    }
+  
+    private processData(): { dates: string[], dataSeries: number[] } {
+      const pastWeekDates = this.getPastWeekDates();
+      const dateMap = new Map<string, number>();
+  
+      pastWeekDates.forEach(date => dateMap.set(date, 0));
+  
+      this.data.forEach(item => {
+        Object.entries(item).forEach(([dateStr, value]) => {
+          const formattedDate = this.formatDate(new Date(dateStr));
+          if (dateMap.has(formattedDate)) {
+            dateMap.set(formattedDate, (dateMap.get(formattedDate) || 0) + Number(value));
+          }
+        });
+      });
+  
+      const dates = pastWeekDates;
+      const dataSeries = pastWeekDates.map(date => dateMap.get(date) || 0);
+  
       return { dates, dataSeries };
     }
-
-    for (const item of this.data) {
-      const dateStr = Object.keys(item)[0]; // Extract date string
-      const value = item[dateStr]; // Extract value
-      const formattedDate = this.formatDate(new Date(dateStr));
-      const index = dates.indexOf(formattedDate);
-      if (index !== -1) {
-        dataSeries[index] = value;
+  
+    private getPastWeekDates(): string[] {
+      const dates: string[] = [];
+      const today = new Date();
+      for (let i = 6; i >= 0; i--) {
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        dates.push(this.formatDate(date));
       }
+      return dates;
     }
-
-    return { dates, dataSeries };
-  }
-
-  // Generate an array of dates for the past 7 days
-  private getLastWeekDates(): string[] {
-    const dates: string[] = [];
-    const today = new Date();
-
-    for (let i = 6; i >= 0; i--) {
-      const date = new Date();
-      date.setDate(today.getDate() - i);
-      dates.push(this.formatDate(date));
+  
+    private formatDate(date: Date): string {
+      const options: Intl.DateTimeFormatOptions = { 
+        day: '2-digit',
+        weekday: 'short'
+      };
+      return date.toLocaleDateString('en-US', options).replace(',', '');
     }
-
-    return dates;
-  }
-
-  // Format date as 'Mon dd'
-  private formatDate(date: Date): string {
-    const options: Intl.DateTimeFormatOptions = { 
-      weekday: 'short',  // "short", "long", or "narrow"
-      day: '2-digit'     // "2-digit" or "numeric"
-    };
-
-    // Format the date using the options
-    return date.toLocaleDateString('en-US', options);
-  }
 }
