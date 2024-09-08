@@ -8,22 +8,22 @@
       <!-- <select id="tenant" formControlName="tenant">
         <option *ngFor="let tenant of tenantOptionNames" value="tenant">{{ tenant }}</option>
       </select> -->
-      <mat-select formControlName="tenant" [multiple]="isSAValue">
-        <mat-option *ngFor="let tenant of tenantOptionNames" [value]="tenant">{{ tenant }}</mat-option>
+      <mat-select formControlName="tenant">
+        <mat-option *ngFor="let tenant of tenantOptionNames" [value]="tenant.id">{{ tenant.name }}</mat-option>
      </mat-select>
     </div>
 
     <div class="form-group">
       <label for="role">Role:</label>
-      <mat-select id="role" formControlName="role" [multiple]="isSAValue">
-        <mat-option *ngFor="let role of roleOptionNames" [value]="role">{{ role }}</mat-option>
+      <mat-select id="role" formControlName="role">
+        <mat-option *ngFor="let role of roleOptionNames" [value]="role.id">{{ role.name }}</mat-option>
       </mat-select>
     </div>
 
     <div class="form-group">
       <label for="alert">Alert:</label>
       <select id="alert" formControlName="alert">
-        <option *ngFor="let alert of alertOptionNames" value="alert">{{ alert }}</option>
+        <option *ngFor="let alert of alertOptionNames" [value]="alert.id">{{ alert.name }}</option>
       </select>
     </div>
 
@@ -95,15 +95,15 @@
             <div formArrayName="roles">
               <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-box">
                 <div class="header">
-                  <span>{{ item.controls.label.value }}</span>
+                  <span>{{ item.controls.name.value }}</span>
                   <button mat-icon-button color="warn" (click)="removeItem(i)">
                     <mat-icon>delete</mat-icon>
                   </button>
                 </div>
                 <div class="checkboxes">
-                  <mat-checkbox formControlName="view">View</mat-checkbox>
-                  <mat-checkbox formControlName="edit">Edit</mat-checkbox>
-                  <mat-checkbox formControlName="delete">Delete</mat-checkbox>
+                  <mat-checkbox formControlName="allowView">View</mat-checkbox>
+                  <mat-checkbox formControlName="allowEdit">Edit</mat-checkbox>
+                  <mat-checkbox formControlName="allowView">Delete</mat-checkbox>
                 </div>
               </div>
             </div>
@@ -118,16 +118,16 @@
               </div>
           <label for="originator">Originator:</label>
           <select id="originator" formControlName="originator">
-            <option value="Server">Server</option>
-            <option value="Device">Device</option>
+            <option value="SERVER">SERVER</option>
+            <option value="SERVER">DEVICE</option>
           </select>
         </div>
         <div class="form-group">
             <label for="alert">Alert:</label>
             <select id="alert" formControlName="alert">
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
+              <option value="LOW">LOW</option>
+              <option value="MEDIUM">MEDIUM</option>
+              <option value="HIGH">HIGH</option>
             </select>
           </div>
           <div class="form-group">

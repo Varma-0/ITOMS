@@ -65,7 +65,7 @@ export class MerchantsComponent {
 
   search(): void {
     this.filteredmerchants = this.merchants.filter(device =>
-      device.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      device.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
     );
     this.updatePagination();
   }

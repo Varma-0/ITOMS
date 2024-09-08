@@ -70,11 +70,11 @@ export class FlyparametersComponent {
   constructor(public dialog: MatDialog, private shared:SharedServices){}
 
   filterDeployments() {
-    const filterValue = this.searchTerm.trim().toLowerCase();
+    const filterValue = this.searchTerm.trim()?.toLowerCase();
 
     if (filterValue) {
       this.filteredDeployments = this.deployments.filter(deployment =>
-        deployment.name.toLowerCase().includes(filterValue)
+        deployment.name?.toLowerCase().includes(filterValue)
       );
     } else {
       this.filteredDeployments = this.deployments;
@@ -112,7 +112,7 @@ export class FlyparametersComponent {
 
       search() {
         this.filteredDevices = this.devices.filter(device =>
-          device.deviceSN.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
+          device.deviceSN?.toLowerCase().includes(this.searchTerm?.toLowerCase()) &&
           (this.statusFilter === '' || device.parameterFileStatus === this.statusFilter)
         );
       }

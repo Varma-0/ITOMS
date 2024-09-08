@@ -35,9 +35,9 @@ export class ActiveComponent {
   }
 
   filterItems() {
-    const searchTerm = this.searchText.toLowerCase();
+    const searchTerm = this.searchText?.toLowerCase();
     this.filteredItems = this.items.filter(item =>
-      item.label.toLowerCase().startsWith(searchTerm)
+      item.label?.toLowerCase().startsWith(searchTerm)
     );
   }
 

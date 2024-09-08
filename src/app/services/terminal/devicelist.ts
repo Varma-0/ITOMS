@@ -75,6 +75,18 @@ export class TerminalService {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/merchant/add`, options, { headers: this.httpHeaders });
     }
 
+    addAlert(options): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/alert/`, options, { headers: this.httpHeaders });
+    }
+
+    getAlertData(options): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/alert/getAlert`, options, { headers: this.httpHeaders });
+    }
+
+    deleteAlertData(options): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/alert/`, options, { headers: this.httpHeaders });
+    }
+
     deleteMerchant(options:merchantDelete): Observable<any> {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/merchant/delete`, options, { headers: this.httpHeaders });
     }
@@ -104,7 +116,7 @@ export class TerminalService {
         return this.http.post<any>(`${environment.userApiUrl}/user/`,options, {headers: this.httpHeaders});
     }
 
-    updateRoles(options: roleUpdate): Observable<any> {
+    updateRoles(options): Observable<any> {
         return this.http.put<any>(`${environment.userApiUrl}/role/`,options, {headers: this.httpHeaders});
     }
 

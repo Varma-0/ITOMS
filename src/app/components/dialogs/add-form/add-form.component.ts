@@ -47,9 +47,12 @@ export class AddFormComponent {
         items: this.fb.array([])
       });
     this.userForm = this.fb.group({
-        tenant: [[]],
-        role: this.isSAValue ? [[]] : [''],
-        alert: this.isSAValue ? [[]] : [''],
+        tenant: [''],
+        tenantName:[''],
+        role:  [''],
+        roleName:[''],
+        alert: [''],
+        alertName:[''],
         firstName: [''],
         lastName: [''],
         dob: [''],
@@ -104,7 +107,7 @@ export class AddFormComponent {
         this.userForm.patchValue(this.userData.form);
       }else if(this.title == 'Edit Role'){
         this.roleForm.patchValue(this.userData.form);
-        this.userData.form.roles.forEach(roleData => {
+        this.userData.form.roles?.forEach(roleData => {
             this.items.push(this.fb.group({
                 label : roleData.label,
                 view : [{value : roleData.view,disabled:true}],
@@ -129,10 +132,11 @@ export class AddFormComponent {
 
   createItem(data): FormGroup {
     return this.fb.group({
-      label: [data.permission],
-      view: [{value : data.checkbox1, disabled:true}],
-      edit: [{value : data.checkbox2, disabled:true}],
-      delete: [{value : data.checkbox3, disabled:true}]
+      name: [data.name],
+      id:[data.permission],
+      allowView: [data.checkbox1],
+      allowEdit: [data.checkbox2],
+      allowDelete: [data.checkbox3]
     });
   }
 
@@ -151,22 +155,30 @@ export class AddFormComponent {
         }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log("122",result)
       if (result != true && result != false) {
         this.addItem(result);
       }
     });
   }
 
+  getObjectById(id,list) {
+    return list.find(obj => obj.id === id);
+}
+
   onCancel(): void {
     this.dialogRef.close(false);
   }
   onConfirm(): void {
     if(this.title == 'Add User' || this.title == 'Edit User'){
+        this.userForm.get('tenantName').setValue(this.getObjectById(this.userForm.get('tenant').value,this.tenantOptionNames).name)
+        this.userForm.get('roleName').setValue(this.getObjectById(this.userForm.get('role').value,this.roleOptionNames).name)
+        this.userForm.get('alertName').setValue(this.getObjectById(this.userForm.get('alert').value,this.alertOptionNames).name)
         this.dialogRef.close(this.userForm.value);
       }else if(this.title == 'Add Role' || this.title == 'Edit Role'){
-        this.roleForm.get('roles').setValue(this.items);
-        this.dialogRef.close(this.roleForm.value);
+        this.dialogRef.close({
+            data:this.roleForm.value,
+            roles: this.items.value
+        });
       }else if(this.title == 'Add Alert' || this.title == 'Edit Alert'){
         this.dialogRef.close(this.alertForm.value);
       }else if(this.title == 'Add Permission' || this.title == 'Edit Permission'){
