@@ -24,33 +24,29 @@ export class AlertComponent {
   month: any = '';
   userDetails = '';
   userName = '';
+  filteredalerts = [];
+  searchTerm = '';
+  currentPage = 1;
+  itemsPerPage = 5;
+  totalPages = 1;
+  itemsPerPageOptions = [5, 10, 15];
   constructor(public dialog: MatDialog, private dataService: TerminalService) {}
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    this.loadAlerts();
+    
+  }
+
+  loadAlerts() {
     this.dataService.alertData().subscribe(
       response => {
         console.log(response);
-        this.alerts = response.event.eventData.alerts
-        this.alerts.forEach(data => {
-          this.time = data.createdBy.ts
-        this.fulldate = this.time.split('T')[0];
-        this.userName = data.createdBy.name;
-        this.userDetails = `${this.userName} on ${this.fulldate}`
-        // Parse the date string to a Date object
-        const dateObject = new Date(this.fulldate);
-
-        // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-        const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        this.day = daysOfWeek[dateObject.getUTCDay()];
-        console.log('Day of the week:', this.day); // For example, "Friday"
-        this.date = this.fulldate.split('-')[2];
-        console.log(this.date);
-        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        this.month = monthNames[dateObject.getUTCMonth()];
-        console.log('Month:', this.month);
-        });
+        this.alerts = response.event.eventData.alerts.map(data => ({
+          fulldate: data.createdBy.ts.split('T')[0],
+          userName: data.createdBy.name,
+          name: data.name
+        }));
+        this.search();
       },
       error => {
         console.error('Error:', error);
@@ -58,7 +54,41 @@ export class AlertComponent {
     )
   }
 
-  openCreateDialog(edit?): void {
+  search(): void {
+    this.filteredalerts = this.alerts.filter(device =>
+      device.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+    this.updatePagination();
+  }
+
+  updatePagination(): void {
+    this.totalPages = Math.ceil(this.filteredalerts.length / this.itemsPerPage);
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  updateItemsPerPage(): void {
+    this.currentPage = 1;
+    this.updatePagination();
+  }
+
+  get paginatedDevices(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredalerts.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+
+  openCreateDialog(data?,edit?): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
         data: {
             title: edit ? 'Edit Alert' : 'Add Alert',
@@ -89,7 +119,7 @@ export class AlertComponent {
     });
   }
 
-  openDeleteDialog(): void {
+  openDeleteDialog(alert): void {
     const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {

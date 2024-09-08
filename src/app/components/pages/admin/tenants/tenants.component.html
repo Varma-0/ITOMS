@@ -1,4 +1,4 @@
-<div class="breadcrumb-area">
+<!-- <div class="breadcrumb-area">
   <h1>Administration</h1>
   <ol class="breadcrumb">
     <li class="item"><a routerLink="/admin/user"><i class='bx bx-home-alt'></i></a></li>
@@ -40,4 +40,73 @@
       </button>
     </div>
   </mat-card>
+</div> -->
+
+<div class="breadcrumb-area">
+  <h1>Administration</h1>
+  <ol class="breadcrumb">
+    <li class="item">Permissions</li>
+  </ol>
+</div>
+
+<div class="search-container">
+  <input [(ngModel)]="searchTerm" placeholder="Permissions" (input)="search()">
+  <button class="headerIcons" (click)="search()"><i class="bx bx-search"></i></button>
+  <button class="headerIcons" (click)="openCreateDialog(false)"><i class="bx bx-plus"></i></button>
+</div>
+<table >
+  <thead>
+    <tr>
+      <th>Tenant Name</th>
+      <th>User Name</th>
+      <th>Created Date</th>
+      <th>Tenant Type</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let device of filteredtenants;let i = index">
+    <tr>
+      <td>{{ device.name }}</td>
+      <td>{{ device.userName }}</td>
+      <td>{{ device.fulldate }}</td>
+      <td>{{ device.type }}</td>
+      <td>
+        <mat-slide-toggle
+        color="primary"
+        (change)="toggleStatus(device,i)">
+        {{ device.status == 'ACTIVE' ? 'Active' : 'Inactive' }}
+      </mat-slide-toggle>
+      </td>
+      <td>
+        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openCreateDialog(device,true)">
+          <mat-icon color="green">edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item (click)="openDeleteDialog(device)">
+          <mat-icon color="red">delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </td>
+    </tr>
+  </tbody>
+</table>
+<div class="pagination-container">
+  <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+    <i class="bx bx-chevron-left"></i> Previous
+  </button>
+  <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+  <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">
+    Next <i class="bx bx-chevron-right"></i>
+  </button>
+  <select class="pagination-select" [(ngModel)]="itemsPerPage" (change)="updatePagination()">
+    <option [ngValue]="5">5 per page</option>
+    <option [ngValue]="10">10 per page</option>
+    <option [ngValue]="20">15 per page</option>
+  </select>
 </div>

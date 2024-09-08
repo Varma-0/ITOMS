@@ -25,32 +25,31 @@ export class MerchantsComponent {
   day:any = '';
   date: any='';
   month: any = '';
+  filteredmerchants = [];
+  searchTerm = '';
+  currentPage = 1;
+  itemsPerPage = 5;
+  totalPages = 1;
+  itemsPerPageOptions = [5, 10, 15];
   constructor(public dialog: MatDialog, private dataService: TerminalService) { }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+   
+    this.loadMerchants();
+  }
+
+  loadMerchants() {
     const event = new terminalEvent('MERCHANT', 'SEARCH');
     const merchantRequest = new terminalBody(event);
-    this.dataService.merchantData(merchantRequest).subscribe(
+    this.merchants = this.dataService.merchantData(merchantRequest).subscribe(
       response => {
-        console.log(response);
-        this.merchants = response.event.eventData
-        this.time = response.timestamp
-        this.fulldate = this.time.split('T')[0];
-
-        // Parse the date string to a Date object
-        const dateObject = new Date(this.fulldate);
-
-        // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-        const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        this.day = daysOfWeek[dateObject.getUTCDay()];
-        console.log('Day of the week:', this.day); // For example, "Friday"
-        this.date = this.fulldate.split('-')[2];
-        console.log(this.date);
-        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        this.month = monthNames[dateObject.getUTCMonth()];
-        console.log('Month:', this.month);
+        this.merchants = response.event.eventData.map(data => ({
+          fulldate: data.createdBy.ts.split("T")[0],
+          name: data.name,
+          email: data.email,
+          contactName: data.contactName
+        }));
+        this.search();
       },
       error => {
         console.error('Error:', error);
@@ -58,7 +57,42 @@ export class MerchantsComponent {
     )
   }
 
-  openCreateDialog(): void {
+
+
+  search(): void {
+    this.filteredmerchants = this.merchants.filter(device =>
+      device.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+    this.updatePagination();
+  }
+
+  updatePagination(): void {
+    this.totalPages = Math.ceil(this.filteredmerchants.length / this.itemsPerPage);
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  updateItemsPerPage(): void {
+    this.currentPage = 1;
+    this.updatePagination();
+  }
+
+  get paginatedDevices(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredmerchants.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  openCreateDialog(data?): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
         data:{
             title:'Add Merchant'
@@ -74,7 +108,7 @@ export class MerchantsComponent {
     });
   }
 
-  openDeleteDialog(): void {
+  openDeleteDialog(merchant): void {
     const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {

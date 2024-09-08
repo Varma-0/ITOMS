@@ -34,6 +34,10 @@ export class TerminalService {
         return this.http.patch<any>(`${environment.tmsApiUrl}/tms/model/delete`, options, { headers: this.httpHeaders });
     }
 
+    deleteDevice(options:deleteBody): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/device/delete`, options, { headers: this.httpHeaders });
+    }
+
     updateModel(options:updateBody): Observable<any> {
         return this.http.put<any>(`${environment.tmsApiUrl}/tms/model`, options, { headers: this.httpHeaders });
     }

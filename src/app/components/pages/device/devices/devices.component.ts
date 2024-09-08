@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { DevicesFormComponent } from 'src/app/components/dialogs/device-form/device-form.component';
-import { addDeviceBody, updateDevice } from 'src/app/services/login/body/body';
-import { addDeviceEvent, updateDeviceEvent } from 'src/app/services/login/body/event';
+import { addDeviceBody, deleteBody, updateDevice } from 'src/app/services/login/body/body';
+import { addDeviceEvent, deleteModelEvent, updateDeviceEvent } from 'src/app/services/login/body/event';
 import { addDevice, createDevice } from 'src/app/services/login/body/event-data';
 import { SharedServices } from 'src/app/services/shared.service';
 import { terminalBody } from 'src/app/services/terminal/body/body';
@@ -170,9 +170,21 @@ export class DevicesComponent {
     const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-
+        this.deleteDevice(device.deviceId);
       }
     });
+  }
+
+  deleteDevice(deviceId: string) {
+    const event = new deleteModelEvent(deviceId, 'DEVICE', 'DELETE');
+    const deleteRequest = new deleteBody(event);
+
+    this.dataService.deleteDevice(deleteRequest).subscribe(
+      response => {
+        console.log("Delete response", response);
+        this.deviceData();
+      }
+    );
   }
 
 
@@ -203,7 +215,7 @@ export class DevicesComponent {
       console.log("dufgq",result);
       if (result) {
        if(edit) {
-        const event = new createDevice(data.deviceId,result.sno,result.skey,result.modal,result.hierarchy,result.modelName,result.hierarchyName,result.merchantName,result.merchant);
+        const event = new createDevice(data.deviceId,result.sno,result.skey,result.modalName,result.modal,result.hierarchyName,result.hierarchy,result.merchantName,result.merchant);
         const terminalRequest = new updateDeviceEvent(event,'DEVICE','UPDATE');
         const editDevice = new updateDevice(terminalRequest);
         console.log("cwicw",editDevice);
@@ -218,7 +230,7 @@ export class DevicesComponent {
         );
        }
        else if (!edit) {
-          const event = new addDevice(result.sno,result.skey,result.modal,result.modalName,result.hierarchy,result.hierarchyName,result.merchantName,result.merchant,result.status)
+          const event = new addDevice(result.sno,result.status,result.skey,result.modalName,result.modal,result.hierarchyName,result.hierarchy,result.merchantName,result.merchant)
           const terminalRequest = new addDeviceEvent(event,'DEVICE','CREATE');
           const editDevice = new addDeviceBody(terminalRequest);
           console.log("cwicw",editDevice);

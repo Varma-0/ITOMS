@@ -25,35 +25,31 @@ export class TenantsComponent {
   date: any='';
   month: any = '';
   userDetails = '';
-  userName = '';
+  userName = '';  
+  filteredtenants = [];
+  searchTerm = '';
+  currentPage = 1;
+  itemsPerPage = 5;
+  totalPages = 1;
+  itemsPerPageOptions = [5, 10, 15];
   constructor(public dialog: MatDialog, private dataService: TerminalService) {}
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    this.loadTenants();
+  }
+
+  loadTenants() {
     this.dataService.tenantData().subscribe(
       response => {
         console.log(response);
-        this.tenants = response.event.eventData.tenants
-        this.tenants.forEach(data => {
-          data.isActive = data.status === 'ACTIVE';
-          this.time = data.createdBy.ts
-          this.fulldate = this.time.split('T')[0];
-          this.userName = data.createdBy.name;
-          this.userDetails = `${this.userName} on ${this.fulldate}`
-          // Parse the date string to a Date object
-          const dateObject = new Date(this.fulldate);
-
-          // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-          const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-          this.day = daysOfWeek[dateObject.getUTCDay()];
-          console.log('Day of the week:', this.day); // For example, "Friday"
-          this.date = this.fulldate.split('-')[2];
-          console.log(this.date);
-          const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-          this.month = monthNames[dateObject.getUTCMonth()];
-          console.log('Month:', this.month);
-        });
+        this.tenants = response.event.eventData.tenants.map(data => ({
+          fulldate: data.createdBy.ts.split('T')[0],
+          userName: data.createdBy.name,
+          name: data.name,
+          type: data.type,
+          status: data.status
+        }));
+        this.search();
       },
       error => {
         console.error('Error:', error);
@@ -61,12 +57,46 @@ export class TenantsComponent {
     )
   }
 
-  toggleStatus(tenant: any): void {
+  toggleStatus(tenant: any,i?): void {
+    this.filteredtenants[i].status = this.filteredtenants[i].status == 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'; 
     tenant.status = tenant.isActive ? 'ACTIVE' : 'INACTIVE';
     console.log(`${tenant.name} status is now: ${tenant.status}`);
   }
 
-  openCreateDialog(edit?): void {
+  search(): void {
+    this.filteredtenants = this.tenants.filter(device =>
+      device.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+    this.updatePagination();
+  }
+
+  updatePagination(): void {
+    this.totalPages = Math.ceil(this.filteredtenants.length / this.itemsPerPage);
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  updateItemsPerPage(): void {
+    this.currentPage = 1;
+    this.updatePagination();
+  }
+
+  get paginatedDevices(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredtenants.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  openCreateDialog(data?,edit?): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
         data:{
             title:edit ? 'Edit Tenant' : 'Add Tenant',
@@ -88,7 +118,7 @@ export class TenantsComponent {
     });
   }
 
-  openDeleteDialog(): void {
+  openDeleteDialog(tenants): void {
     const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {

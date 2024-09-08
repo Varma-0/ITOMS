@@ -23,7 +23,7 @@
   <tbody>
     <tr *ngFor="let device of paginatedDevices">
       <td>{{ device.serialNumber }}</td>
-      <td>{{ device.model }}</td>
+      <td>{{ device.modelName }}</td>
       <td>
         <span [ngClass]="{'status-active': device.status === 'ACTIVE','status-inactive': device.status === 'INACTIVE'}">
           {{ device.status }}

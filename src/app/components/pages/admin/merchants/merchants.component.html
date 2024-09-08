@@ -1,38 +1,60 @@
 <div class="breadcrumb-area">
   <h1>Administration</h1>
   <ol class="breadcrumb">
-    <li class="item"><a routerLink="/admin/user"><i class='bx bx-home-alt'></i></a></li>
-    <li class="item">Administration</li>
-    <li class="item">Merchants</li>
+    <li class="item">Permissions</li>
   </ol>
 </div>
 
-<div class="add-user" *ngIf="merchants.length != 0">
-  <button class="btn btn-primary" (click)="openCreateDialog()">Create Merchant</button>
+<div class="search-container">
+  <input [(ngModel)]="searchTerm" placeholder="Merchants" (input)="search()">
+  <button class="headerIcons" (click)="search()"><i class="bx bx-search"></i></button>
+  <button class="headerIcons" (click)="openCreateDialog(false)"><i class="bx bx-plus"></i></button>
 </div>
-
-<div *ngFor="let merchant of merchants" class="mb-4">
-  <mat-card class="user-card">
-    <div class="user-card-header">
-      <div class="date-info">
-        <p class="date">{{day}}</p>
-        <p class="day">{{ date }}</p>
-        <p class="month">{{ month }}</p>
-      </div>
-      <div class="user-info">
-        <p class="user-name">{{ merchant.name }}</p>
-        <p class="user-email">{{ fulldate }}</p>
-        <p class="user-email">{{ merchant.email }}</p>
-      </div>
-      <button color="primary" class="btn btn-primary">{{ merchant.contactName }}</button>
-    </div>
-    <div class="user-card-actions">
-      <button mat-icon-button color="primary" aria-label="View Details">
-        <mat-icon style="color: blue;">view_list</mat-icon>
+<table >
+  <thead>
+    <tr>
+      <th>Merchant Name</th>
+      <th>Email</th>
+      <th>Created Date</th>
+      <th>Contact Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let device of filteredmerchants">
+    <tr>
+      <td>{{ device.name }}</td>
+      <td>{{ device.email }}</td>
+      <td>{{ device.fulldate }}</td>
+      <td><span class="status-inactive">{{ device.contactName }}</span></td>
+      <td>
+        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+        <mat-icon>more_vert</mat-icon>
       </button>
-      <button mat-icon-button color="warn" aria-label="Delete" (click)="openDeleteDialog()">
-        <mat-icon style="color: red;">delete</mat-icon>
-      </button>
-    </div>
-  </mat-card>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openCreateDialog(device)">
+          <mat-icon color="green">edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item (click)="openDeleteDialog(device)">
+          <mat-icon color="red">delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </td>
+    </tr>
+  </tbody>
+</table>
+<div class="pagination-container">
+  <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+    <i class="bx bx-chevron-left"></i> Previous
+  </button>
+  <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+  <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">
+    Next <i class="bx bx-chevron-right"></i>
+  </button>
+  <select class="pagination-select" [(ngModel)]="itemsPerPage" (change)="updatePagination()">
+    <option [ngValue]="5">5 per page</option>
+    <option [ngValue]="10">10 per page</option>
+    <option [ngValue]="20">15 per page</option>
+  </select>
 </div>

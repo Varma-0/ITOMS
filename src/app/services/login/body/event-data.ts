@@ -87,9 +87,9 @@ export class createDevice {
   hierarchyName: string;
   hierarchy: string;
   merchantName: string;
-  merchant: string;
+  merchantId: string;
 
-  constructor(deviceId: string, serialNumber: string,softwareKey: string,modelName: string,model: string,hierarchyName: string,hierarchy: string,merchantName: string,merchant: string) {
+  constructor(deviceId: string, serialNumber: string,softwareKey: string,modelName: string,model: string,hierarchyName: string,hierarchy: string,merchantName: string,merchantId: string) {
       this.deviceId = deviceId;
       this.serialNumber = serialNumber;
       this.softwareKey = softwareKey;
@@ -98,7 +98,7 @@ export class createDevice {
       this.hierarchyName = hierarchyName;
       this.hierarchy = hierarchy;
       this.merchantName = merchantName;
-      this.merchant = merchant;
+      this.merchantId = merchantId;
   }
 }
 
@@ -115,8 +115,8 @@ export class addDevice {
 
   constructor(serialNumber: string,status: string,softwareKey: string,modelName: string,model: string,hierarchyName: string,hierarchy: string,merchantName: string,merchantId: string) {
       this.serialNumber = serialNumber;
-      this.softwareKey = softwareKey;
       this.status = status;
+      this.softwareKey = softwareKey;
       this.modelName = modelName;
       this.model = model;
       this.hierarchyName = hierarchyName;

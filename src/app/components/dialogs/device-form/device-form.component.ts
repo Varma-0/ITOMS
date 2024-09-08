@@ -21,6 +21,7 @@ export class DevicesFormComponent {
   deviceForm: FormGroup;
   modalForm: FormGroup;
   options:'';
+  status = 'ACTIVE';
   modals = [];
   merchants = [];
   hirearchies = [];
@@ -41,7 +42,7 @@ export class DevicesFormComponent {
         modal: [''],
         merchant : [''],
         hierarchy: [''],
-        status: [''],
+        status:this.status,
         merchantName:[''],
         modalName : [''],
         hierarchyName :[''],
@@ -53,6 +54,7 @@ export class DevicesFormComponent {
       });
       if(this.title == 'Edit Device'){
         this.deviceForm.patchValue(this.data.form);
+        this.getHierarchy();
       }else if(this.title == 'Edit Model'){
         this.modalForm.patchValue(this.data.form);
       }
