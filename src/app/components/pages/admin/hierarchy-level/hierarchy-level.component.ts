@@ -181,8 +181,7 @@ export class HierarchyLevelComponent implements OnInit {
     }
   }
 
-  addNewItem(levelIndex: number,event) {
-    // event.stopPropagation();
+  addNewItem(levelIndex: number) {
     if (levelIndex >= this.hierarchyLevels.length - 1) {
       console.log("Cannot add child to the lowest level");
       return;
@@ -244,8 +243,7 @@ export class HierarchyLevelComponent implements OnInit {
     });
   }
 
-  deleteItem(levelIndex: number, item: HierarchyItem,event) {
-    // event.stopPropagation();
+  deleteItem(levelIndex: number, item: HierarchyItem) {
     if (levelIndex === 0) {
       const index = this.hierarchyData.merchants.indexOf(item);
       if (index > -1) {
@@ -294,17 +292,7 @@ export class HierarchyLevelComponent implements OnInit {
   }
 
   saveHierarchyItem() {
-    if (this.selectedItem) {
-      const updatedItem = {
-        ...this.selectedItem,
-        ...this.itemForm.value
-      };
-      console.log('Saving item:', updatedItem);
-      // In a real application, you would make an API call here to save the item
-      // Update the item in the hierarchy
-      this.updateItemInHierarchy(updatedItem);
-      console.log('Updated hierarchy data:', this.hierarchyData);
-    }
+    localStorage.setItem('hpath',this.selectedPath);
   }
 
   updateItemInHierarchy(updatedItem: HierarchyItem) {

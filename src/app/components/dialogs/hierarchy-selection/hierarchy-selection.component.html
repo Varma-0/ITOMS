@@ -2,12 +2,12 @@
 <mat-dialog-content>
     <ng-container *ngIf="title == 'Select Hierarchy'">
         <div class="hierarchy-values">
-            <div *ngFor="let level of hierarchyLevels; let i = index" class="hierarchy-column">
+            <div *ngFor="let level of hierarchyLevelsList; let i = index" class="hierarchy-column">
               <h3>{{ level.name }}</h3>
               <div class="hierarchy-items">
-                <div *ngFor="let item of level.values"
+                <div *ngFor="let item of level.items"
                      class="hierarchy-item"
-                     [class.selected]="item === level.selectedValue"
+                     [class.selected]="item === level.selectedItem"
                      (click)="selectItem(i, item)">
                   {{ item.name }}
                 </div>
