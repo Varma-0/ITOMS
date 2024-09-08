@@ -5,9 +5,9 @@ import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 import { SharedServices } from 'src/app/services/shared.service';
 import { ActiveComponent } from 'src/app/components/dialogs/active/active.component';
-import { createUserData } from 'src/app/services/login/body/event-data';
-import { createUserEvent } from 'src/app/services/login/body/event';
-import { createUser } from 'src/app/services/login/body/body';
+import { createNewUserEvent, createUserData } from 'src/app/services/login/body/event-data';
+import { createNewUserBody, createUserEvent } from 'src/app/services/login/body/event';
+import { createNewUser, createUser } from 'src/app/services/login/body/body';
 
 @Component({
   selector: 'app-user',
@@ -131,6 +131,17 @@ export class UserComponent {
               console.log(response);
             }
           )
+        }
+        else if(!edit) {
+          const event = new createNewUserEvent(result.firstName,result.lastName,result.dob,result.email,result.phone,result.country,result.emailAlt,result.phoneAlt,result.countryAlt,result.userLinkDataList); //pass uid based on user selected 
+          const eventData = new createNewUserBody(event,'USER','CREATE');
+          const eventType = new createNewUser(eventData);
+          console.log("1212",eventType);
+          this.dataService.addNewUser(eventType).subscribe(
+            response => {
+              console.log(response);
+            }
+          );
         }
       }
     });
