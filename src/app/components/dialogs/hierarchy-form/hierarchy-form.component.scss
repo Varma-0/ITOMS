@@ -1,4 +1,23 @@
-body {
+/* Style the dialog title */
+mat-dialog-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: red;
+    border-bottom: 1px solid #ddd;
+  }
+  /* Style the dialog content */
+  mat-dialog-content {
+    font-size: 1rem;
+    color: #666;
+  }
+  /* Style the dialog actions container */
+  mat-dialog-actions {
+    padding: 16px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+  }
+
+  body {
     background-color: #f4f7fa;
     color: #333333;
     font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

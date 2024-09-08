@@ -199,6 +199,7 @@ import { AddPermissionComponent } from './components/dialogs/add-permission/add-
 import { ActiveComponent } from './components/dialogs/active/active.component';
 import { DevicesFormComponent } from './components/dialogs/device-form/device-form.component';
 import { HierarchySelectionComponent } from './components/dialogs/hierarchy-selection/hierarchy-selection.component';
+import { HierarchyFormComponent } from './components/dialogs/hierarchy-form/hierarchy-form.component';
 
 @NgModule({
   declarations: [
@@ -373,7 +374,8 @@ import { HierarchySelectionComponent } from './components/dialogs/hierarchy-sele
     AddPermissionComponent,
     ActiveComponent,
     DevicesFormComponent,
-    HierarchySelectionComponent
+    HierarchySelectionComponent,
+    HierarchyFormComponent
   ],
   imports: [
     BrowserModule,

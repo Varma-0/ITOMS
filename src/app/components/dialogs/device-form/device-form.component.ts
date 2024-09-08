@@ -10,6 +10,7 @@ import { midEvent } from 'src/app/services/login/body/event';
 import { midDevice } from 'src/app/services/login/body/event-data';
 import { SharedServices } from 'src/app/services/shared.service';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
+import { HierarchySelectionComponent } from '../hierarchy-selection/hierarchy-selection.component';
 
 @Component({
   selector: 'app-device-form',
@@ -89,6 +90,23 @@ export class DevicesFormComponent {
     } else {
       this.dialogRef.close(this.modalForm.value);
     }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(HierarchySelectionComponent,{
+        data : {
+            title : 'Select Hierarchy',
+            list : [
+                { name: 'Merchant', values: [], selectedValue: '' },
+                { name: 'Level 0', values: [], selectedValue: '' },
+                { name: 'Level 1', values: [], selectedValue: '' },
+                { name: 'Level 2', values: [], selectedValue: '' },
+              ]
+        },
+        width:'50%',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
    getObjectById(id,list) {

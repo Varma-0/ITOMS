@@ -34,9 +34,7 @@
     <div class="form-group">
       <label for="hierarchy">Hierarchy:</label>
       <!-- <input id="hierarchy" type="text" formControlName="hierarchy" /> -->
-      <select class="form-select" id="hierarchy" formControlName="hierarchy">
-        <option value="" selected disabled>Select Hierarchy</option>
-        <option *ngFor="let i of hirearchies" [value]="i.id">{{ i.name }}</option>
+      <select class="form-select" id="hierarchy" formControlName="hierarchy" (click)="openDialog()">
       </select>
     </div>
   </form>
