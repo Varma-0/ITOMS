@@ -34,7 +34,7 @@ export class PackagesComponent implements OnInit {
 
   search() {
     this.filteredResources = this.resources.filter(resource => 
-      resource.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      resource.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
     );
   }
 

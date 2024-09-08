@@ -44,6 +44,7 @@ export class HierarchyLevelComponent implements OnInit {
         ipStartAddress: [''],
         ipEndAddress: [''],
         locationIdentifier: [''],
+        path:[''],
         timeZone: ['']
       });
     this.loadInitialData();
@@ -292,7 +293,11 @@ export class HierarchyLevelComponent implements OnInit {
   }
 
   saveHierarchyItem() {
-    localStorage.setItem('hpath',this.selectedPath);
+    const data = JSON.parse(localStorage.getItem('hier')) ? JSON.parse(localStorage.getItem('hier')) : [];
+    this.itemForm.get('path').setValue(this.selectedPath);
+    data.push(this.itemForm.value)
+    const string = JSON.stringify(data);
+    localStorage.setItem('hier',string);
   }
 
   updateItemInHierarchy(updatedItem: HierarchyItem) {

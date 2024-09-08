@@ -67,7 +67,10 @@ export class UserComponent {
       response => {
         this.tenantsData = response.event.eventData.tenants
         this.tenantsData.forEach(name => {
-          this.tenantsNames.push(name.name);
+          this.tenantsNames.push({
+            name : name.name,
+            id: name.id
+          });
         });
       }
     )
@@ -78,7 +81,10 @@ export class UserComponent {
       response => {
         this.rolesData = response.event.eventData.tenantRoles
         this.rolesData.forEach(name => {
-          this.rolesNames.push(name.name);
+          this.rolesNames.push({
+            name : name.name,
+            id: name.id
+          });
         });
       }
     )
@@ -89,7 +95,10 @@ export class UserComponent {
       response => {
         this.alertsData = response.event.eventData.alerts
         this.alertsData.forEach(name => {
-          this.alertsNames.push(name.name);
+          this.alertsNames.push({
+            name : name.name,
+            id: name.id
+          });
         });
       }
     )
@@ -134,7 +143,25 @@ export class UserComponent {
         }
         else if(!edit) {
           console.log(result);
-          const event = new createNewUserEvent(result.firstName,result.lastName,result.dob,result.email,result.phone,result.country,result.emailAlt,result.phoneAlt,result.countryAlt,result.userLinkDataList); //pass uid based on user selected
+          result.userLinkDataList = [
+            {
+                "tenant": {
+                    "id": result.tenant,
+                    "name": result.tenantName
+                },
+                "role": {
+                    "id": result.role,
+                    "name": result.roleName
+                },
+                "alerts": [
+                    {
+                        "id": result.alert,
+                        "name": result.alertName
+                    }
+                ]
+            },
+        ]
+          const event = new createNewUserEvent(result.firstName,result.lastName,result.dob,result.email,result.phone,result.country,result.altemail,result.altphone,result.altcountry,result.userLinkDataList); //pass uid based on user selected
           const eventData = new createNewUserBody(event,'USER','CREATE');
           const eventType = new createNewUser(eventData);
           console.log("1212",eventType);
@@ -150,7 +177,7 @@ export class UserComponent {
 
   search(): void {
     this.filteredusers = this.users.filter(device =>
-      device.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      device.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
     );
     this.updatePagination();
   }

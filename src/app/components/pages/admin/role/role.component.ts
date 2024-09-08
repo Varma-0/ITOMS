@@ -56,7 +56,10 @@ export class RoleComponent {
         this.permissionsData = response.event.eventData.permissions
         this.permissionsData.forEach(name => {
           console.log("ythefuckisObje",name.name);
-          this.permissionsNames.push(name.name);
+          this.permissionsNames.push({
+            name : name.name,
+            id : name.id
+          });
           console.log("ythefuckisObje",this.permissionsNames);
 
         });
@@ -66,7 +69,7 @@ export class RoleComponent {
 
   search(): void {
     this.filteredroles = this.roles.filter(device =>
-      device.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      device.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
     );
     this.updatePagination();
   }
@@ -120,16 +123,19 @@ export class RoleComponent {
           this.dataService.updateRoles(finals).subscribe(
             response => {
               console.log("resssss",response);
+              this.loadRoles();
             }
           )
         }
         else if(!edit) {
-          const event = new addRoleData(result.name,result.description,result.roles);
+        console.log(result);
+          const event = new addRoleData(result.data.name,result.data.description,result.roles);
           const eventType = new addRoleBody(event,'ROLE','CREATE');
           const finals = new roleAdd(eventType);
           this.dataService.addRoles(finals).subscribe(
             response => {
               console.log("resssss",response);
+              this.loadRoles();
             }
           )
         }

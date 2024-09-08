@@ -57,7 +57,7 @@ export class GalleryComponent implements OnInit {
     this.filteredDevices = this.devices.filter(device =>
       Object.entries(device).some(([key, value]) =>
         this.columns.find(col => col.key === key)?.visible &&
-        value.toLowerCase().includes(this.searchTerm.toLowerCase())
+        value?.toLowerCase().includes(this.searchTerm?.toLowerCase())
       )
     );
   }

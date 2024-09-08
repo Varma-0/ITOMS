@@ -106,7 +106,7 @@ export class TerminalComponent implements OnInit {
     console.log("efw",filteredData);
     if (this.searchText) {
       filteredData = filteredData.filter(device =>
-        (device.serialNumber && device.serialNumber.toLowerCase().includes(this.searchText.toLowerCase()))
+        (device.serialNumber && device.serialNumber?.toLowerCase().includes(this.searchText?.toLowerCase()))
       );
     }
 

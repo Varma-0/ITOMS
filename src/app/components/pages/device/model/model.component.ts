@@ -85,7 +85,7 @@
 
 //   search() {
 //     this.filteredDevices = this.device.filter(devi =>
-//       devi.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+//       devi.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
 //     );
 //     this.updatePagination();
 //   }
@@ -238,7 +238,7 @@ export class ModelComponent implements OnInit {
 
   search() {
     this.filteredDevices = this.devices.filter(device =>
-      device.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      device.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
     );
     this.updatePagination();
   }
@@ -370,7 +370,7 @@ export class ModelComponent implements OnInit {
 
   // applyFilter() {
   //   this.filteredFiles = this.files.filter(file => 
-  //     file.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+  //     file.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
   //   );
   //   this.currentPage = 1;
   //   this.updatePagination();

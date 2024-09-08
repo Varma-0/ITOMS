@@ -59,7 +59,7 @@ export class PermissionComponent {
 
   search(): void {
     this.filteredpermissions = this.permissions.filter(device =>
-      device.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      device.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
     );
     this.updatePagination();
   }

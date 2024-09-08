@@ -63,11 +63,11 @@ export class GroupComponent {
   }
 
   filterDeployments() {
-    const filterValue = this.searchTerm.trim().toLowerCase();
+    const filterValue = this.searchTerm.trim()?.toLowerCase();
     
     if (filterValue) {
       this.filteredDeployments = this.deployments.filter(deployment =>
-        deployment.name.toLowerCase().includes(filterValue)
+        deployment.name?.toLowerCase().includes(filterValue)
       );
     } else {
       this.filteredDeployments = this.deployments;

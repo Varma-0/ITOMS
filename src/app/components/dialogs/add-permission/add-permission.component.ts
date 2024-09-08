@@ -22,18 +22,23 @@ export class AddPermissionComponent {
   ngOnInit(){
       this.permissionForm = this.fb.group({
         permission: ['',Validators.required],
+        name:[''],
         checkbox1: [false],
         checkbox2: [false],
         checkbox3: [false],
       });
     }
 
+    getObjectById(id,list) {
+        return list.find(obj => obj.id === id);
+    }
   onCancel(): void {
     this.dialogRef.close(false);
   }
 
   onConfirm(): void {
     if (this.permissionForm.valid) {
+        this.permissionForm.get('name').setValue(this.getObjectById(this.permissionForm.get('permission').value,this.permissionOptionNames).name)
         this.dialogRef.close(this.permissionForm.value);
     }
   }

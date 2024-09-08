@@ -69,7 +69,7 @@ export class TenantsComponent {
 
   search(): void {
     this.filteredtenants = this.tenants.filter(device =>
-      device.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      device.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
     );
     this.updatePagination();
   }
