@@ -1,4 +1,4 @@
-import { addDeviceEvent, addMerchantBody, addPermissionBody, addRoleBody, addTenantBody, createModelEvent, createNewUserBody, createUserEvent, deleteMerchantEVent, deleteModelEvent, deletePermissionEVent, deleteTenantEVent, dropEvent, editPermissionBody, editTenantBody, emailEvent, midEvent, passEvent, updateDeviceEvent, updateModelEvent, updateRoleBody } from './event';
+import { addDeviceEvent, addMerchantBody, addPermissionBody, addRoleBody, addTenantBody, chartsEvent, createModelEvent, createNewUserBody, createUserEvent, deleteMerchantEVent, deleteModelEvent, deletePermissionEVent, deleteTenantEVent, dropEvent, editPermissionBody, editTenantBody, emailEvent, midEvent, passEvent, updateDeviceEvent, updateModelEvent, updateRoleBody } from './event';
 import { createDevice, createNewUserEvent, createUserData, midDevice, updateRoleData } from './event-data';
 
 export class emailBody {
@@ -159,6 +159,14 @@ export class merchantDelete {
   event: deleteMerchantEVent;
 
   constructor(event: deleteMerchantEVent) {
+    this.event = event;
+  }
+}
+
+export class devicePie {
+  event: chartsEvent;
+
+  constructor(event: chartsEvent) {
     this.event = event;
   }
 }
