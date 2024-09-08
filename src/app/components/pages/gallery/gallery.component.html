@@ -1,73 +1,61 @@
-<!-- Breadcrumb Area -->
-<div class="breadcrumb-area">
-    <h1>Dashboard</h1>
-
-    <ol class="breadcrumb">
-        <li class="item"><a routerLink="/gallery"><i class='bx bx-home-alt'></i></a></li>
-
-        <li class="item">Dashboard</li>
-
-        <li class="item">Gallery</li>
-    </ol>
-</div>
-<!-- End Breadcrumb Area -->
-
-<!-- Gallery Area -->
-<div class="gallery-area">
-    <div class="row">
-        <div class="col-lg-4 col-sm-6 col-md-6">
-            <div class="single-gallery-image mb-30">
-                <img src="assets/img/slider/1.jpg" alt="Gallery Image" data-original="assets/img/slider/1.jpg">
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-sm-6 col-md-6">
-            <div class="single-gallery-image mb-30">
-                <img src="assets/img/slider/2.jpg" alt="Gallery Image" data-original="assets/img/slider/2.jpg">
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-sm-6 col-md-6">
-            <div class="single-gallery-image mb-30">
-                <img src="assets/img/slider/3.jpg" alt="Gallery Image" data-original="assets/img/slider/3.jpg">
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-sm-6 col-md-6">
-            <div class="single-gallery-image mb-30">
-                <img src="assets/img/slider/4.jpg" alt="Gallery Image" data-original="assets/img/slider/4.jpg">
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-sm-6 col-md-6">
-            <div class="single-gallery-image mb-30">
-                <img src="assets/img/slider/5.jpg" alt="Gallery Image" data-original="assets/img/slider/5.jpg">
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-sm-6 col-md-6">
-            <div class="single-gallery-image mb-30">
-                <img src="assets/img/slider/6.jpg" alt="Gallery Image" data-original="assets/img/slider/6.jpg">
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-sm-6 col-md-6">
-            <div class="single-gallery-image mb-30">
-                <img src="assets/img/slider/7.jpg" alt="Gallery Image" data-original="assets/img/slider/7.jpg">
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-sm-6 col-md-6">
-            <div class="single-gallery-image mb-30">
-                <img src="assets/img/slider/8.jpg" alt="Gallery Image" data-original="assets/img/slider/8.jpg">
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-sm-6 col-md-6">
-            <div class="single-gallery-image mb-30">
-                <img src="assets/img/slider/9.jpg" alt="Gallery Image" data-original="assets/img/slider/9.jpg">
-            </div>
-        </div>
+<!-- device-search-report.component.html -->
+<div class="report-container">
+    <h1>Device Search Report</h1>
+  
+    <div class="breadcrumb">
+      Reports / Standard Reports / Device / Device Search Report
     </div>
-</div>
-<!-- End Gallery Area -->
+  
+    <div class="search-container">
+      <input type="text" [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search">
+      <button (click)="applyFilter()">Search</button>
+    </div>
+  
+    <div class="actions-container">
+      <button (click)="exportToExcel()">Export to Excel</button>
+      <div class="dropdown">
+        <button class="dropbtn">Show/Hide Columns</button>
+        <div class="dropdown-content">
+          <label *ngFor="let column of columns">
+            <input type="checkbox" [checked]="isColumnVisible(column)" (change)="toggleColumn(column)">
+            {{column}}
+          </label>
+        </div>
+      </div>
+    </div>
+  
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">{{column}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let device of filteredDevices">
+          <td *ngIf="isColumnVisible('serialNumber')">{{device.serialNumber}}</td>
+          <td *ngIf="isColumnVisible('deviceId')">{{device.deviceId}}</td>
+          <td *ngIf="isColumnVisible('model')">{{device.model}}</td>
+          <td *ngIf="isColumnVisible('deviceStatus')">
+            <span [ngClass]="{'pending': device.deviceStatus === 'PendingRegistration', 'inactive': device.deviceStatus === 'Inactive'}">
+              {{device.deviceStatus}}
+            </span>
+          </td>
+          <td *ngIf="isColumnVisible('hierarchy')">{{device.hierarchy}}</td>
+          <td *ngIf="isColumnVisible('lastHeartbeat')">{{device.lastHeartbeat}}</td>
+          <td *ngIf="isColumnVisible('groupNames')">{{device.groupNames}}</td>
+          <td *ngIf="isColumnVisible('ipAddress')">{{device.ipAddress}}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="pagination">
+      <span>Showing: 1-69 of 69</span>
+      <div class="pagination-controls">
+        <button>&lt;&lt;</button>
+        <button>&lt;</button>
+        <span>Page 1 / 1</span>
+        <button>&gt;</button>
+        <button>&gt;&gt;</button>
+      </div>
+    </div>
+  </div>

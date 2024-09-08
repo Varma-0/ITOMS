@@ -222,7 +222,7 @@ const routes: Routes = [
     ]
   },
   {path: 'merchant', component: MerchantComponent},
-  {path: 'profile', component: ProfileComponent},
+  {path: 'report', component: GalleryComponent},
   {path: 'gallery', component: GalleryComponent},
   {path: 'timeline', component: TimelineComponent},
   {path: 'pricing', component: PricingComponent},
