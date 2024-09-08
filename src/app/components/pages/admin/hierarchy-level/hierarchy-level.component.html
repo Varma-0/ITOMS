@@ -1,11 +1,12 @@
-<div class="hierarchy-container">
+
+  <div class="hierarchy-container">
     <div class="header">
-        <h1>Manage Hierarchy</h1>
-        <div class="header-buttons">
-          <button class="btn primary" (click)="openDialog()" >Manage Hierarchy Level</button>
-          <button class="btn secondary">Upload Hierarchy File</button>
-        </div>
+      <h1>Manage Hierarchy</h1>
+      <div class="header-buttons">
+        <button class="btn primary" (click)="openDialog()">Manage Hierarchy Level</button>
+        <button class="btn secondary">Upload Hierarchy File</button>
       </div>
+    </div>
 
     <div class="hierarchy-values">
       <div *ngFor="let level of hierarchyLevels; let i = index" class="hierarchy-column">
@@ -16,9 +17,9 @@
                [class.selected]="item === level.selectedItem"
                (click)="selectItem(i, item)">
             {{ item.name }}
-            <div class="item-actions">
+            <div class="item-actions" (click)="$event.stopPropagation()">
               <button class="icon-btn add" (click)="addNewItem(i)">+</button>
-              <button class="icon-btn delete" *ngIf="i >= 2 " (click)="deleteItem(i, item)">×</button>
+              <button class="icon-btn delete" (click)="deleteItem(i, item)">×</button>
             </div>
           </div>
         </div>
@@ -29,10 +30,10 @@
       <h2>Hierarchy Value Properties</h2>
       <form [formGroup]="itemForm" (ngSubmit)="saveHierarchyItem()">
         <div class="form-grid">
-         <div class="form-group">
-                <label for="hierarchyName">Hierarchy name: *</label>
-                <input id="hierarchyName" type="text" formControlName="name">
-            </div>
+          <div class="form-group">
+            <label for="hierarchyName">Hierarchy name: *</label>
+            <input id="hierarchyName" type="text" formControlName="name">
+          </div>
           <div class="form-group">
             <label for="description">Description:</label>
             <input id="description" formControlName="description">
@@ -63,4 +64,5 @@
         </div>
       </form>
     </div>
+
   </div>

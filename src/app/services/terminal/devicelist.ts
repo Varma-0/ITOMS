@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { terminalBody } from './body/body';
 import { environment } from 'src/environments/environment';
-import { createModelEvent, deleteModelEvent, midEvent, updateModelEvent } from '../login/body/event';
-import { addDeviceBody, createBody, createUser, deleteBody, midHeirarchy, updateBody, updateDevice } from '../login/body/body';
+import { createModelEvent, createNewUserBody, deleteModelEvent, midEvent, updateModelEvent } from '../login/body/event';
+import { addDeviceBody, createBody, createNewUser, createUser, deleteBody, midHeirarchy, updateBody, updateDevice } from '../login/body/body';
 import { midDevice, addDevice } from '../login/body/event-data';
 
 @Injectable({
@@ -65,6 +65,10 @@ export class TerminalService {
 
     merchantData(options:terminalBody): Observable<any> {
         return this.http.post<any>(`${environment.userApiUrl}/merchant/getTenantMerchants`,options)
+    }
+
+    addNewUser(options: createNewUser): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/user/`,options, {headers: this.httpHeaders});
     }
 
     userData(): Observable<any> {

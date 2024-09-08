@@ -1,3 +1,6 @@
+import { count } from "rxjs";
+import { ArrayDataOfNewUser } from "./event";
+
 export class emailData {
     loginId: string;
     loginType: string;
@@ -35,6 +38,33 @@ export class createUserData {
 
   constructor(uid: string) {
       this.uid = uid;
+  }
+}
+
+export class createNewUserEvent {
+  firstName: string;
+  lastName: string;
+  dob: string;
+  email: string;
+  phone: string;
+  country: string;
+  emailAlt: string;
+  phoneAlt: string;
+  countryAlt: string;
+  userLinkDataList: ArrayDataOfNewUser;
+ 
+
+  constructor(firstName: string,lastName: string,dob: string,email: string,phone: string,country: string,emailAlt: string,countryAlt: string,phoneAlt: string,userLinkDataList: ArrayDataOfNewUser) {
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.dob = dob;
+      this.email = email;
+      this.phone = phone;
+      this.country = country;
+      this.emailAlt = emailAlt;
+      this.phoneAlt = phoneAlt;
+      this.countryAlt = countryAlt;
+      this.userLinkDataList = userLinkDataList;
   }
 }
 

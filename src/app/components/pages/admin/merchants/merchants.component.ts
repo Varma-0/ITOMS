@@ -66,30 +66,31 @@ export class MerchantsComponent {
     this.updatePagination();
   }
 
-  updatePagination(): void {
+
+  updatePagination() {
     this.totalPages = Math.ceil(this.filteredmerchants.length / this.itemsPerPage);
+    this.currentPage = 1;
+    this.paginate();
   }
 
-  previousPage(): void {
+  paginate() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.filteredmerchants = this.filteredmerchants.slice(startIndex, endIndex);
+  }
+
+  previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
+      this.paginate();
     }
   }
 
-  nextPage(): void {
+  nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
+      this.paginate();
     }
-  }
-
-  updateItemsPerPage(): void {
-    this.currentPage = 1;
-    this.updatePagination();
-  }
-
-  get paginatedDevices(): any[] {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredmerchants.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
   openCreateDialog(data?): void {
