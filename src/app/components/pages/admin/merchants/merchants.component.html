@@ -14,27 +14,27 @@
   <thead>
     <tr>
       <th>Merchant Name</th>
+      <th>Contact Name</th>
       <th>Email</th>
       <th>Created Date</th>
-      <th>Contact Name</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody *ngFor="let device of filteredmerchants">
     <tr>
       <td>{{ device.name }}</td>
+      <td><span class="status-inactive">{{ device.contactName }}</span></td>
       <td>{{ device.email }}</td>
       <td>{{ device.fulldate }}</td>
-      <td><span class="status-inactive">{{ device.contactName }}</span></td>
       <td>
         <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="openCreateDialog(device)">
+        <!-- <button mat-menu-item (click)="openCreateDialog(device)">
           <mat-icon color="green">edit</mat-icon>
           <span>Edit</span>
-        </button>
+        </button> -->
         <button mat-menu-item (click)="openDeleteDialog(device)">
           <mat-icon color="red">delete</mat-icon>
           <span>Delete</span>

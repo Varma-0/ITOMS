@@ -72,11 +72,11 @@ export class TerminalService {
     }
 
     addMerchant(options:merchantAdd): Observable<any> {
-        return this.http.post<any>(`${environment.tmsApiUrl}tms/merchant/add`, options, { headers: this.httpHeaders });
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/merchant/add`, options, { headers: this.httpHeaders });
     }
 
     deleteMerchant(options:merchantDelete): Observable<any> {
-        return this.http.post<any>(`${environment.tmsApiUrl}tms/merchant/delete`, options, { headers: this.httpHeaders });
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/merchant/delete`, options, { headers: this.httpHeaders });
     }
 
 
@@ -97,7 +97,7 @@ export class TerminalService {
     }
 
     merchantData(options:terminalBody): Observable<any> {
-        return this.http.post<any>(`${environment.userApiUrl}/merchant/getTenantMerchants`,options)
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/merchant/getTenantMerchants`,options)
     }
 
     addNewUser(options: createNewUser): Observable<any> {

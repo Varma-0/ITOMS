@@ -120,7 +120,7 @@ export class DevicesComponent {
 
   search() {
     this.filteredDevices = this.device.filter(devi =>
-      devi.serialNumber.toLowerCase().includes(this.searchTerm.toLowerCase())
+      devi.serialNumber?.toLowerCase().includes(this.searchTerm?.toLowerCase())
     );
     this.updatePagination();
   }
@@ -202,7 +202,7 @@ export class DevicesComponent {
             skey: data.sk,
             modal: data.model,
             modalName: data.modelName,
-            hierarchy: data.hierarchy,
+            hierarchy: data.hierarchyName,
             hierarchyName: data.hierarchyName,
             merchantName: data.merchantName,
             merchant: data.merchantId
@@ -215,7 +215,7 @@ export class DevicesComponent {
       console.log("dufgq",result);
       if (result) {
        if(edit) {
-        const event = new createDevice(data.deviceId,result.sno,result.skey,result.modalName,result.modal,result.hierarchyName,result.hierarchy,result.merchantName,result.merchant);
+        const event = new createDevice(data.deviceId,result.sno,result.skey,result.modalName,result.modal,result.hierarchyName,"",result.merchantName,result.merchant);
         const terminalRequest = new updateDeviceEvent(event,'DEVICE','UPDATE');
         const editDevice = new updateDevice(terminalRequest);
         console.log("cwicw",editDevice);
@@ -230,7 +230,7 @@ export class DevicesComponent {
         );
        }
        else if (!edit) {
-          const event = new addDevice(result.sno,result.status,result.skey,result.modalName,result.modal,result.hierarchyName,result.hierarchy,result.merchantName,result.merchant)
+          const event = new addDevice(result.sno,result.status,result.skey,result.modalName,result.modal,result.hierarchyName,"",result.merchantName,result.merchant)
           const terminalRequest = new addDeviceEvent(event,'DEVICE','CREATE');
           const editDevice = new addDeviceBody(terminalRequest);
           console.log("cwicw",editDevice);

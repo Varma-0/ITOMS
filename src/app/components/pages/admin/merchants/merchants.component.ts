@@ -105,7 +105,7 @@ export class MerchantsComponent {
               name: data.name,
               email:data.email,
               phone: data.permission,
-              contactName: data.contactName,
+              cname: data.contactName,
           }
         },
         width:'40%'
@@ -113,13 +113,14 @@ export class MerchantsComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
-        const event = new addMerchantData(result.name,result.email,result.phone,result.contactName);
+        const event = new addMerchantData(result.name,result.email,result.phone,result.cname);
         const eventType = new addMerchantBody(event,'MERCHANT','CREATE');
         const finals = new merchantAdd(eventType);
         this.dataService.addMerchant(finals).subscribe(
-          response => [
+          response => {
             console.log("response",response)
-          ]
+            this.loadMerchants();
+          }
         )
       }
   });
@@ -130,11 +131,12 @@ export class MerchantsComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const eventType = new deleteMerchantEVent(merchant.merchantId,'MERCHANT','SEARCH');
+        const eventType = new deleteMerchantEVent(merchant.merchantId,'MERCHANT','DELETE');
         const finals = new merchantDelete(eventType);
         this.dataService.deleteMerchant(finals).subscribe(
           response => {
             console.log("respoonse",response);
+            this.loadMerchants();
           }
         )
     }
