@@ -56,12 +56,12 @@
       </form>
 </ng-container>
 <ng-container *ngIf="title == 'New Terminal'">
-  <form [formGroup]="modalForm" class="merchant-form">
+  <div class="merchant-form">
       <div class="form-group">
         <label for="dsn">Device Sn:</label>
-        <input id="dsn" type="text" ([ngModel])="dsn">
+        <input id="dsn" type="text" [(ngModel)]="dsn">
       </div>
-    </form>
+    </div>
 </ng-container>
 </mat-dialog-content>
 <mat-dialog-actions align="end" class="d-flex justify-content-evenly">

@@ -87,18 +87,40 @@ export class FlyparametersComponent {
       data: {
         title: 'New Terminal',
         form: {
-          name: data?.name,
+          dsn: data?.dsn,
         }
       },
       width: '40%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log("1111111111",result);
       if (result) {
-      
+        this.openCheckDialog(result);
       }
     });
   }
+
+  openCheckDialog(data?: any): void {
+    const dialogRef = this.dialog.open(DevicesFormComponent, {
+      data: {
+        title: 'New Terminal',
+        form: {
+          dsn: data?.dsn,
+        }
+      },
+      width: '40%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("1111111111",result);
+      if (result) {
+        
+      }
+    });
+  }
+
+
 
 
   selectItem(deployment: any) {
