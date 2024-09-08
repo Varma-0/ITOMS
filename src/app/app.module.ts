@@ -209,6 +209,8 @@ import { ParametersReportComponent } from './components/pages/reports/parameters
 import { SearchReportComponent } from './components/pages/reports/search/search.component';
 import { SoftwareReportComponent } from './components/pages/reports/software/software.component';
 import { StatusReportComponent } from './components/pages/reports/status/status.component';
+import { BasicLineChart1Component } from './components/charts/basic-line-chart1/basic-line-chart1.component';
+import { BasicLineChart2Component } from './components/charts/basic-line-chart2/basic-line-chart2.component';
 import { GoogleMapComponent } from './components/pages/table/terminal/google-map/google-map.component';
 
 @NgModule({
@@ -330,6 +332,8 @@ import { GoogleMapComponent } from './components/pages/table/terminal/google-map
     BasicAreaChartComponent,
     SplineAreaComponent,
     NegativeAreaComponent,
+    BasicLineChart1Component,
+    BasicLineChart2Component,
     StackedAreaComponent,
     AreaDatetimeXAxisComponent,
     BasicColumnChartComponent,
