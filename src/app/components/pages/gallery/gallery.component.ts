@@ -38,7 +38,7 @@ export class GalleryComponent implements OnInit {
 
   filteredDevices: Device[] = [];
   searchTerm: string = '';
-  columns: string[] = ['serialNumber', 'deviceId', 'model', 'deviceStatus', 'hierarchy', 'lastHeartbeat', 'groupNames', 'ipAddress'];
+  columns: string[] = ['Serial Number', 'Device Id', 'Merchant Name', 'Merchant Hirearchy', 'Device Current Status', 'Last Connected'];
   columnsVisibility = [true, true, true, true, true,true,true,true];
 
   

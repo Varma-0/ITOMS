@@ -14,13 +14,16 @@
     <div class="actions-container">
       <button (click)="exportToExcel()">Export to Excel</button>
       <div class="dropdown">
-        <button class="dropbtn">Show/Hide Columns</button>
-        <div class="dropdown-content">
-          <label *ngFor="let column of columns">
-            <input type="checkbox" [checked]="isColumnVisible(column)" (change)="toggleColumn(column)">
-            {{column}}
-          </label>
-        </div>
+        <button mat-icon-button [matMenuTriggerFor]="filterMenu">
+            <mat-icon>filter_list</mat-icon>
+          </button>
+          <mat-menu #filterMenu="matMenu">
+            <button mat-menu-item *ngFor="let column of columns; let i = index">
+              <mat-checkbox [checked]="columnsVisibility[i]" (change)="toggleColumn(i)">
+                {{ column }}
+              </mat-checkbox>
+            </button>
+          </mat-menu>
       </div>
     </div>
   
@@ -32,18 +35,18 @@
       </thead>
       <tbody>
         <tr *ngFor="let device of filteredDevices">
-          <td *ngIf="isColumnVisible('serialNumber')">{{device.serialNumber}}</td>
-          <td *ngIf="isColumnVisible('deviceId')">{{device.deviceId}}</td>
-          <td *ngIf="isColumnVisible('model')">{{device.model}}</td>
-          <td *ngIf="isColumnVisible('deviceStatus')">
-            <span [ngClass]="{'pending': device.deviceStatus === 'PendingRegistration', 'inactive': device.deviceStatus === 'Inactive'}">
-              {{device.deviceStatus}}
-            </span>
-          </td>
-          <td *ngIf="isColumnVisible('hierarchy')">{{device.hierarchy}}</td>
-          <td *ngIf="isColumnVisible('lastHeartbeat')">{{device.lastHeartbeat}}</td>
-          <td *ngIf="isColumnVisible('groupNames')">{{device.groupNames}}</td>
-          <td *ngIf="isColumnVisible('ipAddress')">{{device.ipAddress}}</td>
+            <td *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">
+                <ng-container [ngSwitch]="column">
+                  <span *ngSwitchCase="'Serial Number'">{{ device.serialNumber || 'N/A' }}</span>
+                  <span *ngSwitchCase="'Device Id'">{{ device.deviceId || 'N/A' }}</span>
+                  <span *ngSwitchCase="'Merchant Name'">{{ device.model || 'N/A' }}</span>
+                  <span *ngSwitchCase="'Merchant Hirearchy'">{{ device.model || 'N/A' }}</span>
+                  <span *ngSwitchCase="'Device Current Status'">{{ device.model || 'N/A' }}</span>
+                  <span *ngSwitchCase="'Last Connected'">{{ device.model || 'N/A' }}</span>
+                  <span *ngSwitchDefault>{{ 'N/A' }}</span>
+                </ng-container>
+              </td>
+          
         </tr>
       </tbody>
     </table>
