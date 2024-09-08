@@ -20,11 +20,11 @@ interface Column {
 }
 
 @Component({
-  selector: 'app-gallery',
-  templateUrl: './gallery.component.html',
-  styleUrls: ['./gallery.component.scss']
+  selector: 'app-swap',
+  templateUrl: './swap.component.html',
+  styleUrls: ['./swap.component.scss']
 })
-export class GalleryComponent implements OnInit {
+export class SwapReportComponent implements OnInit {
     devices: Device[] = [
         { serialNumber: '111-111-111', deviceId: '', model: 'VX 520', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed', lastHeartbeat: '', groupNames: '', ipAddress: '',view:true },
         { serialNumber: '1212121', deviceId: '0837823782378', model: '640P 1', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed >> Girmiti', lastHeartbeat: '', groupNames: '', ipAddress: '' },
@@ -36,12 +36,14 @@ export class GalleryComponent implements OnInit {
   filteredDevices: Device[] = [];
   searchTerm: string = '';
   columns: Column[] = [
-    { key: 'serialNumber', label: 'Serial Number', visible: true },
-    { key: 'deviceId', label: 'Device ID', visible: true },
-    { key: 'model', label: 'Merchant Name', visible: true },
-    { key: 'hierarchy', label: 'Merchant Hierarchy', visible: true },
-    { key: 'deviceStatus', label: 'Device Current Status', visible: true },
-    { key: 'lastHeartbeat', label: 'Last Connected', visible: true },
+    { key: 'serialNumber', label: 'Current Device Serial Number', visible: true },
+    { key: 'deviceId', label: 'Current Device Hierarchy', visible: true },
+    { key: 'model', label: 'Swapped Out Serial Number', visible: true },
+    { key: 'hierarchy', label: 'Swapped Out Hirercy', visible: true },
+    { key: 'deviceStatus', label: 'Device ID', visible: true },
+    { key: 'lastHeartbeat', label: 'From Model', visible: true },
+    { key: 'deviceStatus', label: 'To Model', visible: true },
+    { key: 'lastHeartbeat', label: 'Swapped on', visible: true },
   ];
 
   currentPage = 1;

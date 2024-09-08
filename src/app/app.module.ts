@@ -200,6 +200,15 @@ import { ActiveComponent } from './components/dialogs/active/active.component';
 import { DevicesFormComponent } from './components/dialogs/device-form/device-form.component';
 import { HierarchySelectionComponent } from './components/dialogs/hierarchy-selection/hierarchy-selection.component';
 import { HierarchyFormComponent } from './components/dialogs/hierarchy-form/hierarchy-form.component';
+import { ReportsDialogComponent } from './components/dialogs/reports/reports.component';
+import { HeartReportComponent } from './components/pages/reports/heart/heart.component';
+import { SystemReportComponent } from './components/pages/reports/system/system.component';
+import { SwapReportComponent } from './components/pages/reports/swap/swap.component';
+import { HirerichiesReportComponent } from './components/pages/reports/hirerichies/hirerichies.component';
+import { ParametersReportComponent } from './components/pages/reports/parameters/parameters.component';
+import { SearchReportComponent } from './components/pages/reports/search/search.component';
+import { SoftwareReportComponent } from './components/pages/reports/software/software.component';
+import { StatusReportComponent } from './components/pages/reports/status/status.component';
 
 @NgModule({
   declarations: [
@@ -240,6 +249,15 @@ import { HierarchyFormComponent } from './components/dialogs/hierarchy-form/hier
     AlertComponent,
     InboxComponent,
     ReadComponent,
+    ReportsDialogComponent,
+    HeartReportComponent,
+    SystemReportComponent,
+    SwapReportComponent,
+    HirerichiesReportComponent,
+    ParametersReportComponent,
+    SearchReportComponent,
+    SoftwareReportComponent,
+    StatusReportComponent,
     ComposeComponent,
     UiComponentsComponent,
     AlertsComponent,

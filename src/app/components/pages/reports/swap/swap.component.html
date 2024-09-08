@@ -23,21 +23,23 @@
       </div>
     </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th *ngFor="let column of visibleColumns">{{ column.label }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let device of paginatedDevices">
-          <td *ngFor="let column of visibleColumns" [ngClass]="{'pending': device[column.key] === 'PendingRegistration', 'inactive': device[column.key] === 'Inactive'}">
-            <span *ngIf="column.key != 'view'"> {{ device[column.key] || 'N/A' }} </span>
-            <span *ngIf="column.key == 'view'"><button mat-icon-button *ngIf="device[column.key] == true"><mat-icon>visibility</mat-icon></button></span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div style="overflow-x: auto;">
+        <table>
+            <thead>
+              <tr>
+                <th *ngFor="let column of visibleColumns">{{ column.label }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let device of paginatedDevices">
+                <td *ngFor="let column of visibleColumns" [ngClass]="{'pending': device[column.key] === 'PendingRegistration', 'inactive': device[column.key] === 'Inactive'}">
+                  <span *ngIf="column.key != 'view'"> {{ device[column.key] || 'N/A' }} </span>
+                  <span *ngIf="column.key == 'view'"><button mat-icon-button *ngIf="device[column.key] == true"><mat-icon>visibility</mat-icon></button></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
 
     <div class="pagination">
       <span>Showing: {{ startIndex + 1 }}-{{ endIndex }} of {{ totalItems }}</span>

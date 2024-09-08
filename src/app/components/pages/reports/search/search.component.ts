@@ -20,11 +20,11 @@ interface Column {
 }
 
 @Component({
-  selector: 'app-gallery',
-  templateUrl: './gallery.component.html',
-  styleUrls: ['./gallery.component.scss']
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.scss']
 })
-export class GalleryComponent implements OnInit {
+export class SearchReportComponent implements OnInit {
     devices: Device[] = [
         { serialNumber: '111-111-111', deviceId: '', model: 'VX 520', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed', lastHeartbeat: '', groupNames: '', ipAddress: '',view:true },
         { serialNumber: '1212121', deviceId: '0837823782378', model: '640P 1', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed >> Girmiti', lastHeartbeat: '', groupNames: '', ipAddress: '' },
@@ -40,8 +40,12 @@ export class GalleryComponent implements OnInit {
     { key: 'deviceId', label: 'Device ID', visible: true },
     { key: 'model', label: 'Merchant Name', visible: true },
     { key: 'hierarchy', label: 'Merchant Hierarchy', visible: true },
-    { key: 'deviceStatus', label: 'Device Current Status', visible: true },
-    { key: 'lastHeartbeat', label: 'Last Connected', visible: true },
+    { key: 'deviceStatus', label: 'Model', visible: true },
+    { key: 'lastHeartbeat', label: 'Device Current Status', visible: true },
+    { key: 'deviceStatus', label: 'Last Heart Beat', visible: true },
+    { key: 'lastHeartbeat', label: 'Org ID', visible: true },
+    { key: 'deviceStatus', label: 'OS Vresion Details', visible: true },
+    { key: 'lastHeartbeat', label: 'Battery Status', visible: true },
   ];
 
   currentPage = 1;

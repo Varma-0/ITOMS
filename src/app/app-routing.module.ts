@@ -105,6 +105,14 @@ import { DevicesComponent } from './components/pages/device/devices/devices.comp
 import { UpdateScheduleComponent } from './components/pages/table/update-schedule/update-schedule.component';
 import { GroupComponent } from './components/pages/table/group/group.component';
 import { ModelComponent } from './components/pages/device/model/model.component';
+import { StatusReportComponent } from './components/pages/reports/status/status.component';
+import { HeartReportComponent } from './components/pages/reports/heart/heart.component';
+import { SearchReportComponent } from './components/pages/reports/search/search.component';
+import { HirerichiesReportComponent } from './components/pages/reports/hirerichies/hirerichies.component';
+import { SoftwareReportComponent } from './components/pages/reports/software/software.component';
+import { ParametersReportComponent } from './components/pages/reports/parameters/parameters.component';
+import { SwapReportComponent } from './components/pages/reports/swap/swap.component';
+import { SystemReportComponent } from './components/pages/reports/system/system.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'landing',pathMatch:'full'},
@@ -221,8 +229,20 @@ const routes: Routes = [
       {path: 'model', data: { breadcrumb: 'Model' }, component: ModelComponent},
     ]
   },
+  {
+    path: 'report', component: AdministrationComponent,
+    children: [
+      {path: 'status', component: StatusReportComponent},
+      {path: 'heart', component: HeartReportComponent},
+      {path: 'search', component: SearchReportComponent},
+      {path: 'hierarchy', component: HirerichiesReportComponent},
+      {path: 'software', component: SoftwareReportComponent},
+      {path: 'parameters', component: ParametersReportComponent},
+      {path: 'swap', component: SwapReportComponent},
+      {path: 'system', component: SystemReportComponent},
+    ]
+  },
   {path: 'merchant', component: MerchantComponent},
-  {path: 'report', component: GalleryComponent},
   {path: 'gallery', component: GalleryComponent},
   {path: 'timeline', component: TimelineComponent},
   {path: 'pricing', component: PricingComponent},

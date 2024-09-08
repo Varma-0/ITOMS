@@ -20,11 +20,11 @@ interface Column {
 }
 
 @Component({
-  selector: 'app-gallery',
-  templateUrl: './gallery.component.html',
-  styleUrls: ['./gallery.component.scss']
+  selector: 'app-system',
+  templateUrl: './system.component.html',
+  styleUrls: ['./system.component.scss']
 })
-export class GalleryComponent implements OnInit {
+export class SystemReportComponent implements OnInit {
     devices: Device[] = [
         { serialNumber: '111-111-111', deviceId: '', model: 'VX 520', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed', lastHeartbeat: '', groupNames: '', ipAddress: '',view:true },
         { serialNumber: '1212121', deviceId: '0837823782378', model: '640P 1', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed >> Girmiti', lastHeartbeat: '', groupNames: '', ipAddress: '' },
@@ -36,12 +36,12 @@ export class GalleryComponent implements OnInit {
   filteredDevices: Device[] = [];
   searchTerm: string = '';
   columns: Column[] = [
-    { key: 'serialNumber', label: 'Serial Number', visible: true },
-    { key: 'deviceId', label: 'Device ID', visible: true },
-    { key: 'model', label: 'Merchant Name', visible: true },
-    { key: 'hierarchy', label: 'Merchant Hierarchy', visible: true },
-    { key: 'deviceStatus', label: 'Device Current Status', visible: true },
-    { key: 'lastHeartbeat', label: 'Last Connected', visible: true },
+    { key: 'serialNumber', label: 'Date Changed', visible: true },
+    { key: 'deviceId', label: 'Description', visible: true },
+    { key: 'model', label: 'Source', visible: true },
+    { key: 'hierarchy', label: 'Modified By', visible: true },
+    { key: 'deviceStatus', label: 'Entity', visible: true },
+    { key: 'lastHeartbeat', label: 'Operation', visible: true },
   ];
 
   currentPage = 1;

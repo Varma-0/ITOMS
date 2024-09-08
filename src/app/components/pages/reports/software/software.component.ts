@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ReportsDialogComponent } from 'src/app/components/dialogs/reports/reports.component';
 import * as XLSX from 'xlsx';
 
 interface Device {
@@ -20,11 +22,11 @@ interface Column {
 }
 
 @Component({
-  selector: 'app-gallery',
-  templateUrl: './gallery.component.html',
-  styleUrls: ['./gallery.component.scss']
+  selector: 'app-software',
+  templateUrl: './software.component.html',
+  styleUrls: ['./software.component.scss']
 })
-export class GalleryComponent implements OnInit {
+export class SoftwareReportComponent implements OnInit {
     devices: Device[] = [
         { serialNumber: '111-111-111', deviceId: '', model: 'VX 520', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed', lastHeartbeat: '', groupNames: '', ipAddress: '',view:true },
         { serialNumber: '1212121', deviceId: '0837823782378', model: '640P 1', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed >> Girmiti', lastHeartbeat: '', groupNames: '', ipAddress: '' },
@@ -40,14 +42,14 @@ export class GalleryComponent implements OnInit {
     { key: 'deviceId', label: 'Device ID', visible: true },
     { key: 'model', label: 'Merchant Name', visible: true },
     { key: 'hierarchy', label: 'Merchant Hierarchy', visible: true },
-    { key: 'deviceStatus', label: 'Device Current Status', visible: true },
-    { key: 'lastHeartbeat', label: 'Last Connected', visible: true },
+    { key: 'deviceStatus', label: 'Model', visible: true },
+    { key: 'view', label: 'View', visible: true },
   ];
 
   currentPage = 1;
   itemsPerPage = 10;
 
-  constructor() { }
+  constructor(private dialog:MatDialog) { }
 
   ngOnInit(): void {
     this.applyFilter();
@@ -112,4 +114,23 @@ export class GalleryComponent implements OnInit {
       this.currentPage = page;
     }
   }
+
+  openReportDialog(data): void {
+    const dialogRef = this.dialog.open(ReportsDialogComponent,{
+        data:{
+            'Package Name' : 'Test',
+            'Current Version' : 'Test',
+            'Deployment Version' : 'Test',
+            'Download Status' : 'Test'
+        }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Implement delete functionality here
+        console.log('User deleted');
+      }
+    });
+  }
+
 }
