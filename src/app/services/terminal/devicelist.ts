@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { terminalBody } from './body/body';
 import { environment } from 'src/environments/environment';
 import { createModelEvent, createNewUserBody, deleteModelEvent, midEvent, updateModelEvent, updateRoleBody } from '../login/body/event';
-import { addDeviceBody, createBody, createNewUser, createUser, deleteBody, merchantAdd, merchantDelete, midHeirarchy, permissionAdd, permissionDelete, permissionUpdate, roleAdd, roleUpdate, tenantAdd, tenantDelete, tenantUpdate, updateBody, updateDevice } from '../login/body/body';
+import { addDeviceBody, createBody, createNewUser, createUser, deleteBody, devicePie, merchantAdd, merchantDelete, midHeirarchy, permissionAdd, permissionDelete, permissionUpdate, roleAdd, roleUpdate, tenantAdd, tenantDelete, tenantUpdate, updateBody, updateDevice } from '../login/body/body';
 import { midDevice, addDevice } from '../login/body/event-data';
 
 @Injectable({
@@ -130,5 +130,17 @@ export class TerminalService {
 
     tenantData(): Observable<any> {
         return this.http.get<any>(`${environment.userApiUrl}/tenant/`, {headers: this.httpHeaders});
+    }
+
+    deviceModelRatio(options: devicePie): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/eachModelCountReport`,options, {headers: this.httpHeaders})
+    }
+
+    merchantCount(options: devicePie): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/getMerchantCount`,options, {headers: this.httpHeaders})
+    }
+
+    apkCountInfo(options: devicePie): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/apkPackage`,options, {headers: this.httpHeaders})
     }
 }

@@ -208,7 +208,9 @@ export class DLogInComponent implements OnInit{
         const jwtToken = response.event.eventData.jwtToken;
         response.event.eventData.userType == "SA"? this.superAdmin = true : this.superAdmin = false;
         const data = this.superAdmin;
+        const userName = response.event.eventData.name;
         this.shared.setLoginData(data);
+        localStorage.setItem('User Name',userName);
         localStorage.setItem("SA",`${this.superAdmin}`);
         localStorage.setItem('jwtToken', jwtToken);
         this.router.navigate(['/dashboard/analytics']);

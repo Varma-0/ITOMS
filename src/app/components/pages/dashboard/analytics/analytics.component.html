@@ -1,46 +1,54 @@
-<!-- Breadcrumb Area -->
-<div class="breadcrumb-area">
-    <h1>Home</h1>
-</div>
-<!-- End Breadcrumb Area -->
 
 <!-- Start Stats Cards -->
-<div class="row">
-    <div class="col-lg-3 col-md-6">
+
+    
+    <div class="welcome-card">
+        <div class="image-container">
+          <img src="../../../../../assets/img/welcome.png" alt="Welcome image" class="welcome-image">
+        </div>
+        <div class="content">
+          <h2 class="welcome-text">Welcome Back,</h2>
+          <h1 class="user-name">{{ welcome }}</h1>
+        </div>
+      </div>
+    
+      <div class="row">
+    <div class="col-lg-4 col-md-6">
         <div class="stats-card-box">
             <div class="icon-box">
                 <i class='bx bx-bar-chart'></i>
             </div>
             <span class="sub-title">Terminals</span>
             <div class="progress-list">
-                <p>18</p>
+                <p>{{ terminalCount }}</p>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-4 col-md-6">
         <div class="stats-card-box">
-            <div class="icon-box">
+            <div class="icon-box" style="background-color: #13bb37;">
                <i class='bx bx-bar-chart-square'></i>
             </div>
             <span class="sub-title">Merchants</span>
             <div class="progress-list">
-                <p>22</p>
+                <p>{{ merchantCount }}</p>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-4 col-md-6" >
         <div class="stats-card-box">
-            <div class="icon-box">
+            <div class="icon-box" style="background-color: #ff4b00;">
                 <i class='bx bx-send'></i>
             </div>
             <span class="sub-title">Applications</span>
             <div class="progress-list">
-                <p>14</p>
+                <p>{{ apkCount }}</p>
             </div>
         </div>
     </div>
+
 </div>
 <!-- End Stats Cards -->
 
@@ -50,21 +58,22 @@
         <div class="dashboard-card">
             <div class="card-header">
                 <p>Device Model Ratio</p>
-                <button class="filter-button"><i class='bx bx-filter-alt' style="color:blue"></i></button>
+                <!-- <button class="filter-button"><i class='bx bx-filter-alt' style="color:blue"></i></button> -->
             </div>
             <div class="card-content">
                 <!-- Add your pie chart component here -->
+                <app-email-send [data]="data"></app-email-send>
             </div>
         </div>
     </div>
     <div class="col-lg-6 col-md-12">
         <div class="dashboard-card">
             <div class="card-header">
-                <p>Number of Devices Repaired</p>
-                <button class="filter-button"><i class='bx bx-filter-alt' style="color:blue"></i></button>
+                <p>New Activated Devices Number</p>
+                <!-- <button class="filter-button"><i class='bx bx-filter-alt' style="color:blue"></i></button> -->
             </div>
             <div class="card-content">
-                <!-- Add your line graph component here -->
+                <!-- Add your pie chart component here -->
             </div>
         </div>
     </div>
@@ -76,8 +85,8 @@
     <div class="col-lg-6 col-md-12">
         <div class="dashboard-card">
             <div class="card-header">
-                <p>New Activated Devices Number</p>
-                <button class="filter-button"><i class='bx bx-filter-alt' style="color:blue"></i></button>
+                <p>Device Online Number</p>
+                <!-- <button class="filter-button"><i class='bx bx-filter-alt' style="color:blue"></i></button> -->
             </div>
             <div class="card-content">
                 <!-- Add your pie chart component here -->
@@ -87,11 +96,11 @@
     <div class="col-lg-6 col-md-12">
         <div class="dashboard-card">
             <div class="card-header">
-                <p>Device Cumulative Usage Time</p>
-                <button class="filter-button"><i class='bx bx-filter-alt' style="color:blue"></i></button>
+                <p>Download Status</p>
+                <!-- <button class="filter-button"><i class='bx bx-filter-alt' style="color:blue"></i></button> -->
             </div>
             <div class="card-content">
-                <!-- Add your line graph component here -->
+                <!-- Add your pie chart component here -->
             </div>
         </div>
     </div>
@@ -100,41 +109,22 @@
 
 <!-- 3 -->
 <div class="row">
-    <div class="col-lg-6 col-md-12">
-        <div class="dashboard-card">
-            <div class="card-header">
-                <p>Device Online Number</p>
-                <button class="filter-button"><i class='bx bx-filter-alt' style="color:blue"></i></button>
-            </div>
-            <div class="card-content">
-                <!-- Add your pie chart component here -->
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6 col-md-12">
-        <div class="dashboard-card">
-            <div class="card-header">
-                <p>Ratio of Card Reading Method</p>
-            </div>
-            <div class="card-content">
-                <!-- Add your line graph component here -->
-            </div>
-        </div>
-    </div>
+    
+    
 </div>
 <!-- 3 -->
 
 <!-- 4 -->
-<div class="row">
+<!-- <div class="row">
     <div class="col-lg-6 col-md-12">
         <div class="dashboard-card">
             <div class="card-header">
                 <p>Average Traffic</p>
             </div>
             <div class="card-content">
-                <!-- Add your pie chart component here -->
+
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- 4 -->
