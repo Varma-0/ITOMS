@@ -41,6 +41,7 @@ export class DevicesFormComponent {
         modal: [''],
         merchant : [''],
         hierarchy: [''],
+        status: ['']
       });
       this.modalForm = this.fb.group({
         name: [''],
