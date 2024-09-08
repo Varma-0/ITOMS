@@ -26,10 +26,7 @@ export class AnalyticsComponent implements OnInit {
     data: any;
 
     activatedData: ChartData[] = [];
-    deviceOnlineData: any[] = [
-      {"2024-09-08": 2},
-       { "2024-09-06": 1}
-    ];
+    deviceOnlineData: any[] = [];
   toggleFilter() {
     this.showFilter = !this.showFilter;
   }
