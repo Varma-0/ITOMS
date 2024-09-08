@@ -1,32 +1,28 @@
-import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
-import { HierarchySelectionComponent } from 'src/app/components/dialogs/hierarchy-selection/hierarchy-selection.component';
+import { Component, Inject } from '@angular/core';
+import {
+    MAT_DIALOG_DATA,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { midHeirarchy } from 'src/app/services/login/body/body';
 import { midEvent } from 'src/app/services/login/body/event';
 import { midDevice } from 'src/app/services/login/body/event-data';
 import { terminalBody } from 'src/app/services/terminal/body/body';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
-interface HierarchyLevel {
-    name: string;
-    values: any[];
-    selectedValue: string;
-  }
-@Component({
-  selector: 'app-hierarchy-level',
-  templateUrl: './hierarchy-level.component.html',
-  styleUrl: './hierarchy-level.component.scss'
-})
-export class HierarchyLevelComponent {
-    hierarchyLevels: HierarchyLevel[] = [
-        { name: 'Merchant', values: [], selectedValue: '' },
-        { name: 'Level 0', values: [], selectedValue: '' },
-        { name: 'Level 1', values: [], selectedValue: '' },
-        { name: 'Level 2', values: [], selectedValue: '' },
-      ];
 
-      constructor(private dataService: TerminalService,public dialog: MatDialog){}
+@Component({
+  selector: 'app-hierarchy-selection',
+  templateUrl: './hierarchy-selection.component.html',
+  styleUrls: ['./hierarchy-selection.component.scss'],
+})
+export class HierarchySelectionComponent {
+    hierarchyLevels = [];
+      title="";
+
+      constructor(public dialogRef: MatDialogRef<HierarchySelectionComponent>,private dataService: TerminalService,@Inject(MAT_DIALOG_DATA) public data: any){
+        this.title = data.title
+        this.hierarchyLevels = data.list
+      }
       ngOnInit() {
         this.getData();
       }
@@ -68,7 +64,7 @@ export class HierarchyLevelComponent {
       }
 
       removeLevel(index: number) {
-        if (index >= 2 && this.hierarchyLevels.length > 2) {
+        if (this.hierarchyLevels.length > 1) {
           this.hierarchyLevels.splice(index, 1);
         }
       }
@@ -97,20 +93,12 @@ export class HierarchyLevelComponent {
         }
       }
 
-      openDialog(): void {
-        const dialogRef = this.dialog.open(HierarchySelectionComponent,{
-            data:{
-                title:'Hierarchy Levels',
-                list:this.hierarchyLevels
-            },
-            width:'30%'
-        });
+  onCancel(): void {
+    this.dialogRef.close(false);
+  }
 
-        dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            // Implement delete functionality here
-            console.log('User deleted');
-          }
-        });
-      }
+  onConfirm(): void {
+    this.dialogRef.close(this.hierarchyLevels);
+  }
+
 }

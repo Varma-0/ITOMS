@@ -21,8 +21,8 @@ export class DevicesFormComponent {
   deviceForm: FormGroup;
   modalForm: FormGroup;
   options:'';
-  modals: [];
-  merchants: [];
+  modals = [];
+  merchants = [];
   hirearchies = [];
   constructor(public dialog: MatDialog,public dialogRef: MatDialogRef<DevicesFormComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private shared:SharedServices,private dataService: TerminalService) {
     this.title = data.title
@@ -41,7 +41,10 @@ export class DevicesFormComponent {
         modal: [''],
         merchant : [''],
         hierarchy: [''],
-        status: ['']
+        status: [''],
+        merchantName:[''],
+        modalName : [''],
+        hierarchyName :[''],
       });
       this.modalForm = this.fb.group({
         name: [''],
@@ -62,7 +65,10 @@ export class DevicesFormComponent {
     this.dataService.getHierarchyFromMerchant(mrHierarchy).subscribe(
       response =>  {
         response.event.eventData.forEach(name => {
-          this.hirearchies.push(name.name)
+          this.hirearchies.push({
+            id:name.id,
+            name : name.name
+          })
         });;
       }
     )
@@ -74,11 +80,18 @@ export class DevicesFormComponent {
 
   onConfirm(): void {
     if(this.title == 'Add Device' || this.title == 'Edit Device') {
+      this.deviceForm.get('modalName').setValue(this.getObjectById(this.deviceForm.get('modal').value,this.modals).name)
+      this.deviceForm.get('merchantName').setValue(this.getObjectById(this.deviceForm.get('merchant').value,this.merchants).name)
+      this.deviceForm.get('hierarchyName').setValue(this.getObjectById(this.deviceForm.get('hierarchy').value,this.hirearchies).name)
       this.dialogRef.close(this.deviceForm.value);
     } else {
       this.dialogRef.close(this.modalForm.value);
     }
   }
+
+   getObjectById(id,list) {
+    return list.find(obj => obj.id === id);
+}
 
   ngOnDestroy(){
     this.shared.setSidebarState(true);

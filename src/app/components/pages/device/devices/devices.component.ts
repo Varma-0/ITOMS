@@ -60,7 +60,7 @@ export class DevicesComponent {
         this.device = response.event.eventData.map(data => {
           const time = data.createdBy.ts;
           const fulldate = time.split('T')[0];  // Get the full date (YYYY-MM-DD)
-          
+
           return {
             deviceId: data.id,
             serialNumber: data.serialNumber,
@@ -78,7 +78,7 @@ export class DevicesComponent {
         // this.filteredDevices = this.device;
         this.search();
         // this.paginatedDevices = this.device;
-    
+
         // Log the updated device array
         console.log('Updated device data:', this.device);
       },
@@ -106,7 +106,7 @@ export class DevicesComponent {
             name: data.name,
             description: data.description,
             fulldate: fulldate,
-            
+
           };
         });
         // this.filteredDevices = this.device;
@@ -138,7 +138,7 @@ export class DevicesComponent {
     )
   }
 
-  
+
   updatePagination() {
     this.totalPages = Math.ceil(this.filteredDevices.length / this.itemsPerPage);
     this.currentPage = 1;
@@ -170,7 +170,7 @@ export class DevicesComponent {
     const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        
+
       }
     });
   }
@@ -188,7 +188,7 @@ export class DevicesComponent {
           deviceId: data.id,
             sno: data.serialNumber,
             skey: data.sk,
-            modal: data.model, 
+            modal: data.model,
             modalName: data.modelName,
             hierarchy: data.hierarchy,
             hierarchyName: data.hierarchyName,

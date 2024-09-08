@@ -13,7 +13,7 @@ import { midDevice, addDevice } from '../login/body/event-data';
   providedIn: 'root'
 })
 export class TerminalService {
-    
+
     private httpHeaders: HttpHeaders;
 
     constructor(private http: HttpClient) {
@@ -56,7 +56,7 @@ export class TerminalService {
     }
 
     addNewDevice(options: addDeviceBody): Observable<any> {
-        return this.http.post(`${environment.userApiUrl}/tms/device`,options, { headers: this.httpHeaders});
+        return this.http.post(`${environment.tmsApiUrl}/tms/device`,options, { headers: this.httpHeaders});
     }
 
     merchantData(options:terminalBody): Observable<any> {

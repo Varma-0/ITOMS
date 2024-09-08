@@ -1,41 +1,61 @@
-<!-- Breadcrumb Area -->
-<div class="breadcrumb-area">
-    <h1>Administration</h1>
-
-    <ol class="breadcrumb">
-        <li class="item"><a routerLink="/admin/user"><i class='bx bx-home-alt'></i></a></li>
-
-        <li class="item">Administration</li>
-
-        <li class="item">Hierarchy-level</li>
-    </ol>
-</div>
-<!-- End Breadcrumb Area -->
-<div class="add-user">
-    <button class="btn btn-primary" (click)="openDeleteDialog()">Create Hierarchy-level</button>
-</div>
-<mat-card class="user-card">
-    <div class="user-card-header">
-      <div class="date-info">
-        <p class="date">{{ day }}</p>
-        <p class="day">{{ date }}</p>
-        <p class="month">{{ month }}</p>
+<div class="hierarchy-container">
+    <div class="header">
+      <h1>Manage Hierarchy</h1>
+      <div class="header-buttons">
+        <button class="btn primary" (click)="openDialog()" >Manage Hierarchy Level</button>
+        <button class="btn secondary">Upload Hierarchy File</button>
       </div>
-      <div class="user-info">
-        <p class="user-name">{{ hierarchyLevelName }}</p>
-        <p class="user-email">{{ levelDetails }}</p>
+    </div>
+
+    <div class="hierarchy-values">
+      <div *ngFor="let level of hierarchyLevels; let i = index" class="hierarchy-column">
+        <h3>{{ level.name }}</h3>
+        <div class="hierarchy-items">
+          <div *ngFor="let item of level.values"
+               class="hierarchy-item"
+               [class.selected]="item === level.selectedValue"
+               (click)="selectItem(i, item)">
+            {{ item.name }}
+          </div>
+        </div>
+        <button *ngIf="i < 2" class="btn icon-btn add" (click)="addLevel()">+</button>
+        <button *ngIf="i >= 2" class="btn icon-btn remove" (click)="removeLevel(i)">×</button>
       </div>
-      <button  color="primary" class="btn btn-primary">{{ levelStatus }}</button>
-
     </div>
-    <div class="user-card-actions">
-      <button mat-icon-button color="primary" aria-label="Action 1">
-        <mat-icon style="color: blue;">view_list</mat-icon>
-      </button>
-      <button mat-icon-button color="warn" aria-label="Delete" (click)="openDeleteDialog()">
-        <mat-icon style="color: red;">delete</mat-icon>
-      </button>
+
+    <div class="hierarchy-properties">
+      <h2>Hierarchy Value Properties</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="hierarchyName">Hierarchy name: *</label>
+          <input id="hierarchyName" type="text" [(ngModel)]="hierarchyLevels[0].selectedValue">
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <input id="description" type="text">
+        </div>
+        <div class="form-group">
+          <label for="ipStart">IP starting address:</label>
+          <input id="ipStart" type="text">
+        </div>
+        <div class="form-group">
+          <label for="ipEnd">IP ending address:</label>
+          <input id="ipEnd" type="text">
+        </div>
+        <div class="form-group">
+          <label for="locationId">Location identifier:</label>
+          <input id="locationId" type="text">
+        </div>
+        <div class="form-group">
+          <label for="timezone">Time zone:</label>
+          <select id="timezone">
+            <option>(UTC+01:00) Dublin, Edinburgh, Lisbon, London</option>
+          </select>
+        </div>
+      </div>
+      <div class="button-group">
+        <button class="btn primary">Save</button>
+        <button class="btn secondary">Cancel</button>
+      </div>
     </div>
-  </mat-card>
-
-
+  </div>
