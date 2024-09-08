@@ -209,6 +209,7 @@ import { ParametersReportComponent } from './components/pages/reports/parameters
 import { SearchReportComponent } from './components/pages/reports/search/search.component';
 import { SoftwareReportComponent } from './components/pages/reports/software/software.component';
 import { StatusReportComponent } from './components/pages/reports/status/status.component';
+import { GoogleMapComponent } from './components/pages/table/terminal/google-map/google-map.component';
 
 @NgModule({
   declarations: [
@@ -393,7 +394,8 @@ import { StatusReportComponent } from './components/pages/reports/status/status.
     ActiveComponent,
     DevicesFormComponent,
     HierarchySelectionComponent,
-    HierarchyFormComponent
+    HierarchyFormComponent,
+    GoogleMapComponent
   ],
   imports: [
     BrowserModule,
@@ -423,7 +425,7 @@ import { StatusReportComponent } from './components/pages/reports/status/status.
     MatProgressBarModule,
     MatProgressSpinner,
     ReactiveFormsModule,
-    MultiSelectModule
+    MultiSelectModule,
 ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
