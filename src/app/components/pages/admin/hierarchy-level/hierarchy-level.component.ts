@@ -5,6 +5,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HierarchySelectionComponent } from 'src/app/components/dialogs/hierarchy-selection/hierarchy-selection.component';
 import { HierarchyFormComponent } from 'src/app/components/dialogs/hierarchy-form/hierarchy-form.component';
 import { Router } from '@angular/router';
+import { terminalEvent } from 'src/app/services/terminal/body/event-data';
+import { terminalBody } from 'src/app/services/terminal/body/body';
 
 interface HierarchyItem {
   id: string;
@@ -31,12 +33,36 @@ export class HierarchyLevelComponent implements OnInit {
     { name: 'City', items: [], selectedItem: null },
   ];
 
+  private countries = ['India', 'United States', 'Canada', 'Germany', 'France'];
+  private states = {
+    India: ['Maharashtra', 'Karnataka', 'Gujarat'],
+    'United States': ['California', 'New York', 'Texas'],
+    Canada: ['Ontario', 'Quebec'],
+    Germany: ['Bavaria', 'Berlin'],
+    France: ['Île-de-France', 'Provence-Alpes-Côte d\'Azur'],
+  };
+  private cities = {
+    Maharashtra: ['Mumbai', 'Pune'],
+    Karnataka: ['Bangalore', 'Mysore'],
+    Gujarat: ['Ahmedabad', 'Surat'],
+    California: ['Los Angeles', 'San Francisco'],
+    NewYork: ['New York City', 'Buffalo'],
+    Texas: ['Houston', 'Dallas'],
+    Ontario: ['Toronto', 'Ottawa'],
+    Quebec: ['Montreal', 'Quebec City'],
+    Bavaria: ['Munich', 'Nuremberg'],
+    Berlin: ['Berlin'],
+    'Île-de-France': ['Paris', 'Versailles'],
+    'Provence-Alpes-Côte d\'Azur': ['Marseille', 'Nice'],
+  };
+
   hierarchyData: any;
   selectedItem: HierarchyItem | null = null;
   selectedPath: string = ''; // New property for selected path
   itemForm: FormGroup;
+  merchants = [];
 
-  constructor(private router: Router, public dialog: MatDialog,private fb: FormBuilder) {}
+  constructor(private router: Router, public dialog: MatDialog,private fb: FormBuilder,private dataService:TerminalService) {}
 
   ngOnInit() {
     this.itemForm = this.fb.group({
@@ -48,97 +74,212 @@ export class HierarchyLevelComponent implements OnInit {
         path:[''],
         timeZone: ['']
       });
-    this.loadInitialData();
+      this.loadMerchants();
   }
 
-  loadInitialData() {
-    this.hierarchyData = {
-        "merchants": [
-          {
-            "id": "m1",
-            "name": "MegaMart",
-            "countries": [
-              {
-                "id": "c1",
-                "name": "United States",
-                "states": [
-                  {
-                    "id": "s1",
-                    "name": "California",
-                    "cities": [
-                      {
-                        "id": "city1",
-                        "name": "Los Angeles"
-                      },
-                      {
-                        "id": "city2",
-                        "name": "San Francisco"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "s2",
-                    "name": "New York",
-                    "cities": [
-                      {
-                        "id": "city3",
-                        "name": "New York City"
-                      },
-                      {
-                        "id": "city4",
-                        "name": "Buffalo"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "id": "c2",
-                "name": "Canada",
-                "states": [
-                  {
-                    "id": "s3",
-                    "name": "Ontario",
-                    "cities": [
-                      {
-                        "id": "city5",
-                        "name": "Toronto"
-                      },
-                      {
-                        "id": "city6",
-                        "name": "Ottawa"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": "m2",
-            "name": "TechWorld",
-            "countries": [
-              {
-                "id": "c3",
-                "name": "Germany",
-                "states": [
-                  {
-                    "id": "s4",
-                    "name": "Bavaria",
-                    "cities": [
-                      {
-                        "id": "city7",
-                        "name": "Munich"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+  loadMerchants() {
+    const event = new terminalEvent('MERCHANT', 'SEARCH');
+    const merchantRequest = new terminalBody(event);
+    this.dataService.merchantData(merchantRequest).subscribe(
+      response => {
+        response.event.eventData.map(data => this.merchants.push(data.name));
+        this.loadInitialData();
+      },
+      error => {
+        console.error('Error:', error);
       }
+    )
+  }
 
+  generateMerchantData(merchantNames: string[]): any {
+    return merchantNames.map((merchantName, mIndex) => {
+      // Create copies of the original arrays to avoid modifying them
+      const availableCountries = [...this.countries];
+      const countries = this.generateCountries(availableCountries, mIndex);
+
+      return {
+        id: `m${mIndex + 1}`,
+        name: merchantName,
+        countries: countries,
+      };
+    });
+  }
+
+  private generateCountries(availableCountries: string[], mIndex: number) {
+    const numCountries = this.getRandomNumber(1, 3);
+    const countriesArray = [];
+
+    for (let i = 0; i < numCountries; i++) {
+      const randomCountry = this.getRandomItem(availableCountries);
+      if (randomCountry) {
+        const availableStates = [...this.states[randomCountry]];
+        const states = this.generateStates(randomCountry, availableStates, mIndex);
+
+        countriesArray.push({
+          id: `c${mIndex + 1}-${i + 1}`,
+          name: randomCountry,
+          states: states,
+        });
+
+        // Remove the selected country to avoid duplicates
+        this.removeItem(availableCountries, randomCountry);
+      }
+    }
+    return countriesArray;
+  }
+
+  private generateStates(country: string, availableStates: string[], mIndex: number) {
+    const numStates = this.getRandomNumber(1, 3);
+    const statesArray = [];
+
+    for (let i = 0; i < numStates; i++) {
+      const randomState = this.getRandomItem(availableStates);
+      if (randomState && this.cities[randomState]) {
+        const availableCities = [...this.cities[randomState]];
+        const cities = this.generateCities(randomState, availableCities, mIndex);
+
+        statesArray.push({
+          id: `s${mIndex + 1}-${i + 1}`,
+          name: randomState,
+          cities: cities,
+        });
+
+        // Remove the selected state to avoid duplicates
+        this.removeItem(availableStates, randomState);
+      }
+    }
+    return statesArray;
+  }
+
+
+  private generateCities(state: string, availableCities: string[], mIndex: number) {
+    const numCities = this.getRandomNumber(1, 3);
+    const citiesArray = [];
+
+    for (let i = 0; i < numCities; i++) {
+      const randomCity = this.getRandomItem(availableCities);
+      if (randomCity) {
+        citiesArray.push({
+          id: `city${mIndex + 1}-${i + 1}`,
+          name: randomCity,
+        });
+
+        // Remove the selected city to avoid duplicates
+        this.removeItem(availableCities, randomCity);
+      }
+    }
+    return citiesArray;
+  }
+
+  private getRandomItem(array: string[]): string {
+    if (!array || array.length === 0) {
+      return null;
+    }
+    return array[Math.floor(Math.random() * array.length)];
+  }
+
+  private getRandomNumber(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  private removeItem(array: string[], item: string): void {
+    const index = array.indexOf(item);
+    if (index > -1) {
+      array.splice(index, 1);
+    }
+  }
+  loadInitialData() {
+    // this.hierarchyData = {
+    //     "merchants": [
+    //       {
+    //         "id": "m1",
+    //         "name": "MegaMart",
+    //         "countries": [
+    //           {
+    //             "id": "c1",
+    //             "name": "United States",
+    //             "states": [
+    //               {
+    //                 "id": "s1",
+    //                 "name": "California",
+    //                 "cities": [
+    //                   {
+    //                     "id": "city1",
+    //                     "name": "Los Angeles"
+    //                   },
+    //                   {
+    //                     "id": "city2",
+    //                     "name": "San Francisco"
+    //                   }
+    //                 ]
+    //               },
+    //               {
+    //                 "id": "s2",
+    //                 "name": "New York",
+    //                 "cities": [
+    //                   {
+    //                     "id": "city3",
+    //                     "name": "New York City"
+    //                   },
+    //                   {
+    //                     "id": "city4",
+    //                     "name": "Buffalo"
+    //                   }
+    //                 ]
+    //               }
+    //             ]
+    //           },
+    //           {
+    //             "id": "c2",
+    //             "name": "Canada",
+    //             "states": [
+    //               {
+    //                 "id": "s3",
+    //                 "name": "Ontario",
+    //                 "cities": [
+    //                   {
+    //                     "id": "city5",
+    //                     "name": "Toronto"
+    //                   },
+    //                   {
+    //                     "id": "city6",
+    //                     "name": "Ottawa"
+    //                   }
+    //                 ]
+    //               }
+    //             ]
+    //           }
+    //         ]
+    //       },
+    //       {
+    //         "id": "m2",
+    //         "name": "TechWorld",
+    //         "countries": [
+    //           {
+    //             "id": "c3",
+    //             "name": "Germany",
+    //             "states": [
+    //               {
+    //                 "id": "s4",
+    //                 "name": "Bavaria",
+    //                 "cities": [
+    //                   {
+    //                     "id": "city7",
+    //                     "name": "Munich"
+    //                   }
+    //                 ]
+    //               }
+    //             ]
+    //           }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // console.log(this.hierarchyData);
+    this.hierarchyData = {
+        'merchants' : this.generateMerchantData(this.merchants)
+    }
+    localStorage.setItem('Hlist',JSON.stringify(this.hierarchyData));
     this.hierarchyLevels[0].items = this.hierarchyData.merchants;
   }
 

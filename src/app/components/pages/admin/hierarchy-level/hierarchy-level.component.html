@@ -19,7 +19,7 @@
             {{ item.name }}
             <div class="item-actions" (click)="$event.stopPropagation()">
               <button class="icon-btn add" (click)="addNewItem(i)">+</button>
-              <button class="icon-btn delete" (click)="deleteItem(i, item)">×</button>
+              <button class="icon-btn delete" *ngIf="i > 0" (click)="deleteItem(i, item)">×</button>
             </div>
           </div>
         </div>
