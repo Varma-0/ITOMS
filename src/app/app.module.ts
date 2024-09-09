@@ -213,6 +213,7 @@ import { BasicLineChart1Component } from './components/charts/basic-line-chart1/
 import { BasicLineChart2Component } from './components/charts/basic-line-chart2/basic-line-chart2.component';
 import { GoogleMapComponent } from './components/pages/table/terminal/google-map/google-map.component';
 import { TerminalProfileComponent } from './components/dialogs/terminal-profile/terminal-profile.component';
+import { DeploymentModalComponent } from './components/dialogs/deployment-modal/deployment-modal.component';
 
 @NgModule({
   declarations: [
@@ -401,7 +402,8 @@ import { TerminalProfileComponent } from './components/dialogs/terminal-profile/
     HierarchySelectionComponent,
     HierarchyFormComponent,
     GoogleMapComponent,
-    TerminalProfileComponent
+    TerminalProfileComponent,
+    DeploymentModalComponent
   ],
   imports: [
     BrowserModule,

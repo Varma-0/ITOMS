@@ -178,4 +178,8 @@ export class TerminalService {
     deviceOnlineGraphInfo(options: devicePie): Observable<any> {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/deviceOnlineStatistics`,options, {headers: this.httpHeaders})
     }
+
+    getDevicebysn(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/device/getDeviceBySNo`,options, {headers: this.httpHeaders})
+    }
 }

@@ -4,7 +4,10 @@ import { Router } from '@angular/router';
 import { DesignSelectionComponent } from 'src/app/components/dialogs/design-selection/design-selection.component';
 import { DevicesFormComponent } from 'src/app/components/dialogs/device-form/device-form.component';
 import { SelectCfgComponent } from 'src/app/components/dialogs/select-cfg/select-cfg.component';
+import { TerminalProfileComponent } from 'src/app/components/dialogs/terminal-profile/terminal-profile.component';
+import { deleteModelEvent } from 'src/app/services/login/body/event';
 import { SharedServices } from 'src/app/services/shared.service';
+import { TerminalService } from 'src/app/services/terminal/devicelist';
 
 interface Device {
   deviceSN: string;
@@ -68,7 +71,7 @@ export class FlyparametersComponent {
 
   }
 
-  constructor(public dialog: MatDialog, private shared:SharedServices){}
+  constructor(public dialog: MatDialog, private shared:SharedServices,private dataService: TerminalService){}
 
   filterDeployments() {
     const filterValue = this.searchTerm.trim()?.toLowerCase();
@@ -102,7 +105,7 @@ export class FlyparametersComponent {
   }
 
   openCheckDialog(data?: any): void {
-    const dialogRef = this.dialog.open(DevicesFormComponent, {
+    const dialogRef = this.dialog.open(TerminalProfileComponent, {
       data: {
         title: 'New Terminal',
         form: {
@@ -115,6 +118,15 @@ export class FlyparametersComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log("1111111111",result);
       if (result) {
+        const flyPara = new deleteModelEvent(data,'DEVICE','SEARCH');
+        const payload = {
+          event: flyPara 
+        }
+        this.dataService.getDevicebysn(payload).subscribe(
+          response => {
+            console.log("fd",response);
+          }
+        )
         
       }
     });

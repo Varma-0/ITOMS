@@ -25,6 +25,7 @@ export class PackagesComponent implements OnInit {
 
   filteredResources: Resource[] = [];
   searchTerm: string = '';
+  selectedTab: string = 'applications';
   flyParameterApp: string = '';
   viewMode: 'grid' | 'list' = 'grid';
 
@@ -36,6 +37,10 @@ export class PackagesComponent implements OnInit {
     this.filteredResources = this.resources.filter(resource => 
       resource.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
     );
+  }
+
+  selectTab(tab: string) {
+    this.selectedTab = tab;
   }
 
   setViewMode(mode: 'grid' | 'list') {

@@ -1,9 +1,14 @@
 .resources-container {
-    padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+    padding: 10px;
     font-family: Arial, sans-serif;
   }
   
   .resources-title {
+    display: flex;
+    align-items: center;
     margin-bottom: 20px;
   }
   
@@ -49,7 +54,7 @@
     margin-bottom: 20px;
   
     button {
-      padding: 8px 12px;
+      padding: 5px;
       background-color: #f8f9fa;
       border: 1px solid #ccc;
       cursor: pointer;
@@ -137,3 +142,55 @@
       text-align: left;
     }
   }
+
+  .tabs {
+    display: flex;
+    justify-content: left;
+    list-style-type: none;
+    // margin-top: 10px;
+    border-bottom: 1px solid lightgrey ;
+    padding: 0;
+
+    @media (max-width: 768px) {
+        margin-top: 15px;
+        justify-content: space-around; /* Spread tabs evenly on mobile */
+    }
+}
+
+.tabs li {
+    margin-right: 20px;
+
+    @media (max-width: 768px) {
+        margin-right: 10px; /* Reduce margin for mobile */
+    }
+}
+
+.tabs li:last-child {
+    margin-right: 0;
+}
+
+.tabs li button {
+    background: none;
+    border: none;
+    color: #333; /* Default color */
+    font-weight:500;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-size: 16px;
+    justify-content: left;
+
+    @media (max-width: 768px) {
+        font-size: 14px; /* Adjust font size on mobile */
+    }
+}
+
+/* Style for the active tab */
+.tabs li button.active-tab {
+    color: #007bff; /* Blue color for active tab */
+    border-bottom: 2px solid #007bff;
+}
+
+.tabs li button:hover {
+    color: #0056b3;
+}

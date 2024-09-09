@@ -15,9 +15,9 @@ interface ChartData {
     styleUrls: ["./analytics.component.scss"]
 })
 export class AnalyticsComponent implements OnInit {
-  terminalCount: any;
-  merchantCount: any;
-  apkCount: any;
+  terminalCount: any = 0;
+  merchantCount: any = 0;
+  apkCount: any = 0;
   // activatedData: any;
     constructor(private dataService: TerminalService) {}
     @Input() title: string = 'Demo';
@@ -47,7 +47,7 @@ export class AnalyticsComponent implements OnInit {
       const chartData = new devicePie(charts);
       this.dataService.deviceModelRatio(chartData).subscribe(
         response => {
-          console.log("pie",response);
+          console.log("pieMain",response);
           this.data = response.event.eventData.data[0];
           console.log("pie",this.data);
         }

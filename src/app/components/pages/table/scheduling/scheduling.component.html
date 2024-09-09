@@ -1,52 +1,52 @@
-   <div class="breadcrumb-area">
-    <h1>Scheduling</h1>
-  </div>
+<div class="breadcrumb-area">
+  <h1>Scheduling</h1>
+</div>
 
-  <div class="container">
-    <mat-card class="card">
-      <mat-card-title>
-        <div class="heading">
-          <div class="title-container">
-            <span>Deployment</span> &nbsp;
-              <input type="text" class="form-control" aria-label="Deployment Name" placeholder="Deployment Name" [(ngModel)]="searchTerm" (input)="filterDeployments()">
-          </div>
-          <div class="icon-container">
-            <button mat-icon-button color="primary" (click)="filterDeployments()">
-              <mat-icon>search</mat-icon>
-            </button>
-            <button mat-icon-button color="accent">
-              <mat-icon>add</mat-icon>
-            </button>
-          </div>
+<div class="row">
+  <mat-card class="card">
+    <mat-card-title>
+      <div class="heading">
+        <div class="title-container">
+          <span>Deployment</span> &nbsp;
+          <input type="text" class="form-control" aria-label="Deployment Name" placeholder="Deployment Name"
+            [(ngModel)]="searchTerm" (input)="filterDeployments()">
         </div>
-      </mat-card-title>
+        <div class="icon-container">
+          <button mat-icon-button color="primary" (click)="filterDeployments()">
+            <mat-icon>search</mat-icon>
+          </button>
+          <button mat-icon-button color="accent">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card-title>
 
-      <ul class="nolist">
-        <li *ngFor="let deployment of filteredDeployments" class="deployment-item">
-          <div class="grp">
-            <button class="btn btn-light custom-button"
-                    [ngClass]="{'active-sidebar': selectedItem === deployment}"
-                    (click)="selectItem(deployment)">
-              <span class="deployment-name">{{deployment.name}}</span>
-              <div class="right-section">
-                <span class="deployment-count">{{deployment.count}}</span>
-                <!-- <mat-icon>computer</mat-icon> -->
-                <img src="../../../../../assets/img/res.png">
-              </div>
-            </button>
-            <br>
-          </div>
-        </li>
-      </ul>
-    </mat-card>
+    <ul class="nolist">
+      <li *ngFor="let deployment of filteredDeployments" class="deployment-item">
+        <div class="grp">
+          <button class="btn btn-light custom-button" [ngClass]="{'active-sidebar': selectedItem === deployment}"
+            (click)="selectItem(deployment)">
+            <span class="deployment-name">{{deployment.name}}</span>
+            <div class="right-section">
+              <span class="deployment-count">{{deployment.count}}</span>
+              <!-- <mat-icon>computer</mat-icon> -->
+              <img src="../../../../../assets/img/res.png">
+            </div>
+          </button>
+          <br>
+        </div>
+      </li>
+    </ul>
+  </mat-card>
 
-    <div class="main-container" *ngIf="selectedItem">
-      <div class="header">
-          <div class="selected-item">
-            <span class="header-text">Deployment</span>
-            <h2>{{ selectedItem?.name }}</h2>
-          </div>
-        <!-- <div class="header-icons">
+  <div class="main-container" *ngIf="selectedItem">
+    <div class="header">
+      <div class="selected-item">
+        <span class="header-text">Deployment</span>
+        <h2>{{ selectedItem?.name }}</h2>
+      </div>
+      <!-- <div class="header-icons">
           <button mat-icon-button color="primary">
             <span class="material-icons">qr_code</span>
           </button>
@@ -60,85 +60,161 @@
             <mat-icon>settings</mat-icon>
           </button>
         </div> -->
-      </div>
+    </div>
 
 
-      <div>
-        <ul class="tabs">
-            <li>
-              <button [ngClass]="{'active-tab': selectedTab === 'settings'}" (click)="selectTab('settings')">
-                Settings
-              </button>
-            </li>
-            <li>
-              <button [ngClass]="{'active-tab': selectedTab === 'terminal'}" (click)="selectTab('terminal')">
-                Terminal
-              </button>
-            </li>
-            <li>
-              <button [ngClass]="{'active-tab': selectedTab === 'process'}" (click)="selectTab('process')">
-                Process
-              </button>
-            </li>
-          </ul>
+    <div>
+      <ul class="tabs">
+        <li>
+          <button [ngClass]="{'active-tab': selectedTab === 'settings'}" (click)="selectTab('settings')">
+            Settings
+          </button>
+        </li>
+        <li>
+          <button [ngClass]="{'active-tab': selectedTab === 'terminal'}" (click)="selectTab('terminal')">
+            Terminal
+          </button>
+        </li>
+        <li>
+          <button [ngClass]="{'active-tab': selectedTab === 'process'}" (click)="selectTab('process')">
+            Process
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="selectedTab === 'terminal'">
+      <div class="controls">
+        <input [(ngModel)]="searchTerms" placeholder="SN" (input)="search1()">
+        <select [(ngModel)]="statusFilter" (change)="search1()">
+            <option value="">Status</option>
+            <option value="Pending publish">Pending publish</option>
+            <option value="Published">Published</option>
+        </select>
+        <button class="icon-button"><i class="bx bx-search"></i></button>
+        <button class="icon-button" (click)="openCreateTerminalDialog(true)"><i class="bx bx-plus"></i></button>
+        <button class="icon-button" (click)="openCreateTerminalDialog(false)"><i class="bx bx-trash"></i></button>
+        <!-- <button class="icon-button"><i class="bx bx-download"></i></button>
+        <button class="icon-button"><i class="bx bx-bar-chart-alt-2"></i></button> -->
+        <button class="menu-button"><i class="bx bx-menu"></i></button>
+    </div>
+    
+      <div class="d-flex align-items-center">
+          {{ selectedCount }} Selected
+          <button class="btn btn-outline-light" (click)="deleteSelected()">
+            <i class="bx bx-trash" style="color: red;"></i> Delete
+          </button>
       </div>
-      <div *ngIf="selectedTab === 'terminal'">
-        <app-terminal></app-terminal>
-      </div>
-      <div *ngIf="selectedTab === 'settings'">
-        <mat-card class="card">
-            <mat-card-title>
-              <div class="over-header">
-                <span>Application</span>
-                <button mat-icon-button color="accent">
-                  <mat-icon>add</mat-icon>
-                </button>
-              </div>
-            </mat-card-title>
-            <hr>
-
-            <div class="application">
-                <mat-card class="card-with-menu">
-                  <div class="card-content">
-                    <img class="linux" src="../../../../../assets/img/linux-icon.png">
-                    <span>BANKDEMO_NDK</span>
-                    <span>0.0.18(gcc4.9.4)</span>
-                    <span>Normal Update</span>
+      
+      <table class="device-table">
+          <thead>
+              <tr>
+                  <th>
+                    <div class="checkbox">
+                      <input class="inp-cbx" id="cbx" type="checkbox" style="display: none;" (change)="toggleSelectAll($event)"/>
+                      <label class="cbx" for="cbx">
+                          <span>
+                              <svg width="12px" height="10px" viewbox="0 0 12 10">
+                                  <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                              </svg>
+                          </span>
+                      </label>
                   </div>
-                  <!-- Button that will show on hover -->
-                  <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <!-- Define the menu -->
-                  <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Option 1</button>
-                    <button mat-menu-item>Option 2</button>
-                    <button mat-menu-item>Option 3</button>
-                  </mat-menu>
-                </mat-card>
+                  </th>
+                  <th class="th-device-sn">SN</th>
+                  <th class="th-organization">Model</th>
+                  <th class="th-file-version">Status</th>
+                  <th class="th-file-status">Online Status</th>
+                  <th class="th-publish-time">Binding Time</th>
+                  <th class="th-operation">Process</th>
+                  <th></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let device of filteredDevices">
+                  <td>
+                      <!-- <input type="checkbox" [(ngModel)]="device.selected" (change)="updateSelectedCount()"> -->
+                      <div class="checkbox">
+                        <input class="inp-cbx" id="cbx" type="checkbox" style="display: none;" [(ngModel)]="device.selected" (change)="updateSelectedCount()"/>
+                        <label class="cbx" for="cbx">
+                            <span>
+                                <svg width="12px" height="10px" viewbox="0 0 12 10">
+                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                </svg>
+                            </span>
+                        </label>
+                    </div>
+                  </td>
+                  <td class="td-device-sn">{{ device.deviceSN }}</td>
+                  <td class="td-organization">{{ device.organization }}</td>
+                  <td class="td-file-version">{{ device.parameterFileVersion }}</td>
+                  <td class="td-file-status">
+                      <span [ngClass]="{'status-pending': device.parameterFileStatus === 'Pending publish',
+                                          'status-published': device.parameterFileStatus === 'Published'}">
+                          {{ device.parameterFileStatus }}
+                      </span>
+                  </td>
+                  <td class="td-publish-time">{{ device.parameterFilePublishTime }}</td>
+                  <td class="td-operation">
+                      <button class="icon-button"><i class="bx bx-dots-vertical-rounded"></i></button>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+    </div>
+    <div *ngIf="selectedTab === 'settings'">
+      <mat-card class="cardInS">
+        <mat-card-title>
+          <div class="over-header">
+            <span>Application</span>
+            <button mat-icon-button color="accent">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </mat-card-title>
 
-                <mat-card class="card-with-menu">
-                  <div class="card-content">
-                    <img class="linux" src="../../../../../assets/img/linux-icon.png">
-                    <span>BANKDEMO_NDK</span>
-                    <span>0.0.18(gcc4.9.4)</span>
-                    <span>Normal Update</span>
-                  </div>
-                  <!-- Button that will show on hover -->
-                  <button mat-icon-button [matMenuTriggerFor]="menu2" class="menu-button">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <!-- Define the menu -->
-                  <mat-menu #menu2="matMenu">
-                    <button mat-menu-item>Change Version</button>
-                    <button mat-menu-item>Change Update Method</button>
-                    <button mat-menu-item>Remove</button>
-                  </mat-menu>
-                </mat-card>
+        <div class="application">
+          <div class="row" style="gap:16px">
+            <mat-card class="card-with-menu" (click)="openCreateDialog()">
+              <div class="card-content">
+                <img class="linux" src="../../../../../assets/img/linux-icon.png">
+                <span>BANKDEMO_NDK</span>
+                <span>0.0.18(gcc4.9.4)</span>
+                <span>Normal Update</span>
               </div>
+              <!-- Button that will show on hover -->
+              <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>Option 1</button>
+                <button mat-menu-item>Option 2</button>
+                <button mat-menu-item>Option 3</button>
+              </mat-menu> -->
+            </mat-card>
 
-            <!-- <hr> -->
-            <!-- <div class="frimware">
+            <mat-card class="card-with-menu">
+              <div class="card-content">
+                <img class="linux" src="../../../../../assets/img/linux-icon.png">
+                <span>BANKDEMO_NDK</span>
+                <span>0.0.18(gcc4.9.4)</span>
+                <span>Normal Update</span>
+              </div>
+              <!-- Button that will show on hover -->
+              <button mat-icon-button [matMenuTriggerFor]="menu2" class="menu-button">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <!-- Define the menu -->
+              <mat-menu #menu2="matMenu">
+                <button mat-menu-item>Change Version</button>
+                <button mat-menu-item>Change Update Method</button>
+                <button mat-menu-item>Remove</button>
+              </mat-menu>
+            </mat-card>
+          </div>
+        </div>
+
+        <!-- <hr> -->
+        <!-- <div class="frimware">
                 <mat-card-title>
                     <span>Firmware</span>
                 </mat-card-title>
@@ -197,63 +273,67 @@
                     </mat-menu>
                 </mat-card>
             </div> -->
-          </mat-card>
+      </mat-card>
+    </div>
+    <div *ngIf="selectedTab === 'process'" class="row">
+      <div class="dashboard">
+        <div class="card">
+          <div class="card-header">
+            <h2>Connected terminals/Unconnected terminals</h2>
+            <span class="info-icon">i</span>
+          </div>
+          <div class="chart">
+            <div class="semi-circle"
+              [style.background-image]="'conic-gradient(#4285F4 0deg, #4285F4 ' + connectedPercentage * 3.6 + 'deg, #F8F9FA ' + connectedPercentage * 3.6 + 'deg)'">
+            </div>
+            <div class="chart-labels">
+              <span class="label connected">Connected terminals</span>
+              <span class="label unconnected">Un...</span>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <span class="dot blue"></span>
+              <span class="percentage">{{connectedPercentage.toFixed(2)}}% ({{connectedTerminals}})</span>
+              <span class="label">Connected terminals</span>
+            </div>
+            <div class="stat">
+              <span class="dot red"></span>
+              <span class="percentage">{{unconnectedPercentage.toFixed(2)}}% ({{unconnectedTerminals}})</span>
+              <span class="label">Unconnected terminals</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>Number of active terminals</h2>
+            <span class="info-icon">i</span>
+          </div>
+          <div class="chart">
+            <div class="semi-circle"
+              [style.background-image]="'conic-gradient(#EA4335 0deg, #EA4335 ' + inactivePercentage * 3.6 + 'deg, #F8F9FA ' + inactivePercentage * 3.6 + 'deg)'">
+            </div>
+            <div class="chart-labels">
+              <span class="label active">Ac...</span>
+              <span class="label inactive">Inactive terminals</span>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <span class="dot blue"></span>
+              <span class="percentage">{{activePercentage.toFixed(2)}}% ({{activeTerminals}})</span>
+              <span class="label">Active terminals</span>
+            </div>
+            <div class="stat">
+              <span class="dot red"></span>
+              <span class="percentage">{{inactivePercentage.toFixed(2)}}% ({{inactiveTerminals}})</span>
+              <span class="label">Inactive terminals</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div *ngIf="selectedTab === 'process'">
-        <div class="dashboard">
-          <div class="card">
-            <div class="card-header">
-              <h2>Connected terminals/Unconnected terminals</h2>
-              <span class="info-icon">i</span>
-            </div>
-            <div class="chart">
-              <div class="semi-circle" [style.background-image]="'conic-gradient(#4285F4 0deg, #4285F4 ' + connectedPercentage * 3.6 + 'deg, #F8F9FA ' + connectedPercentage * 3.6 + 'deg)'"></div>
-              <div class="chart-labels">
-                <span class="label connected">Connected terminals</span>
-                <span class="label unconnected">Un...</span>
-              </div>
-            </div>
-            <div class="stats">
-              <div class="stat">
-                <span class="dot blue"></span>
-                <span class="percentage">{{connectedPercentage.toFixed(2)}}% ({{connectedTerminals}})</span>
-                <span class="label">Connected terminals</span>
-              </div>
-              <div class="stat">
-                <span class="dot red"></span>
-                <span class="percentage">{{unconnectedPercentage.toFixed(2)}}% ({{unconnectedTerminals}})</span>
-                <span class="label">Unconnected terminals</span>
-              </div>
-            </div>
-          </div>
-        
-          <div class="card">
-            <div class="card-header">
-              <h2>Number of active terminals</h2>
-              <span class="info-icon">i</span>
-            </div>
-            <div class="chart">
-              <div class="semi-circle" [style.background-image]="'conic-gradient(#EA4335 0deg, #EA4335 ' + inactivePercentage * 3.6 + 'deg, #F8F9FA ' + inactivePercentage * 3.6 + 'deg)'"></div>
-              <div class="chart-labels">
-                <span class="label active">Ac...</span>
-                <span class="label inactive">Inactive terminals</span>
-              </div>
-            </div>
-            <div class="stats">
-              <div class="stat">
-                <span class="dot blue"></span>
-                <span class="percentage">{{activePercentage.toFixed(2)}}% ({{activeTerminals}})</span>
-                <span class="label">Active terminals</span>
-              </div>
-              <div class="stat">
-                <span class="dot red"></span>
-                <span class="percentage">{{inactivePercentage.toFixed(2)}}% ({{inactiveTerminals}})</span>
-                <span class="label">Inactive terminals</span>
-              </div>
-            </div>
-          </div>
-        </div>        
-        <div class="statistics-card">
+      <!-- <div class="statistics-card">
           <h2 class="overall-progress">Overall progress {{overallProgress}}% (0/0)</h2>
           
           <div class="info-box">
@@ -264,15 +344,12 @@
           
           <div class="chart-container">
             <svg width="100%" height="200">
-              <!-- Y-axis -->
               <line x1="40" y1="10" x2="40" y2="180" stroke="#ccc" />
               <text x="30" y="15" text-anchor="end">1</text>
               <text x="30" y="180" text-anchor="end">0</text>
               
-              <!-- X-axis -->
               <line x1="40" y1="180" x2="700" y2="180" stroke="#ccc" />
               
-              <!-- Data points and line -->
               <polyline
                 [attr.points]="getPolylinePoints()"
                 fill="none"
@@ -280,13 +357,12 @@
                 stroke-width="2"
               />
               
-              <!-- X-axis labels -->
               <ng-container *ngFor="let stat of updateStatistics; let i = index">
                 <text [attr.x]="40 + i * 100" y="195" text-anchor="middle">{{stat.date | date:'yyyy-MM-dd'}}</text>
               </ng-container>
             </svg>
           </div>
-        </div>
-      </div>
+        </div> -->
     </div>
   </div>
+</div>

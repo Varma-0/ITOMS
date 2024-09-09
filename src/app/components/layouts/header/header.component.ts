@@ -7,10 +7,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+    welcome: string;
+    email: string;
 
     constructor(private router: Router) { }
 
     ngOnInit() {
+      this.welcome = localStorage.getItem('User Name')
+      this.email = localStorage.getItem('Email')
     }
 
     logout(): void {

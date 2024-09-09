@@ -1,38 +1,55 @@
+
+
 <div class="resources-container">
-    <h1 class="resources-title">Resources</h1>
-    
-    <div class="search-bar">
-      <input [(ngModel)]="searchTerm" placeholder="App Name" (input)="search()">
-      <span class="results-count">{{filteredResources.length}}/{{resources.length}}</span>
-      <input [(ngModel)]="flyParameterApp" placeholder="FlyParameter App">
-      <button class="search-button" (click)="search()">
-        <span class="material-icons">search</span>
+  <h1 class="resources-title"><span class="material-symbols-outlined">featured_seasonal_and_gifts </span> Resources</h1>
+  <div class="view-toggle" *ngIf="selectedTab === 'applications'">
+    <button [ngClass]="{'active': viewMode === 'grid'}" (click)="setViewMode('grid')">
+      <i class="bx bx-grid"></i>
+    </button>
+    <button [ngClass]="{'active': viewMode === 'list'}" (click)="setViewMode('list')">
+      <i class="bx bx-list-ul"></i>
+    </button>
+  </div>
+</div>
+<div>
+  <ul class="tabs">
+    <li>
+      <button [ngClass]="{'active-tab': selectedTab === 'applications'}" (click)="selectTab('applications')">
+        Applications
       </button>
-      <button class="add-button" (click)="addNew()">+</button>
-    </div>
+    </li>
+    <!-- <li>
+      <button [ngClass]="{'active-tab': selectedTab === 'parameter'}" (click)="selectTab('parameter')">
+        Parameter Resources
+      </button>
+    </li> -->
+  </ul>
+</div>
+<div *ngIf="selectedTab === 'applications'">
+  <div class="search-bar">
+    <input [(ngModel)]="searchTerm" placeholder="App Name" (input)="search()">
+    <span class="results-count">{{filteredResources.length}}/{{resources.length}}</span>
+    <input [(ngModel)]="flyParameterApp" placeholder="FlyParameter App">
+    <button class="search-button" (click)="search()">
+      <span class="material-icons">search</span>
+    </button>
+    <button class="add-button" (click)="addNew()">+</button>
+  </div>
   
-    <div class="view-toggle">
-      <button [ngClass]="{'active': viewMode === 'grid'}" (click)="setViewMode('grid')">
-        <span class="material-icons">grid_view</span>
-      </button>
-      <button [ngClass]="{'active': viewMode === 'list'}" (click)="setViewMode('list')">
-        <span class="material-icons">view_list</span>
-      </button>
-    </div>
   
-    <div [ngClass]="{'resources-grid': viewMode === 'grid', 'resources-list': viewMode === 'list'}">
-      <div *ngFor="let resource of filteredResources" class="resource-item">
-        <div class="menu-dots">
-          <span class="material-icons">more_vert</span>
-        </div>
-        <img [src]="resource.icon" [alt]="resource.name" class="resource-icon">
-        <div class="resource-details">
-          <h3>{{resource.name}}</h3>
-          <p>{{resource.version}}</p>
-        </div>
-        <button class="database-button">
-          <span class="material-icons">storage</span>
-        </button>
+  <div [ngClass]="{'resources-grid': viewMode === 'grid', 'resources-list': viewMode === 'list'}">
+    <div *ngFor="let resource of filteredResources" class="resource-item">
+      <div class="menu-dots">
+        <span class="material-icons">more_vert</span>
       </div>
+      <img [src]="resource.icon" [alt]="resource.name" class="resource-icon">
+      <div class="resource-details">
+        <h3>{{resource.name}}</h3>
+        <p>{{resource.version}}</p>
+      </div>
+      <button class="database-button">
+        <span class="material-icons">storage</span>
+      </button>
     </div>
   </div>
+</div>

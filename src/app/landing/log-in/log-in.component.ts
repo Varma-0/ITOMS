@@ -211,6 +211,7 @@ export class DLogInComponent implements OnInit{
         const userName = response.event.eventData.name;
         this.shared.setLoginData(data);
         localStorage.setItem('User Name',userName);
+        localStorage.setItem('Email',this.username);
         localStorage.setItem("SA",`${this.superAdmin}`);
         localStorage.setItem('jwtToken', jwtToken);
         this.router.navigate(['/dashboard/analytics']);

@@ -1,0 +1,78 @@
+.dialog-content {
+    padding: 20px;
+  }
+  
+  .app-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .app-logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+  }
+  
+  .app-details h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  
+  .app-details a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .app-details a:hover {
+    text-decoration: underline;
+  }
+  
+  .version-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .version-summary h3 {
+    margin: 0;
+    padding: 10px 10px;
+    font-size: 1rem;
+  }
+  
+  .release-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    box-sizing: border-box;
+    background-color: #ecf5ff;
+    border-color: #d9ecff;
+    color: #007bff;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  .btn-primary {
+    margin-left: 10px;
+  }
+  
+  
+  .table {
+    margin-bottom: 0;
+  }
+  
+  .table-bordered {
+    border: 1px solid #dee2e6;
+  }
+  
+  .table-bordered td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border: 1px solid #dee2e6;
+  }
+  
+  
+  mat-card {
+    margin-bottom: 20px;
+  }
+  

@@ -1,0 +1,140 @@
+<!-- 
+
+   <mat-dialog-content>
+    <div class="dialog-content">
+      <div class="app-header">
+        <img src="../../../../assets/img/linux-icon.png" class="app-logo" alt="App Logo">
+        <div class="app-details">
+          <h2>DASHPAY POS</h2>
+          <a href="https://com.ar.dashpaypos" target="_blank">com.ar.dashpaypos</a>
+        </div>
+      </div>
+      
+      <mat-card>
+        <div class="version-summary">
+          <h3>Version: {{ currentVersion.versionNumber }} <span class="release-label">Release</span></h3>
+          <span>{{ currentVersion.releaseDate | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+          <button  class="btn btn-outline-light" type="button" data-bs-toggle="collapse" data-bs-target="#currentVersionDetails" aria-expanded="false" aria-controls="currentVersionDetails">
+            <span class="material-symbols-outlined">
+                arrow_drop_down
+                </span>
+          </button>
+        </div>
+        <div id="currentVersionDetails" class="collapse">
+          <div class="version-details">
+            <table class="table table-bordered">
+              <tbody>
+                <tr *ngFor="let item of currentVersion.details">
+                  <td >{{ item.label }}</td>
+                  <td>{{ item.value }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="deployment-section">
+              <button mat-stroked-button color="primary">Reddy</button>
+              <button mat-stroked-button color="accent">Test</button>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+  
+      <mat-card>
+        <div class="version-summary">
+          <h3>Version: {{ previousVersion.versionNumber }} <span class="release-label">Release</span></h3>
+          <span>{{ previousVersion.releaseDate | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+          <button class="btn btn-outline-light" type="button" data-bs-toggle="collapse" data-bs-target="#previousVersionDetails" aria-expanded="false" aria-controls="previousVersionDetails">
+            <span class="material-symbols-outlined">
+                arrow_drop_down
+                </span>
+          </button>
+        </div>
+        <div id="previousVersionDetails" class="collapse">
+          <div class="version-details">
+             <p>Details</p>
+            <table class="table table-bordered mr-2" >
+              <tbody>
+                <tr *ngFor="let item of previousVersion.details">
+                  <td><strong>{{ item.label }}</strong></td>
+                  <td>{{ item.value }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </mat-dialog-content>
+   -->
+
+   <mat-dialog-content>
+    <div class="dialog-content">
+      <div class="app-header">
+        <img src="../../../../assets/img/linux-icon.png" class="app-logo" alt="App Logo">
+        <div class="app-details">
+          <h2>DASHPAY POS</h2>
+          <a href="https://com.ar.dashpaypos" target="_blank">com.ar.dashpaypos</a>
+        </div>
+      </div>
+      
+      <mat-card>
+        <div class="version-summary">
+          <h3>Version: {{ currentVersion.versionNumber }} <span class="release-label">Release</span></h3>
+          <span>{{ currentVersion.releaseDate | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+          <button class="btn btn-outline-light" type="button" (click)="toggleCollapse('currentVersionDetails')">
+            <span class="material-symbols-outlined">
+              arrow_drop_down
+            </span>
+          </button>
+        </div>
+        <div id="currentVersionDetails" class="collapse">
+          <div class="version-details">
+            <h4 style="padding: 10px;">Details</h4>
+            <table class="table table-bordered">
+                <tbody>
+                  <tr *ngFor="let item of currentVersion.details">
+                    <td>{{ item.label }}</td>
+                    <td>
+                      <ng-container *ngIf="item.label === 'Deployment'; else defaultValue">
+                        <div class="deployment-section">
+                          <button mat-stroked-button color="primary">Reddy</button>
+                          <button mat-stroked-button color="accent">Test</button>
+                        </div>
+                      </ng-container>
+                      <ng-template #defaultValue>
+                        {{ item.value }}
+                      </ng-template>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>              
+          </div>
+        </div>
+      </mat-card>
+  
+      <mat-card>
+        <div class="version-summary">
+          <h3>Version: {{ previousVersion.versionNumber }} <span class="release-label">Release</span></h3>
+          <span>{{ previousVersion.releaseDate | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+          <button class="btn btn-outline-light" type="button" (click)="toggleCollapse('previousVersionDetails')">
+            <span class="material-symbols-outlined">
+              arrow_drop_down
+            </span>
+          </button>
+        </div>
+        <div id="previousVersionDetails" class="collapse">
+          <div class="version-details">
+            <h4 style="padding: 10px;">Details</h4>
+            <table class="table table-bordered">
+              <tbody>
+                <tr *ngFor="let item of previousVersion.details">
+                  <td><strong>{{ item.label }}</strong></td>
+                  <td>{{ item.value }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </mat-dialog-content>
+  
