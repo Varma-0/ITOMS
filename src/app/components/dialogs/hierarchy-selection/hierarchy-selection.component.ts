@@ -3,11 +3,6 @@ import {
     MAT_DIALOG_DATA,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { midHeirarchy } from 'src/app/services/login/body/body';
-import { midEvent } from 'src/app/services/login/body/event';
-import { midDevice } from 'src/app/services/login/body/event-data';
-import { terminalBody } from 'src/app/services/terminal/body/body';
-import { terminalEvent } from 'src/app/services/terminal/body/event-data';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 
 interface HierarchyItem {
@@ -35,28 +30,22 @@ export class HierarchySelectionComponent {
   ];
     hierarchyLevels = [];
       title="";
+    startLength;
     selectedPath: string;
 
       constructor(public dialogRef: MatDialogRef<HierarchySelectionComponent>,private dataService: TerminalService,@Inject(MAT_DIALOG_DATA) public data: any){
         this.title = data.title
         this.hierarchyLevels = data.list
+        this.startLength = this.hierarchyLevels.length;
         this.hierarchyLevelsList[0].items = data.list.merchants;
       }
       ngOnInit() {
       }
 
 
-      addLevel() {
+      addLevel(level) {
           this.hierarchyLevels.push({
-            name: `Level ${this.hierarchyLevels.length + 1}`,
-            values: [{
-                name:'ye',
-                id:'ejn'
-            },{
-                name:'dfi',
-                id:'j'
-            }],
-            selectedValue: ''
+            name: `Level ${this.hierarchyLevels.length + 1}`
           });
       }
 
@@ -111,7 +100,16 @@ export class HierarchySelectionComponent {
     if(this.title == 'Select Hierarchy'){
         this.dialogRef.close(this.selectedPath);
     }else{
-        this.dialogRef.close(this.hierarchyLevels);
+       const payload = {
+            "event": {
+                "eventData": {
+                    "hierarchyLevels": this.hierarchyLevels.splice(this.startLength)
+                },
+                "eventType": "HIERARCHY_LEVEL",
+                "eventSubType": "CREATE"
+            }
+        }
+        this.dialogRef.close(payload);
     }
   }
 

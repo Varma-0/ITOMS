@@ -120,6 +120,31 @@ export class TerminalService {
         return this.http.put<any>(`${environment.userApiUrl}/role/`,options, {headers: this.httpHeaders});
     }
 
+
+    hierarchyLevelData(options:terminalBody): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/hierarchy/level/search`,options)
+    }
+
+    hierarchySearchData(options): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/hierarchy/search`,options)
+    }
+
+    hierarchyAddData(options): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/hierarchy/`,options)
+    }
+
+    hierarchyAddLevel(options): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/hierarchy/level/add`,options)
+    }
+
+    hierarchyDeleteData(options): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/hierarchy/`,options)
+    }
+
+    hierarchyChildData(options): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/hierarchy/getChildHierarchies`,options)
+    }
+
     addRoles(options: roleAdd): Observable<any> {
         return this.http.post<any>(`${environment.userApiUrl}/role/`,options, {headers: this.httpHeaders});
     }

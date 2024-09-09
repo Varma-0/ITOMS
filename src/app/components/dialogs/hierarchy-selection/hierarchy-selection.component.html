@@ -20,8 +20,8 @@
             <tr *ngFor="let level of hierarchyLevels; let i = index">
                 <td>Level{{i+1}}:</td>
                 <td><input [(ngModel)]="level.name" /></td>
-                <td><button class="btn add" (click)="addLevel()">+</button></td>
-                <td><button *ngIf="i >= 1" class="btn remove" (click)="removeLevel(i)">×</button></td>
+                <td><button class="btn add" *ngIf="i == hierarchyLevels.length-1" (click)="addLevel(level)">+</button></td>
+                <!-- <td><button *ngIf="i >= 1" class="btn remove" (click)="removeLevel(i)">×</button></td> -->
             </tr>
         </table>
 

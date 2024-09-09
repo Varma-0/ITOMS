@@ -4,7 +4,7 @@
       <h1>Manage Hierarchy</h1>
       <div class="header-buttons">
         <button class="btn primary" (click)="openDialog()">Manage Hierarchy Level</button>
-        <button class="btn secondary">Upload Hierarchy File</button>
+        <!-- <button class="btn secondary">Upload Hierarchy File</button> -->
       </div>
     </div>
 
@@ -15,54 +15,18 @@
           <div *ngFor="let item of level.items"
                class="hierarchy-item"
                [class.selected]="item === level.selectedItem"
-               (click)="selectItem(i, item)">
+               (click)="selectItem(i,level, item)">
             {{ item.name }}
             <div class="item-actions" (click)="$event.stopPropagation()">
               <button class="icon-btn add" (click)="addNewItem(i)">+</button>
-              <button class="icon-btn delete" *ngIf="i > 0" (click)="deleteItem(i, item)">×</button>
+              <!-- <button class="icon-btn delete" *ngIf="i > 0" (click)="deleteItem(item)">×</button> -->
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="hierarchy-properties" *ngIf="itemForm">
-      <h2>Hierarchy Value Properties</h2>
-      <form [formGroup]="itemForm" (ngSubmit)="saveHierarchyItem()">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="hierarchyName">Hierarchy name: *</label>
-            <input id="hierarchyName" type="text" formControlName="name">
-          </div>
-          <div class="form-group">
-            <label for="description">Description:</label>
-            <input id="description" formControlName="description">
-          </div>
-          <div class="form-group">
-            <label for="ipStartAddress">IP starting address:</label>
-            <input id="ipStartAddress" formControlName="ipStartAddress">
-          </div>
-          <div class="form-group">
-            <label for="ipEndAddress">IP ending address:</label>
-            <input id="ipEndAddress" formControlName="ipEndAddress">
-          </div>
-          <div class="form-group">
-            <label for="locationIdentifier">Location identifier:</label>
-            <input id="locationIdentifier" formControlName="locationIdentifier">
-          </div>
-          <div class="form-group">
-            <label for="timeZone">Time zone:</label>
-            <select id="timeZone" formControlName="timeZone">
-              <option value="UTC+01:00">(UTC+01:00) Dublin, Edinburgh, Lisbon, London</option>
-              <!-- Add more time zone options as needed -->
-            </select>
-          </div>
-        </div>
-        <div class="button-group">
-          <button type="button" class="btn secondary" (click)="itemForm.reset()">Cancel</button>
-          <button type="submit" class="btn primary">Save</button>
-        </div>
-      </form>
-    </div>
-
+    <div class="button-group">
+        <button type="submit" class="btn primary" (click)="this.getLevels()">Save</button>
+      </div>
   </div>
