@@ -113,6 +113,7 @@ import { SoftwareReportComponent } from './components/pages/reports/software/sof
 import { ParametersReportComponent } from './components/pages/reports/parameters/parameters.component';
 import { SwapReportComponent } from './components/pages/reports/swap/swap.component';
 import { SystemReportComponent } from './components/pages/reports/system/system.component';
+import { PackageAddComponent } from './components/pages/table/packages/package-add/package-add.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'landing',pathMatch:'full'},
@@ -143,7 +144,7 @@ const routes: Routes = [
   {path: 'app-calendar', component: AppCalendarComponent},
 
   {path: 'grid', component: GridComponent},
-  {path: 'colors', component: ColorsComponent},
+  {path: 'colors', component: PackageAddComponent},
   {
     path: 'icons', component: IconsComponent,
     children: [

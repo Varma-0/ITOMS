@@ -214,6 +214,8 @@ import { BasicLineChart2Component } from './components/charts/basic-line-chart2/
 import { GoogleMapComponent } from './components/pages/table/terminal/google-map/google-map.component';
 import { TerminalProfileComponent } from './components/dialogs/terminal-profile/terminal-profile.component';
 import { DeploymentModalComponent } from './components/dialogs/deployment-modal/deployment-modal.component';
+import { PackageAddComponent } from './components/pages/table/packages/package-add/package-add.component';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
@@ -403,7 +405,8 @@ import { DeploymentModalComponent } from './components/dialogs/deployment-modal/
     HierarchyFormComponent,
     GoogleMapComponent,
     TerminalProfileComponent,
-    DeploymentModalComponent
+    DeploymentModalComponent,
+    PackageAddComponent
   ],
   imports: [
     BrowserModule,
@@ -434,6 +437,7 @@ import { DeploymentModalComponent } from './components/dialogs/deployment-modal/
     MatProgressSpinner,
     ReactiveFormsModule,
     MultiSelectModule,
+    MatStepperModule
 ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -56,6 +56,8 @@ export class SchedulingComponent {
     { date: '2024-09-06', value: 0 }
   ];
   searchTerm: string = '';
+  selectedTerminals: Set<any> = new Set();
+
   searchTerms: string = '';
   selectedTab: string = 'settings'; // Default tab
   devices1: Device1[] = [
@@ -86,7 +88,7 @@ export class SchedulingComponent {
       parameterFilePublishTime: '09/06/2024 12:15:27'
     }
   ];
-  filteredDevices = [];
+  filteredTerminals = [];
   statusFilter = '';
   filteredDeployments = [];
   selectedItem: any;
@@ -95,6 +97,10 @@ export class SchedulingComponent {
   ngOnInit() {
     // Initialize filteredDeployments with all deployments on load
     this.filteredDeployments = this.deployments;
+  }
+
+  isAllSelected(): boolean {
+    return this.filteredTerminals.length > 0 && this.selectedTerminals?.size === this.filteredTerminals.length;
   }
 
   filterDeployments() {
@@ -115,6 +121,25 @@ export class SchedulingComponent {
         title: edit? 'New Terminal' : 'Delete Terminal',
         form: {
           dsn: data?.dsn,
+        }
+      },
+      width: '40%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("1111111111",result);
+      if (result) {
+        
+      }
+    });
+  }
+
+  openCreateDeployDialog(): void {
+    const dialogRef = this.dialog.open(DevicesFormComponent, {
+      data: {
+        title: 'Create Deployment',
+        form: {
+          
         }
       },
       width: '40%'
@@ -165,33 +190,7 @@ export class SchedulingComponent {
   selectedDevices: Device[] = [];
 
 
-  onSearch() {
-    // Implement search functionality
-  }
-
-  onAddDevice() {
-    // Implement add device functionality
-  }
-
-  onDelete() {
-    // Implement delete functionality
-  }
-
-  onDownload() {
-    // Implement download functionality
-  }
-
-  onRefresh() {
-    // Implement refresh functionality
-  }
-
-  onDeviceSelect(device: Device) {
-    // Handle device selection
-  }
-
-  isSelected(device: Device): boolean {
-    return this.selectedDevices.includes(device);
-  }
+ 
 
   // toggleSelectAll(event: Event) {
   //   const isChecked = (event.target as HTMLInputElement).checked;
@@ -236,34 +235,53 @@ export class SchedulingComponent {
   }
 
   search() {
-    this.filteredDevices = this.devices.filter(device =>
+    this.filteredTerminals = this.devices.filter(device =>
       device.deviceSN?.toLowerCase().includes(this.searchTerm?.toLowerCase()) &&
       (this.statusFilter === '' || device.parameterFileStatus === this.statusFilter)
     );
   }
 
   search1() {
-    this.filteredDevices = this.devices.filter(device =>
+    this.filteredTerminals = this.devices.filter(device =>
       device.deviceSN?.toLowerCase().includes(this.searchTerms?.toLowerCase()) &&
       (this.statusFilter === '' || device.parameterFileStatus === this.statusFilter)
     );
   }
 
+  masterToggle(): void {
+    if (this.isAllSelected()) {
+      this.selectedTerminals.clear();
+    } else {
+      this.filteredTerminals.forEach(schedule => this.selectedTerminals.add(schedule.id));
+    }
+  }
   
+  toggleSelection(terminal: Device1): void {
+    if (this.selectedTerminals.has(terminal.sn)) {
+      this.selectedTerminals.delete(terminal.sn);
+    } else {
+      this.selectedTerminals.add(terminal.sn);
+    }
+  }
 
+
+
+  isSelected(terminal: Device1): boolean {
+    return this.selectedTerminals.has(terminal.sn);
+  }
 
   toggleSelectAll(event: any) {
     const isChecked = event.target.checked;
-    this.filteredDevices.forEach(device => device.selected = isChecked);
+    this.filteredTerminals.forEach(device => device.selected = isChecked);
     this.updateSelectedCount();
   }
 
   updateSelectedCount() {
-    this.selectedCount = this.filteredDevices.filter(device => device.selected).length;
+    this.selectedCount = this.filteredTerminals.filter(device => device.selected).length;
   }
 
   deleteSelected() {
-    this.filteredDevices = this.filteredDevices.filter(device => !device.selected);
+    this.filteredTerminals = this.filteredTerminals.filter(device => !device.selected);
     this.updateSelectedCount();
   }
 }

@@ -162,7 +162,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
+    // justify-content: flex-start;
   }
 
   .deded {
@@ -447,57 +447,84 @@ svg text {
   fill: #5f6368;
 }
 
-.controls {
+.containers {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+}
+.search-bar {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
 }
-input, select {
+.search-bar input {
   padding: 8px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #ccc;
   border-radius: 4px;
 }
-.icon-button {
-  background-color: #1976D2;
+
+.search-bar select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.btn-primary {
+  background-color: #1976d2;
   color: white;
   border: none;
+  padding: 8px 16px;
   border-radius: 4px;
-  padding: 8px;
   cursor: pointer;
 }
-.menu-button {
-  margin-left: auto;
+.btn-icon {
+  padding: 8px;
+}
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-danger:disabled {
+  background-color: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+.action-bar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 10px;
+  background-color: #e7f1ff;
+  border-radius: 4px;
 }
 table {
   width: 100%;
   border-collapse: collapse;
-}
-th, td {
-  text-align: left;
-  padding: 12px;
-  border-bottom: 1px solid #e0e0e0;
-}
-th {
-  background-color: #f5f5f5;
-  font-weight: bold;
-}
-.status-pending {
-  background-color: #E3F2FD;
-  color: #1976D2;
-  padding: 4px 8px;
-  border-radius: 4px;
-}
-.status-published {
-  background-color: #E8F5E9;
-  color: #4CAF50;
-  padding: 4px 8px;
-  border-radius: 4px;
+  // border-spacing: 0 15px;
 }
 
-.headerTerminal {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  // background-color: lightgrey;
+th, td {
+  border: none;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background-color: white;
+}
+
+
+
+.no-data {
+  text-align: center;
+  color: #6c757d;
 }

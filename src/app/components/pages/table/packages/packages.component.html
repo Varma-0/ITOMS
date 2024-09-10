@@ -1,7 +1,7 @@
 
 
-<div class="resources-container">
-  <h1 class="resources-title"><span class="material-symbols-outlined">featured_seasonal_and_gifts </span> Resources</h1>
+<div class="resources-container" *ngIf="create">
+  <h1 class="resources-title"><i class="bx bx-gift"></i> Resources</h1>
   <div class="view-toggle" *ngIf="selectedTab === 'applications'">
     <button [ngClass]="{'active': viewMode === 'grid'}" (click)="setViewMode('grid')">
       <i class="bx bx-grid"></i>
@@ -11,7 +11,7 @@
     </button>
   </div>
 </div>
-<div>
+<div *ngIf="create">
   <ul class="tabs">
     <li>
       <button [ngClass]="{'active-tab': selectedTab === 'applications'}" (click)="selectTab('applications')">
@@ -25,31 +25,37 @@
     </li> -->
   </ul>
 </div>
-<div *ngIf="selectedTab === 'applications'">
+<div *ngIf="selectedTab === 'applications' && create">
   <div class="search-bar">
     <input [(ngModel)]="searchTerm" placeholder="App Name" (input)="search()">
     <span class="results-count">{{filteredResources.length}}/{{resources.length}}</span>
     <input [(ngModel)]="flyParameterApp" placeholder="FlyParameter App">
-    <button class="search-button" (click)="search()">
-      <span class="material-icons">search</span>
-    </button>
-    <button class="add-button" (click)="addNew()">+</button>
+    <div class="d-flex" style="gap: 10px">
+      <button class="btn btn-primary" (click)="search()">
+        <i class="bx bx-search"></i>
+      </button>
+      <button class="btn btn-primary" (click)="createResource()"><i class="bx bx-plus"></i></button>
+    </div>
   </div>
   
   
   <div [ngClass]="{'resources-grid': viewMode === 'grid', 'resources-list': viewMode === 'list'}">
     <div *ngFor="let resource of filteredResources" class="resource-item">
-      <div class="menu-dots">
-        <span class="material-icons">more_vert</span>
-      </div>
+      <!-- <div class="menu-dots">
+        <i class="bx bx-dots-vertical-rounded"></i>
+      </div> -->
       <img [src]="resource.icon" [alt]="resource.name" class="resource-icon">
       <div class="resource-details">
         <h3>{{resource.name}}</h3>
         <p>{{resource.version}}</p>
       </div>
       <button class="database-button">
-        <span class="material-icons">storage</span>
+        <i class="bx bx-data"></i>
       </button>
     </div>
   </div>
 </div>
+
+<ng-container *ngIf="insideCreate">
+  <app-package-add  [view]="create" [insideview]="insideCreate" (viewChange)="onViewChange($event)" (insideviewChange)="onInsideViewChange($event)"></app-package-add>
+</ng-container>

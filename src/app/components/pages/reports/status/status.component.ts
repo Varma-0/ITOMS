@@ -32,7 +32,7 @@ export class StatusReportComponent implements OnInit {
     { key: 'deviceId', label: 'Device ID', visible: true },
     { key: 'merchantName', label: 'Merchant Name', visible: true },
     { key: 'merchantHierarchy', label: 'Merchant Hierarchy', visible: true },
-    { key: 'deviceCurrentStatus', label: 'Device Current Status', visible: true },
+    { key: 'deviceCurrentStatus', label: 'Connected Status', visible: true },
     { key: 'lastHeartBeat', label: 'Last Connected', visible: true },
   ];
 

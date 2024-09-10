@@ -39,8 +39,8 @@ export class SearchReportComponent implements OnInit {
     { key: 'deviceModel', label: 'Model', visible: true },
     { key: 'deviceCurrentStatus', label: 'Device Current Status', visible: true },
     { key: 'lastHeartBeat', label: 'Last Heart Beat', visible: true },
-    { key: 'orgId', label: 'Org ID', visible: true },
-    { key: 'osVersion', label: 'OS Vresion Details', visible: true },
+    // { key: 'orgId', label: 'Org ID', visible: true },
+    { key: 'osVersion', label: 'OS Version Details', visible: true },
     { key: 'batteryStatus', label: 'Battery Status', visible: true },
   ];
 
