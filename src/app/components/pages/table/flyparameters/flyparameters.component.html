@@ -74,8 +74,8 @@
               <button class="icon-button"><i class="bx bx-bar-chart-alt-2"></i></button> -->
               <button class="menu-button"><i class="bx bx-menu"></i></button>
             </div>
-        
-            <table class="device-table">
+
+            <table class="device-table" style="overflow:scroll;">
               <thead>
                 <tr>
                   <th class="th-device-sn">Device SN</th>
@@ -185,7 +185,7 @@
         </button>
         <span class="app-name ms-3">App Name: {{selectedItem?.name}}</span>
       </div>
-    
+
       <div class="right-section d-flex align-items-center">
         <button class="icon-button">
           <span class="material-symbols-outlined" style="color: #007bff;">save</span>
@@ -197,6 +197,6 @@
           <span class="material-symbols-outlined" style="color: #777a7e;">settings</span>
         </button>
       </div>
-    </div>    
-    <app-profile></app-profile>
+    </div>
+    <app-profile [profile]="profile" [params]="param"></app-profile>
 </ng-container>

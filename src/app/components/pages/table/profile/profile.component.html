@@ -10,42 +10,41 @@
   </div>
 </div>
 <ng-container *ngIf="showProfile">
-
   <div class="main-container">
     <div class="left-body">
       <div *ngFor="let formGroup of formsArray.controls; let i = index" [formGroup]="formGroup"
         class="textarea-container" [ngClass]="{ 'active-form': activeForm === formGroup }"
         (click)="setActiveForm(formGroup)">
         <label [for]="'textarea-input-' + i" class="textarea-label"
-          [ngStyle]=" {visibility : formGroup.get('type')?.value == 'Boolean' ? 'hidden' : 'visible'} ">{{
+          [ngStyle]=" {visibility : formGroup.get('type')?.value == 'BOOLEAN' ? 'hidden' : 'visible'} ">{{
           formGroup.get('label')?.value }}</label>
         <ng-container [ngSwitch]="formGroup.get('type')?.value">
-          <textarea *ngSwitchCase="'String'" [id]="'textarea-input-' + i" #textarea
+          <textarea *ngSwitchCase="'STRING'" [id]="'textarea-input-' + i" #textarea
             [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
             [attr.maxlength]="formGroup.get('maxvalue')?.value" placeholder="Enter your text here..."
             name="default-{{i}}"></textarea>
-          <input *ngSwitchCase="'Time'" (click)="triggerPicker($event)" [id]="'date-input-' + i" type="time" #textarea
+          <input *ngSwitchCase="'TIME'" (click)="triggerPicker($event)" [id]="'date-input-' + i" type="time" #textarea
             [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
             name="default-{{i}}">
-          <input *ngSwitchCase="'Date'" (click)="triggerPicker($event)" [id]="'date-input-' + i" type="date" #textarea
+          <input *ngSwitchCase="'DATE'" (click)="triggerPicker($event)" [id]="'date-input-' + i" type="date" #textarea
             [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
             name="default-{{i}}">
-          <input *ngSwitchCase="'DateTime'" (click)="triggerPicker($event)" [id]="'date-input-' + i"
+          <input *ngSwitchCase="'DATETIME'" (click)="triggerPicker($event)" [id]="'date-input-' + i"
             type="datetime-local" #textarea [(ngModel)]="formGroup.controls['default'].value"
             [ngModelOptions]="{standalone: true}" name="default-{{i}}">
-          <textarea *ngSwitchCase="'Number'" [id]="'date-input-' + i" (input)="onInput($event)" #textarea
+          <textarea *ngSwitchCase="'NUMBER'" [id]="'date-input-' + i" (input)="onInput($event)" #textarea
             [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
             name="default-{{i}}"></textarea>
-          <textarea *ngSwitchCase="'Hex'" [id]="'date-input-' + i" (input)="onInput($event)" #textarea
+          <textarea *ngSwitchCase="'HEX'" [id]="'date-input-' + i" (input)="onInput($event)" #textarea
             [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
             [attr.maxlength]="formGroup.get('maxvalue')?.value" name="default-{{i}}"></textarea>
-          <textarea *ngSwitchCase="'String Text'" [id]="'date-input-' + i" #textarea
+          <textarea *ngSwitchCase="'STRING TEXT'" [id]="'date-input-' + i" #textarea
             [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
             name="default-{{i}}"></textarea>
-          <textarea *ngSwitchCase="'Hex Text'" [id]="'date-input-' + i" (input)="onInput($event)" #textarea
+          <textarea *ngSwitchCase="'HEX TEXT'" [id]="'date-input-' + i" (input)="onInput($event)" #textarea
             [(ngModel)]="formGroup.controls['default'].value" [ngModelOptions]="{standalone: true}"
             name="default-{{i}}"></textarea>
-          <div class="boolean" *ngSwitchCase="'Boolean'" #textarea>
+          <div class="boolean" *ngSwitchCase="'BOOLEAN'" #textarea>
             <div class="row" style="padding: 5px;">
               <div class="col-2">
                 <input [id]="'date-input-' + i" type="checkbox" [(ngModel)]="formGroup.controls['default'].value"
@@ -56,7 +55,7 @@
           </div>
         </ng-container>
         <div class="char-count"
-          [ngStyle]=" {visibility : (formGroup.get('type')?.value == 'String' || formGroup.get('type')?.value == 'Hex') ? 'visible' : 'hidden'} ">
+          [ngStyle]=" {visibility : (formGroup.get('type')?.value == 'STRING' || formGroup.get('type')?.value == 'HEX') ? 'visible' : 'hidden'} ">
           {{ formGroup.get('default')?.value.length || 0 }}/{{ formGroup.get('maxvalue')?.value || 255 }}</div>
         <span class="close-icon" (click)="removeForm(i)">×</span>
       </div>
@@ -107,7 +106,6 @@
           <label for="input9">Description</label>
           <textarea id="input9" type="number" class="form-control" formControlName="description"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
   </div>

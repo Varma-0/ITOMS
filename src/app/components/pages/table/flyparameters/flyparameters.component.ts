@@ -63,6 +63,8 @@ export class FlyparametersComponent {
       parameterFilePublishTime: '09/06/2024 12:15:27'
     }
   ];
+    profile: any;
+    param: any;
 
   ngOnInit() {
     // Initialize filteredDeployments with all deployments on load
@@ -120,14 +122,14 @@ export class FlyparametersComponent {
       if (result) {
         const flyPara = new deleteModelEvent(data,'DEVICE','SEARCH');
         const payload = {
-          event: flyPara 
+          event: flyPara
         }
         this.dataService.getDevicebysn(payload).subscribe(
           response => {
             console.log("fd",response);
           }
         )
-        
+
       }
     });
   }
@@ -152,16 +154,24 @@ export class FlyparametersComponent {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-            const dialogRef = this.dialog.open(SelectCfgComponent);
+            if(result?.type){
+                this.profile = result.profile;
+                this.param = result.parameters;
+                this.showDynamicKeys = false;
+            }else{
+              const dialogRef = this.dialog.open(SelectCfgComponent);
               dialogRef.afterClosed().subscribe(result => {
                 if (result) {
+                    this.profile = [];
+                    this.param = [];
                     this.showDynamicKeys = false;
                 }
               });
+            }
         }
       });
     }
-  
+
 
       search() {
         this.filteredDevices = this.devices.filter(device =>
