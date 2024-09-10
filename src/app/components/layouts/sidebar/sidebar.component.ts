@@ -10,7 +10,7 @@ declare let $: any;
 })
 export class SidebarComponent implements OnInit {
     isSidebarActive = true;
-
+    superAdmin = localStorage.getItem('SA');
     constructor(private router: Router,private shared:SharedServices) {
         router.events.subscribe((event: Event) => {
             if (event instanceof NavigationEnd) {

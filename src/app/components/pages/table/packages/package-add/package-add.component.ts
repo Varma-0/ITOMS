@@ -1,5 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import * as JSZip from 'jszip';
+import { DesignSelectionComponent } from 'src/app/components/dialogs/design-selection/design-selection.component';
+import { SelectCfgComponent } from 'src/app/components/dialogs/select-cfg/select-cfg.component';
 
 @Component({
   selector: 'app-package-add',
@@ -12,7 +14,7 @@ export class PackageAddComponent {
   @Input() insideview: any;
   @Output() viewChange = new EventEmitter<boolean>();
   @Output() insideviewChange = new EventEmitter<boolean>();
-  steps: string[] = ['Upload File', 'Details', 'Pilot', 'Release', 'Param'];
+  steps: string[] = ['Upload File', 'Details', 'Release', 'Param'];
   currentStep: number = 1;
   maxFileSize: number = 500;
 
@@ -22,7 +24,9 @@ export class PackageAddComponent {
     // { name: 'RTOS', icon: 'assets/img/rtos.png' }
   ];
   selectedType: any = null;
-
+  isUploaded: boolean = false;
+  fileName: string = ''; 
+  fileSize: number = 0;
   extractedInfo: {
     name: string;
     version: string;
@@ -30,10 +34,38 @@ export class PackageAddComponent {
     name: '',
     version: '',
   };
+  onlyName: string;
+  version: string;
 
   selectType(type: any) {
     this.selectedType = type;
   }
+
+  // designSelection() {
+  //   const dialogRef = this.dialog.open(DesignSelectionComponent, {
+  //       height: '80%',
+  //       width: '40%'
+  //     });
+
+  //     dialogRef.afterClosed().subscribe(result => {
+  //       if (result) {
+  //           if(result?.type){
+  //               this.profile = result.profile;
+  //               this.param = result.parameters;
+  //               this.showDynamicKeys = false;
+  //           }else{
+  //             const dialogRef = this.dialog.open(SelectCfgComponent);
+  //             dialogRef.afterClosed().subscribe(result => {
+  //               if (result) {
+  //                   this.profile = [];
+  //                   this.param = [];
+  //                   this.showDynamicKeys = false;
+  //               }
+  //             });
+  //           }
+  //       }
+  //     });
+  //   }
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
@@ -72,17 +104,24 @@ export class PackageAddComponent {
       try {
         const zip = new JSZip();
         const contents = await zip.loadAsync(file);
-        console.log(contents)
+        console.log(contents.files)
         let appFile: JSZip.JSZipObject | null = null;
         console.log(appFile);
 
 
-        contents.forEach((relativePath, zipEntry) => {
-        console.log(relativePath,zipEntry)
+        // contents.forEach((relativePath, zipEntry) => {
+        // console.log(relativePath,zipEntry)
 
-          if (relativePath['name'].endsWith('.apk') || relativePath['name'].endsWith('.nld')) {
+        //   if (relativePath['name'].endsWith('.apk') || relativePath['name'].endsWith('.nld')) {
+        //     appFile = zipEntry;
+        //   } 
+        // });
+        contents.forEach((relativePath, zipEntry) => {
+          if (this.selectedType.name === 'Android' && relativePath.endsWith('.apk')) {
             appFile = zipEntry;
-          } 
+          } else if (this.selectedType.name === 'Linux' && relativePath.endsWith('.NLD')) {
+            appFile = zipEntry;
+          }
         });
 
         if (appFile) {
@@ -91,9 +130,17 @@ export class PackageAddComponent {
           const { name, version } = await this.extractAppInfo(appData, appFile.name);
 
           this.extractedInfo = { name, version };
-          this.nextStep();
+          // this.nextStep();
+          this.fileName = appFile.name;
+          const parts = this.fileName.split('.');
+          parts.length > 1 ? this.fileName =  parts.slice(0, -1).join('.'):''
+          this.onlyName = this.fileName.split('_')[0]
+          this.version = this.fileName.split('_')[1]
+          this.fileSize = file.size;
+          console.log("efqq",this.fileName,this.fileSize);
+          this.isUploaded = true;
         } else {
-          alert('ZIP file must contain one APK or NLD file and one image file.');
+          alert('ZIP file must contain one APK or NLD file.');
         }
       } catch (error) {
         console.error('Error processing ZIP file:', error);
@@ -104,10 +151,15 @@ export class PackageAddComponent {
     }
   }
 
+  resetUpload() {
+    this.isUploaded = false;
+    this.extractedInfo = { name: '', version: '' };
+  }
+
   async extractAppInfo(data: Uint8Array, fileName: string): Promise<{ name: string, version: string }> {
-    if (fileName.toLowerCase().endsWith('.apk')) {
+    if (fileName.toLowerCase().endsWith('.apk') || fileName.toLowerCase().endsWith('.APK')) {
       return this.extractApkInfo(data);
-    } else if (fileName.toLowerCase().endsWith('.nld')) {
+    } else if (fileName.toLowerCase().endsWith('.nld') || fileName.toLowerCase().endsWith('.NLD')) {
       return this.extractNldInfo(data);
     } else {
       throw new Error('Unsupported file type');
