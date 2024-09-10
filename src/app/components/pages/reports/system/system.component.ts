@@ -56,7 +56,7 @@ export class SystemReportComponent implements OnInit {
   applyFilter(): void {
     this.filteredDevices = this.devices.filter(device =>
       Object.entries(device).some(([key, value]) =>
-        this.columns.find(col => col.key === key)?.visible &&
+        this.columns.find(col => col.key === key)?.visible && value != 0 &&
         value?.toLowerCase().includes(this.searchTerm?.toLowerCase())
       )
     );

@@ -69,7 +69,7 @@ export class HeartReportComponent implements OnInit {
   applyFilter(): void {
     this.filteredDevices = this.devices.filter(device =>
       Object.entries(device).some(([key, value]) =>
-        this.columns.find(col => col.key === key)?.visible &&
+        this.columns.find(col => col.key === key)?.visible && value != 0 &&
         value?.toLowerCase().includes(this.searchTerm?.toLowerCase())
       )
     );
@@ -130,7 +130,7 @@ export class HeartReportComponent implements OnInit {
     console.log(data);
         const payload = {
             "event": {
-              "eventData":data,  
+              "eventData":data,
               "eventType": "REPORT",
               "eventSubType": "SEARCH"
             }
@@ -140,7 +140,7 @@ export class HeartReportComponent implements OnInit {
                 const dialogRef = this.dialog.open(ReportsDialogComponent,{
                     data: response.event.eventData.responseData
                 });
-            
+
                 dialogRef.afterClosed().subscribe(result => {
                   if (result) {
                     // Implement delete functionality here

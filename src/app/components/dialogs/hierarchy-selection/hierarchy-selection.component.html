@@ -8,7 +8,7 @@
                 <div *ngFor="let item of level.items"
                      class="hierarchy-item"
                      [class.selected]="item === level.selectedItem"
-                     (click)="selectItem(i, item)">
+                     (click)="selectItem(i,level, item)">
                   {{ item.name }}
                 </div>
               </div>

@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
 
 interface Device {
-    name: string;               
-    path: string;           
-    description: string;         
-    ipStartAddress: string;      
-    ipEndAddress: string;        
-    locationIdentifier: string;  
-    timeZone: string;  
+    name: string;
+    path: string;
+    description: string;
+    ipStartAddress: string;
+    ipEndAddress: string;
+    locationIdentifier: string;
+    timeZone: string;
 }
 
 interface Column {
@@ -50,7 +50,7 @@ export class HirerichiesReportComponent implements OnInit {
   applyFilter(): void {
     this.filteredDevices = this.devices.filter(device =>
       Object.entries(device).some(([key, value]) =>
-        this.columns.find(col => col.key === key)?.visible &&
+        this.columns.find(col => col.key === key)?.visible && value != 0 &&
         value?.toLowerCase().includes(this.searchTerm?.toLowerCase())
       )
     );

@@ -13,7 +13,7 @@ interface Device {
     orgId: string;
     osVersion: string;
     batteryStatus: string;
-  }  
+  }
 
 interface Column {
   key: keyof Device;
@@ -62,8 +62,8 @@ export class SearchReportComponent implements OnInit {
       }
     this.dataService.getSearchReport(data).subscribe(
         response => {
-            console.log(response);
             this.devices = response.event.eventData.responseData[0];
+            console.log(this.devices);
             this.applyFilter();
         },
         error => {
@@ -75,7 +75,7 @@ export class SearchReportComponent implements OnInit {
   applyFilter(): void {
     this.filteredDevices = this.devices.filter(device =>
       Object.entries(device).some(([key, value]) =>
-        this.columns.find(col => col.key === key)?.visible &&
+        this.columns.find(col => col.key === key)?.visible && value != 0 &&
         value?.toLowerCase().includes(this.searchTerm?.toLowerCase())
       )
     );

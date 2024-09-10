@@ -90,7 +90,7 @@ export class DevicesFormComponent {
       this.dialogRef.close(this.deviceForm.value);
     } else if (this.title == 'New Terminal') {
       this.dialogRef.close(this.dsn);
-    } 
+    }
     else {
       this.dialogRef.close(this.modalForm.value);
     }
@@ -100,7 +100,6 @@ export class DevicesFormComponent {
     const dialogRef = this.dialog.open(HierarchySelectionComponent,{
         data : {
             title : 'Select Hierarchy',
-            list : JSON.parse(localStorage.getItem('Hlist'))
         },
         width:'50%',
     });
