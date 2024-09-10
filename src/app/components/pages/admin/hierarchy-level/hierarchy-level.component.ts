@@ -99,6 +99,13 @@ export class HierarchyLevelComponent implements OnInit {
                 this.loadMerchants();
             },
             error => {
+                this.hierarchyLevels.push({
+                    name: "MERCHANT",
+                    pid: "",
+                    items: [],
+                    selectedItem: null
+                });
+                this.loadMerchants();
                 console.error('Error:', error);
             }
         )
