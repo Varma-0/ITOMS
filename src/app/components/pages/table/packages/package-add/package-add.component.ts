@@ -19,18 +19,16 @@ export class PackageAddComponent {
   appTypes = [
     { name: 'Android', icon: 'assets/img/android-logo.png' },
     { name: 'Linux', icon: 'assets/img/linux-icon.png' },
-    { name: 'RTOS', icon: 'assets/img/rtos.png' }
+    // { name: 'RTOS', icon: 'assets/img/rtos.png' }
   ];
   selectedType: any = null;
 
   extractedInfo: {
     name: string;
     version: string;
-    imageUrl: string | null;
   } = {
     name: '',
     version: '',
-    imageUrl: null
   };
 
   selectType(type: any) {
@@ -77,8 +75,6 @@ export class PackageAddComponent {
         console.log(contents)
         let appFile: JSZip.JSZipObject | null = null;
         console.log(appFile);
-        let imageFile: JSZip.JSZipObject | null = null;
-        console.log(imageFile);
 
 
         contents.forEach((relativePath, zipEntry) => {
@@ -86,21 +82,15 @@ export class PackageAddComponent {
 
           if (relativePath['name'].endsWith('.apk') || relativePath['name'].endsWith('.nld')) {
             appFile = zipEntry;
-          } else if (relativePath.toLowerCase().endsWith('.png') || relativePath.toLowerCase().endsWith('.jpg')) {
-            // imageFile = zipEntry;
-          }
+          } 
         });
 
-        if (appFile || imageFile) {
+        if (appFile) {
           // Extract info from APK or NLD file
           const appData = await appFile.async('uint8array');
           const { name, version } = await this.extractAppInfo(appData, appFile.name);
 
-          // Process image file
-          const imageData = await imageFile.async('blob');
-          const imageUrl = URL.createObjectURL(imageData);
-
-          this.extractedInfo = { name, version, imageUrl };
+          this.extractedInfo = { name, version };
           this.nextStep();
         } else {
           alert('ZIP file must contain one APK or NLD file and one image file.');

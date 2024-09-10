@@ -1,38 +1,3 @@
-<!-- <div class="application-management">
-    <h1>Application Management</h1>
-    
-    Progress Indicator
-    <div class="progress-indicator">
-        <div
-          *ngFor="let step of steps; let i = index"
-          class="step-container"
-        >
-          <div class="step" [ngClass]="{ active: i + 1 <= currentStep, disabled: i + 1 > currentStep }">
-            <div class="step-number">{{ i + 1 }}</div>
-          </div>
-          <div class="step-label">{{ step }}</div>
-          <div class="line" *ngIf="i < steps.length - 1"></div>
-        </div>
-      </div>
-      
-    
-   
-
-    File Information Display
-    <div class="file-info" *ngIf="currentStep === 2">
-      <h2>File Information</h2>
-      <p>Name: {{ extractedInfo.name }}</p>
-      <p>Version: {{ extractedInfo.version }}</p>
-      <img [src]="extractedInfo.imageUrl" alt="Application Icon" *ngIf="extractedInfo.imageUrl">
-    </div>
-
-    Navigation Buttons
-    <div class="navigation-buttons">
-      <button (click)="previousStep()" *ngIf="currentStep > 1">Previous</button>
-      <button (click)="nextStep()" *ngIf="currentStep < steps.length">Next</button>
-    </div>
-  </div>  -->
-
  <div class="card-container">
   <mat-card>
       <mat-card-header>
@@ -64,76 +29,75 @@
           <img [src]="type.icon" [alt]="type.name">
         </label>
       </div>
-    <div class="file-upload-container" *ngIf="currentStep === 1" (dragover)="onDragOver($event)"
-      (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" (click)="fileInput.click()">
-      <input type="file" (change)="onFileSelected($event)" #fileInput hidden accept=".zip">
-      <div class="upload-icon">
-        <i class="material-icons">cloud_upload</i>
+      <div class="file-upload-container" *ngIf="currentStep === 1" (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" (click)="fileInput.click()">
+        <input type="file" (change)="onFileSelected($event)" #fileInput hidden accept=".zip">
+        <div class="upload-icon">
+          <i class="material-icons">cloud_upload</i>
+        </div>
+        <p>Click to upload or drag a ZIP file here</p>
+        <p class="file-size-info">(The ZIP file size can not be more than {{maxFileSize}}MB)</p>
       </div>
-      <p>Click to upload or drag a ZIP file here</p>
-      <p class="file-size-info">(The ZIP file size can not be more than {{maxFileSize}}MB)</p>
-    </div>
+    </mat-card-content>
+    <mat-card-content *ngIf="currentStep === 1">
+      <div class="package-config">
+        <div class="header">
+          <img src="assets/tux.png" alt="Linux" class="logo">
+          <div class="package-info">
+            <span class="package-name">TEST</span>
+            <span class="version">1.0.2</span>
+          </div>
+        </div>
+        <table>
+          <tr>
+            <td class="label">Package Name</td>
+            <td>TEST</td>
+          </tr>
+          <tr>
+            <td class="label">Build Environment</td>
+            <td>
+              <label><input type="radio" name="buildEnv" checked> gcc4.2.0</label>
+              <label><input type="radio" name="buildEnv"> gcc4.9.4</label>
+            </td>
+          </tr>
+          <tr>
+            <td class="label">Supported Device Models</td>
+            <td>
+              <div class="device-models">
+                <span>Newland</span>
+                <button class="show-all">+ Show All</button>
+              </div>
+              <div class="selected-count">(Selected Quantity: 0)</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="label">Delete Update</td>
+            <td><input type="checkbox"></td>
+          </tr>
+          <tr>
+            <td class="label">Auto Update</td>
+            <td><input type="checkbox"></td>
+          </tr>
+          <tr>
+            <td class="label">Sync to Deployment</td>
+            <td><input type="checkbox"></td>
+          </tr>
+          <tr>
+            <td class="label">Parameter Module</td>
+            <td><input type="checkbox" checked></td>
+          </tr>
+          <tr>
+            <td class="label">Pilot</td>
+            <td><input type="checkbox"></td>
+          </tr>
+          <tr>
+            <td class="label">Introduction</td>
+            <td><textarea rows="4"></textarea></td>
+          </tr>
+        </table>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>
 
 <div style="height: 50px;"></div>
-
-
-<!-- step 2
-<div class="package-config">
-  <div class="header">
-    <img src="assets/tux.png" alt="Linux" class="logo">
-    <div class="package-info">
-      <span class="package-name">TEST</span>
-      <span class="version">1.0.2</span>
-    </div>
-  </div>
-  <table>
-    <tr>
-      <td class="label">Package Name</td>
-      <td>TEST</td>
-    </tr>
-    <tr>
-      <td class="label">Build Environment</td>
-      <td>
-        <label><input type="radio" name="buildEnv" checked> gcc4.2.0</label>
-        <label><input type="radio" name="buildEnv"> gcc4.9.4</label>
-      </td>
-    </tr>
-    <tr>
-      <td class="label">Supported Device Models</td>
-      <td>
-        <div class="device-models">
-          <span>Newland</span>
-          <button class="show-all">+ Show All</button>
-        </div>
-        <div class="selected-count">(Selected Quantity: 0)</div>
-      </td>
-    </tr>
-    <tr>
-      <td class="label">Delete Update</td>
-      <td><input type="checkbox"></td>
-    </tr>
-    <tr>
-      <td class="label">Auto Update</td>
-      <td><input type="checkbox"></td>
-    </tr>
-    <tr>
-      <td class="label">Sync to Deployment</td>
-      <td><input type="checkbox"></td>
-    </tr>
-    <tr>
-      <td class="label">Parameter Module</td>
-      <td><input type="checkbox" checked></td>
-    </tr>
-    <tr>
-      <td class="label">Pilot</td>
-      <td><input type="checkbox"></td>
-    </tr>
-    <tr>
-      <td class="label">Introduction</td>
-      <td><textarea rows="4"></textarea></td>
-    </tr>
-  </table>
-</div> -->
