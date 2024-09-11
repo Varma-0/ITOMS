@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DeploymentModalComponent } from 'src/app/components/dialogs/deployment-modal/deployment-modal.component';
 import { DevicesFormComponent } from 'src/app/components/dialogs/device-form/device-form.component';
+import { deleteMerchantEVent } from 'src/app/services/login/body/event';
 import { SharedServices } from 'src/app/services/shared.service';
 import { terminalBody } from 'src/app/services/terminal/body/body';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
@@ -40,7 +41,8 @@ export class SchedulingComponent {
   selectedCount: number = 0;
   constructor(public dialog: MatDialog, private shared:SharedServices,private dataService: TerminalService){}
 
-  connectedTerminals = 1;
+  connectedTerminals = 0;
+  totalTerminals = 0;
   unconnectedTerminals = 0;
   activeTerminals = 0;
   inactiveTerminals = 1;
@@ -63,15 +65,7 @@ export class SchedulingComponent {
   devices1: Device1[] = [
     { sn: 'NCA700083597', model: 'N950', status: 'Inventory', onlineStatus: 'Offline', bindingTime: '09/09/2024', process: 0 }
   ];
-  deployments = [
-      { name: 'P180', count: 2 },
-      { name: 'U1000', count: 0 },
-      { name: 'SP930', count: 0 },
-      { name: 'lipp', count: 1 },
-      { name: 'SP550', count: 1 },
-      { name: 'SP550 TEST', count: 1 },
-      // Add more as needed
-  ];
+  deployments = [];
   devices: Device[] = [
     {
       deviceSN: 'NCA700083597',
@@ -92,11 +86,28 @@ export class SchedulingComponent {
   statusFilter = '';
   filteredDeployments = [];
   selectedItem: any;
+  settingsInApplication = [];
+  settingsInTerminal = [];
   checkk: boolean = false;
 
   ngOnInit() {
-    // Initialize filteredDeployments with all deployments on load
-    this.filteredDeployments = this.deployments;
+    this.loadDeploymentsData();
+  }
+
+  loadDeploymentsData() {
+    const payload = {
+      "event" : {
+        "eventType": "DEPLOYMENT",
+        "eventSubType": "SEARCH"
+      }
+    }
+    this.dataService.getDeployment(payload).subscribe(
+      response => {
+        // console.log("qdoog",response);
+        this.deployments = response.event.eventData;
+        this.filteredDeployments = this.deployments;
+      }
+    )
   }
 
   isAllSelected(): boolean {
@@ -138,9 +149,6 @@ export class SchedulingComponent {
     const dialogRef = this.dialog.open(DevicesFormComponent, {
       data: {
         title: 'Create Deployment',
-        form: {
-          
-        }
       },
       width: '40%'
     });
@@ -148,7 +156,19 @@ export class SchedulingComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log("1111111111",result);
       if (result) {
-        
+        const payload = {
+          "event": {
+            "eventData": result,
+            "eventType": "DEPLOYMENT",
+            "eventSubType": "CREATE"
+          }
+        }
+        this.dataService.createDeployment(payload).subscribe(
+          response => {
+            console.log("dvub",response);
+            this.loadDeploymentsData();
+          }
+        )
       }
     });
   }
@@ -201,31 +221,74 @@ export class SchedulingComponent {
 
   selectItem(deployment: any) {
     this.selectedItem = deployment;
+    const payload = {
+      "event": {
+        "eventData": this.selectedItem.id,
+        "eventType": "DEPLOYMENT",
+        "eventSubType": "CREATE"
+      }
+    }
+    this.dataService.settingsInDeployment(payload).subscribe(
+      response => {
+        console.log("21821",response);
+        if (response.event.eventData != 'null') {
+          this.settingsInApplication = response.event.eventData
+        }  else {
+          this.settingsInApplication = [];
+        }
+      }
+    );
   }
 
   selectTab(tab: string) {
     this.selectedTab = tab;
+    const payload = {
+      "event": {
+        "eventData": this.selectedItem.id,
+        "eventType": "DEPLOYMENT",
+        "eventSubType": "CREATE"
+      }
+    }
+     if(this.selectedTab == 'terminal') {
+      console.log("ewufwew terminal")
+      this.dataService.terminalInDeployment(payload).subscribe(
+        response => {
+          if (response.event.eventData != 'null') {
+            this.settingsInTerminal = response.event.eventData
+            this.totalTerminals = response.event.eventData.totalTerminals;
+            this.connectedTerminals = response.event.eventData.connectedTerminals;
+            this.unconnectedTerminals = response.event.eventData.unConnectedTerminals;
+            this.activeTerminals = response.event.eventData.activeTerminals;
+            this.inactiveTerminals = response.event.eventData.inActiveTerminals;
+            this.filteredTerminals = this.settingsInTerminal
+          }  else {
+            this.settingsInTerminal = [];
+            this.filteredTerminals = this.settingsInTerminal
+          }
+        }
+      );
+    }
   }
 
 
-  get totalTerminals(): number {
-    return this.connectedTerminals + this.unconnectedTerminals;
-  }
+  // get totalTerminals(): number {
+  //   return this.connectedTerminals + this.unconnectedTerminals;
+  // }
 
   get connectedPercentage(): number {
-    return (this.connectedTerminals / this.totalTerminals) * 100;
+    return this.totalTerminals ? (this.connectedTerminals / this.totalTerminals) * 100 : 0;
   }
 
   get unconnectedPercentage(): number {
-    return (this.unconnectedTerminals / this.totalTerminals) * 100;
+    return this.totalTerminals ? (this.unconnectedTerminals / this.totalTerminals) * 100 : 0;
   }
 
   get activePercentage(): number {
-    return (this.activeTerminals / this.totalTerminals) * 100;
+    return this.totalTerminals ? (this.activeTerminals / this.totalTerminals) * 100 : 0;
   }
 
   get inactivePercentage(): number {
-    return (this.inactiveTerminals / this.totalTerminals) * 100;
+    return this.totalTerminals ? (this.inactiveTerminals / this.totalTerminals) * 100 : 0;
   }
 
   getPolylinePoints(): string {

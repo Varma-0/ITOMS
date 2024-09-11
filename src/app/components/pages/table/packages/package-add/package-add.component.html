@@ -29,7 +29,7 @@
           <img [src]="type.icon" [alt]="type.name">
         </label>
       </div>
-      <div *ngIf="currentStep === 1" >
+      <!-- <div *ngIf="currentStep === 1" >
         <div *ngIf="!isUploaded; else uploadedButtons" class="file-upload-container" (dragover)="onDragOver($event)"
           (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" (click)="fileInput.click()">
           <input type="file" (change)="onFileSelected($event)" #fileInput hidden accept=".zip">
@@ -47,6 +47,41 @@
         <div class="d-flex align-items-center flex-row justify-content-end" style="gap:10px">
           <button class="btn btn-danger" (click)="resetUpload()">Re-upload</button>
           <button class="btn btn-primary" (click)="nextStep()">Next</button>
+        </div>
+      </ng-template> -->
+      <div *ngIf="currentStep === 1">
+        <div *ngIf="!isUploaded && !isUploading; else uploadingOrUploaded" 
+             class="file-upload-container" 
+             (dragover)="onDragOver($event)"
+             (dragleave)="onDragLeave($event)" 
+             (drop)="onDrop($event)" 
+             (click)="fileInput.click()">
+          <input type="file" (change)="onFileSelected($event)" #fileInput hidden accept=".zip">
+          <div class="upload-icon">
+            <i class="material-icons">cloud_upload</i>
+          </div>
+          <p>Click to upload or drag a ZIP file here</p>
+          <p class="file-size-info">(The ZIP file size can not be more than {{maxFileSize}}MB)</p>
+        </div>
+      </div>
+      
+      <ng-template #uploadingOrUploaded>
+        <div *ngIf="isUploading; else uploadedButtons" class="uploading-container">
+          <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+          <p>Uploading...</p>
+        </div>
+      </ng-template>
+      
+      <ng-template #uploadedButtons>
+        <div class="uploaded-container">
+          <img src="../../../../../../assets/img/success.png" alt="Success">
+          <p>File Name: {{ fileName }}</p>
+          <!-- <p>Size: {{ (fileSize / 1024 / 1024).toFixed(2) }} MB</p>  -->
+          <p>Size: {{ randomSize }}</p>
+          <div class="d-flex align-items-center flex-row justify-content-end" style="gap:10px">
+            <button class="btn btn-danger" (click)="resetUpload()">Re-upload</button>
+            <button class="btn btn-primary" (click)="nextStep()">Next</button>
+          </div>
         </div>
       </ng-template>
     </mat-card-content>
@@ -76,10 +111,16 @@
             <td class="label">Supported Device Models</td>
             <td>
               <div class="device-models">
-                <span>Newland</span>
+                <!-- <span>Newland</span> -->
                 <!-- <button class="show-all">+ Show All</button> -->
+                <div *ngFor="let card of modelsList" class="model" [class.selected]="card.selected" (click)="selectCard(card)">
+                  <h3>{{ card.name }}</h3>
+                  <span class="tick-mark" *ngIf="card.selected">✓</span>
+                  <!-- <p>ID: {{ card.id }}</p> -->
+                  <!-- <p>Additional Info: {{ card.someOtherField }}</p> -->
+                </div>
               </div>
-              <div class="selected-count">(Selected Quantity: 0)</div>
+              <div class="selected-count">(Selected Quantity: {{ selectedCount }})</div>
             </td>
           </tr>
           <tr>
