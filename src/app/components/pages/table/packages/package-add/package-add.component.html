@@ -19,7 +19,7 @@
       </mat-card-content>
     <!-- </mat-card> -->
   </mat-card>
-  <mat-card>
+  <mat-card style="overflow:auto">
     <mat-card-content class="app-type-selector"  *ngIf="currentStep === 1">
       <h2>Application Type</h2>
       <div class="type-buttons">
@@ -114,19 +114,21 @@
       </div>
     </mat-card-content>
     <mat-card-content *ngIf="currentStep === 3">
-      <div>
-        <img src="../../../../../../assets/img/final.png">
+      <div class="content-center">
+        <img src="../../../../../../assets/img/final.png" class="final-image">
         <p>RELEASE APP SUCCESSFUL</p>
         <img *ngIf="selectedType.name === 'Android'" src="assets/img/android-logo.png" alt="Android" class="logo">
-        <img *ngIf="selectedType.name === 'Linux'" src="assets/img/linux-icon.png" alt="Linux"class="logo">
-        <p>{{onlyName}}</p>
+        <img *ngIf="selectedType.name === 'Linux'" src="assets/img/linux-icon.png" alt="Linux" class="logo">
+        <div class="d-flex flex-row fw-500" style="gap:10px; color: black">
+          <p>{{onlyName}}</p>
         <p>{{version}}</p>
+        </div>
       </div>
-      <div class="d-flex align-items-center flex-row justify-content-end" style="gap:10px">
-        <button class="btn btn-primary" (click)="nextStep()">Next: Parameter Desgin</button>
+      <div class="button-group">
+        <button class="btn btn-primary" (click)="nextStep()">Next: Parameter Design</button>
         <button class="btn btn-primary" (click)="toggleView()">Ok</button>
       </div>
-    </mat-card-content>
+    </mat-card-content>    
     <mat-card-content *ngIf="currentStep === 4">
       <div style="text-align: center;margin-top:5%;">
         <p>No parameter template has been configured in this parameter application.</p>
@@ -136,4 +138,4 @@
   </mat-card>
 </div>
 
-<div style="height: 1000px;"></div>
+<div style="height: 50px;"></div>

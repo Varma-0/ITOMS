@@ -80,7 +80,6 @@
                 <tr>
                   <th class="th-device-sn">Device SN</th>
                   <th class="th-organization">Organization</th>
-                  <th class="th-file-version">Parameter File Version</th>
                   <th class="th-file-status">Parameter File Status</th>
                   <th class="th-publish-time">Parameter File Publish Time</th>
                   <th class="th-operation">Operation</th>
@@ -90,7 +89,6 @@
                 <tr *ngFor="let device of filteredDevices">
                   <td class="td-device-sn">{{ device.deviceSN }}</td>
                   <td class="td-organization">{{ device.organization }}</td>
-                  <td class="td-file-version">{{ device.parameterFileVersion }}</td>
                   <td class="td-file-status">
                     <span [ngClass]="{'status-pending': device.parameterFileStatus === 'Pending publish',
                                       'status-published': device.parameterFileStatus === 'Published'}">
@@ -99,8 +97,20 @@
                   </td>
                   <td class="td-publish-time">{{ device.parameterFilePublishTime }}</td>
                   <td class="td-operation">
-                    <button class="icon-button"><i class="bx bx-dots-vertical-rounded"></i></button>
-                  </td>
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item>
+                        <mat-icon>edit</mat-icon>
+                        Edit
+                      </button>
+                      <button mat-menu-item>
+                        <mat-icon>delete</mat-icon>
+                        Delete
+                      </button>
+                    </mat-menu>
+                  </td>                  
                 </tr>
               </tbody>
             </table>

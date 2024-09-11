@@ -1,4 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { MatStepper } from '@angular/material/stepper';
 import * as JSZip from 'jszip';
 import { DesignSelectionComponent } from 'src/app/components/dialogs/design-selection/design-selection.component';
 import { SelectCfgComponent } from 'src/app/components/dialogs/select-cfg/select-cfg.component';
@@ -9,6 +10,7 @@ import { SelectCfgComponent } from 'src/app/components/dialogs/select-cfg/select
   styleUrl: './package-add.component.scss'
 })
 export class PackageAddComponent {
+  @ViewChild('stepper') private stepper!: MatStepper;
   @ViewChild('fileInput') fileInput!: ElementRef;
   @Input() view: any;
   @Input() insideview: any;
@@ -117,9 +119,9 @@ export class PackageAddComponent {
         //   } 
         // });
         contents.forEach((relativePath, zipEntry) => {
-          if (this.selectedType.name === 'Android' && relativePath.endsWith('.apk')) {
+          if (this.selectedType.name === 'Android' && relativePath.endsWith('.apk')  || relativePath.endsWith('.APK')) {
             appFile = zipEntry;
-          } else if (this.selectedType.name === 'Linux' && relativePath.endsWith('.NLD')) {
+          } else if (this.selectedType.name === 'Linux' && relativePath.endsWith('.NLD')  || relativePath.endsWith('.NLD')) {
             appFile = zipEntry;
           }
         });
@@ -153,6 +155,11 @@ export class PackageAddComponent {
 
   resetUpload() {
     this.isUploaded = false;
+    this.fileName = '';
+    this.fileSize = 0;
+    this.onlyName = '';
+    this.version = '';
+    this.fileInput.nativeElement.value = '';
     this.extractedInfo = { name: '', version: '' };
   }
 
@@ -191,12 +198,14 @@ export class PackageAddComponent {
   nextStep() {
     if (this.currentStep < this.steps.length) {
       this.currentStep++;
+      // this.stepper.next();
     }
   }
 
   previousStep() {
     if (this.currentStep > 1) {
       this.currentStep--;
+      // this.stepper.previous();
     }
   }
 

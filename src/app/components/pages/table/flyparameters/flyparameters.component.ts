@@ -12,7 +12,6 @@ import { TerminalService } from 'src/app/services/terminal/devicelist';
 interface Device {
   deviceSN: string;
   organization: string;
-  parameterFileVersion: string;
   parameterFileStatus: string;
   parameterFilePublishTime: string;
 }
@@ -51,14 +50,12 @@ export class FlyparametersComponent {
     {
       deviceSN: 'NCA700083597',
       organization: 'DEMOQZRNAXTpjSgS',
-      parameterFileVersion: '',
       parameterFileStatus: 'Pending publish',
       parameterFilePublishTime: ''
     },
     {
       deviceSN: 'NCA700083598',
       organization: 'DEMOQZRNAXTpjSgS',
-      parameterFileVersion: '1',
       parameterFileStatus: 'Published',
       parameterFilePublishTime: '09/06/2024 12:15:27'
     }

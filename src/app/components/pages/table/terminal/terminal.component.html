@@ -83,11 +83,11 @@
            [ngClass]="{'btn-active': getSelectedCount() > 0}">
      <mat-icon>lock_open</mat-icon> Unlock
    </button>
-   <button class="btn btn-outline-primary"
+   <!-- <button class="btn btn-outline-primary"
            [disabled]="getSelectedCount() === 0"
            [ngClass]="{'btn-active': getSelectedCount() > 0}">
      <mat-icon>group_add</mat-icon> Add to Group
-   </button>
+   </button> -->
  </div>
 </div>
 </div>
@@ -133,7 +133,7 @@
         <td *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">
           <ng-container [ngSwitch]="column">
             <span *ngSwitchCase="'Serial Number'">{{ device.serialNumber || 'N/A' }}</span>
-            <span *ngSwitchCase="'Model'">{{ device.model || 'N/A' }}</span>
+            <span *ngSwitchCase="'Model'">{{ device.modelName || 'N/A' }}</span>
             <span *ngSwitchCase="'Status'">{{ device.status || 'N/A' }}</span>
             <span *ngSwitchDefault>{{ 'N/A' }}</span>
           </ng-container>
