@@ -1,9 +1,17 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import * as JSZip from 'jszip';
 import { DesignSelectionComponent } from 'src/app/components/dialogs/design-selection/design-selection.component';
 import { SelectCfgComponent } from 'src/app/components/dialogs/select-cfg/select-cfg.component';
+import { terminalBody } from 'src/app/services/terminal/body/body';
+import { terminalEvent } from 'src/app/services/terminal/body/event-data';
+import { TerminalService } from 'src/app/services/terminal/devicelist';
 
+interface SelectedCard {
+  id: string;
+  name: string;
+}
 @Component({
   selector: 'app-package-add',
   templateUrl: './package-add.component.html',
@@ -29,6 +37,10 @@ export class PackageAddComponent {
   isUploaded: boolean = false;
   fileName: string = ''; 
   fileSize: number = 0;
+  modelsList: any[] = [];
+  isUploading = false;
+  size: any[] = ['100Mb','300Mb','110Mb','50Mb','105Mb','95mb','280mb','75mb','69mb','250mb'];
+  selectedCards: SelectedCard[] = [];
   extractedInfo: {
     name: string;
     version: string;
@@ -38,40 +50,30 @@ export class PackageAddComponent {
   };
   onlyName: string;
   version: string;
+  uploadedFile: File | null = null;
+  type: string;
+  blobFile: File;
+  randomSize: string = '';
+
+  constructor(private http: HttpClient, private dataService: TerminalService) {}
 
   selectType(type: any) {
     this.selectedType = type;
   }
 
-  // designSelection() {
-  //   const dialogRef = this.dialog.open(DesignSelectionComponent, {
-  //       height: '80%',
-  //       width: '40%'
-  //     });
+  ngOnInit() {
+    this.getRandomSize();
+  }
 
-  //     dialogRef.afterClosed().subscribe(result => {
-  //       if (result) {
-  //           if(result?.type){
-  //               this.profile = result.profile;
-  //               this.param = result.parameters;
-  //               this.showDynamicKeys = false;
-  //           }else{
-  //             const dialogRef = this.dialog.open(SelectCfgComponent);
-  //             dialogRef.afterClosed().subscribe(result => {
-  //               if (result) {
-  //                   this.profile = [];
-  //                   this.param = [];
-  //                   this.showDynamicKeys = false;
-  //               }
-  //             });
-  //           }
-  //       }
-  //     });
-  //   }
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
+  }
+
+  getRandomSize() {
+    const randomIndex = Math.floor(Math.random() * this.size.length);
+    this.randomSize = this.size[randomIndex];
   }
 
   onDragLeave(event: DragEvent) {
@@ -103,6 +105,7 @@ export class PackageAddComponent {
     }
     
     if (file.name.toLowerCase().endsWith('.zip')) {
+      this.isUploading = true;
       try {
         const zip = new JSZip();
         const contents = await zip.loadAsync(file);
@@ -119,21 +122,26 @@ export class PackageAddComponent {
         //   } 
         // });
         contents.forEach((relativePath, zipEntry) => {
-          if (this.selectedType.name === 'Android' && relativePath.endsWith('.apk')  || relativePath.endsWith('.APK')) {
+          // if (this.selectedType.name === 'Android' && relativePath.endsWith('.apk')  || relativePath.endsWith('.APK')) {
+            this.type = "apk"
             appFile = zipEntry;
-          } else if (this.selectedType.name === 'Linux' && relativePath.endsWith('.NLD')  || relativePath.endsWith('.NLD')) {
-            appFile = zipEntry;
-          }
+          // } else if (this.selectedType.name === 'Linux' && relativePath.endsWith('.nld')  || relativePath.endsWith('.NLD')) {
+          //   this.type = "nld"
+          //   appFile = zipEntry;
+          // }
         });
 
         if (appFile) {
           // Extract info from APK or NLD file
+          var appInfoData = await appFile.async('blob'); // Get the file data as a Blob
+          this.blobFile = new File([appInfoData], appFile.name, { type: 'application/octet-stream' });
           const appData = await appFile.async('uint8array');
           const { name, version } = await this.extractAppInfo(appData, appFile.name);
 
           this.extractedInfo = { name, version };
           // this.nextStep();
           this.fileName = appFile.name;
+          console.log(this.fileName);
           const parts = this.fileName.split('.');
           parts.length > 1 ? this.fileName =  parts.slice(0, -1).join('.'):''
           this.onlyName = this.fileName.split('_')[0]
@@ -141,6 +149,13 @@ export class PackageAddComponent {
           this.fileSize = file.size;
           console.log("efqq",this.fileName,this.fileSize);
           this.isUploaded = true;
+          setTimeout(() => {
+            this.fileName = file.name;
+            this.fileSize = file.size;
+            this.isUploading = false;
+            this.isUploaded = true;
+          }, 2000);
+          // this.uploadedFile = file;
         } else {
           alert('ZIP file must contain one APK or NLD file.');
         }
@@ -151,6 +166,81 @@ export class PackageAddComponent {
     } else {
       alert('Please upload a ZIP file.');
     }
+  }
+
+  // selectCard(card: any): void {
+  //   card.selected = !card.selected;
+  //   this.selectedCard = {
+  //     id: card.modelId,
+  //     name: card.name,
+  //   };
+  //   console.log('Selected Card:', this.selectedCard);
+  // }
+  selectCard(card: any): void {
+    card.selected = !card.selected;
+
+    if (card.selected) {
+      // Add the card to selectedCards if it's not already there
+      if (!this.selectedCards.some(selectedCard => selectedCard.id === card.modelId)) {
+        this.selectedCards.push({
+          id: card.modelId,
+          name: card.name,
+        });
+      }
+    } else {
+      // Remove the card from selectedCards if it's there
+      this.selectedCards = this.selectedCards.filter(selectedCard => selectedCard.id !== card.modelId);
+    }
+
+    console.log('Selected Cards:', this.selectedCards);
+  }
+
+  get selectedCount(): number {
+    return this.modelsList.filter(card => card.selected).length;
+  }
+
+  async uploadPackage() {
+    if (!this.blobFile) {
+      console.error('No file uploaded');
+      return;
+    }
+
+    // const formData = new FormData();
+    const formData = new FormData();
+    formData.append('multipartFile', this.blobFile);
+
+    const jsonData = {
+        "event":{
+           "eventData":{
+              "name":`${this.onlyName}.${this.type}`,
+              "description":"sample package for testing",
+              "version":this.version,
+              "type":"apk",
+              "postInstallationAction":"REBOOT",
+              "platformType":"ANDROID",
+              "packageTypeIdentifier":"APPLICATION",
+              "tags":"",
+              "packageFile":{
+                 "filePath":"INA-TMS/INA-TMS/TMS-PACKAGES",
+                 "fileSize":this.randomSize,
+                 "fileName":"InaImagePackage"
+              },
+              "models":this.selectedCards
+           },
+           "eventType":"PACKAGE",
+           "eventSubType":"CREATE"
+        }
+    };
+
+    formData.append('json', JSON.stringify(jsonData));
+    this.dataService.uploadPackage(formData).subscribe(
+      response => {
+        console.log(response,"uploadPackage");
+      },
+      error => {
+          console.error('Error:', error);
+      }
+    )
   }
 
   resetUpload() {
@@ -195,7 +285,30 @@ export class PackageAddComponent {
     };
   }
 
+  async getModelsApi() {
+    const event = new terminalEvent('MODEL', 'SEARCH');
+    const terminalRequest = new terminalBody(event);
+    this.dataService.modelData(terminalRequest).subscribe(
+      response => {
+        this.modelsList = response.event.eventData.map(data => ({
+          modelId: data.id,
+          name: data.name,
+          // oem: data.oem,
+          // description: data.description,
+          // fulldate: data.createdBy.ts.split('T')[0],
+          // delete: data.delete
+        }));
+      },
+      error => {
+        console.error('Error:', error);
+      }
+    );
+  }
+
   nextStep() {
+    console.log("wegw",this.currentStep);
+    this.currentStep === 1 ? this.getModelsApi(): '';
+    this.currentStep === 2 ? this.uploadPackage()    : '';
     if (this.currentStep < this.steps.length) {
       this.currentStep++;
       // this.stepper.next();

@@ -207,4 +207,24 @@ export class TerminalService {
     getDevicebysn(options): Observable<any> {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/device/getDeviceBySNo`,options, {headers: this.httpHeaders})
     }
+
+    uploadPackage(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/package`, options, {headers: this.httpHeaders})
+    }
+
+    getDeployment(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/deployment/getAllTerminalCountDeployed`,options,{headers: this.httpHeaders})
+    }
+
+    createDeployment(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/deployment`,options, {headers: this.httpHeaders})
+    }
+
+    settingsInDeployment(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/deployment/getAllAssociatedSettings`,options,{headers: this.httpHeaders});
+    }
+
+    terminalInDeployment(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/deployment/getAllAssociatedTerminals`,options,{headers: this.httpHeaders});
+    }
 }

@@ -1,5 +1,5 @@
 <div class="breadcrumb-area">
-  <h1>Scheduling</h1>
+  <h1>Deployment</h1>
 </div>
 
 <div class="row">
@@ -31,7 +31,7 @@
             (click)="selectItem(deployment)">
             <span class="deployment-name">{{deployment.name}}</span>
             <div class="right-section">
-              <span class="deployment-count">{{deployment.count}}</span>
+              <span class="deployment-count">{{deployment.deviceCount}}</span>
               <!-- <mat-icon>computer</mat-icon> -->
               <img src="../../../../../assets/img/res.png">
             </div>
@@ -160,7 +160,7 @@
           </div>
         </mat-card-title>
 
-        <div class="application">
+        <!-- <div class="application">
           <div class="row" style="gap:16px">
             <mat-card class="card-with-menu" (click)="openCreateDialog()">
               <div class="card-content">
@@ -169,15 +169,6 @@
                 <span>0.0.18(gcc4.9.4)</span>
                 <span>Normal Update</span>
               </div>
-              <!-- Button that will show on hover -->
-              <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item>Option 1</button>
-                <button mat-menu-item>Option 2</button>
-                <button mat-menu-item>Option 3</button>
-              </mat-menu> -->
             </mat-card>
 
             <mat-card class="card-with-menu">
@@ -187,11 +178,9 @@
                 <span>0.0.18(gcc4.9.4)</span>
                 <span>Normal Update</span>
               </div>
-              <!-- Button that will show on hover -->
               <button mat-icon-button [matMenuTriggerFor]="menu2" class="menu-button">
                 <mat-icon>more_vert</mat-icon>
               </button>
-              <!-- Define the menu -->
               <mat-menu #menu2="matMenu">
                 <button mat-menu-item>Change Version</button>
                 <button mat-menu-item>Change Update Method</button>
@@ -199,7 +188,40 @@
               </mat-menu>
             </mat-card>
           </div>
+        </div> -->
+        <div class="application">
+          <div class="row" style="gap:16px">
+            <!-- Check if settingsInApplication is null or empty -->
+            <ng-container *ngIf="settingsInApplication?.length > 0; else noDataTemplate">
+              <mat-card class="card-with-menu" *ngFor="let app of settingsInApplication" (click)="openCreateDialog()">
+                <div class="card-content">
+                  <img class="linux" src="../../../../../assets/img/linux-icon.png">
+                  <span>{{ app.name }}</span>
+                  <span>{{ app.version }}</span>
+                  <span>{{ app.updateMethod }}</span>
+                </div>
+                 <!-- <button *ngIf="app.hasMenu" mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="handleMenuAction('Change Version')">Change Version</button>
+                        <button mat-menu-item (click)="handleMenuAction('Change Update Method')">Change Update Method</button>
+                        <button mat-menu-item (click)="handleMenuAction('Remove')">Remove</button>
+                      </mat-menu> -->
+              </mat-card>
+            </ng-container>
+        
+            <!-- No Data Template -->
+            <ng-template #noDataTemplate>
+              <div class="no-data-message">
+                No Data Available
+              </div>
+            </ng-template>
+          </div>
         </div>
+        
+        
 
         <!-- <hr> -->
         <!-- <div class="frimware">
@@ -263,7 +285,7 @@
             </div> -->
       </mat-card>
     </div>
-    <div *ngIf="selectedTab === 'process'" class="row">
+    <!-- <div *ngIf="selectedTab === 'process'" class="row">
       <div class="dashboard">
         <div class="card">
           <div class="card-header">
@@ -321,7 +343,7 @@
           </div>
         </div>
       </div>
-      <!-- <div class="statistics-card">
+      <div class="statistics-card">
           <h2 class="overall-progress">Overall progress {{overallProgress}}% (0/0)</h2>
           
           <div class="info-box">
@@ -350,7 +372,68 @@
               </ng-container>
             </svg>
           </div>
-        </div> -->
+        </div>
     </div>
-  </div>
+  </div> -->
+  <div *ngIf="selectedTab === 'process'" class="row">
+    <div class="dashboard">
+      <!-- First card for Connected/Unconnected terminals -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Connected terminals/Unconnected terminals</h2>
+          <span class="info-icon">i</span>
+        </div>
+        <div class="chart">
+          <div class="semi-circle"
+            [style.background-image]="'conic-gradient(#4285F4 0deg, #4285F4 ' + connectedPercentage * 3.6 + 'deg, #F8F9FA ' + connectedPercentage * 3.6 + 'deg)'">
+          </div>
+          <div class="chart-labels">
+            <span class="label connected">Connected terminals</span>
+            <span class="label unconnected">Unconnected terminals</span>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <span class="dot blue"></span>
+            <span class="percentage">{{connectedPercentage.toFixed(2)}}% ({{connectedTerminals}})</span>
+            <span class="label">Connected terminals</span>
+          </div>
+          <div class="stat">
+            <span class="dot red"></span>
+            <span class="percentage">{{unconnectedPercentage.toFixed(2)}}% ({{unconnectedTerminals}})</span>
+            <span class="label">Unconnected terminals</span>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Second card for Active/Inactive terminals -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Number of active terminals</h2>
+          <span class="info-icon">i</span>
+        </div>
+        <div class="chart">
+          <div class="semi-circle"
+            [style.background-image]="'conic-gradient(#EA4335 0deg, #EA4335 ' + inactivePercentage * 3.6 + 'deg, #F8F9FA ' + inactivePercentage * 3.6 + 'deg)'">
+          </div>
+          <div class="chart-labels">
+            <span class="label active">Active terminals</span>
+            <span class="label inactive">Inactive terminals</span>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <span class="dot blue"></span>
+            <span class="percentage">{{activePercentage.toFixed(2)}}% ({{activeTerminals}})</span>
+            <span class="label">Active terminals</span>
+          </div>
+          <div class="stat">
+            <span class="dot red"></span>
+            <span class="percentage">{{inactivePercentage.toFixed(2)}}% ({{inactiveTerminals}})</span>
+            <span class="label">Inactive terminals</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
 </div>

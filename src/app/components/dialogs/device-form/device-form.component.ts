@@ -27,6 +27,7 @@ export class DevicesFormComponent {
   merchants = [];
   hirearchies = [];
   dsn:any;
+  deployment: any;
   constructor(public dialog: MatDialog,public dialogRef: MatDialogRef<DevicesFormComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private shared:SharedServices,private dataService: TerminalService) {
     this.title = data.title
     this.options = data.hierarchy
@@ -90,8 +91,9 @@ export class DevicesFormComponent {
       this.dialogRef.close(this.deviceForm.value);
     } else if (this.title == 'New Terminal') {
       this.dialogRef.close(this.dsn);
-    }
-    else {
+    } else if (this.title == 'Create Deployment') {
+      this.dialogRef.close(this.deployment);
+    } else {
       this.dialogRef.close(this.modalForm.value);
     }
   }

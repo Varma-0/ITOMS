@@ -216,6 +216,7 @@ import { TerminalProfileComponent } from './components/dialogs/terminal-profile/
 import { DeploymentModalComponent } from './components/dialogs/deployment-modal/deployment-modal.component';
 import { PackageAddComponent } from './components/pages/table/packages/package-add/package-add.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { ProfileChartComponent } from './components/charts/profile-chart/profile-chart.component';
 
 @NgModule({
   declarations: [
@@ -406,7 +407,8 @@ import { MatStepperModule } from '@angular/material/stepper';
     GoogleMapComponent,
     TerminalProfileComponent,
     DeploymentModalComponent,
-    PackageAddComponent
+    PackageAddComponent,
+    ProfileChartComponent
   ],
   imports: [
     BrowserModule,
