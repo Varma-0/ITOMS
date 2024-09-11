@@ -90,8 +90,8 @@
           <input type="text" placeholder="SN" [(ngModel)]="searchTerms" (input)="search1()">
           <select [(ngModel)]="statusFilter" (change)="search1()">
             <option value="">Status</option>
-            <option value="Pending publish">Pending publish</option>
-            <option value="Published">Published</option>
+            <option value="PENDING">Pending</option>
+            <option value="PUBLISHED">Published</option>
           </select>
           <button class="btn-primary btn-icon"><i class="bx bx-search"></i></button>
           <button class="btn-primary btn-icon" (click)="openCreateTerminalDialog(true)"><i class="bx bx-plus"></i></button>
@@ -134,16 +134,28 @@
             </tr>
             <tr *ngFor="let terminal of filteredTerminals">
               <td>
-                <input type="checkbox" 
+                <!-- <input type="checkbox" 
                        (change)="toggleSelection(terminal)"
-                       [checked]="isSelected(terminal)">
+                       [checked]="isSelected(terminal)"> -->
+
+                       <div class="checkbox">
+                        <input class="inp-cbx" id="cbx.terminal" type="checkbox" style="display: none;" (change)="toggleSelection(terminal)" [checked]="isSelected(terminal)"/>
+                        <label class="cbx" for="cbx.terminal">
+                            <span>
+                                <svg width="12px" height="10px" viewbox="0 0 12 10">
+                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                </svg>
+                            </span>
+                        </label>
+                    </div>
               </td>
-              <td>{{ terminal.sn }}</td>
-              <td>{{ terminal.model }}</td>
+              <td>{{ terminal.serialNumber }}</td>
+              <td>{{ terminal.model || '-' }}</td>
               <td>{{ terminal.status }}</td>
-              <td>{{ terminal.OnlineStatus }}</td>
-              <td>{{ terminal.BindingTime }}</td>
-              <td>{{ terminal.Process }}</td>
+              <td>{{ terminal.onlineStatus }}</td>
+              <td>{{ terminal.bindingTime.split('T')[0] }}</td>
+              <td>{{ terminal.processPercentage }}</td>
+              <td></td>
             </tr>
           </tbody>
         </table>
@@ -154,7 +166,7 @@
         <mat-card-title>
           <div class="over-header">
             <span>Application</span>
-            <button mat-icon-button color="accent">
+            <button mat-icon-button color="accent" (click)="createSettingCard()">
               <mat-icon>add</mat-icon>
             </button>
           </div>

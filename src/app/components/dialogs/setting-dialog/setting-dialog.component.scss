@@ -1,0 +1,186 @@
+// .app-container {
+//     display: flex;
+//     justify-content: space-between;
+//     padding: 20px;
+//   }
+  
+//   .current-app-section,
+//   .optional-app-section {
+//     flex: 1;
+//     margin: 0 20px;
+//   }
+  
+//   .header {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     margin-bottom: 20px;
+//   }
+  
+//   .search-bar {
+//     width: 200px;
+//     padding: 8px;
+//     border: 1px solid #ccc;
+//     border-radius: 4px;
+//   }
+  
+//   .app-grid {
+//     display: grid;
+//     grid-template-columns: repeat(3, 1fr);
+//     grid-gap: 20px;
+//   }
+  
+//   .app-card {
+//     background-color: white;
+//     border: 1px solid #eee;
+//     border-radius: 8px;
+//     text-align: center;
+//     padding: 15px;
+//     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+//     transition: box-shadow 0.3s ease-in-out;
+    
+//     &:hover {
+//       box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+//     }
+//   }
+  
+//   .app-icon {
+//     width: 50px;
+//     height: 50px;
+//     margin-bottom: 10px;
+//   }
+  
+//   .app-info {
+//     h5 {
+//       margin: 0;
+//       font-size: 16px;
+//       font-weight: bold;
+//     }
+//     p {
+//       margin: 0;
+//       color: #888;
+//       font-size: 12px;
+//     }
+//     span {
+//       margin-top: 5px;
+//       display: inline-block;
+//       color: #666;
+//       font-size: 12px;
+//     }
+//   }
+  
+//   .switch-icon {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     font-size: 24px;
+//     margin: 0 20px;
+//     cursor: pointer;
+  
+//     i {
+//       color: #4285f4;
+//     }
+//   }
+
+.app-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .current-app-section,
+  .optional-app-section {
+    flex: 1;
+    margin: 0 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .search-bar {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .app-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+  }
+  
+  .app-card {
+    background-color: white;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    text-align: center;
+    padding: 15px;
+    position: relative;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+  
+    &:hover {
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+    }
+  
+    .delete-icon,
+    .plus-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: red;
+      font-size: 20px;
+      cursor: pointer;
+      display: none;
+      transition: opacity 0.3s;
+    }
+  
+    &:hover .delete-icon,
+    &:hover .plus-icon {
+      display: block;
+    }
+  }
+  
+  .app-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+  }
+  
+  .app-info {
+    h5 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    p {
+      margin: 0;
+      color: #888;
+      font-size: 12px;
+    }
+    span {
+      margin-top: 5px;
+      display: inline-block;
+      color: #666;
+      font-size: 12px;
+    }
+  }
+  
+  .switch-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    margin: 0 20px;
+    cursor: pointer;
+  
+    i {
+      color: #4285f4;
+    }
+  }
+  

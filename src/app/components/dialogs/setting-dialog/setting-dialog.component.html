@@ -1,0 +1,89 @@
+<!-- <div class="app-container">
+    <div class="current-app-section">
+      <div class="header">
+        <h4>Current App</h4>
+        <input type="text" placeholder="App Name / Package Name" [(ngModel)]="searchQueryCurrent" class="search-bar" />
+      </div>
+      <div class="app-grid">
+        <div *ngFor="let app of currentApps | filter: searchQueryCurrent" class="app-card">
+          <img [src]="app.icon" alt="app icon" class="app-icon" />
+          <div class="app-info">
+            <h5>{{ app.name }}</h5>
+            <p>{{ app.packageName }}</p>
+            <span>{{ app.version }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="switch-icon">
+      <i class="fa fa-exchange"></i>
+    </div>
+  
+    <div class="optional-app-section">
+      <div class="header">
+        <h4>Optional App</h4>
+        <input type="text" placeholder="App Name / Package Name" [(ngModel)]="searchQueryOptional" class="search-bar" />
+      </div>
+      <div class="app-grid">
+        <div *ngFor="let app of optionalApps | filter: searchQueryOptional" class="app-card">
+          <img [src]="app.icon" alt="app icon" class="app-icon" />
+          <div class="app-info">
+            <h5>{{ app.name }}</h5>
+            <p>{{ app.packageName }}</p>
+            <span>{{ app.version }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   -->
+
+   <div class="app-container">
+    <!-- Current App Section -->
+    <div class="current-app-section">
+      <div class="header">
+        <h4>Current App</h4>
+        <input type="text" placeholder="App Name / Package Name" [(ngModel)]="searchQueryCurrent" class="search-bar" />
+      </div>
+      <div class="app-grid">
+        <div *ngFor="let app of currentApps | filter: searchQueryCurrent" class="app-card" (mouseenter)="hoveredApp = app" (mouseleave)="hoveredApp = null">
+          <img [src]="app.icon" alt="app icon" class="app-icon" />
+          <div class="app-info">
+            <h5>{{ app.name }}</h5>
+            <p>{{ app.packageName }}</p>
+            <span>{{ app.version }}</span>
+          </div>
+          <!-- Delete Icon on Hover -->
+
+          <i *ngIf="hoveredApp === app" class="bx bx-trash" style="cursor:pointer;font-size: 20px;color:red;width:100%" (click)="moveToOptional(app)"></i>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Switch Icon -->
+    <div class="switch-icon">
+      <i class="bx bx-exchange"></i>
+    </div>
+  
+    <!-- Optional App Section -->
+    <div class="optional-app-section">
+      <div class="header">
+        <h4>Optional App</h4>
+        <input type="text" placeholder="App Name / Package Name" [(ngModel)]="searchQueryOptional" class="search-bar" />
+      </div>
+      <div class="app-grid">
+        <div *ngFor="let app of optionalApps | filter: searchQueryOptional" class="app-card" (mouseenter)="hoveredApp = app" (mouseleave)="hoveredApp = null">
+          <img [src]="app.icon" alt="app icon" class="app-icon" />
+          <div class="app-info">
+            <h5>{{ app.name }}</h5>
+            <p>{{ app.packageName }}</p>
+            <span>{{ app.version }}</span>
+          </div>
+          <!-- Plus Icon on Hover -->
+          <i *ngIf="hoveredApp === app" class="bx bx-plus plus-icon" style="background-color:rgb(168, 236, 168);color:green" (click)="moveToCurrent(app)"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  

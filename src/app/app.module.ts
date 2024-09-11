@@ -217,6 +217,8 @@ import { DeploymentModalComponent } from './components/dialogs/deployment-modal/
 import { PackageAddComponent } from './components/pages/table/packages/package-add/package-add.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ProfileChartComponent } from './components/charts/profile-chart/profile-chart.component';
+import { SettingDialogComponent } from './components/dialogs/setting-dialog/setting-dialog.component';
+import { FilterPipe } from './components/dialogs/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -408,7 +410,9 @@ import { ProfileChartComponent } from './components/charts/profile-chart/profile
     TerminalProfileComponent,
     DeploymentModalComponent,
     PackageAddComponent,
-    ProfileChartComponent
+    ProfileChartComponent,
+    SettingDialogComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

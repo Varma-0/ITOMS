@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DeploymentModalComponent } from 'src/app/components/dialogs/deployment-modal/deployment-modal.component';
 import { DevicesFormComponent } from 'src/app/components/dialogs/device-form/device-form.component';
+import { SettingDialogComponent } from 'src/app/components/dialogs/setting-dialog/setting-dialog.component';
 import { deleteMerchantEVent } from 'src/app/services/login/body/event';
 import { SharedServices } from 'src/app/services/shared.service';
 import { terminalBody } from 'src/app/services/terminal/body/body';
@@ -39,6 +40,7 @@ interface Device1 {
 export class SchedulingComponent {
   data: any;
   selectedCount: number = 0;
+  modelNameBasedOnSN: any;
   constructor(public dialog: MatDialog, private shared:SharedServices,private dataService: TerminalService){}
 
   connectedTerminals = 0;
@@ -66,22 +68,6 @@ export class SchedulingComponent {
     { sn: 'NCA700083597', model: 'N950', status: 'Inventory', onlineStatus: 'Offline', bindingTime: '09/09/2024', process: 0 }
   ];
   deployments = [];
-  devices: Device[] = [
-    {
-      deviceSN: 'NCA700083597',
-      organization: 'DEMOQZRNAXTpjSgS',
-      parameterFileVersion: '',
-      parameterFileStatus: 'Pending publish',
-      parameterFilePublishTime: ''
-    },
-    {
-      deviceSN: 'NCA700083598',
-      organization: 'DEMOQZRNAXTpjSgS',
-      parameterFileVersion: '1',
-      parameterFileStatus: 'Published',
-      parameterFilePublishTime: '09/06/2024 12:15:27'
-    }
-  ];
   filteredTerminals = [];
   statusFilter = '';
   filteredDeployments = [];
@@ -126,7 +112,7 @@ export class SchedulingComponent {
     }
   }
 
-  openCreateTerminalDialog(data?: any,edit?): void {
+  openCreateTerminalDialog(edit?: any,data?: any): void {
     const dialogRef = this.dialog.open(DevicesFormComponent, {
       data: {
         title: edit? 'New Terminal' : 'Delete Terminal',
@@ -140,7 +126,45 @@ export class SchedulingComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log("1111111111",result);
       if (result) {
-        
+        if (edit) {
+          const payloadForModel = {
+            "event": {
+                "eventData": result,
+                "eventType": "DEVICE",
+                "eventSubType": "SEARCH"
+            }
+          }
+          this.dataService.getDevicebysn(payloadForModel).subscribe(
+            response => {
+              this.modelNameBasedOnSN = response.event.eventData.modelName;
+            },
+            error => {
+              console.error(error);
+            }
+          )
+          const payload = {
+            "event": {
+                "eventData": {
+                    "deploymentId": this.selectedItem.id,
+                    "deploymentName": this.selectedItem.name,
+                    "serialNumber": result,
+                    "model": this.modelNameBasedOnSN,
+                    "status": "PENDING",
+                    "onlineStatus": "OFFLINE"
+                },
+                "eventType": "DEPLOYMENT",
+                "eventSubType": "CREATE"
+            }
+          }
+          this.dataService.addTerminal(payload).subscribe(
+            response => {
+              console.log("erecw",response);
+            },
+            error => {
+              console.error(error);
+            }
+          )
+        }
       }
     });
   }
@@ -270,10 +294,14 @@ export class SchedulingComponent {
     }
   }
 
-
-  // get totalTerminals(): number {
-  //   return this.connectedTerminals + this.unconnectedTerminals;
-  // }
+  createSettingCard(): void{
+    const dialogRef = this.dialog.open(SettingDialogComponent, {
+      data: {
+        title: 'Create Setting',
+      },
+      width: '70%'
+    });
+  }
 
   get connectedPercentage(): number {
     return this.totalTerminals ? (this.connectedTerminals / this.totalTerminals) * 100 : 0;
@@ -297,15 +325,9 @@ export class SchedulingComponent {
     ).join(' ');
   }
 
-  search() {
-    this.filteredTerminals = this.devices.filter(device =>
-      device.deviceSN?.toLowerCase().includes(this.searchTerm?.toLowerCase()) &&
-      (this.statusFilter === '' || device.parameterFileStatus === this.statusFilter)
-    );
-  }
 
   search1() {
-    this.filteredTerminals = this.devices.filter(device =>
+    this.filteredTerminals = this.settingsInTerminal.filter(device =>
       device.deviceSN?.toLowerCase().includes(this.searchTerms?.toLowerCase()) &&
       (this.statusFilter === '' || device.parameterFileStatus === this.statusFilter)
     );
