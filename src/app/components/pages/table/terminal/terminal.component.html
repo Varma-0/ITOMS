@@ -65,7 +65,7 @@
 </div>
 
 
-
+<!-- 
   <div class="row align-items-center"
   [ngClass]="{'bg-light-grey': getSelectedCount() === 0,'cursor-not-allowed': getSelectedCount() === 0}">
 <div class="col-md-2 sel">
@@ -83,22 +83,21 @@
            [ngClass]="{'btn-active': getSelectedCount() > 0}">
      <mat-icon>lock_open</mat-icon> Unlock
    </button>
-   <!-- <button class="btn btn-outline-primary"
+   <button class="btn btn-outline-primary"
            [disabled]="getSelectedCount() === 0"
            [ngClass]="{'btn-active': getSelectedCount() > 0}">
      <mat-icon>group_add</mat-icon> Add to Group
-   </button> -->
+   </button>
  </div>
 </div>
-</div>
+</div> -->
 
 <!-- Table Section -->
-<div class="table-responsive">
+<!-- <div class="table-responsive">
   <table class="table table-hover table-bordered">
     <thead class="table-light">
       <tr>
         <th>
-          <!-- <input type="checkbox" id="selectAll" (change)="toggleSelectAll($event)"> -->
           <div class="checkbox">
             <input class="inp-cbx" id="cbx" type="checkbox" style="display: none;" (change)="toggleSelectAll($event)"/>
             <label class="cbx" for="cbx">
@@ -118,7 +117,6 @@
     <tbody class="dataRowColor">
       <tr *ngFor="let device of paginatedDevices" (click)="row(device)">
         <td>
-          <!-- <input type="checkbox" [(ngModel)]="device.selected" (click)="$event.stopPropagation()"> -->
           <div class="checkbox" (click)="$event.stopPropagation()">
             <input class="inp-cbx" id="cbx{{device.id}}" type="checkbox" style="display: none;"  [(ngModel)]="device.selected"/>
             <label class="cbx" for="cbx{{device.id}}">
@@ -156,8 +154,80 @@
       </tr>
     </tbody>
   </table>
+</div> -->
+<div class="action-bar"  [ngClass]="{'bg-light-grey': getSelectedCount() === 0,'cursor-not-allowed': getSelectedCount() === 0}">
+  <span>{{ getSelectedCount() }} Selected</span>
+  <button class="btn-primary" [disabled]=" getSelectedCount() === 0" [ngClass]="{'btn-active': getSelectedCount() > 0,'cursor-not-allowed': getSelectedCount() === 0}">
+    <i class='bx bx-lock'></i>  Lock
+  </button>
+  <button class="btn-primary" [disabled]=" getSelectedCount() === 0" [ngClass]="{'btn-active': getSelectedCount() > 0,'cursor-not-allowed': getSelectedCount() === 0}">
+    <i class='bx bx-lock-open'></i>  Unlock
+  </button>
 </div>
-
+<table>
+  <thead>
+    <tr>
+      <th>
+        <div class="checkbox">
+          <input class="inp-cbx" id="cbx" type="checkbox" style="display: none;" (change)="toggleSelectAll($event)"/>
+          <label class="cbx" for="cbx">
+              <span>
+                  <svg width="12px" height="10px" viewbox="0 0 12 10">
+                      <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                  </svg>
+              </span>
+          </label>
+        </div>
+      </th>
+      <th *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">
+        {{ column }}
+      </th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngIf="paginatedDevices.length === 0">
+      <td colspan="5" class="no-data">No Data</td>
+    </tr>
+    <tr *ngFor="let device of paginatedDevices" (click)="row(device)">
+      <td>
+        <div class="checkbox" (click)="$event.stopPropagation()">
+          <input class="inp-cbx" id="cbx{{device.id}}" type="checkbox" style="display: none;"  [(ngModel)]="device.selected"/>
+          <label class="cbx" for="cbx{{device.id}}">
+              <span>
+                  <svg width="12px" height="10px" viewbox="0 0 12 10">
+                      <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                  </svg>
+              </span>
+          </label>
+      </div>
+      </td>
+      <td *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">
+        <ng-container [ngSwitch]="column">
+          <span *ngSwitchCase="'Serial Number'">{{ device.serialNumber || 'N/A' }}</span>
+          <span *ngSwitchCase="'Model'">{{ device.modelName || 'N/A' }}</span>
+          <span *ngSwitchCase="'Status'">{{ device.status || 'N/A' }}</span>
+          <span *ngSwitchDefault>{{ 'N/A' }}</span>
+        </ng-container>
+      </td>
+      <td>
+        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="edit(device)">
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="openDeleteDialog(device)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 
   <!-- Pagination Section -->
