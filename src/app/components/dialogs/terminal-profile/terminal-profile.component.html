@@ -1,7 +1,22 @@
 <h2 mat-dialog-title>Profile</h2>
 <mat-dialog-content>
+    <div class="container">
+        <div *ngFor="let item of items" class="card">
+          <div class="card-header">
+            <span>{{ item.title }}</span>
+          </div>
+          <div class="card-body">
+            <textarea readonly>{{ item.defaultValue }}</textarea>
+          </div>
+        </div>
+      </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button class="btn btn-secondary" mat-dialog-close>Cancel</button>&nbsp;
-  <button class="btn btn-danger" [mat-dialog-close]="true">Save</button>
+<div *ngIf="title != 'Profile'">
+    <button class="btn btn-secondary" mat-dialog-close>Cancel</button>&nbsp;
+    <button class="btn btn-danger" [mat-dialog-close]="true">Save</button>
+</div>
+<div *ngIf="title == 'Profile'">
+    <button class="btn btn-danger" [mat-dialog-close]="true">OK</button>
+</div>
 </mat-dialog-actions>

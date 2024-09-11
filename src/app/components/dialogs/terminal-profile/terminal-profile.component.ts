@@ -10,7 +10,11 @@ import {
   styleUrls: ['./terminal-profile.component.scss'],
 })
 export class TerminalProfileComponent {
+    items;
+    title;
   constructor(public dialogRef: MatDialogRef<TerminalProfileComponent>,@Inject(MAT_DIALOG_DATA) public data: any) {
+    this.title = data.title;
+    this.items = data.items;
   }
 
   onCancel(): void {

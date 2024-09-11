@@ -264,4 +264,25 @@ export class TerminalService {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/schedule/getScheduledParameterJobs`,options, {headers: this.httpHeaders})
     }
 
+    deleteParametrs(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/parameter/batch/deleteParameters`,options, {headers: this.httpHeaders})
+    }
+
+    updateParametrs(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/parameter/batch/updateParameterLog`,options, {headers: this.httpHeaders})
+    }
+
+    getParamByPackage(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/parameter/batch/getParametersByPackage`,options, {headers: this.httpHeaders})
+    }
+
+    deleteScheduleParamJob(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/schedule/deleteScheduledParameter`,options, {headers: this.httpHeaders})
+    }
+
+    scheduleJobParams(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/schedule/scheduleJobForParameters`,options, {headers: this.httpHeaders})
+    }
+
+
 }
