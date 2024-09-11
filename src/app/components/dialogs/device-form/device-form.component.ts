@@ -89,7 +89,7 @@ export class DevicesFormComponent {
       this.deviceForm.get('merchantName').setValue(this.getObjectById(this.deviceForm.get('merchant').value,this.merchants).name)
       this.deviceForm.get('hierarchyName').setValue(this.deviceForm.get('hierarchy').value,this.hirearchies);
       this.dialogRef.close(this.deviceForm.value);
-    } else if (this.title == 'New Terminal') {
+    } else if (this.title == 'New Terminal' || this.title == 'Delete Terminal') {
       this.dialogRef.close(this.dsn);
     } else if (this.title == 'Create Deployment') {
       this.dialogRef.close(this.deployment);

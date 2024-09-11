@@ -44,14 +44,17 @@
     <div class="current-app-section">
       <div class="header">
         <h4>Current App</h4>
-        <input type="text" placeholder="App Name / Package Name" [(ngModel)]="searchQueryCurrent" class="search-bar" />
+        <div class="d-flex aligin-items-center" style="gap:16px">
+          <input type="text" placeholder="App Name / Package Name" [(ngModel)]="searchQueryCurrent" class="search-bar" />
+          <button class="btn btn-primary"><i class="bx bx-search"></i></button>
+        </div>
       </div>
       <div class="app-grid">
-        <div *ngFor="let app of currentApps | filter: searchQueryCurrent" class="app-card" (mouseenter)="hoveredApp = app" (mouseleave)="hoveredApp = null">
+        <div *ngFor="let app of oldApps | filter: searchQueryCurrent" class="app-card" (mouseenter)="hoveredApp = app" (mouseleave)="hoveredApp = null">
           <img [src]="app.icon" alt="app icon" class="app-icon" />
           <div class="app-info">
             <h5>{{ app.name }}</h5>
-            <p>{{ app.packageName }}</p>
+            <!-- <p>{{ app.packageName }}</p> -->
             <span>{{ app.version }}</span>
           </div>
           <!-- Delete Icon on Hover -->
@@ -63,21 +66,26 @@
   
     <!-- Switch Icon -->
     <div class="switch-icon">
-      <i class="bx bx-exchange"></i>
+      <span class="material-symbols-outlined" style="color:blue">
+        swap_horiz
+        </span>
     </div>
   
     <!-- Optional App Section -->
     <div class="optional-app-section">
       <div class="header">
-        <h4>Optional App</h4>
-        <input type="text" placeholder="App Name / Package Name" [(ngModel)]="searchQueryOptional" class="search-bar" />
+        <h4>Add App</h4>
+        <div class="d-flex aligin-items-center" style="gap:16px">
+          <input type="text" placeholder="App Name / Package Name" [(ngModel)]="searchQueryOptional" class="search-bar" />
+          <button class="btn btn-primary"><i class="bx bx-search"></i></button>
+        </div>
       </div>
       <div class="app-grid">
-        <div *ngFor="let app of optionalApps | filter: searchQueryOptional" class="app-card" (mouseenter)="hoveredApp = app" (mouseleave)="hoveredApp = null">
+        <div *ngFor="let app of addApps | filter: searchQueryOptional" class="app-card" (mouseenter)="hoveredApp = app" (mouseleave)="hoveredApp = null">
           <img [src]="app.icon" alt="app icon" class="app-icon" />
           <div class="app-info">
             <h5>{{ app.name }}</h5>
-            <p>{{ app.packageName }}</p>
+            <!-- <p>{{ app.packageName }}</p> -->
             <span>{{ app.version }}</span>
           </div>
           <!-- Plus Icon on Hover -->
@@ -86,4 +94,7 @@
       </div>
     </div>
   </div>
-  
+  <mat-dialog-actions align="end" class="d-flex justify-content-evenly">
+    <button class="btn btn-secondary" mat-dialog-close>Cancel</button>
+    <button class="btn btn-primary" [mat-dialog-close]="true" (click)="confirm()">Confirm</button>
+  </mat-dialog-actions>

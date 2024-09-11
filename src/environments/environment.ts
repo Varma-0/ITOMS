@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  tmsApiUrl:'http://ec2-3-110-120-158.ap-south-1.compute.amazonaws.com:9009/api/ina',
+  tmsApiUrl:'http://ec2-65-2-184-172.ap-south-1.compute.amazonaws.com:9009/api/ina',
   userApiUrl:'http://ec2-3-110-102-138.ap-south-1.compute.amazonaws.com:9008/api/ina',
   
 

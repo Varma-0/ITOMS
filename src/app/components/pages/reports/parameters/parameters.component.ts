@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ReportsDialogComponent } from 'src/app/components/dialogs/reports/reports.component';
+import { TerminalService } from 'src/app/services/terminal/devicelist';
 import * as XLSX from 'xlsx';
 
 interface Device {
   serialNumber: string;
   deviceId: string;
-  model: string;
-  deviceStatus: string;
-  hierarchy: string;
+  merchantName: string;
+  deviceModel: string;
+  merchantHierarchy: string;
   lastHeartbeat: string;
   groupNames: string;
   ipAddress: string;
@@ -27,32 +28,27 @@ interface Column {
   styleUrls: ['./parameters.component.scss']
 })
 export class ParametersReportComponent implements OnInit {
-    devices: Device[] = [
-        { serialNumber: '111-111-111', deviceId: '', model: 'VX 520', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed', lastHeartbeat: '', groupNames: '', ipAddress: '',view:true },
-        { serialNumber: '1212121', deviceId: '0837823782378', model: '640P 1', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed >> Girmiti', lastHeartbeat: '', groupNames: '', ipAddress: '' },
-        { serialNumber: '237984329843289', deviceId: '0837823782378', model: '640P 2', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed', lastHeartbeat: '', groupNames: '', ipAddress: '' },
-        { serialNumber: '261-025-797', deviceId: '', model: 'VX 520', deviceStatus: 'Inactive', hierarchy: 'BankMed >> Girmiti', lastHeartbeat: '25/Nov/2020 09:49:...', groupNames: '', ipAddress: '192.168.1.1' },
-        // Add more device data here...
-      ];
+    devices: Device[] = [];
 
   filteredDevices: Device[] = [];
   searchTerm: string = '';
   columns: Column[] = [
     { key: 'serialNumber', label: 'Serial Number', visible: true },
     { key: 'deviceId', label: 'Device ID', visible: true },
-    { key: 'model', label: 'Merchant Name', visible: true },
-    { key: 'hierarchy', label: 'Merchant Hierarchy', visible: true },
-    { key: 'deviceStatus', label: 'Model', visible: true },
+    { key: 'merchantName', label: 'Merchant Name', visible: true },
+    { key: 'merchantHierarchy', label: 'Merchant Hierarchy', visible: true },
+    { key: 'deviceModel', label: 'Model', visible: true },
     { key: 'lastHeartbeat', label: 'View', visible: true },
   ];
 
   currentPage = 1;
   itemsPerPage = 10;
 
-  constructor(private dialog:MatDialog) { }
+  constructor(private dialog:MatDialog,private dataService:TerminalService) { }
 
   ngOnInit(): void {
     this.applyFilter();
+    this.loadParameterStatusReport();
   }
 
   applyFilter(): void {
@@ -62,6 +58,25 @@ export class ParametersReportComponent implements OnInit {
         value?.toLowerCase().includes(this.searchTerm?.toLowerCase())
       )
     );
+  }
+
+  loadParameterStatusReport() {
+    const payload = {
+      "event": {
+        "eventType": "REPORT",
+        "eventSubType": "SEARCH"
+      }
+    }
+    this.dataService.getParameterReport(payload).subscribe(
+      response => {
+          console.log(response);
+          this.devices = response.event.eventData.responseData[0];
+          this.applyFilter();
+      },
+      error => {
+          console.error('Error:', error);
+      }
+  )
   }
 
   exportToExcel(): void {

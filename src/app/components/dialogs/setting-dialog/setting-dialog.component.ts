@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SharedServices } from 'src/app/services/shared.service';
+import { TerminalService } from 'src/app/services/terminal/devicelist';
+
 
 @Component({
   selector: 'app-setting-dialog',
@@ -10,33 +13,97 @@ export class SettingDialogComponent {
   searchQueryCurrent: string = '';
   searchQueryOptional: string = '';
   hoveredApp: any = null;
-  currentApps = [
-    { name: 'DASHPAY POS', packageName: 'com.ar.dashpaypos', version: '2.7.3P', icon: 'assets/img/linux-icon.png' },
-    { name: 'NEDBANK POS', packageName: 'com.ar.nedbankpos', version: '14.0.7.0D H0', icon: 'assets/img/linux-icon.png' },
-    { name: 'FNB POS', packageName: 'com.ar.fnbpos', version: '5.00 - (0320)', icon: 'assets/img/linux-icon.png' }
+  addApps = [];
+  icons: string[] = [
+    // 'assets/img/linux-icon.png',
+    'assets/img/android-logo.png'
   ];
-
-  optionalApps = [
-    { name: 'Dashpay', packageName: 'Dashpay', version: '4.41', icon: 'assets/img/linux-icon.png' },
-    { name: 'Nedbank', packageName: 'Nedbank', version: '4.43', icon: 'assets/img/linux-icon.png' },
-    { name: 'AdumoPOS', packageName: 'AdumoPOS', version: '1.13', icon: 'assets/img/linux-icon.png' },
-    { name: 'RKLA Demo', packageName: 'com.newland.rklDemo', version: '1.1.0', icon: 'assets/img/linux-icon.png' },
-    { name: 'TEST', packageName: 'TEST', version: '1.0.2', icon: 'assets/img/linux-icon.png' },
-    { name: 'AVO RP', packageName: 'za.co.nedbank.rp', version: '1.3-release (211027151)', icon: 'assets/img/linux-icon.png' }
-  ];
-  constructor(private shared:SharedServices) {
+  movedToCurrent = [];
+  id = '';
+  oldApps = [];
+  constructor(public dialogRef: MatDialogRef<SettingDialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any ,private shared:SharedServices,private dataService: TerminalService) {
     this.shared.setSidebarState(false);
+    console.log(data)
+    this.id = data.id;
+  }
+
+  ngOnInit() {
+    this.getSettingsData();
+    this.loadPackages();
   }
 
   moveToOptional(app: any) {
     // Remove app from currentApps and add it to optionalApps
-    this.currentApps = this.currentApps.filter(a => a !== app);
-    this.optionalApps.push(app);
+    this.oldApps = this.oldApps.filter(a => a !== app);
+    this.addApps.push(app);
+    this.movedToCurrent = this.movedToCurrent.filter(a=> a.name != app.name);
+    // this.movedToCurrent.pop(app);
+
   }
 
   moveToCurrent(app: any) {
     // Remove app from optionalApps and add it to currentApps
-    this.optionalApps = this.optionalApps.filter(a => a !== app);
-    this.currentApps.push(app);
+    this.addApps = this.addApps.filter(a => a !== app);
+    this.oldApps.push(app);
+    console.log("sssas",app)
+    this.movedToCurrent.push(app);
   }
+
+  loadPackages() {
+    const payload = {
+      "event": {
+          "eventType": "PACKAGE",
+          "eventSubType": "SEARCH"
+        }
+    }
+    this.dataService.getPackageList(payload).subscribe(
+      response => {
+        console.log(response)
+        this.addApps = response.event.eventData.map(data => ({
+          id: data.id,
+          name: data.name,
+          type: data.type,
+          version: data.version,
+          icon: this.getRandomIcon(),
+          fulldate: data.createdBy.ts.split('T')[0],
+          deleted: data.deleted
+        }));
+      }
+    )
+  }
+
+  getRandomIcon(): string {
+    const randomIndex = Math.floor(Math.random() * this.icons.length);
+    return this.icons[randomIndex];
+  }
+  
+
+
+  getSettingsData() {
+    const payload = {
+      "event": {
+        "eventData": this.id,
+        "eventType": "DEPLOYMENT",
+        "eventSubType": "CREATE"
+      }
+    }
+    this.dataService.settingsInDeployment(payload).subscribe(
+      response => {
+        console.log("21821",response);
+        this.oldApps = response.event.eventData.map(data => ({
+          ...data, // Spread the existing data
+          icon: this.getRandomIcon() // Assign a random icon
+        }));
+      }
+    );
+  }
+  
+  confirm() {
+    this.dialogRef.close(this.movedToCurrent);
+  }
+
+  ngOnDestroy(){
+    this.shared.setSidebarState(true);
+  }
+
 }

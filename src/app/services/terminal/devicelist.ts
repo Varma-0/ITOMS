@@ -75,8 +75,20 @@ export class TerminalService {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/deployment/addTerminal`, options, { headers: this.httpHeaders });
     }
 
+    deleteTerminal(options): Observable<any> {
+        return this.http.delete<any>(`${environment.tmsApiUrl}/tms/deployment/deleteTerminal`, { body : options, headers: this.httpHeaders });
+    }
+
     addMerchant(options:merchantAdd): Observable<any> {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/merchant/add`, options, { headers: this.httpHeaders });
+    }
+
+    addSetting(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/deployment/addSetting`, options, { headers: this.httpHeaders });
+    }
+
+    getPackageList(options):Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/package/search`, options, { headers: this.httpHeaders });
     }
 
     addAlert(options): Observable<any> {
@@ -165,6 +177,10 @@ export class TerminalService {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/getDeviceHeartBeatHistoryReport`,options, {headers: this.httpHeaders});
     }
 
+    getParameterReport(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/getParameterStatusReport`,options, {headers: this.httpHeaders});
+    }
+
     getHeartViewReport(options): Observable<any> {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/getDeviceHeartBeatHistoryViewReport`,options, {headers: this.httpHeaders});
     }
@@ -230,6 +246,10 @@ export class TerminalService {
 
     terminalInDeployment(options): Observable<any> {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/deployment/getAllAssociatedTerminals`,options,{headers: this.httpHeaders});
+    }
+
+    processInDeployment(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/deployment/getProcessDetails`,options,{headers: this.httpHeaders});
     }
 
     addParametrs(options): Observable<any> {

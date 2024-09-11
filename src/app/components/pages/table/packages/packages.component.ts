@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TerminalService } from 'src/app/services/terminal/devicelist';
 
 interface Resource {
   name: string;
@@ -22,6 +23,10 @@ export class PackagesComponent implements OnInit {
     { name: 'DASHPAY POS', icon: 'assets/img/linux-icon.png', version: '2.7.3P' },
     { name: 'RKLA Demo', icon: 'assets/img/linux-icon.png', version: '1.1.0' },
   ];
+  icons: string[] = [
+    // 'assets/img/linux-icon.png',
+    'assets/img/android-logo.png'
+  ];
   create = true;
   insideCreate = false;
   filteredResources: Resource[] = [];
@@ -29,9 +34,39 @@ export class PackagesComponent implements OnInit {
   selectedTab: string = 'applications';
   flyParameterApp: string = '';
   viewMode: 'grid' | 'list' = 'grid';
+  packages: any;
+
+  constructor(private dataService: TerminalService) {}
 
   ngOnInit() {
-    this.filteredResources = this.resources;
+    this.loadPackages();
+  }
+
+  loadPackages() {
+    const payload = {
+      "event": {
+          "eventType": "PACKAGE",
+          "eventSubType": "SEARCH"
+        }
+    }
+    this.dataService.getPackageList(payload).subscribe(
+      response => {
+        console.log(response)
+        this.resources = response.event.eventData.map(data => ({
+          id: data.id,
+          name: data.name,
+          type: data.type,
+          version: data.version,
+          icon: this.getRandomIcon(),
+        }));
+        this.filteredResources = this.resources;
+      }
+    )
+  }
+
+  getRandomIcon(): string {
+    const randomIndex = Math.floor(Math.random() * this.icons.length);
+    return this.icons[randomIndex];
   }
 
   search() {

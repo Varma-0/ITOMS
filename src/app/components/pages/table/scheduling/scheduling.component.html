@@ -128,11 +128,11 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngFor="let terminal of filteredTerminals">
             <tr *ngIf="filteredTerminals.length === 0">
               <td colspan="5" class="no-data">No Data</td>
             </tr>
-            <tr *ngFor="let terminal of filteredTerminals">
+            <tr *ngIf="terminal.deleted == false">
               <td>
                 <!-- <input type="checkbox" 
                        (change)="toggleSelection(terminal)"

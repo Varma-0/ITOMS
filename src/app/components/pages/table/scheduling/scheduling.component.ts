@@ -41,6 +41,7 @@ export class SchedulingComponent {
   data: any;
   selectedCount: number = 0;
   modelNameBasedOnSN: any;
+  processInTerminal: any;
   constructor(public dialog: MatDialog, private shared:SharedServices,private dataService: TerminalService){}
 
   connectedTerminals = 0;
@@ -159,6 +160,28 @@ export class SchedulingComponent {
           this.dataService.addTerminal(payload).subscribe(
             response => {
               console.log("erecw",response);
+              this.getTerminalData();
+            },
+            error => {
+              console.error(error);
+            }
+          );
+        } else if (!edit) {
+          const deletePayload = {
+            "event": {
+                "eventData": {
+                    "deploymentId" : this.selectedItem.id,
+                    "deploymentName": this.selectedItem.name,
+                    "serialNumber": result
+                },
+                "eventType": "DEPLOYMENT",
+                "eventSubType": "CREATE"
+            }
+          }
+          this.dataService.deleteTerminal(deletePayload).subscribe(
+            response => {
+              console.log("erecw",response);
+              this.getTerminalData();
             },
             error => {
               console.error(error);
@@ -245,6 +268,11 @@ export class SchedulingComponent {
 
   selectItem(deployment: any) {
     this.selectedItem = deployment;
+    this.getSettingsData();
+    
+  }
+
+  getSettingsData() {
     const payload = {
       "event": {
         "eventData": this.selectedItem.id,
@@ -257,6 +285,7 @@ export class SchedulingComponent {
         console.log("21821",response);
         if (response.event.eventData != 'null') {
           this.settingsInApplication = response.event.eventData
+          this.selectTab('settings');
         }  else {
           this.settingsInApplication = [];
         }
@@ -264,8 +293,7 @@ export class SchedulingComponent {
     );
   }
 
-  selectTab(tab: string) {
-    this.selectedTab = tab;
+  getTerminalData() {
     const payload = {
       "event": {
         "eventData": this.selectedItem.id,
@@ -273,33 +301,88 @@ export class SchedulingComponent {
         "eventSubType": "CREATE"
       }
     }
-     if(this.selectedTab == 'terminal') {
-      console.log("ewufwew terminal")
-      this.dataService.terminalInDeployment(payload).subscribe(
-        response => {
-          if (response.event.eventData != 'null') {
-            this.settingsInTerminal = response.event.eventData
-            this.totalTerminals = response.event.eventData.totalTerminals;
-            this.connectedTerminals = response.event.eventData.connectedTerminals;
-            this.unconnectedTerminals = response.event.eventData.unConnectedTerminals;
-            this.activeTerminals = response.event.eventData.activeTerminals;
-            this.inactiveTerminals = response.event.eventData.inActiveTerminals;
-            this.filteredTerminals = this.settingsInTerminal
-          }  else {
-            this.settingsInTerminal = [];
-            this.filteredTerminals = this.settingsInTerminal
-          }
+    this.dataService.terminalInDeployment(payload).subscribe(
+      response => {
+        if (response.event.eventData != 'null') {
+          this.settingsInTerminal = response.event.eventData
+          this.filteredTerminals = this.settingsInTerminal
+        }  else {
+          this.settingsInTerminal = [];
+          this.filteredTerminals = this.settingsInTerminal
         }
-      );
+      }
+    );
+  }
+
+  getProcessData() {
+    const payload = {
+      "event": {
+        "eventData": this.selectedItem.id,
+        "eventType": "DEPLOYMENT",
+        "eventSubType": "CREATE"
+      }
+    }
+    this.dataService.processInDeployment(payload).subscribe(
+      response => {
+        if (response.event.eventData != 'null') {
+          this.processInTerminal = response.event.eventData
+          this.totalTerminals = response.event.eventData.totalTerminals;
+          this.connectedTerminals = response.event.eventData.connectedTerminals;
+          this.unconnectedTerminals = response.event.eventData.unConnectedTerminals;
+          this.activeTerminals = response.event.eventData.activeTerminals;
+          this.inactiveTerminals = response.event.eventData.inActiveTerminals;
+        }  else {
+          this.processInTerminal = [];
+        }
+      }
+    );
+  }
+
+  selectTab(tab: string) {
+    this.selectedTab = tab;
+     if(this.selectedTab == 'process') {
+      console.log("ewufwew process")
+      this.getProcessData();
+    } else if(this.selectedTab == 'terminal') {
+      this.getTerminalData();
     }
   }
 
   createSettingCard(): void{
     const dialogRef = this.dialog.open(SettingDialogComponent, {
       data: {
-        title: 'Create Setting',
+        id: this.selectedItem.id
       },
-      width: '70%'
+      width: '60%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("Dialog closed", result);
+      if (result) {
+        // Handle the result
+        let deploymentList = result.map(app => ({
+          packageId: app.id,  // Mapping 'id' to 'packageId'
+          name: app.name,
+          type: app.type,
+          deploymentVersion: app.version
+        }))
+        const payload = {
+          "event": {
+              "eventData": {
+                  "deploymentId": this.selectedItem.id,
+                  "deploymentName": this.selectedItem.name,
+                  "applicationInfoList": deploymentList
+              },
+              "eventType": "DEPLOYMENT",
+              "eventSubType": "CREATE"
+          }
+        }
+        this.dataService.addSetting(payload).subscribe(
+          response=> {
+            console.log("res",response);
+            this.getSettingsData();
+          }
+        )
+      }
     });
   }
 
