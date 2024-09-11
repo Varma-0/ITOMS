@@ -88,7 +88,7 @@ export class HeartReportComponent implements OnInit {
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(visibleData);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Devices');
-    XLSX.writeFile(wb, 'DeviceSearchReport.xlsx');
+    XLSX.writeFile(wb, 'DeviceHeartReport.xlsx');
   }
 
   toggleColumn(column: Column): void {

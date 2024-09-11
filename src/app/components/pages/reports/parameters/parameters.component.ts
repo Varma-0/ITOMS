@@ -92,7 +92,7 @@ export class ParametersReportComponent implements OnInit {
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(visibleData);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Devices');
-    XLSX.writeFile(wb, 'DeviceSearchReport.xlsx');
+    XLSX.writeFile(wb, 'DeviceParameterStatusReport.xlsx');
   }
 
   toggleColumn(column: Column): void {
@@ -121,7 +121,10 @@ export class ParametersReportComponent implements OnInit {
   }
 
   get paginatedDevices(): Device[] {
-    return this.filteredDevices.slice(this.startIndex, this.endIndex);
+    this.filteredDevices = this.filteredDevices.filter(device => device.serialNumber !== null);
+  
+  // Return paginated data after filtering
+  return this.filteredDevices.slice(this.startIndex, this.endIndex);
   }
 
   goToPage(page: number): void {
