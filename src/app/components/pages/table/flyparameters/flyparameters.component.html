@@ -11,14 +11,9 @@
                 <span>Parameters</span> &nbsp;
                   <input type="text" class="form-control" aria-label="Deployment Name" placeholder="App Name/Package Name" [(ngModel)]="searchTerm" (input)="filterDeployments()">
               </div>
-              <div class="icon-container">
-                <button mat-icon-button class="btn btn-primary" color="primary" (click)="filterDeployments()">
-                  <mat-icon>search</mat-icon>
-                </button>
-              </div>
             </div>
           </mat-card-title>
-
+<br>
           <ul class="nolist">
             <li *ngFor="let deployment of filteredDeployments" class="deployment-item">
               <div class="grp">
@@ -27,7 +22,7 @@
                         (click)="selectItem(deployment)">
                   <span class="deployment-name">{{deployment.name}}</span>
                   <div class="right-section">
-                    <span class="deployment-count">{{deployment.count}}</span>
+                    <span class="deployment-count">{{deployment.deviceCount}}</span>
                     <img src="../../../../../assets/img/res.png">
                   </div>
                 </button>
@@ -61,7 +56,7 @@
               </ul>
           </div>
           <div *ngIf="selectedTab === 'terminal'">
-            <div class="controls">
+            <div class="controls" style="overflow:auto;">
               <input [(ngModel)]="searchTerm" placeholder="Device SN" (input)="search()">
               <select [(ngModel)]="statusFilter" (change)="search()">
                 <option value="">Parameter File Status</option>
@@ -75,7 +70,7 @@
               <button class="menu-button"><i class="bx bx-menu"></i></button>
             </div>
 
-            <table class="device-table" style="overflow:scroll;">
+            <table class="device-table">
               <thead>
                 <tr>
                   <th class="th-device-sn">Device SN</th>
@@ -86,6 +81,9 @@
                 </tr>
               </thead>
               <tbody>
+                <tr *ngIf="filteredDevices.length === 0">
+                    <td colspan="5" class="no-data-message">No data available</td>
+                </tr>
                 <tr *ngFor="let device of filteredDevices">
                   <td class="td-device-sn">{{ device.deviceSN }}</td>
                   <td class="td-organization">{{ device.organization }}</td>
@@ -110,7 +108,7 @@
                         Delete
                       </button>
                     </mat-menu>
-                  </td>                  
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -145,8 +143,8 @@
                         <td>Last Modification Time</td>
                       </tr>
                       <tr>
-                          <td>06/17/2024 17:48:17</td>
-                          <td>06/17/2024 17:48:17</td>
+                          <td>{{creationTime | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                          <td>{{modificaionTime | date:'dd/MM/yyyy HH:mm:ss'}}</td>
                       </tr>
                 </table>
                 <table class="info-table">
@@ -154,7 +152,7 @@
                         <td>Number of Parameters</td>
                       </tr>
                       <tr class="single">
-                          <td>2</td>
+                          <td>{{parameterCount}}</td>
                       </tr>
                 </table>
                 <br>
@@ -197,7 +195,7 @@
       </div>
 
       <div class="right-section d-flex align-items-center">
-        <button class="icon-button">
+        <button class="icon-button" (click)="saveData()">
           <span class="material-symbols-outlined" style="color: #007bff;">save</span>
         </button>
         <button class="icon-button ms-3">
@@ -208,5 +206,5 @@
         </button>
       </div>
     </div>
-    <app-profile [profile]="profile" [params]="param"></app-profile>
+    <app-profile [profile]="profile" [params]="param" [packageId]="packageId"></app-profile>
 </ng-container>

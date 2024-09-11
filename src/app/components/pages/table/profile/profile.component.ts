@@ -1,5 +1,6 @@
-import { Component, ElementRef, QueryList, Renderer2, ViewChildren, AfterViewInit, OnInit, Input, ChangeDetectorRef, AfterViewChecked } from "@angular/core";
+import { Component, ElementRef, QueryList, Renderer2, ViewChildren, AfterViewInit, OnInit, Input, ChangeDetectorRef, AfterViewChecked, EventEmitter, Output, SimpleChanges } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { TerminalService } from "src/app/services/terminal/devicelist";
 
 @Component({
   selector: 'app-profile',
@@ -7,6 +8,7 @@ import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked {
+  @Output() dataChange = new EventEmitter<any>();
   formsArray!: FormArray;
   @ViewChildren('textarea') textareas!: QueryList<ElementRef<HTMLTextAreaElement>>;
   private nextIndex = 0;
@@ -20,9 +22,10 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
   extractedData: any;
     @Input() params;
     @Input() profile;
+    @Input() packageId;
     error: string;
 
-  constructor(private fb: FormBuilder, private renderer: Renderer2, private cdr: ChangeDetectorRef) {}
+  constructor(private fb: FormBuilder, private renderer: Renderer2, private cdr: ChangeDetectorRef,private dataService: TerminalService) {}
 
   ngOnInit() {
     this.formsArray = this.fb.array([]);
@@ -30,6 +33,40 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
         this.prepopulate();
     }
   }
+
+  performSave() {
+    const transformedArray = this.formsArray.value.map(this.transformObject);
+    const payload = {
+        "event": {
+            "eventData": {
+                "application": "itoms",
+                "packageId": this.packageId,
+                "parameterLogInfoList": transformedArray
+            },
+            "eventType": "PARAMETER",
+            "eventSubType": "CREATE"
+        }
+    }
+    this.dataService.addParametrs(payload).subscribe(
+        response => {
+          console.log("fd",response);
+        }
+      )
+  }
+
+   transformObject(input) {
+    return {
+        title: input.label,
+        description: input.description,
+        paramLabel: input.label,
+        paramKey: input.key,
+        maxLength: input.minvalue,
+        minLength: input.maxvalue,
+        nullable: input.manadatroy ? true : false,
+        defaultValue: input.default,
+        valueType: input.type
+    };
+}
 
   ngAfterViewInit() {
     this.textareas.changes.subscribe(() => this.adjustTextareaSizes());

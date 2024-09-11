@@ -207,4 +207,17 @@ export class TerminalService {
     getDevicebysn(options): Observable<any> {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/device/getDeviceBySNo`,options, {headers: this.httpHeaders})
     }
+
+    addParametrs(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/parameter/batch/create`,options, {headers: this.httpHeaders})
+    }
+
+    getPacks(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/schedule/getPackageTerminalCount`,options, {headers: this.httpHeaders})
+    }
+
+    getParamCount(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/schedule/getScheduledParameterJobs`,options, {headers: this.httpHeaders})
+    }
+
 }

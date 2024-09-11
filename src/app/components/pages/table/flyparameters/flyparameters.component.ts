@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DesignSelectionComponent } from 'src/app/components/dialogs/design-selection/design-selection.component';
@@ -8,6 +8,7 @@ import { TerminalProfileComponent } from 'src/app/components/dialogs/terminal-pr
 import { deleteModelEvent } from 'src/app/services/login/body/event';
 import { SharedServices } from 'src/app/services/shared.service';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
+import { ProfileComponent } from '../profile/profile.component';
 
 interface Device {
   deviceSN: string;
@@ -24,16 +25,11 @@ interface Device {
 export class FlyparametersComponent {
   searchTerm: string = '';
   selectedTab: string = 'profile'; // Default tab
-  deployments = [
-      { name: 'P180', count: 2 },
-      { name: 'U1000', count: 0 },
-      { name: 'SP930', count: 0 },
-      { name: 'lipp', count: 1 },
-      { name: 'SP550', count: 1 },
-      { name: 'SP550 TEST', count: 1 },
-      // Add more as needed
-  ];
+  deployments = [];
   filteredDeployments = [];
+  creationTime = "";
+  modificaionTime = "";
+  parameterCount = "";
   selectedItem: any;
   labelsm: string[] = ['Pending Publish','Published','Downloaded','Download failed'];
   seriesm: number[] = [20,30,17,13];
@@ -62,15 +58,35 @@ export class FlyparametersComponent {
   ];
     profile: any;
     param: any;
+    @ViewChild(ProfileComponent) childComponent!: ProfileComponent;
+    packageId:any;
 
   ngOnInit() {
     // Initialize filteredDeployments with all deployments on load
-    this.filteredDeployments = this.deployments;
-    this.filteredDevices = this.devices;
-
+    this.getPacks();
   }
 
-  constructor(public dialog: MatDialog, private shared:SharedServices,private dataService: TerminalService){}
+  getPacks(){
+    const payload = {
+        "event": {
+            "eventType": "SCHEDULE",
+            "eventSubType": "UPDATE"
+        }
+    }
+    this.dataService.getPacks(payload).subscribe(
+        response => {
+          this.deployments = response.event.eventData;
+          this.filteredDeployments = this.deployments;
+        }
+      )
+  }
+
+  saveData() {
+    console.log('Parent save button clicked');
+    this.childComponent.performSave();
+  }
+
+  constructor(public dialog: MatDialog,private dataService: TerminalService){}
 
   filterDeployments() {
     const filterValue = this.searchTerm.trim()?.toLowerCase();
@@ -96,7 +112,6 @@ export class FlyparametersComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("1111111111",result);
       if (result) {
         this.openCheckDialog(result);
       }
@@ -136,7 +151,27 @@ export class FlyparametersComponent {
 
   selectItem(deployment: any) {
     this.selectedItem = deployment;
-    this.selectedTab = deployment.count > 0 ? 'profile' : 'emptyData';
+    this.packageId = deployment.id;
+    const payload = {
+        "event": {
+            "eventData": {
+                "packageId": deployment.id
+            },
+            "eventType": "SCHEDULE",
+            "eventSubType": "UPDATE"
+        }
+    }
+    this.dataService.getParamCount(payload).subscribe(
+        response => {
+            const data = response.event.eventData;
+          this.selectedTab = data.parametersCount > 0 ? 'profile' : 'emptyData';
+          this.creationTime = data.creationTimeStamp;
+          this.modificaionTime = data.lastUpdatedTimeStamp;
+          this.parameterCount = data.parametersCount;
+          this.devices = data.scheduleParameterJobDetails;
+          this.filteredDevices = this.devices;
+        }
+      )
   }
 
   selectTab(tab: string) {
