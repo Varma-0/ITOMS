@@ -181,6 +181,10 @@ export class TerminalService {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/getParameterStatusReport`,options, {headers: this.httpHeaders});
     }
 
+    getSoftwareReport(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/getDeviceSoftwareStatusReport`,options, {headers: this.httpHeaders});
+    }
+
     getHeartViewReport(options): Observable<any> {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/getDeviceHeartBeatHistoryViewReport`,options, {headers: this.httpHeaders});
     }
