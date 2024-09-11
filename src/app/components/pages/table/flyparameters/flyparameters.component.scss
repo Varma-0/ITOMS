@@ -408,3 +408,29 @@
     padding: 4px 8px;
     border-radius: 4px;
   }
+  .header-icons {
+    display: flex;
+    gap: 10px; /* Space between icons */
+  }
+
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px; /* Adjust the size of the icons */
+  }
+
+  .icon-button i {
+    color: #000; /* Adjust the color of the icons */
+  }
+
+  .json-display {
+    background-color: #2b2b2b; /* Match the dark background */
+    color: #f8f8f2;            /* Match the light text color */
+    padding: 20px;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace; /* Use a monospace font */
+    white-space: pre-wrap; /* Preserve whitespace */
+    overflow-x: auto; /* Allow horizontal scrolling */
+  }
+

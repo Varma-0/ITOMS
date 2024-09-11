@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DesignSelectionComponent } from 'src/app/components/dialogs/design-selection/design-selection.component';
 import { DevicesFormComponent } from 'src/app/components/dialogs/device-form/device-form.component';
 import { SelectCfgComponent } from 'src/app/components/dialogs/select-cfg/select-cfg.component';
@@ -10,12 +10,6 @@ import { SharedServices } from 'src/app/services/shared.service';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 import { ProfileComponent } from '../profile/profile.component';
 
-interface Device {
-  deviceSN: string;
-  organization: string;
-  parameterFileStatus: string;
-  parameterFilePublishTime: string;
-}
 
 @Component({
   selector: 'app-flyparameters',
@@ -32,7 +26,7 @@ export class FlyparametersComponent {
   parameterCount = "";
   selectedItem: any;
   labelsm: string[] = ['Pending Publish','Published','Downloaded','Download failed'];
-  seriesm: number[] = [20,30,17,13];
+  seriesm: number[] = [0,0,0,0];
   colors: string[] = [
     '#FF6B6B',  // Bright Red
     '#4ECDC4',  // Teal
@@ -40,28 +34,21 @@ export class FlyparametersComponent {
     '#9B59B6'   // Purple
   ];
   showDynamicKeys = true;
-  filteredDevices: Device[] = [];
+  filteredDevices= [];
   statusFilter = '';
-  devices: Device[] = [
-    {
-      deviceSN: 'NCA700083597',
-      organization: 'DEMOQZRNAXTpjSgS',
-      parameterFileStatus: 'Pending publish',
-      parameterFilePublishTime: ''
-    },
-    {
-      deviceSN: 'NCA700083598',
-      organization: 'DEMOQZRNAXTpjSgS',
-      parameterFileStatus: 'Published',
-      parameterFilePublishTime: '09/06/2024 12:15:27'
-    }
-  ];
+  devices = [];
     profile: any;
     param: any;
     @ViewChild(ProfileComponent) childComponent!: ProfileComponent;
     packageId:any;
+    serialNo: any;
+    deviceId: any;
+    selectedName;
 
   ngOnInit() {
+    this.router.queryParams.subscribe(params => {
+         this.selectedName = params['name'];
+      });
     // Initialize filteredDeployments with all deployments on load
     this.getPacks();
   }
@@ -77,16 +64,23 @@ export class FlyparametersComponent {
         response => {
           this.deployments = response.event.eventData;
           this.filteredDeployments = this.deployments;
+          if(this.selectedName){
+            const data = this.filteredDeployments.filter(e=> e.name == this.selectedName);
+           this.selectItem(data[0]);
+          }
         }
       )
   }
 
   saveData() {
-    console.log('Parent save button clicked');
     this.childComponent.performSave();
   }
 
-  constructor(public dialog: MatDialog,private dataService: TerminalService){}
+  viewData() {
+    this.childComponent.performView();
+  }
+
+  constructor(public dialog: MatDialog,private dataService: TerminalService,private router:ActivatedRoute){}
 
   filterDeployments() {
     const filterValue = this.searchTerm.trim()?.toLowerCase();
@@ -113,36 +107,140 @@ export class FlyparametersComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.openCheckDialog(result);
+        const payload = {
+            "event": {
+                "eventData": result,
+                "eventType": "DEVICE",
+                "eventSubType": "SEARCH"
+            }
+        }
+        this.dataService.getDevicebysn(payload).subscribe(
+          response => {
+            this.serialNo = response.event.eventData.serialNumber;
+            this.deviceId = response.event.eventData.id;
+            const payload = {
+                "event": {
+                    "eventData": this.packageId,
+                    "eventType": "DEVICE",
+                    "eventSubType": "SEARCH"
+                }
+            }
+            this.dataService.getParamByPackage(payload).subscribe(
+              response => {
+                this.openCheckDialog(response.event.eventData);
+              },
+              (error)=>{
+                alert("Invalid device")
+              }
+            )
+          },
+          (error)=>{
+            alert("Invalid device")
+          }
+        )
       }
     });
   }
 
+  view(){
+    const payload = {
+        "event": {
+            "eventData": this.packageId,
+            "eventType": "DEVICE",
+            "eventSubType": "SEARCH"
+        }
+    }
+    this.dataService.getParamByPackage(payload).subscribe(
+      response => {
+        const dialogRef = this.dialog.open(TerminalProfileComponent, {
+            data: {
+              title: 'Profile',
+              items: response.event.eventData.filter(e=> !e.delete)
+            },
+            width: '60%'
+          });
+
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+          });
+      },
+      (error)=>{
+      }
+    )
+  }
+
+  delete(id){
+    const payload = {
+        "event": {
+            "eventData": id,
+            "eventType": "SCHEDULE",
+            "eventSubType": "UPDATE"
+        }
+    }
+    this.dataService.deleteScheduleParamJob(payload).subscribe(
+        response => {
+            this.selectItem(this.selectedItem);
+            this.selectedTab = 'terminal';
+        },
+        (error)=>{
+        }
+      )
+  }
+
+  edit(){
+    const payload = {
+        "event": {
+            "eventData": this.packageId,
+            "eventType": "DEVICE",
+            "eventSubType": "SEARCH"
+        }
+    }
+    this.dataService.getParamByPackage(payload).subscribe(
+      response => {
+        this.profile = response.event.eventData;
+        this.showDynamicKeys = false;
+      },
+      (error)=>{
+      }
+    )
+  }
   openCheckDialog(data?: any): void {
     const dialogRef = this.dialog.open(TerminalProfileComponent, {
       data: {
         title: 'New Terminal',
-        form: {
-          dsn: data?.dsn,
-        }
+        items: data.filter(e=> !e.delete)
       },
-      width: '40%'
+      width: '60%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("1111111111",result);
+      let publish;
       if (result) {
-        const flyPara = new deleteModelEvent(data,'DEVICE','SEARCH');
-        const payload = {
-          event: flyPara
-        }
-        this.dataService.getDevicebysn(payload).subscribe(
-          response => {
-            console.log("fd",response);
-          }
-        )
-
+        publish = "PUBLISHED";
+      }else{
+        publish = "PUBLISH_PENDING"
       }
+      const payload = {
+        "event": {
+            "eventData": {
+                "deviceId": this.deviceId,
+                "packageId":this.packageId,
+                "serialNumber":this.serialNo,
+                "status": publish
+            },
+            "eventType": "SCHEDULE",
+            "eventSubType": "CREATE"
+        }
+    }
+      this.dataService.scheduleJobParams(payload).subscribe(
+        response => {
+          this.selectItem(this.selectedItem);
+          this.selectedTab = 'terminal';
+        },
+        (error)=>{
+          alert("Invalid device")
+        }
+      )
     });
   }
 
@@ -170,6 +268,11 @@ export class FlyparametersComponent {
           this.parameterCount = data.parametersCount;
           this.devices = data.scheduleParameterJobDetails;
           this.filteredDevices = this.devices;
+          this.seriesm = [];
+          this.seriesm.push(data.jobsUpdateStatistics.pendingPublish);
+          this.seriesm.push(data.jobsUpdateStatistics.published);
+          this.seriesm.push(data.jobsUpdateStatistics.downloaded);
+          this.seriesm.push(data.jobsUpdateStatistics.downloadFailed);
         }
       )
   }
@@ -207,8 +310,8 @@ export class FlyparametersComponent {
 
       search() {
         this.filteredDevices = this.devices.filter(device =>
-          device.deviceSN?.toLowerCase().includes(this.searchTerm?.toLowerCase()) &&
-          (this.statusFilter === '' || device.parameterFileStatus === this.statusFilter)
+          device.serialNumber?.toLowerCase().includes(this.searchTerm?.toLowerCase()) &&
+          (this.statusFilter === '' || device.jobStatus === this.statusFilter)
         );
       }
   }

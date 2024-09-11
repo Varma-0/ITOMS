@@ -90,3 +90,73 @@ mat-dialog-title {
   input:checked + .slider:before {
     transform: translateX(20px);
   }
+
+  .container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: center;
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 220px;  /* Reduced width slightly */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 10px;  /* Reduced padding */
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;  /* Reduced padding */
+  }
+
+  .close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;  /* Slightly smaller font size */
+    color: #888;
+    transition: color 0.2s ease;
+  }
+
+  .close-button:hover {
+    color: #ff6b6b;
+  }
+
+  .card-body {
+    margin: 10px 0;  /* Reduced margin */
+  }
+
+  .card-body textarea {
+    width: 100%;
+    height: 60px;  /* Reduced textarea height */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px;  /* Reduced padding */
+    resize: none;
+    outline: none;
+    background-color: #f9f9f9;
+    color: #555;
+    font-size: 14px;
+  }
+
+  .card-footer {
+    text-align: right;
+    font-size: 12px;
+    color: #777;
+    border-top: 1px solid #eee;
+    padding-top: 5px;  /* Reduced padding */
+  }

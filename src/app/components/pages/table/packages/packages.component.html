@@ -37,8 +37,8 @@
       <button class="btn btn-primary" (click)="createResource()"><i class="bx bx-plus"></i></button>
     </div>
   </div>
-  
-  
+
+
   <div [ngClass]="{'resources-grid': viewMode === 'grid', 'resources-list': viewMode === 'list'}">
     <div *ngFor="let resource of filteredResources" class="resource-item">
       <!-- <div class="menu-dots">
@@ -49,7 +49,7 @@
         <h3>{{resource.name}}</h3>
         <p>{{resource.version}}</p>
       </div>
-      <button class="database-button">
+      <button class="database-button" (click)="redirect(resource.name)">
         <i class="bx bx-data"></i>
       </button>
     </div>

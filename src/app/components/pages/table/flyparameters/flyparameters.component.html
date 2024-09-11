@@ -33,12 +33,21 @@
         </mat-card>
 
         <div class="main-container" *ngIf="selectedItem">
-          <div class="header">
-              <div class="selected-item">
-                <span class="header-text">Parameters</span>
-                <h2>{{ selectedItem?.name }}</h2>
+            <div class="header">
+                <div class="selected-item">
+                  <span class="header-text">Parameters</span>
+                  <h2>{{ selectedItem?.name }}</h2>
+                </div>
+                <div class="header-icons" *ngIf="selectedTab != 'emptyData'">
+                    <button class="icon-button" (click)="view()">
+                        <i class="bx bx-show"></i> <!-- Second icon (e.g., delete icon) -->
+                      </button>
+                  <button class="icon-button" (click)="edit()">
+                    <i class="bx bx-edit"></i> <!-- First icon (e.g., edit icon) -->
+                  </button>
+                </div>
               </div>
-          </div>
+
 
 
           <div>
@@ -55,15 +64,14 @@
                 </li>
               </ul>
           </div>
-          <div *ngIf="selectedTab === 'terminal'">
-            <div class="controls" style="overflow:auto;">
+          <div *ngIf="selectedTab === 'terminal'" style="overflow:auto;">
+            <div class="controls">
               <input [(ngModel)]="searchTerm" placeholder="Device SN" (input)="search()">
               <select [(ngModel)]="statusFilter" (change)="search()">
                 <option value="">Parameter File Status</option>
-                <option value="Pending publish">Pending publish</option>
-                <option value="Published">Published</option>
+                <option value="PUBLISH_PENDING">Pending publish</option>
+                <option value="PUBLISHED">Published</option>
               </select>
-              <button class="icon-button"><i class="bx bx-search"></i></button>
               <button class="icon-button" (click)="openCreateDialog()"><i class="bx bx-plus"></i></button>
               <!-- <button class="icon-button"><i class="bx bx-download"></i></button>
               <button class="icon-button"><i class="bx bx-bar-chart-alt-2"></i></button> -->
@@ -74,9 +82,9 @@
               <thead>
                 <tr>
                   <th class="th-device-sn">Device SN</th>
-                  <th class="th-organization">Organization</th>
-                  <th class="th-file-status">Parameter File Status</th>
-                  <th class="th-publish-time">Parameter File Publish Time</th>
+                  <th class="th-file-status">Status</th>
+                  <th class="th-publish-time">Publish Time</th>
+                  <th class="th-publish-time">Updated Time</th>
                   <th class="th-operation">Operation</th>
                 </tr>
               </thead>
@@ -84,26 +92,26 @@
                 <tr *ngIf="filteredDevices.length === 0">
                     <td colspan="5" class="no-data-message">No data available</td>
                 </tr>
-                <tr *ngFor="let device of filteredDevices">
-                  <td class="td-device-sn">{{ device.deviceSN }}</td>
-                  <td class="td-organization">{{ device.organization }}</td>
-                  <td class="td-file-status">
-                    <span [ngClass]="{'status-pending': device.parameterFileStatus === 'Pending publish',
-                                      'status-published': device.parameterFileStatus === 'Published'}">
-                      {{ device.parameterFileStatus }}
+                <tr *ngFor="let device of filteredDevices" style="height: 50px;">
+                  <td class="td-device-sn" style="white-space: nowrap;">{{ device.serialNumber }}</td>
+                  <td class="td-file-status" style="white-space: nowrap;">
+                    <span [ngClass]="{'status-pending': device.jobStatus === 'PUBLISH_PENDING',
+                                      'status-published': device.jobStatus === 'PUBLISHED'}">
+                      {{ device.jobStatus == 'PUBLISH_PENDING' ? 'Pending publish' : 'Published'  }}
                     </span>
                   </td>
-                  <td class="td-publish-time">{{ device.parameterFilePublishTime }}</td>
+                  <td class="td-publish-time" style="white-space: nowrap;">{{ device.createdBy.ts | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                  <td class="td-publish-time" style="white-space: nowrap;">{{ device.updatedBy.ts | date:'dd/MM/yyyy HH:mm:ss' }}</td>
                   <td class="td-operation">
                     <button mat-icon-button [matMenuTriggerFor]="menu">
                       <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <mat-menu #menu="matMenu">
-                      <button mat-menu-item>
+                      <button mat-menu-item (click)="edit()">
                         <mat-icon>edit</mat-icon>
                         Edit
                       </button>
-                      <button mat-menu-item>
+                      <button mat-menu-item (click)="delete(device.id)">
                         <mat-icon>delete</mat-icon>
                         Delete
                       </button>
@@ -198,12 +206,22 @@
         <button class="icon-button" (click)="saveData()">
           <span class="material-symbols-outlined" style="color: #007bff;">save</span>
         </button>
-        <button class="icon-button ms-3">
+        <button class="icon-button ms-3" (click)="viewData()">
           <span class="material-symbols-outlined" style="color: #3cf855;">visibility</span>
         </button>
-        <button class="icon-button ms-3">
+        <button class="icon-button ms-3" mat-icon-button [matMenuTriggerFor]="menus">
           <span class="material-symbols-outlined" style="color: #777a7e;">settings</span>
         </button>
+        <mat-menu #menus="matMenu">
+            <button mat-menu-item>
+              <mat-icon>undo</mat-icon>
+              Undo
+            </button>
+            <button mat-menu-item>
+              <mat-icon>delete</mat-icon>
+              Redesign
+            </button>
+          </mat-menu>
       </div>
     </div>
     <app-profile [profile]="profile" [params]="param" [packageId]="packageId"></app-profile>

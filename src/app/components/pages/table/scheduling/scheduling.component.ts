@@ -103,7 +103,7 @@ export class SchedulingComponent {
 
   filterDeployments() {
     const filterValue = this.searchTerm.trim()?.toLowerCase();
-    
+
     if (filterValue) {
       this.filteredDeployments = this.deployments.filter(deployment =>
         deployment.name?.toLowerCase().includes(filterValue)
@@ -219,7 +219,7 @@ export class SchedulingComponent {
       }
     });
   }
-  
+
   openCreateDialog(data?: any): void {
     const dialogRef = this.dialog.open(DeploymentModalComponent, {
       width: '60%', // Adjust as needed
@@ -257,7 +257,7 @@ export class SchedulingComponent {
   selectedDevices: Device[] = [];
 
 
- 
+
 
   // toggleSelectAll(event: Event) {
   //   const isChecked = (event.target as HTMLInputElement).checked;
@@ -269,7 +269,7 @@ export class SchedulingComponent {
   selectItem(deployment: any) {
     this.selectedItem = deployment;
     this.getSettingsData();
-    
+
   }
 
   getSettingsData() {
@@ -403,7 +403,7 @@ export class SchedulingComponent {
   }
 
   getPolylinePoints(): string {
-    return this.updateStatistics.map((stat, index) => 
+    return this.updateStatistics.map((stat, index) =>
       `${40 + index * 100},${180 - stat.value * 165}`
     ).join(' ');
   }
@@ -411,8 +411,8 @@ export class SchedulingComponent {
 
   search1() {
     this.filteredTerminals = this.settingsInTerminal.filter(device =>
-      device.deviceSN?.toLowerCase().includes(this.searchTerms?.toLowerCase()) &&
-      (this.statusFilter === '' || device.parameterFileStatus === this.statusFilter)
+      device.serialNumber?.toLowerCase().includes(this.searchTerms?.toLowerCase()) &&
+      (this.statusFilter === '' || device.status === this.statusFilter)
     );
   }
 
@@ -423,7 +423,7 @@ export class SchedulingComponent {
       this.filteredTerminals.forEach(schedule => this.selectedTerminals.add(schedule.id));
     }
   }
-  
+
   toggleSelection(terminal: Device1): void {
     if (this.selectedTerminals.has(terminal.sn)) {
       this.selectedTerminals.delete(terminal.sn);

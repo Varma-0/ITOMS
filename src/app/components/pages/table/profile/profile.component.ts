@@ -1,5 +1,7 @@
 import { Component, ElementRef, QueryList, Renderer2, ViewChildren, AfterViewInit, OnInit, Input, ChangeDetectorRef, AfterViewChecked, EventEmitter, Output, SimpleChanges } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
+import { TerminalProfileComponent } from "src/app/components/dialogs/terminal-profile/terminal-profile.component";
 import { TerminalService } from "src/app/services/terminal/devicelist";
 
 @Component({
@@ -24,8 +26,10 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
     @Input() profile;
     @Input() packageId;
     error: string;
+    update: boolean;
+    deletedArray: any = [];
 
-  constructor(private fb: FormBuilder, private renderer: Renderer2, private cdr: ChangeDetectorRef,private dataService: TerminalService) {}
+  constructor(public dialog: MatDialog,private fb: FormBuilder, private renderer: Renderer2, private cdr: ChangeDetectorRef,private dataService: TerminalService) {}
 
   ngOnInit() {
     this.formsArray = this.fb.array([]);
@@ -34,28 +38,92 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
     }
   }
 
+  performView(){
+    const data = [];
+    this.formsArray.value.forEach(element => {
+        data.push({
+            title:element.label,
+            defaultValue: element.default
+        })
+    });
+    const dialogRef = this.dialog.open(TerminalProfileComponent, {
+        data: {
+          title: 'Profile',
+          items: data
+        },
+        width: '60%'
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+      });
+
+  }
+
   performSave() {
-    const transformedArray = this.formsArray.value.map(this.transformObject);
+    if(!this.update){
+
+            const transformedArray = this.formsArray.value.map(this.transformObject);
+            const payload = {
+                "event": {
+                    "eventData": {
+                        "application": "itoms",
+                        "packageId": this.packageId,
+                        "parameterLogInfoList": transformedArray
+                    },
+                    "eventType": "PARAMETER",
+                    "eventSubType": "CREATE"
+                }
+            }
+            this.dataService.addParametrs(payload).subscribe(
+                response => {
+                  console.log("fd",response);
+                }
+              )
+    }else{
+        if(this.deletedArray.length > 0){
+            const array = [];
+            this.deletedArray.forEach(element => {
+                array.push(element.id);
+            });
+            const payload = {
+                "event": {
+                    "eventData": array,
+                    "eventType": "PARAMETER",
+                    "eventSubType": "SEARCH"
+                }
+            }
+            this.dataService.deleteParametrs(payload).subscribe(
+                response => {
+                  console.log("fd",response);
+                }
+              )
+        }else{
+        const transformedArray = this.formsArray.value.map(this.transformObject);
     const payload = {
         "event": {
             "eventData": {
-                "application": "itoms",
+                "batchId": this.formsArray.value[0]?.batchId,
                 "packageId": this.packageId,
                 "parameterLogInfoList": transformedArray
             },
             "eventType": "PARAMETER",
-            "eventSubType": "CREATE"
+            "eventSubType": "UPDATE"
         }
     }
-    this.dataService.addParametrs(payload).subscribe(
+    this.dataService.updateParametrs(payload).subscribe(
         response => {
           console.log("fd",response);
         }
       )
+    }
+}
   }
+
 
    transformObject(input) {
     return {
+        id: input.id,
         title: input.label,
         description: input.description,
         paramLabel: input.label,
@@ -100,18 +168,38 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
 
   prepopulate(){
     this.profile.forEach(item => {
-        const newForm: FormGroup = this.fb.group({
-            label: [this.getLabelValue('label',item)],
-            key: [this.getLabelValue('key',item)],
-            type: [this.getLabelValue('type',item)],
-            default: [this.getLabelValue('default',item)],
-            maxvalue: [this.getLabelValue('maxvalue',item)],
-            minvalue: [this.getLabelValue('minvalue',item)],
-            manadatroy: [''],
-            description: [this.getLabelValue('description',item)]
-          });
-          this.formsArray.push(newForm);
-    });
+        if(item.paramLabel && !item.delete){
+            const newForm: FormGroup = this.fb.group({
+                batchId: [item.batchId],
+                id:[item.id],
+                label: [item.paramLabel],
+                key: [item.paramKey],
+                type: [item.valueType],
+                default: [item.defaultValue],
+                maxvalue: [item.maxLength],
+                minvalue: [item.minLength],
+                manadatroy: [item.nullable],
+                description: [item.description]
+              });
+              this.formsArray.push(newForm);
+              this.update = true;
+        }  });
+        this.profile.forEach(item => {
+            if(!item.paramLabel){
+                const newForm: FormGroup = this.fb.group({
+                    label: [this.getLabelValue('label',item)],
+                    key: [this.getLabelValue('key',item)],
+                    type: [this.getLabelValue('type',item)],
+                    default: [this.getLabelValue('default',item)],
+                    maxvalue: [this.getLabelValue('maxvalue',item)],
+                    minvalue: [this.getLabelValue('minvalue',item)],
+                    manadatroy: [''],
+                    description: [this.getLabelValue('description',item)]
+                  });
+                  this.formsArray.push(newForm);
+                  this.update = false;
+            }
+        })
     this.cdr.detectChanges(); // Ensure changes are detected after populating
   }
 
@@ -191,6 +279,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
   }
 
   removeForm(index: number) {
+    this.deletedArray.push(this.formsArray.value[index]);
     this.formsArray.removeAt(index);
     if (this.formsArray.length > 0) {
       this.activeForm = this.formsArray.at(0) as FormGroup; // Set active form to the first form if any remain

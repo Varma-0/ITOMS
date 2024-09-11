@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 
 interface Resource {
@@ -36,7 +37,7 @@ export class PackagesComponent implements OnInit {
   viewMode: 'grid' | 'list' = 'grid';
   packages: any;
 
-  constructor(private dataService: TerminalService) {}
+  constructor(private dataService: TerminalService,private router:Router) {}
 
   ngOnInit() {
     this.loadPackages();
@@ -64,13 +65,20 @@ export class PackagesComponent implements OnInit {
     )
   }
 
+  redirect(name){
+    this.router.navigate(['/table/parameters'], {
+        queryParams: { name: name }
+      });
+
+  }
+
   getRandomIcon(): string {
     const randomIndex = Math.floor(Math.random() * this.icons.length);
     return this.icons[randomIndex];
   }
 
   search() {
-    this.filteredResources = this.resources.filter(resource => 
+    this.filteredResources = this.resources.filter(resource =>
       resource.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
     );
   }
