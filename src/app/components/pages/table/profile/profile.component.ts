@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
     });
     const dialogRef = this.dialog.open(TerminalProfileComponent, {
         data: {
-          title: 'Profile',
+          // title: 'Profile',
           items: data
         },
         width: '60%'
@@ -100,6 +100,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
               )
         }else{
         const transformedArray = this.formsArray.value.map(this.transformObject);
+        console.log("wew",transformedArray);
     const payload = {
         "event": {
             "eventData": {
@@ -122,6 +123,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
 
 
    transformObject(input) {
+    console.log("qfq",input.defaultValue);
     return {
         id: input.id,
         title: input.label,

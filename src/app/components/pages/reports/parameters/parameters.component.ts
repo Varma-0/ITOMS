@@ -10,10 +10,11 @@ interface Device {
   merchantName: string;
   deviceModel: string;
   merchantHierarchy: string;
-  lastHeartbeat: string;
+  jobStatus: string;
   groupNames: string;
   ipAddress: string;
-  view?:Boolean
+  view?:Boolean;
+  scheduledDate: any;
 }
 
 interface Column {
@@ -38,7 +39,8 @@ export class ParametersReportComponent implements OnInit {
     { key: 'merchantName', label: 'Merchant Name', visible: true },
     { key: 'merchantHierarchy', label: 'Merchant Hierarchy', visible: true },
     { key: 'deviceModel', label: 'Model', visible: true },
-    { key: 'lastHeartbeat', label: 'View', visible: true },
+    { key: 'jobStatus', label: 'JOB Status', visible: true },
+    { key: 'scheduledDate', label: 'Scheduled Date', visible: true },
   ];
 
   currentPage = 1;

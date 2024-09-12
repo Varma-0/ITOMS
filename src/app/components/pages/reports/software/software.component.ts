@@ -13,7 +13,8 @@ interface Device {
   lastHeartbeat: string;
   groupNames: string;
   ipAddress: string;
-  view?:Boolean
+  view?:Boolean;
+  jobStatus: any;
 }
 
 interface Column {
@@ -38,7 +39,8 @@ export class SoftwareReportComponent implements OnInit {
     { key: 'merchantName', label: 'Merchant Name', visible: true },
     { key: 'merchantHierarchy', label: 'Merchant Hierarchy', visible: true },
     { key: 'deviceStatus', label: 'Model', visible: true },
-    { key: 'view', label: 'View', visible: true },
+    { key: 'jobStatus', label: 'JOB Status', visible: true },
+    // { key: 'view', label: 'View', visible: true },
   ];
 
   currentPage = 1;
