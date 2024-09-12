@@ -95,9 +95,8 @@
                 <tr *ngFor="let device of filteredDevices" style="height: 50px;">
                   <td class="td-device-sn" style="white-space: nowrap;">{{ device.serialNumber }}</td>
                   <td class="td-file-status" style="white-space: nowrap;">
-                    <span [ngClass]="{'status-pending': device.jobStatus === 'PUBLISH_PENDING',
-                                      'status-published': device.jobStatus === 'PUBLISHED'}">
-                      {{ device.jobStatus == 'PUBLISH_PENDING' ? 'Pending publish' : 'Published'  }}
+                    <span>
+                      {{ device.jobStatus  }}
                     </span>
                   </td>
                   <td class="td-publish-time" style="white-space: nowrap;">{{ device.createdBy.ts | date:'dd/MM/yyyy HH:mm:ss' }}</td>

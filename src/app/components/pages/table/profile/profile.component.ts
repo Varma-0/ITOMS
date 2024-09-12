@@ -39,6 +39,11 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
   }
 
   performView(){
+    this.activeForm.updateValueAndValidity();
+    const index = this.formsArray.controls.indexOf(this.activeForm);
+    if (index !== -1) {
+      this.formsArray.setControl(index, this.activeForm);
+    }
     const data = [];
     this.formsArray.value.forEach(element => {
         data.push({
@@ -62,7 +67,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
 
   performSave() {
     if(!this.update){
-
             const transformedArray = this.formsArray.value.map(this.transformObject);
             const payload = {
                 "event": {
@@ -99,6 +103,11 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
                 }
               )
         }else{
+            this.activeForm.updateValueAndValidity();
+            const index = this.formsArray.controls.indexOf(this.activeForm);
+            if (index !== -1) {
+              this.formsArray.setControl(index, this.activeForm);
+            }
         const transformedArray = this.formsArray.value.map(this.transformObject);
         console.log("wew",transformedArray);
     const payload = {
