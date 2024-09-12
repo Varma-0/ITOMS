@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
+import { Router } from '@angular/router';
 import * as JSZip from 'jszip';
 import { DesignSelectionComponent } from 'src/app/components/dialogs/design-selection/design-selection.component';
 import { SelectCfgComponent } from 'src/app/components/dialogs/select-cfg/select-cfg.component';
@@ -55,7 +56,7 @@ export class PackageAddComponent {
   blobFile: File;
   randomSize: string = '';
 
-  constructor(private http: HttpClient, private dataService: TerminalService) {}
+  constructor(private http: HttpClient, private dataService: TerminalService,private router:Router) {}
 
   selectType(type: any) {
     this.selectedType = type;
@@ -69,6 +70,13 @@ export class PackageAddComponent {
   onDragOver(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
+  }
+
+  redirect(name){
+    this.router.navigate(['/table/parameters'], {
+        queryParams: { name: name }
+      });
+
   }
 
   getRandomSize() {

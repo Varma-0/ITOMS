@@ -57,7 +57,7 @@ export class AnalyticsComponent implements OnInit {
     terminalCountData() {
       const charts = new chartsEvent('REPORT','SEARCH');
       const chartData = new devicePie(charts);
-      this.dataService.deviceModelRatio(chartData).subscribe(
+      this.dataService.terminalCount(chartData).subscribe(
         response => {
           console.log("pie",response);
           this.terminalCount = response.event.eventData.total;

@@ -221,6 +221,10 @@ export class TerminalService {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/apkPackage`,options, {headers: this.httpHeaders})
     }
 
+    terminalCount(options: devicePie): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/deviceCount`,options, {headers: this.httpHeaders})
+    }
+
     newActivatedGraphInfo(options: devicePie): Observable<any> {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/reports/getNewlyActivatedDevices`,options, {headers: this.httpHeaders})
     }

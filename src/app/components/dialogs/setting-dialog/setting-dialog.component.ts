@@ -59,7 +59,10 @@ export class SettingDialogComponent {
     this.dataService.getPackageList(payload).subscribe(
       response => {
         console.log(response)
-        this.addApps = response.event.eventData.map(data => ({
+        const oldAppNames = this.oldApps.map(app => app.name);
+        this.addApps = response.event.eventData
+        .filter(data => !oldAppNames.includes(data.name)) // Only add apps not in oldApps
+        .map(data => ({
           id: data.id,
           name: data.name,
           type: data.type,

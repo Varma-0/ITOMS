@@ -173,7 +173,7 @@
     <mat-card-content *ngIf="currentStep === 4">
       <div style="text-align: center;margin-top:5%;">
         <p>No parameter template has been configured in this parameter application.</p>
-       <p> Click <span  style="color: blue;"><u>Design</u></span> to start configuring the parameter template.</p>
+       <p> Click <span  (click)="redirect(onlyName)" style="color: blue;"><u>Design</u></span> to start configuring the parameter template.</p>
     </div>
     </mat-card-content>
   </mat-card>
