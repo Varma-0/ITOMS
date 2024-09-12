@@ -17,6 +17,9 @@ import { ProfileComponent } from '../profile/profile.component';
   styleUrl: './flyparameters.component.scss'
 })
 export class FlyparametersComponent {
+clicked() {
+this.showDynamicKeys = true;
+}
   searchTerm: string = '';
   selectedTab: string = 'profile'; // Default tab
   deployments = [];

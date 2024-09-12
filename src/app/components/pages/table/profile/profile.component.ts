@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
     error: string;
     update: boolean;
     deletedArray: any = [];
+    @Output() back = new EventEmitter<string>();
 
   constructor(public dialog: MatDialog,private fb: FormBuilder, private renderer: Renderer2, private cdr: ChangeDetectorRef,private dataService: TerminalService) {}
 
@@ -39,7 +40,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
   }
 
   performView(){
-    this.activeForm.updateValueAndValidity();
+    this.activeForm?.updateValueAndValidity();
     const index = this.formsArray.controls.indexOf(this.activeForm);
     if (index !== -1) {
       this.formsArray.setControl(index, this.activeForm);
@@ -103,7 +104,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
                 }
               )
         }else{
-            this.activeForm.updateValueAndValidity();
+            this.activeForm?.updateValueAndValidity();
             const index = this.formsArray.controls.indexOf(this.activeForm);
             if (index !== -1) {
               this.formsArray.setControl(index, this.activeForm);
@@ -128,6 +129,7 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
       )
     }
 }
+this.back.emit("");
   }
 
 
