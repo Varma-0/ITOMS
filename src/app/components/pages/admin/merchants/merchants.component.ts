@@ -97,6 +97,16 @@ export class MerchantsComponent {
     }
   }
 
+  updateItemsPerPage(): void {
+    this.currentPage = 1;
+    this.updatePagination();
+  }
+
+  get paginatedDevices(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredmerchants.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
   openCreateDialog(data?): void {
     const dialogRef = this.dialog.open(AddFormComponent,{
         data:{

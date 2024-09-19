@@ -20,7 +20,7 @@
       <th>Actions</th>
     </tr>
   </thead>
-  <tbody *ngFor="let device of filteredmerchants">
+  <tbody *ngFor="let device of paginatedDevices">
     <tr>
       <td>{{ device.name }}</td>
       <td><span class="status-inactive">{{ device.contactName }}</span></td>
@@ -52,7 +52,7 @@
   <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">
     Next <i class="bx bx-chevron-right"></i>
   </button>
-  <select class="pagination-select" [(ngModel)]="itemsPerPage" (change)="updatePagination()">
+  <select class="pagination-select" [(ngModel)]="itemsPerPage" (change)="updateItemsPerPage()">
     <option [ngValue]="5">5 per page</option>
     <option [ngValue]="10">10 per page</option>
     <option [ngValue]="20">15 per page</option>

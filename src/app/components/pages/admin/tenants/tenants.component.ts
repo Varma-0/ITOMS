@@ -12,29 +12,15 @@ import { TerminalService } from 'src/app/services/terminal/devicelist';
   templateUrl: './tenants.component.html',
   styleUrl: './tenants.component.scss'
 })
+
 export class TenantsComponent {
-  // day = 'Tue'
-  // date = '20';
-  // month = 'Aug';
-  // tenantName = 'INA QUICKPAY';
-  // tenantDetails = 'sandeepreddymukku143@gmail.com on 2024-06-06';
-  // tenantType = 'COMPANY';
-  isActive: boolean = true;
-  // constructor(public dialog: MatDialog) {}
-  tenants: any = []
-  time: any = '';
-  fulldate:any = '';
-  day:any = '';
-  date: any='';
-  month: any = '';
-  userDetails = '';
-  userName = '';
-  filteredtenants = [];
-  searchTerm = '';
-  currentPage = 1;
-  itemsPerPage = 5;
-  totalPages = 1;
-  itemsPerPageOptions = [5, 10, 15];
+  tenants: any[] = [];
+  filteredtenants: any[] = [];
+  searchTerm: string = '';
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  totalPages: number = 1;
+
   constructor(public dialog: MatDialog, private dataService: TerminalService) {}
 
   ngOnInit(): void {
@@ -44,7 +30,6 @@ export class TenantsComponent {
   loadTenants() {
     this.dataService.tenantData().subscribe(
       response => {
-        console.log(response);
         this.tenants = response.event.eventData.tenants.map(data => ({
           tenantId: data.id,
           createdDate: data.createdBy.ts.split('T')[0],
@@ -60,13 +45,7 @@ export class TenantsComponent {
       error => {
         console.error('Error:', error);
       }
-    )
-  }
-
-  toggleStatus(tenant: any,i?): void {
-    this.filteredtenants[i].status = this.filteredtenants[i].status == 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
-    tenant.status = tenant.isActive ? 'ACTIVE' : 'INACTIVE';
-    console.log(`${tenant.name} status is now: ${tenant.status}`);
+    );
   }
 
   search(): void {
@@ -102,41 +81,67 @@ export class TenantsComponent {
     return this.filteredtenants.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
-  openCreateDialog(data?,edit?): void {
-    const dialogRef = this.dialog.open(AddFormComponent,{
-        data:{
-            title:edit ? 'Edit Tenant' : 'Add Tenant',
-            form : {
-                name: data.name,
-                description: data.description,
-                type: data.type,
-                stype: data.stype,
-            }
+  toggleStatus(tenant: any, i: number,isChecked: boolean): void {
+    const updatedStatus = isChecked ? 'ACTIVE' : 'INACTIVE';
+    // this.filteredtenants[i].status = updatedStatus;
+    // tenant.status = updatedStatus;
+    // console.log(`${tenant.tenantId} status is now: ${tenant.status}`);
+    const payload = {
+      "event": {
+        "eventData":tenant.tenantId,
+        "eventType": "TENANT",
+        "eventSubType": updatedStatus
+      }
+    }
+    this.dataService.tenantUpdateStatus(payload).subscribe(
+      response => {
+        // Update the device status in the UI if the API call is successful
+        console.log('Device status updated successfully:', response);
+        this.loadTenants();
+      },
+      error => {
+        // Handle any errors here
+        console.error('Error updating device status:', error);
+      }
+    );
+  }
+
+  openCreateDialog(data?, edit?): void {
+    const dialogRef = this.dialog.open(AddFormComponent, {
+      data: {
+        title: edit ? 'Edit Tenant' : 'Add Tenant',
+        form: {
+          name: data?.name || '',
+          description: data?.description || '',
+          type: data?.type || '',
+          stype: data?.stype || '',
         },
-        width:'40%'
+      },
+      width: '40%',
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if(edit) {
-          const event = new editTenantData(data.tenantId,result.name,result.description,result.type,result.stype);
-          const eventType = new editTenantBody(event,'TENANT','UPDATE');
+        if (edit) {
+          const event = new editTenantData(data.tenantId, result.name, result.description, result.type, result.stype);
+          const eventType = new editTenantBody(event, 'TENANT', 'UPDATE');
           const finals = new tenantUpdate(eventType);
           this.dataService.updateTenant(finals).subscribe(
-            response => [
-              console.log("response",response)
-            ]
-          )
-        }
-        else if(!edit) {
-          const event = new addTenantData(result.name,result.description,result.type,result.stype);
-          const eventType = new addTenantBody(event,'TENANT','CREATE');
+            response => {
+              console.log('response', response);
+              this.loadTenants();
+            }
+          );
+        } else {
+          const event = new addTenantData(result.name, result.description, result.type, result.stype);
+          const eventType = new addTenantBody(event, 'TENANT', 'CREATE');
           const finals = new tenantAdd(eventType);
           this.dataService.addTenant(finals).subscribe(
-            response => [
-              console.log("response",response)
-            ]
-          )
+            response => {
+              console.log('response', response);
+              this.loadTenants();
+            }
+          );
         }
       }
     });
@@ -151,10 +156,12 @@ export class TenantsComponent {
         const finals = new tenantDelete(eventType);
         this.dataService.deleteTenant(finals).subscribe(
           response => {
-            console.log("respoonse",response);
+            console.log('response', response);
+            this.loadTenants();
           }
-        )
-    }
+        );
+      }
     });
   }
 }
+
