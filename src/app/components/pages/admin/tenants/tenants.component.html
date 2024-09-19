@@ -54,24 +54,26 @@
   <button class="headerIcons" (click)="search()"><i class="bx bx-search"></i></button>
   <button class="headerIcons" (click)="openCreateDialog(false)"><i class="bx bx-plus"></i></button>
 </div>
-<table >
+<table style="overflow:auto;">
   <thead>
-    <tr>
+    <tr style="white-space: nowrap;">
       <th>Tenant Name</th>
       <th>Created By</th>
       <th>Updated By</th>
       <th>Created Date</th>
+      <th>Updated Date</th>
       <th>Tenant Type</th>
       <th>Status</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody *ngFor="let device of filteredtenants;let i = index">
-    <tr>
+    <tr style="white-space: nowrap;">
       <td>{{ device.name }}</td>
       <td>{{ device.created }}</td>
       <td>{{ device.updated }}</td>
-      <td>{{ device.fulldate }}</td>
+      <td>{{ device.createdDate }}</td>
+      <td>{{ device.updatedDate }}</td>
       <td>{{ device.type }}</td>
       <td>
         <mat-slide-toggle
@@ -112,3 +114,4 @@
     <option [ngValue]="20">15 per page</option>
   </select>
 </div>
+<div style="height: 50px;"></div>

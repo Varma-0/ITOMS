@@ -13,9 +13,22 @@ import { SharedServices } from 'src/app/services/shared.service';
 })
 export class AddPermissionComponent {
   permissionOptionNames:any = [];
+  tenantNames:any = [];
+  roleNames:any = [];
+  alertNames:any = [];
+  title='';
+  submitted = false;
   permissionForm: FormGroup;
+  tenantForm: FormGroup;
+  errorStyle = {
+    'border-color':'red'
+   }
   constructor(public dialogRef: MatDialogRef<AddPermissionComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private shared:SharedServices) {
     this.permissionOptionNames = data.permissionOptionNames;
+    this.tenantNames = data.tenantNames;
+    this.alertNames = data.alertNames;
+    this.roleNames = data.roleNames;
+    this.title = data.title;
     this.shared.setSidebarState(false);
   }
 
@@ -27,6 +40,15 @@ export class AddPermissionComponent {
         checkbox2: [false],
         checkbox3: [false],
       });
+      this.tenantForm = this.fb.group({
+        tenant: ['',Validators.required],
+        role: ['',Validators.required],
+        alert: [[],Validators.required]
+      });
+    }
+
+    get tl(){
+        return this.tenantForm.controls;
     }
 
     getObjectById(id,list) {
@@ -37,9 +59,17 @@ export class AddPermissionComponent {
   }
 
   onConfirm(): void {
-    if (this.permissionForm.valid) {
-        this.permissionForm.get('name').setValue(this.getObjectById(this.permissionForm.get('permission').value,this.permissionOptionNames).name)
-        this.dialogRef.close(this.permissionForm.value);
+    if(this.title != 'Role'){
+        if (this.permissionForm.valid) {
+            this.permissionForm.get('name').setValue(this.getObjectById(this.permissionForm.get('permission').value,this.permissionOptionNames).name)
+            this.dialogRef.close(this.permissionForm.value);
+        }
+    }else if(this.title == 'Role'){
+        this.submitted = true;
+        if(this.tenantForm.invalid){
+            return;
+        }
+        this.dialogRef.close(this.tenantForm.value);
     }
   }
 

@@ -1,27 +1,54 @@
-<h2 mat-dialog-title>Add Permission</h2>
+<h2 mat-dialog-title>{{title == 'Role' ? 'Add Roles' : 'Add Permission'}}</h2>
 <mat-dialog-content>
-    <form [formGroup]="permissionForm" class="merchant-form">
-        <div class="form-group">
-            <label for="permission">Permission:</label>
-            <select id="permission" formControlName="permission">
-              <option *ngFor="let permission of permissionOptionNames" [value]="permission.id">{{ permission.name }}</option>
-            </select>
-          </div>
-          <div class="form-group checkbox-group">
-            <label>
-              <input type="checkbox" formControlName="checkbox1"> View
-            </label>
-            <label>
-              <input type="checkbox" formControlName="checkbox2"> Edit
-            </label>
-            <label>
-              <input type="checkbox" (change)="change()" formControlName="checkbox3"> Delete
-            </label>
-          </div>
-      </form>
+    <ng-container *ngIf="title != 'Role'">
+        <form [formGroup]="permissionForm" class="merchant-form">
+            <div class="form-group">
+                <label for="permission">Permission:</label>
+                <select id="permission" formControlName="permission">
+                  <option *ngFor="let permission of permissionOptionNames" [value]="permission.id">{{ permission.name }}</option>
+                </select>
+              </div>
+              <div class="form-group checkbox-group">
+                <label>
+                  <input type="checkbox" formControlName="checkbox1"> View
+                </label>
+                <label>
+                  <input type="checkbox" formControlName="checkbox2"> Edit
+                </label>
+                <label>
+                  <input type="checkbox" (change)="change()" formControlName="checkbox3"> Delete
+                </label>
+              </div>
+          </form>
+    </ng-container>
+    <ng-container *ngIf="title == 'Role'">
+        <form [formGroup]="permissionForm" class="merchant-form">
+            <div class="form-group">
+                <label for="tenant">Tenant <span style="color: red;">*</span></label>
+                <select id="tenant" formControlName="tenant" [ngStyle]=" tl.tenant.errors && ( tl.tenant.touched || tl.tenant.dirty || submitted) ? errorStyle : null ">
+                  <option *ngFor="let tenant of tenantNames" [value]="tenant.id">{{ tenant.name }}</option>
+                </select>
+            <div style="font-size: 12px;color: red;" *ngIf="tl.tenant.errors && ( tl.tenant.touched || tl.tenant.dirty || submitted)">Please select Tenant</div>
+            </div>
+            <div class="form-group">
+                <label for="role">Role <span style="color: red;">*</span></label>
+                <select id="role" formControlName="role" [ngStyle]=" tl.role.errors && ( tl.role.touched || tl.role.dirty || submitted) ? errorStyle : null ">
+                  <option *ngFor="let role of roleNames" [value]="role.id">{{ role.name }}</option>
+                </select>
+            <div style="font-size: 12px;color: red;" *ngIf="tl.role.errors && ( tl.role.touched || tl.role.dirty || submitted)">Please select Role</div>
+            </div>
+            <div class="form-group">
+                <label for="alert">Alerts <span style="color: red;">*</span></label>
+                <mat-select formControlName="alert" multiple="true" [ngStyle]=" tl.alert.errors && ( tl.alert.touched || tl.alert.dirty || submitted) ? errorStyle : null ">
+                    <mat-option *ngFor="let alert of alertNames" [value]="alert.id">{{ alert.name }}</mat-option>
+                </mat-select>
+            <div style="font-size: 12px;color: red;" *ngIf="tl.alert.errors && ( tl.alert.touched || tl.alert.dirty || submitted)">Please select Alert</div>
+            </div>
+        </form>
+    </ng-container>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end" class="d-flex justify-content-evenly">
   <button class="btn btn-secondary" mat-dialog-close>Cancel</button>
-  <button class="btn btn-primary" (click)="onConfirm()" [mat-dialog-close]="true">Confirm</button>
+  <button class="btn btn-primary" (click)="onConfirm()">Confirm</button>
 </mat-dialog-actions>

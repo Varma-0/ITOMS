@@ -97,10 +97,9 @@ export class AddFormComponent {
         checkbox3: [''],
       });
       this.tenantForm = this.fb.group({
-        name: [''],
+        name: ['',Validators.required],
         description: [''],
-        type: [''],
-        stype: [''],
+        type: ['',Validators.required],
       });
       this.merchantForm = this.fb.group({
         name: [''],
@@ -144,6 +143,10 @@ export class AddFormComponent {
     return this.alertForm.controls;
   }
 
+  get tl(){
+    return this.tenantForm.controls;
+  }
+
   get items(): FormArray {
     return this.roleForm.get('roles') as FormArray;
   }
@@ -182,8 +185,12 @@ export class AddFormComponent {
   openTenantDialog(): void {
     const dialogRef = this.dialog.open(AddPermissionComponent,{
         data : {
-            permissionOptionNames : this.permissionOptionNames
-        }
+            tenantNames : this.tenantOptionNames,
+            alertNames  : this.alertOptionNames,
+            roleNames   : this.roleOptionNames,
+            title : 'Role'
+        },
+        width: '40%'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != true && result != false) {
@@ -219,6 +226,10 @@ export class AddFormComponent {
       }else if(this.title == 'Add Permission' || this.title == 'Edit Permission'){
         this.dialogRef.close(this.permissionForm.value);
       }else if(this.title == 'Add Tenant' || this.title == 'Edit Tenant'){
+        this.submitted = true;
+        if(this.tenantForm.invalid){
+            return;
+        }
         this.dialogRef.close(this.tenantForm.value);
       }else if(this.title == 'Add Merchant' || this.title == 'Edit Merchant'){
         this.dialogRef.close(this.merchantForm.value);

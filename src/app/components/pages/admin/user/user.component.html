@@ -17,6 +17,7 @@
       <th>Email</th>
       <th>Created Date</th>
       <th>Status</th>
+      <th>Tenants</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -28,6 +29,7 @@
       <td> <span [ngClass]="{'status-active': device.status === 'ACTIVE','status-inactive': device.status === 'INACTIVE'}">
         {{ device.status }}
       </span></td>
+      <td><button mat-icon-button><mat-icon>visibility</mat-icon></button></td>
       <td>
         <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
         <mat-icon>more_vert</mat-icon>

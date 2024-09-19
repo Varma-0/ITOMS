@@ -47,7 +47,8 @@ export class TenantsComponent {
         console.log(response);
         this.tenants = response.event.eventData.tenants.map(data => ({
           tenantId: data.id,
-          fulldate: data.createdBy.ts.split('T')[0],
+          createdDate: data.createdBy.ts.split('T')[0],
+          updatedDate: data.updatedBy.ts.split('T')[0],
           created: data.createdBy.name,
           updated: data.updatedBy.name,
           name: data.name,
