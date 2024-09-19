@@ -28,8 +28,12 @@ export class AddFormComponent {
   tenantForm: FormGroup;
   merchantForm: FormGroup;
   form: FormGroup;
+  submitted = false;
   userData:any;
     isSAValue: boolean;
+    errorStyle = {
+     'border-color':'red'
+    }
   constructor(public dialog: MatDialog,public dialogRef: MatDialogRef<AddFormComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private shared:SharedServices) {
     this.title = data.title
     this.tenantOptionNames = data.tenantOptionNames
@@ -62,6 +66,7 @@ export class AddFormComponent {
         altemail: [''],
         altphone: [''],
         altcountry: [''],
+        tenants:this.fb.array([])
       });
       this.roleForm = this.fb.group({
         name: [''],
@@ -69,19 +74,19 @@ export class AddFormComponent {
         roles: this.fb.array([])
       });
       this.alertForm = this.fb.group({
-        name: [''],
-        originator: [''],
-        alert: [''],
-        template: [''],
+        name: ['',Validators.required],
+        originator: ['',Validators.required],
+        alert: ['',Validators.required],
+        template: ['',Validators.required],
         description: [''],
         checkbox1: [''],
         checkbox2: [''],
         checkbox3: [''],
         tvalue: [''],
-        dvalue: [''],
-        minvalue: [''],
-        maxvalue: [''],
-        templateId: [''],
+        dvalue: ['',Validators.required],
+        minvalue: ['',Validators.required],
+        maxvalue: ['',Validators.required],
+        templateId: ['',Validators.required],
       });
       this.permissionForm = this.fb.group({
         name: [''],
@@ -126,6 +131,19 @@ export class AddFormComponent {
       }
   }
 
+  applyValidation(){
+    if (this.alertForm.get('checkbox1').value) {
+        this.alertForm.get('tvalue').setValidators(Validators.required);
+    }else{
+        this.alertForm.get('tvalue').setValidators([]);
+    }
+    this.alertForm.get('tvalue').updateValueAndValidity();
+  }
+
+  get al(){
+    return this.alertForm.controls;
+  }
+
   get items(): FormArray {
     return this.roleForm.get('roles') as FormArray;
   }
@@ -161,6 +179,19 @@ export class AddFormComponent {
     });
   }
 
+  openTenantDialog(): void {
+    const dialogRef = this.dialog.open(AddPermissionComponent,{
+        data : {
+            permissionOptionNames : this.permissionOptionNames
+        }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != true && result != false) {
+        this.addItem(result);
+      }
+    });
+  }
+
   getObjectById(id,list) {
     return list.find(obj => obj.id === id);
 }
@@ -180,6 +211,10 @@ export class AddFormComponent {
             roles: this.items.value
         });
       }else if(this.title == 'Add Alert' || this.title == 'Edit Alert'){
+        this.submitted = true;
+        if(this.alertForm.invalid){
+            return;
+        }
         this.dialogRef.close(this.alertForm.value);
       }else if(this.title == 'Add Permission' || this.title == 'Edit Permission'){
         this.dialogRef.close(this.permissionForm.value);

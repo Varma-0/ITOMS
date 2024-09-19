@@ -28,7 +28,7 @@ export class TenantsComponent {
   date: any='';
   month: any = '';
   userDetails = '';
-  userName = '';  
+  userName = '';
   filteredtenants = [];
   searchTerm = '';
   currentPage = 1;
@@ -48,7 +48,8 @@ export class TenantsComponent {
         this.tenants = response.event.eventData.tenants.map(data => ({
           tenantId: data.id,
           fulldate: data.createdBy.ts.split('T')[0],
-          userName: data.createdBy.name,
+          created: data.createdBy.name,
+          updated: data.updatedBy.name,
           name: data.name,
           type: data.type,
           status: data.status
@@ -62,7 +63,7 @@ export class TenantsComponent {
   }
 
   toggleStatus(tenant: any,i?): void {
-    this.filteredtenants[i].status = this.filteredtenants[i].status == 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'; 
+    this.filteredtenants[i].status = this.filteredtenants[i].status == 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
     tenant.status = tenant.isActive ? 'ACTIVE' : 'INACTIVE';
     console.log(`${tenant.name} status is now: ${tenant.status}`);
   }

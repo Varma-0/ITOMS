@@ -68,6 +68,7 @@ export class DLogInComponent implements OnInit{
         } else if (response.dropdownOptions) {
           this.showDropdown = true;
           this.dropdownOptions = response.dropdownOptions;
+          localStorage.setItem('tenants',JSON.stringify(this.dropdownOptions))
         }
         this.loadingEmail = false;
       },
@@ -96,6 +97,7 @@ export class DLogInComponent implements OnInit{
           this.showDropdown = true;
           this.inasecretkey = response.event.eventData.inaSecretKey;
           this.dropdownOptions = response.event.eventData.userTenants;
+          localStorage.setItem('tenants',JSON.stringify(this.dropdownOptions))
           this.errorMessage = '';
         } else if (response.status == 422) {
           this.errorApiMessage = response.message;
@@ -115,7 +117,7 @@ export class DLogInComponent implements OnInit{
 
   onForgotPasswordClick() {
     this.showPasswordField = false;
-    this.forgotPassword = true; 
+    this.forgotPassword = true;
   }
 
   onSubmitEmailforOtp() {
@@ -124,7 +126,7 @@ export class DLogInComponent implements OnInit{
     console.log(eventData)
     const event = new emailEvent(eventData, 'USER', 'FORGOT_CRED');
     const updatePassRequest = new emailBody(event);
-    
+
     this.authService.emailVerificationforPassReset(updatePassRequest).subscribe(
       response => {
         if(response.status == 200) {
@@ -145,11 +147,11 @@ export class DLogInComponent implements OnInit{
   }
 
   onSubmitOtp() {
-    this.validateOtp = true; 
+    this.validateOtp = true;
     const eventData = new verifyEmailData(this.usernameforgot,this.getotp,'EMAIL');
     console.log(eventData)
     const event = new emailEvent(eventData, 'USER', 'VERIFY_OTP');
-    const updatePassRequest = new emailBody(event); 
+    const updatePassRequest = new emailBody(event);
     this.authService.otpConfirmationforPassReset(updatePassRequest).subscribe(
       response => {
         if(response.status == 200) {
@@ -199,6 +201,8 @@ export class DLogInComponent implements OnInit{
   onSubmitDropdown(): void {
    this.loadingDropdown = true;
    if(this.selectedOption) {
+    localStorage.setItem('uid',this.uid);
+    localStorage.setItem('ina',this.inasecretkey)
     const eventData = new dropData(this.selectedOption["id"],this.uid, this.inasecretkey);
     const event = new dropEvent(eventData, 'LOGIN', 'GENERATE_TOKEN');
     const loginRequest = new dropBody(event);

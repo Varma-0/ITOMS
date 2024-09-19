@@ -3,7 +3,7 @@
 <!-- merchant-form.component.html -->
 <ng-container *ngIf="title == 'Add User' || title == 'Edit User'">
   <form [formGroup]="userForm" class="merchant-form">
-    <div class="form-group" *ngIf="loginData === 'true'">
+    <div class="form-group" *ngIf="loginData != 'true'">
       <label for="tenant">Tenant:</label>
       <!-- <select id="tenant" formControlName="tenant">
         <option *ngFor="let tenant of tenantOptionNames" value="tenant">{{ tenant }}</option>
@@ -13,18 +13,18 @@
      </mat-select>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" *ngIf="loginData != 'true'">
       <label for="role">Role:</label>
       <mat-select id="role" formControlName="role">
         <mat-option *ngFor="let role of roleOptionNames" [value]="role.id">{{ role.name }}</mat-option>
       </mat-select>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" >
       <label for="alert">Alert:</label>
-      <select id="alert" formControlName="alert">
-        <option *ngFor="let alert of alertOptionNames" [value]="alert.id">{{ alert.name }}</option>
-      </select>
+      <mat-select formControlName="alert" multiple="true">
+        <mat-option *ngFor="let alert of alertOptionNames" [value]="alert.id">{{ alert.name }}</mat-option>
+     </mat-select>
     </div>
 
     <div class="row">
@@ -77,6 +77,24 @@
         <input id="altcountry" type="text" formControlName="altcountry" />
       </div>
     </div>
+    <div *ngIf="loginData == 'true'"><div class="button-container">
+        <button class="clean-button" (click)="openTenantDialog()">Add Role</button>
+      </div>
+        <div formArrayName="tenants">
+          <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-box">
+            <div class="header">
+              <span>{{ item.controls.name.value }}</span>
+              <button mat-icon-button color="warn" (click)="removeItem(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+            <div class="checkboxes">
+              <mat-checkbox formControlName="allowView">View</mat-checkbox>
+              <mat-checkbox formControlName="allowEdit">Edit</mat-checkbox>
+              <mat-checkbox formControlName="allowView">Delete</mat-checkbox>
+            </div>
+          </div>
+        </div></div>
   </form>
 </ng-container>
 <ng-container *ngIf="title == 'Add Role' || title == 'Edit Role'">
@@ -113,28 +131,32 @@
     <form [formGroup]="alertForm" class="merchant-form">
         <div class="form-group">
             <div class="form-group">
-                <label for="name">Name:</label>
-                <input id="name" type="text" formControlName="name">
+                <label for="name">Name <span style="color: red;">*</span></label>
+                <input id="name" type="text" formControlName="name" [ngStyle]=" al.name.errors && ( al.name.touched || al.name.dirty || submitted) ? errorStyle : null ">
+                <div style="font-size: 12px;color: red;" *ngIf="al.name.errors && ( al.name.touched || al.name.dirty || submitted)">Please enter valid name</div>
               </div>
-          <label for="originator">Originator:</label>
-          <select id="originator" formControlName="originator">
+          <label for="originator">Originator <span style="color: red;">*</span></label>
+          <select id="originator" formControlName="originator" [ngStyle]=" al.originator.errors && ( al.originator.touched || al.originator.dirty || submitted) ? errorStyle : null ">
             <option value="SERVER">SERVER</option>
             <option value="SERVER">DEVICE</option>
           </select>
+          <div style="font-size: 12px;color: red;" *ngIf="al.originator.errors && ( al.originator.touched || al.originator.dirty || submitted)">Please select Originator</div>
         </div>
         <div class="form-group">
-            <label for="alert">Alert:</label>
-            <select id="alert" formControlName="alert">
+            <label for="alert">Alert <span style="color: red;">*</span></label>
+            <select id="alert" formControlName="alert" [ngStyle]=" al.alert.errors && ( al.alert.touched || al.alert.dirty || submitted) ? errorStyle : null ">
               <option value="LOW">LOW</option>
               <option value="MEDIUM">MEDIUM</option>
               <option value="HIGH">HIGH</option>
             </select>
+            <div style="font-size: 12px;color: red;" *ngIf="al.alert.errors && ( al.alert.touched || al.alert.dirty || submitted)">Please select alert</div>
           </div>
           <div class="form-group">
-            <label for="template">Template:</label>
-            <select id="template" formControlName="template">
+            <label for="template">Template <span style="color: red;">*</span></label>
+            <select id="template" formControlName="template" [ngStyle]=" al.template.errors && ( al.template.touched || al.template.dirty || submitted) ? errorStyle : null ">
               <option value="Email">Email</option>
             </select>
+            <div style="font-size: 12px;color: red;" *ngIf="al.template.errors && ( al.template.touched || al.template.dirty || submitted)">Please select Template</div>
           </div>
         <div class="form-group">
           <label for="description">Description:</label>
@@ -142,7 +164,7 @@
         </div>
         <div class="checkbox-group1">
             <label>
-              <input type="checkbox" formControlName="checkbox1"> Thresholed Applicable
+              <input type="checkbox" (click)="applyValidation()" formControlName="checkbox1"> Thresholed Applicable
             </label>
             <label>
               <input type="checkbox" formControlName="checkbox2"> Custom Alert
@@ -153,28 +175,33 @@
           </div>
 
         <div class="form-group">
-          <label for="tvalue">Thresold Value:</label>
-          <input id="tvalue" type="text" formControlName="tvalue">
+          <label for="tvalue">Thresold Value <span *ngIf="al.checkbox1.value" style="color: red;">*</span></label>
+          <input id="tvalue" type="text" formControlName="tvalue" [ngStyle]=" al.tvalue.errors && ( al.tvalue.touched || al.tvalue.dirty || submitted) ? errorStyle : null ">
+          <div style="font-size: 12px;color: red;" *ngIf="al.tvalue.errors && ( al.tvalue.touched || al.tvalue.dirty || submitted)">Please enter thresold value</div>
         </div>
 
         <div class="form-group">
-          <label for="dvalue">Default Value:</label>
-          <input id="dvalue" type="text" formControlName="dvalue">
+          <label for="dvalue">Default Value <span style="color: red;">*</span></label>
+          <input id="dvalue" type="text" formControlName="dvalue" [ngStyle]=" al.dvalue.errors && ( al.dvalue.touched || al.dvalue.dirty || submitted) ? errorStyle : null ">
+          <div style="font-size: 12px;color: red;" *ngIf="al.dvalue.errors && ( al.dvalue.touched || al.dvalue.dirty || submitted)">Please enter default value</div>
         </div>
 
         <div class="form-group">
-            <label for="minvalue">Min Value:</label>
-            <input id="minvalue" type="text" formControlName="minvalue">
+            <label for="minvalue">Min Value <span style="color: red;">*</span></label>
+            <input id="minvalue" type="text" formControlName="minvalue" [ngStyle]=" al.minvalue.errors && ( al.minvalue.touched || al.minvalue.dirty || submitted) ? errorStyle : null ">
+            <div style="font-size: 12px;color: red;" *ngIf="al.minvalue.errors && ( al.minvalue.touched || al.minvalue.dirty || submitted)">Please enter min name</div>
           </div>
 
           <div class="form-group">
-            <label for="maxvalue">Max Value:</label>
-            <input id="maxvalue" type="text" formControlName="maxvalue">
+            <label for="maxvalue">Max Value <span style="color: red;">*</span></label>
+            <input id="maxvalue" type="text" formControlName="maxvalue" [ngStyle]=" al.maxvalue.errors && ( al.maxvalue.touched || al.maxvalue.dirty || submitted) ? errorStyle : null ">
+            <div style="font-size: 12px;color: red;" *ngIf="al.maxvalue.errors && ( al.maxvalue.touched || al.maxvalue.dirty || submitted)">Please enter max name</div>
           </div>
 
           <div class="form-group">
-            <label for="templateId">Template Id:</label>
-            <input id="templateId" type="text" formControlName="templateId">
+            <label for="templateId">Template Id <span style="color: red;">*</span></label>
+            <input id="templateId" type="text" formControlName="templateId" [ngStyle]=" al.templateId.errors && ( al.templateId.touched || al.templateId.dirty || submitted) ? errorStyle : null ">
+            <div style="font-size: 12px;color: red;" *ngIf="al.templateId.errors && ( al.templateId.touched || al.templateId.dirty || submitted)">Please enter Template Id</div>
           </div>
       </form>
 </ng-container>
@@ -221,10 +248,10 @@
         <div class="form-group">
             <label for="type">Tenant Type:</label>
             <select id="type" formControlName="type">
-              <option value="Individual">Individual</option>
-              <option value="Company">Company</option>
-              <option value="Organization">Organization</option>
-              <option value="SA">SA</option>
+              <option value="INDIVIDUAL">INDIVIDUAL</option>
+              <option value="COMPANY">COMPANY</option>
+              <option value="ORGANIZATION">ORGANIZATION</option>
+              <!-- <option value="SA">SA</option> -->
             </select>
           </div>
           <div class="form-group">
@@ -257,5 +284,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end" class="d-flex justify-content-evenly">
   <button class="btn btn-secondary" mat-dialog-close>Cancel</button>
-  <button class="btn btn-primary" (click)="onConfirm()" [mat-dialog-close]="true">Confirm</button>
+  <button class="btn btn-primary" (click)="onConfirm()">Confirm</button>
 </mat-dialog-actions>

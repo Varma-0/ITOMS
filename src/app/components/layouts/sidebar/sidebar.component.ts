@@ -11,6 +11,10 @@ declare let $: any;
 export class SidebarComponent implements OnInit {
     isSidebarActive = true;
     superAdmin = localStorage.getItem('SA');
+    sa = ['home','user','role','alert','permission','tenants','hierarchies','merchant','terminal','deployment','resources','parameters','device','model','con','heart','search','software','param','swap','system'];
+    admin = ['hierarchies','merchant','terminal','deployment','resources','parameters','device','model','con','heart','param','swap','system'];
+    user = ['home','user','role','alert','permission','tenants','hierarchies','merchant','terminal','model','con','heart','search','software','param','swap','system'];
+    accessibleOptions: any = this.sa;
     constructor(private router: Router,private shared:SharedServices) {
         router.events.subscribe((event: Event) => {
             if (event instanceof NavigationEnd) {
@@ -36,4 +40,7 @@ export class SidebarComponent implements OnInit {
             (active: boolean) => (this.isSidebarActive = active)
           );
     }
+    hasAccess(option: string): boolean {
+        return this.accessibleOptions.includes(option);
+      }
 }

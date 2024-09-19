@@ -103,6 +103,10 @@ export class TerminalService {
         return this.http.post<any>(`${environment.userApiUrl}/alert/`, options, { headers: this.httpHeaders });
     }
 
+    deleteRole(options): Observable<any> {
+        return this.http.patch<any>(`${environment.userApiUrl}/role/`, options, { headers: this.httpHeaders });
+    }
+
     deleteMerchant(options:merchantDelete): Observable<any> {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/merchant/delete`, options, { headers: this.httpHeaders });
     }

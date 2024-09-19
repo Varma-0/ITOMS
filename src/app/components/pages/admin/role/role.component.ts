@@ -69,7 +69,7 @@ export class RoleComponent {
 
   search(): void {
     this.filteredroles = this.roles.filter(device =>
-      device.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
+      device.name?.toLowerCase().includes(this.searchTerm?.toLowerCase()) && !device.deleted
     );
     this.updatePagination();
   }
@@ -147,8 +147,19 @@ export class RoleComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Implement delete functionality here
-        console.log('User deleted');
+        const payload = {
+            "event": {
+                "eventData": {
+                    "id":"c0a83801-8e2c-160b-818e-2da8e7cc009b"
+                },
+                "eventType": "ROLE",
+                "eventSubType": "DEACTIVATE"
+            }
+        }
+        this.dataService.deleteRole(payload).subscribe((res) => {
+            console.log(res);
+            this.loadRoles();
+        })
       }
     });
   }

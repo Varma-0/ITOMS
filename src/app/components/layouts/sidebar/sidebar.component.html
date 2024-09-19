@@ -1,4 +1,3 @@
-<!-- Start Sidemenu Area -->
 <div class="sidemenu-area sidebar" [class.inactive]="!isSidebarActive">
     <div class="sidemenu-header">
         <a href="/dashboard/analytics" class="navbar-brand d-flex align-items-center">
@@ -22,154 +21,58 @@
     <div class="sidemenu-body">
         <ul class="sidemenu-nav metisMenu h-100" id="sidemenu-nav" data-simplebar>
 
-            <li class="nav-item" routerLinkActive="active mm-active">
+            <li class="nav-item" *ngIf="hasAccess('home')" routerLinkActive="active">
                 <a routerLink="/dashboard/analytics" class="nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-home-circle'></i></span>
                     <span class="menu-title">HOME</span>
                 </a>
             </li>
 
-            <!-- <li class="nav-item-title">
-                Apps
-            </li> -->
-
-            <!-- <li class="nav-item" routerLinkActive="active mm-active">
-                <a href="#" class="collapsed-nav-link nav-link" aria-expanded="false">
-                    <span class="icon"><i class='bx bx-envelope'></i></span>
-                    <span class="menu-title">Email</span>
-                    <span class="badge">3</span>
-                </a>
-
-                <ul class="sidemenu-nav-second-level">
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/app-email/inbox" class="nav-link">
-                            <span class="icon"><i class='bx bxs-inbox'></i></span>
-                            <span class="menu-title">Inbox</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/app-email/read" class="nav-link">
-                            <span class="icon"><i class='bx bxs-badge-check'></i></span>
-                            <span class="menu-title">Read</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/app-email/compose" class="nav-link">
-                            <span class="icon"><i class='bx bx-send'></i></span>
-                            <span class="menu-title">Compose</span>
-                        </a>
-                    </li>
-                </ul>
-            </li> -->
-
-            <!-- <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/app-chat" class="nav-link">
-                    <span class="icon"><i class='bx bx-message'></i></span>
-                    <span class="menu-title">Chat</span>
-                </a>
-            </li>
-
-            <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/app-todo" class="nav-link">
-                    <span class="icon"><i class='bx bx-badge-check'></i></span>
-                    <span class="menu-title">Todo</span>
-                </a>
-            </li>
-
-            <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/app-calendar" class="nav-link">
-                    <span class="icon"><i class='bx bx-calendar'></i></span>
-                    <span class="menu-title">Calendar</span>
-                </a>
-            </li>
-
-            <li class="nav-item-title">
-                UI Elements
-            </li>
-
-            <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/grid" class="nav-link">
-                    <span class="icon"><i class='bx bx-grid-alt'></i></span>
-                    <span class="menu-title">Grid</span>
-                </a>
-            </li>
-
-            <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/colors" class="nav-link">
-                    <span class="icon"><i class='bx bxs-color-fill'></i></span>
-                    <span class="menu-title">Colors</span>
-                </a>
-            </li>
-
-            <li class="nav-item" routerLinkActive="active mm-active">
-                <a href="#" class="collapsed-nav-link nav-link" aria-expanded="false">
-                    <span class="icon"><i class='bx bx-brightness'></i></span>
-                    <span class="menu-title">Icons</span>
-                </a>
-
-                <ul class="sidemenu-nav-second-level">
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/icons/boxicons" class="nav-link">
-                            <span class="icon"><i class='bx bx-right-arrow-alt'></i></span>
-                            <span class="menu-title">BoxIcons</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/icons/feathericons" class="nav-link">
-                            <span class="icon"><i class='bx bx-right-arrow-alt'></i></span>
-                            <span class="menu-title">Feather Icons</span>
-                        </a>
-                    </li>
-                </ul>
-            </li> -->
-            <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/admin/user" class="collapsed-nav-link nav-link" aria-expanded="false">
+            <li class="nav-item" *ngIf="hasAccess('role') || hasAccess('user') || hasAccess('permission') || hasAccess('tenants') || hasAccess('hierarchies') || hasAccess('merchant') " routerLinkActive="active">
+                <a class="collapsed-nav-link nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-group'></i></span>
                     <span class="menu-title">Administration</span>
                 </a>
 
                 <ul class="sidemenu-nav-second-level">
 
-                    <li class="nav-item" routerLinkActive="active">
+                    <li class="nav-item" *ngIf=" hasAccess('user')" routerLinkActive="active">
                         <a routerLink="/admin/user" class="nav-link">
                             <span class="icon"><i class='bx bx-user'></i></span>
                             <span class="menu-title">User</span>
                         </a>
                     </li>
-                    <li class="nav-item" routerLinkActive="active">
+                    <li class="nav-item" *ngIf=" hasAccess('role')" routerLinkActive="active">
                         <a routerLink="/admin/role" class="nav-link">
                             <span class="icon"><i class='bx bx-briefcase'></i></span>
                             <span class="menu-title">Role</span>
                         </a>
                     </li>
-                    <li class="nav-item" routerLinkActive="active">
+                    <li class="nav-item" *ngIf=" hasAccess('alert')" routerLinkActive="active">
                         <a routerLink="/admin/alert" class="nav-link">
                             <span class="icon"><i class='bx bxs-bell-plus'></i></span>
                             <span class="menu-title">Alert</span>
                         </a>
                     </li>
-                    <li class="nav-item" routerLinkActive="active">
+                    <li class="nav-item" *ngIf="hasAccess('permission')" routerLinkActive="active">
                         <a routerLink="/admin/permission" class="nav-link">
                             <span class="icon"><i class='bx bx-bar-chart-square'></i></span>
                             <span class="menu-title">Permission</span>
                         </a>
                     </li>
-                    <li class="nav-item" routerLinkActive="active" *ngIf="superAdmin == 'true'">
+                    <li class="nav-item" routerLinkActive="active" *ngIf="hasAccess('tenants')">
                         <a routerLink="/admin/tenants" class="nav-link">
                             <span class="icon"><i class='bx bx-color'></i></span>
                             <span class="menu-title">Tenants</span>
                         </a>
                     </li>
-                    <li class="nav-item" routerLinkActive="active">
+                    <li class="nav-item" routerLinkActive="active" *ngIf=" hasAccess('hierarchies')">
                         <a routerLink="/admin/hierarchies" class="nav-link">
                             <span class="icon"><i class='bx bx-network-chart'></i></span>
                             <span class="menu-title">Hierarchies</span>
                         </a>
                     </li>
-                    <li class="nav-item" routerLinkActive="active">
+                    <li class="nav-item" routerLinkActive="active" *ngIf=" hasAccess('merchant')">
                         <a routerLink="/admin/merchant" class="nav-link">
                             <span class="icon"><i class='bx bx-store'></i></span>
                             <span class="menu-title">Merchant</span>
@@ -178,38 +81,18 @@
                 </ul>
             </li>
             <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/table/terminal" class="collapsed-nav-link nav-link" aria-expanded="false">
+                <a class="collapsed-nav-link nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-card'></i></span>
                     <span class="menu-title">TMS</span>
                 </a>
 
                 <ul class="sidemenu-nav-second-level">
-                    <!-- <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/card/basic-card" class="nav-link">
-                            <span class="icon"><i class='bx bx-right-arrow-alt'></i></span>
-                            <span class="menu-title">Basic Card</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/card/colors-card" class="nav-link">
-                            <span class="icon"><i class='bx bx-right-arrow-alt'></i></span>
-                            <span class="menu-title">Colors Card</span>
-                        </a>
-                    </li> -->
-
                     <li class="nav-item" routerLinkActive="active">
                         <a routerLink="/table/terminal" class="nav-link">
                             <span class="icon"><i class='bx bx-terminal'></i></span>
                             <span class="menu-title">Terminal</span>
                         </a>
                     </li>
-                    <!-- <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/merchant" class="nav-link">
-                            <span class="icon"><i class='bx bx-buildings'></i></span>
-                            <span class="menu-title">Merchant</span>
-                        </a>
-                    </li> -->
                     <li class="nav-item" routerLinkActive="active">
                         <a routerLink="/table/scheduling" class="nav-link">
                             <span class="icon"><i class='bx bx-server'></i></span>
@@ -228,23 +111,10 @@
                             <span class="menu-title">Parameters</span>
                         </a>
                     </li>
-                    <!-- <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/table/group" class="nav-link">
-                            <span class="icon"><i class='bx bx-right-arrow-alt'></i></span>
-                            <span class="menu-title">Group</span>
-                        </a>
-                    </li> -->
-                    <!-- <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/table/update-schedule" class="nav-link">
-                            <span class="icon"><i class='bx bxs-plane-alt'></i></span>
-                            <span class="menu-title">Update Schedule</span>
-                        </a>
-                    </li> -->
                 </ul>
             </li>
-            <!-- device management -->
             <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/device/device" class="collapsed-nav-link nav-link" aria-expanded="false">
+                <a class="collapsed-nav-link nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-mobile-alt'></i></span>
                     <span class="menu-title">Device management</span>
                 </a>
@@ -263,30 +133,11 @@
                             <span class="menu-title">Model</span>
                         </a>
                     </li>
-                    <!-- <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/device/folder" class="nav-link">
-                            <span class="icon"><i class='bx bxs-bell-plus'></i></span>
-                            <span class="menu-title">Folder</span>
-                        </a>
-                    </li> -->
-                    <!-- <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/device/package" class="nav-link">
-                            <span class="icon"><i class='bx bx-bar-chart-square'></i></span>
-                            <span class="menu-title">Package</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/device/schedule" class="nav-link">
-                            <span class="icon"><i class='bx bx-color'></i></span>
-                            <span class="menu-title">Schedule</span>
-                        </a>
-                    </li> -->
                 </ul>
             </li>
 
-
             <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/report" class="collapsed-nav-link nav-link" aria-expanded="false">
+                <a class="collapsed-nav-link nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bxs-report'></i></span>
                     <span class="menu-title">Reports</span>
                 </a>
@@ -311,12 +162,6 @@
                             <span class="menu-title">Device Search Report</span>
                         </a>
                     </li>
-                    <!-- <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/report/hierarchy" class="nav-link">
-                            <span class="icon"><i class='bx bxs-shapes'></i></span>
-                            <span class="menu-title">Hireachies</span>
-                        </a>
-                    </li> -->
                     <li class="nav-item" routerLinkActive="active">
                         <a routerLink="/report/software" class="nav-link">
                             <span class="icon"><i class='bx bx-check-circle'></i></span>
@@ -343,62 +188,6 @@
                     </li>
                 </ul>
             </li>
-
-            <!-- <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/faq" class="nav-link">
-                    <span class="icon"><i class='bx bx-help-circle'></i></span>
-                    <span class="menu-title">FAQ</span>
-                </a>
-            </li> -->
-
-            <!-- invoice -->
-            <!-- <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/invoice" class="nav-link">
-                    <span class="icon"><i class='bx bx-receipt'></i></span>
-                    <span class="menu-title">Invoice</span>
-                </a>
-            </li> -->
-
-            <!-- gallery -->
-            <!-- <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/gallery" class="nav-link">
-                    <span class="icon"><i class='bx bx-images'></i></span>
-                    <span class="menu-title">Gallery</span>
-                </a>
-            </li> -->
-
-            <!-- timeline-->
-            <!-- <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/timeline" class="nav-link">
-                    <span class="icon"><i class='bx bx-align-justify'></i></span>
-                    <span class="menu-title">Timeline</span>
-                </a>
-            </li> -->
-
-            <!-- <li class="nav-item" routerLinkActive="active mm-active">
-                <a href="#" class="collapsed-nav-link nav-link" aria-expanded="false">
-                    <span class="icon"><i class='bx bx-chart'></i></span>
-                    <span class="menu-title">Charts</span>
-                </a>
-
-                <ul class="sidemenu-nav-second-level">
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/apex-charts" class="nav-link">
-                            <span class="icon"><i class='bx bx-right-arrow-alt'></i></span>
-                            <span class="menu-title">Apex Charts</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item" routerLinkActive="active">
-                        <a routerLink="/chartjs" class="nav-link">
-                            <span class="icon"><i class='bx bx-right-arrow-alt'></i></span>
-                            <span class="menu-title">Chartjs</span>
-                        </a>
-                    </li>
-                </ul>
-            </li> -->
-
         </ul>
     </div>
 </div>
-<!-- End Sidemenu Area -->

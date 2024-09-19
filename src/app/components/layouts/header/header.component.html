@@ -111,7 +111,18 @@
                     </a>
                 </div>
             </li>
-            <li class="nav-item message-box dropdown">
+            <li class="nav-item dropdown language-switch-nav-item">
+                <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <!-- <img src="assets/img/us-flag.jpg" alt="image"> -->
+                    <span>Tenants <i class='bx bx-chevron-down'></i></span>
+                </button>
+                <div class="dropdown-menu">
+                    <a *ngFor="let i of tenants" (click)="changeTenant(i.id)" class="dropdown-item d-flex justify-content-between align-items-center">
+                        <span>{{i.name}}</span>
+                    </a>
+                </div>
+            </li>
+            <!-- <li class="nav-item message-box dropdown">
                 <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="message-btn">
                         <i class='bx bx-envelope'></i>
@@ -241,7 +252,7 @@
                         <a href="#" class="dropdown-item">View All</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
             <li class="nav-item dropdown profile-nav-item">
                 <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="menu-profile">
