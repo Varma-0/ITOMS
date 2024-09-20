@@ -1,6 +1,10 @@
 .search-container {
     margin-bottom: 20px;
   }
+
+.dia {
+  padding: 20px;
+}
   input {
     flex-grow: 1;
     padding: 8px;
@@ -113,3 +117,12 @@
     border-color: #007bff;
   }
    
+
+/* New styles for close icon */
+.headerIcons.close {
+  margin-left: auto;
+  background-color: transparent;
+  color: #007bff;
+  padding: 8px;
+  font-size: 18px;
+}

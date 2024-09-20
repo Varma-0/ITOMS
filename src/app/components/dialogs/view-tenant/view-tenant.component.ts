@@ -1,9 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { createUser } from 'src/app/services/login/body/body';
-import { createUserEvent } from 'src/app/services/login/body/event';
-import { createUserData } from 'src/app/services/login/body/event-data';
 import { SharedServices } from 'src/app/services/shared.service';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 
@@ -50,7 +47,7 @@ export class ViewTenantComponent {
 
   search(): void {
     this.filteredtenants = this.tenants.filter(device =>
-      device.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
+      device.userId?.toLowerCase().includes(this.searchTerm?.toLowerCase())
     );
     this.updatePagination();
   }

@@ -1,6 +1,10 @@
-<div class="search-container">
+<div class="dia">
+  <div class="search-container">
     <input [(ngModel)]="searchTerm" placeholder="View Tenants" (input)="search()">
     <button class="headerIcons" (click)="search()"><i class="bx bx-search"></i></button>
+    <button class="headerIcons close" mat-dialog-close>
+      <i class="bx bx-x"></i>
+  </button>
   </div>
   <table >
     <thead>
@@ -9,7 +13,7 @@
         <th>Status</th>
       </tr>
     </thead>
-    <tbody *ngFor="let device of tenants">
+    <tbody *ngFor="let device of paginatedDevices">
       <tr>
         <td>{{ device.userId }}</td>
         <td> <span [ngClass]="{'status-active': device.status === 'ACTIVE','status-inactive': device.status === 'INACTIVE'}">
@@ -32,3 +36,4 @@
       <option [ngValue]="15">15 per page</option>
     </select>
   </div>
+</div>
