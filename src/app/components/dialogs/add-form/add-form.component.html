@@ -4,97 +4,107 @@
 <ng-container *ngIf="title == 'Add User' || title == 'Edit User'">
   <form [formGroup]="userForm" class="merchant-form">
     <div class="form-group" *ngIf="loginData != 'true'">
-      <label for="tenant">Tenant:</label>
-      <!-- <select id="tenant" formControlName="tenant">
-        <option *ngFor="let tenant of tenantOptionNames" value="tenant">{{ tenant }}</option>
-      </select> -->
-      <mat-select formControlName="tenant">
+      <label for="tenant">Tenant <span style="color: red;">*</span></label>
+      <mat-select formControlName="tenant" [ngStyle]=" ul.tenant.errors && ( ul.tenant.touched || ul.tenant.dirty || submitted) ? errorStyle : null ">
         <mat-option *ngFor="let tenant of tenantOptionNames" [value]="tenant.id">{{ tenant.name }}</mat-option>
      </mat-select>
+     <div style="font-size: 12px;color: red;" *ngIf="ul.tenant.errors && ( ul.tenant.touched || ul.tenant.dirty || submitted)">Please select Tenant</div>
     </div>
 
     <div class="form-group" *ngIf="loginData != 'true'">
-      <label for="role">Role:</label>
-      <mat-select id="role" formControlName="role">
+      <label for="role">Role <span style="color: red;">*</span></label>
+      <mat-select id="role" formControlName="role" [ngStyle]=" ul.role.errors && ( ul.role.touched || ul.role.dirty || submitted) ? errorStyle : null ">
         <mat-option *ngFor="let role of roleOptionNames" [value]="role.id">{{ role.name }}</mat-option>
       </mat-select>
+      <div style="font-size: 12px;color: red;" *ngIf="ul.role.errors && ( ul.role.touched || ul.role.dirty || submitted)">Please select Role</div>
     </div>
 
     <div class="form-group" *ngIf="loginData != 'true'">
-      <label for="alert">Alert:</label>
-      <mat-select formControlName="alert" multiple="true">
+      <label for="alert">Alert <span style="color: red;">*</span></label>
+      <mat-select formControlName="alert" multiple="true" [ngStyle]=" ul.alert.errors && ( ul.alert.touched || ul.alert.dirty || submitted) ? errorStyle : null ">
         <mat-option *ngFor="let alert of alertOptionNames" [value]="alert.id">{{ alert.name }}</mat-option>
      </mat-select>
+     <div style="font-size: 12px;color: red;" *ngIf="ul.alert.errors && ( ul.alert.touched || ul.alert.dirty || submitted)">Please select Alert</div>
     </div>
 
     <div class="row">
       <div class="col-md-6 form-group">
-        <label for="firstName">First Name:</label>
-        <input id="firstName" type="text" formControlName="firstName" />
+        <label for="firstName">First Name <span style="color: red;">*</span></label>
+        <input id="firstName" type="text" formControlName="firstName" [ngStyle]=" ul.firstName.errors && ( ul.firstName.touched || ul.firstName.dirty || submitted) ? errorStyle : null "/>
+        <div style="font-size: 12px;color: red;" *ngIf="ul.firstName.errors && ( ul.firstName.touched || ul.firstName.dirty || submitted)">Please enter valid First name</div>
       </div>
       <div class="col-md-6 form-group">
-        <label for="lastName">Last Name:</label>
-        <input id="lastName" type="text" formControlName="lastName" />
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6 form-group">
-        <label for="dob">Date of Birth:</label>
-        <input id="dob" type="date" formControlName="dob" />
-      </div>
-      <div class="col-md-6 form-group">
-        <label for="email">Email:</label>
-        <input id="email" type="email" formControlName="email" [readonly]="title === 'Edit User'" [ngClass]="{'readonly-input': title === 'Edit User'}"/>
+        <label for="lastName">Last Name <span style="color: red;">*</span></label>
+        <input id="lastName" type="text" formControlName="lastName" [ngStyle]=" ul.lastName.errors && ( ul.lastName.touched || ul.lastName.dirty || submitted) ? errorStyle : null "/>
+        <div style="font-size: 12px;color: red;" *ngIf="ul.lastName.errors && ( ul.lastName.touched || ul.lastName.dirty || submitted)">Please enter valid Last name</div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-6 form-group">
-        <label for="phone">Phone Number:</label>
-        <input id="phone" type="text" formControlName="phone" />
+        <label for="dob">Date of Birth <span style="color: red;">*</span></label>
+        <input id="dob" type="date" formControlName="dob" [ngStyle]=" ul.dob.errors && ( ul.dob.touched || ul.dob.dirty || submitted) ? errorStyle : null "/>
+        <div style="font-size: 12px;color: red;" *ngIf="ul.dob.errors && ( ul.dob.touched || ul.dob.dirty || submitted)">Please select Date of Birth</div>
       </div>
       <div class="col-md-6 form-group">
-        <label for="country">Country:</label>
-        <input id="country" type="text" formControlName="country" />
+        <label for="email">Email <span style="color: red;">*</span></label>
+        <input id="email" type="email" formControlName="email" [readonly]="title === 'Edit User'" [ngClass]="{'readonly-input': title === 'Edit User'}" [ngStyle]=" ul.email.errors && ( ul.email.touched || ul.email.dirty || submitted) ? errorStyle : null "/>
+        <div style="font-size: 12px;color: red;" *ngIf="ul.email.errors && ( ul.email.touched || ul.email.dirty || submitted)">Please enter valid email</div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-6 form-group">
-        <label for="altemail">Alternative Email:</label>
-        <input id="altemail" type="text" formControlName="altemail" />
+        <label for="phone">Phone Number <span style="color: red;">*</span></label>
+        <input id="phone" type="text" formControlName="phone" [ngStyle]=" ul.phone.errors && ( ul.phone.touched || ul.phone.dirty || submitted) ? errorStyle : null " />
+        <div style="font-size: 12px;color: red;" *ngIf="ul.phone.errors && ( ul.phone.touched || ul.phone.dirty || submitted)">Please enter valid number</div>
       </div>
       <div class="col-md-6 form-group">
-        <label for="altphone">Alternative Phone Number:</label>
-        <input id="altphone" type="text" formControlName="altphone" />
+        <label for="country">Country <span style="color: red;">*</span></label>
+        <input id="country" type="text" formControlName="country" [ngStyle]=" ul.country.errors && ( ul.country.touched || ul.country.dirty || submitted) ? errorStyle : null "/>
+        <div style="font-size: 12px;color: red;" *ngIf="ul.country.errors && ( ul.country.touched || ul.country.dirty || submitted)">Please enter valid country name</div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-6 form-group">
-        <label for="altcountry">Alternative Country:</label>
-        <input id="altcountry" type="text" formControlName="altcountry" />
+        <label for="altemail">Alternative Email <span style="color: red;">*</span></label>
+        <input id="altemail" type="text" formControlName="altemail" [ngStyle]=" ul.altemail.errors && ( ul.altemail.touched || ul.altemail.dirty || submitted) ? errorStyle : null " />
+        <div style="font-size: 12px;color: red;" *ngIf="ul.altemail.errors && ( ul.altemail.touched || ul.altemail.dirty || submitted)">Please enter valid email</div>
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="altphone">Alternative Phone Number <span style="color: red;">*</span></label>
+        <input id="altphone" type="text" formControlName="altphone" [ngStyle]=" ul.altphone.errors && ( ul.altphone.touched || ul.altphone.dirty || submitted) ? errorStyle : null " />
+        <div style="font-size: 12px;color: red;" *ngIf="ul.altphone.errors && ( ul.altphone.touched || ul.altphone.dirty || submitted)">Please enter valid number</div>
       </div>
     </div>
-    <div *ngIf="loginData == 'true'"><div class="button-container">
+
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="altcountry">Alternative Country <span style="color: red;">*</span></label>
+        <input id="altcountry" type="text" formControlName="altcountry" [ngStyle]=" ul.altcountry.errors && ( ul.altcountry.touched || ul.altcountry.dirty || submitted) ? errorStyle : null "/>
+        <div style="font-size: 12px;color: red;" *ngIf="ul.altcountry.errors && ( ul.altcountry.touched || ul.altcountry.dirty || submitted)">Please enter valid country name</div>
+      </div>
+    </div>
+    <div *ngIf="loginData == 'true' && title == 'Add User'"><div class="button-container">
         <button class="clean-button" (click)="openTenantDialog()">Add Role</button>
       </div>
-        <div formArrayName="tenants">
-          <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-box">
-            <div class="header">
-              <span>{{ item.controls.name.value }}</span>
-              <button mat-icon-button color="warn" (click)="removeItem(i)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-            <div class="checkboxes">
-              <mat-checkbox formControlName="allowView">View</mat-checkbox>
-              <mat-checkbox formControlName="allowEdit">Edit</mat-checkbox>
-              <mat-checkbox formControlName="allowView">Delete</mat-checkbox>
-            </div>
-          </div>
-        </div></div>
+      <div *ngFor="let item of userForm.get('tenants').value ; let i = index"  class="item-box">
+        <div class="header">
+          <span>{{ item.tenant.name}}</span>
+          <button *ngIf="title == 'Add User'" mat-icon-button color="warn" (click)="removeTenant(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        <div>
+            <div style="font-weight: 600;">Role : <p>{{ item.role.name}} </p> </div>
+        </div>
+        <b>Alerts :</b>
+        <div *ngFor="let i of item.alerts">
+            <p>{{ i.name}}</p>
+        </div>
+
+    </div></div>
   </form>
 </ng-container>
 <ng-container *ngIf="title == 'Add Role' || title == 'Edit Role'">
@@ -239,7 +249,7 @@
     <form [formGroup]="tenantForm" class="merchant-form">
         <div class="form-group">
           <label for="name">Tenant Name <span style="color: red;">*</span></label>
-          <input id="name" type="text" formControlName="name" [readonly]="title === 'Edit Tenant'" [ngClass]="{'readonly-input': title === 'Edit Tenant'}" [ngStyle]=" tl.name.errors && ( tl.name.touched || tl.name.dirty || submitted) ? errorStyle : null ">
+          <input id="name" type="text" formControlName="name" [ngStyle]=" tl.name.errors && ( tl.name.touched || tl.name.dirty || submitted) ? errorStyle : null ">
           <div style="font-size: 12px;color: red;" *ngIf="tl.name.errors && ( tl.name.touched || tl.name.dirty || submitted)">Please enter valid name</div>
         </div>
         <div class="form-group">

@@ -57,16 +57,16 @@ export class AddFormComponent {
         roleName:[''],
         alert: [''],
         alertName:[''],
-        firstName: [''],
-        lastName: [''],
-        dob: [''],
-        email: [''],
-        phone: [''],
-        country: [''],
-        altemail: [''],
-        altphone: [''],
-        altcountry: [''],
-        tenants:this.fb.array([])
+        firstName: ['',Validators.required],
+        lastName: ['',Validators.required],
+        dob: ['',Validators.required],
+        email: ['',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+        phone: ['',[Validators.required,Validators.pattern(/^\+?[1-9]\d{1,14}$/)]],
+        country: ['',Validators.required],
+        altemail: ['',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+        altphone: ['',[Validators.required,Validators.pattern(/^\+?[1-9]\d{1,14}$/)]],
+        altcountry: ['',Validators.required],
+        tenants:[[]]
       });
       this.roleForm = this.fb.group({
         name: [''],
@@ -147,6 +147,10 @@ export class AddFormComponent {
     return this.tenantForm.controls;
   }
 
+  get ul(){
+    return this.userForm.controls;
+  }
+
   get items(): FormArray {
     return this.roleForm.get('roles') as FormArray;
   }
@@ -167,6 +171,10 @@ export class AddFormComponent {
 
   removeItem(index: number): void {
     this.items.removeAt(index);
+  }
+
+  removeTenant(index: number): void {
+    this.userForm.get('tenants').value.removeAt(index);
   }
 
   openDialog(): void {
@@ -193,9 +201,20 @@ export class AddFormComponent {
         width: '40%'
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result != true && result != false) {
-        this.addItem(result);
-      }
+        console.log(result);
+        this.userForm.get('tenants').value.push(
+            {
+                'tenant': {
+                    'id': result.tenant,
+                    'name' : result.tenantName
+                },
+                'role':{
+                    'id': result.role,
+                    'name' : result.roleName
+                },
+                'alerts': result.alerts
+            }
+        )
     });
   }
 
@@ -208,6 +227,10 @@ export class AddFormComponent {
   }
   onConfirm(): void {
     if(this.title == 'Add User' || this.title == 'Edit User'){
+        this.submitted = true;
+        if(this.userForm.invalid){
+            return;
+        }
         this.userForm.get('tenantName').setValue(this.getObjectById(this.userForm.get('tenant').value,this.tenantOptionNames).name)
         this.userForm.get('roleName').setValue(this.getObjectById(this.userForm.get('role').value,this.roleOptionNames).name)
         this.userForm.get('alertName').setValue(this.getObjectById(this.userForm.get('alert').value,this.alertOptionNames).name)

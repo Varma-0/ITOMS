@@ -22,7 +22,7 @@
           </form>
     </ng-container>
     <ng-container *ngIf="title == 'Role'">
-        <form [formGroup]="permissionForm" class="merchant-form">
+        <form [formGroup]="tenantForm" class="merchant-form">
             <div class="form-group">
                 <label for="tenant">Tenant <span style="color: red;">*</span></label>
                 <select id="tenant" formControlName="tenant" [ngStyle]=" tl.tenant.errors && ( tl.tenant.touched || tl.tenant.dirty || submitted) ? errorStyle : null ">

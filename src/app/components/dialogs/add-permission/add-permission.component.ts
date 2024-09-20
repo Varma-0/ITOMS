@@ -42,8 +42,11 @@ export class AddPermissionComponent {
       });
       this.tenantForm = this.fb.group({
         tenant: ['',Validators.required],
+        tenantName:[''],
         role: ['',Validators.required],
-        alert: [[],Validators.required]
+        roleName:[''],
+        alert: [[],Validators.required],
+        alerts:[[]]
       });
     }
 
@@ -69,6 +72,16 @@ export class AddPermissionComponent {
         if(this.tenantForm.invalid){
             return;
         }
+        this.tenantForm.get('tenantName').setValue(this.getObjectById(this.tenantForm.get('tenant').value,this.tenantNames).name)
+        this.tenantForm.get('roleName').setValue(this.getObjectById(this.tenantForm.get('role').value,this.roleNames).name)
+        this.tenantForm.get('alert').value.forEach(element => {
+            this.tenantForm.get('alerts').value.push(
+                {
+                    'id':element,
+                    'name': this.getObjectById(element,this.alertNames).name
+                }
+            )
+        });
         this.dialogRef.close(this.tenantForm.value);
     }
   }
