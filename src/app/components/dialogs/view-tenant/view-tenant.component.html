@@ -1,0 +1,34 @@
+<div class="search-container">
+    <input [(ngModel)]="searchTerm" placeholder="View Tenants" (input)="search()">
+    <button class="headerIcons" (click)="search()"><i class="bx bx-search"></i></button>
+  </div>
+  <table >
+    <thead>
+      <tr>
+        <th>Tenant Name</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let device of tenants">
+      <tr>
+        <td>{{ device.userId }}</td>
+        <td> <span [ngClass]="{'status-active': device.status === 'ACTIVE','status-inactive': device.status === 'INACTIVE'}">
+          {{ device.status }}
+        </span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination-container">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
+      <i class="bx bx-chevron-left"></i> Previous
+    </button>
+    <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">
+      Next <i class="bx bx-chevron-right"></i>
+    </button>
+    <select class="pagination-select" [(ngModel)]="itemsPerPage" (change)="updateItemsPerPage()">
+      <option [ngValue]="5">5 per page</option>
+      <option [ngValue]="10">10 per page</option>
+      <option [ngValue]="15">15 per page</option>
+    </select>
+  </div>

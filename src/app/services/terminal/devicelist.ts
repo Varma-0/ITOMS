@@ -210,6 +210,10 @@ export class TerminalService {
         return this.http.get<any>(`${environment.userApiUrl}/role/`, {headers: this.httpHeaders});
     }
 
+    viewTenants(options):Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/user/getUserTenantLinks`,options, {headers: this.httpHeaders});
+    }
+
     alertData(): Observable<any> {
         return this.http.get<any>(`${environment.userApiUrl}/alert/`, {headers: this.httpHeaders});
     }

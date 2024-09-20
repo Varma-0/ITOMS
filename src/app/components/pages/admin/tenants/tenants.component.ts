@@ -34,8 +34,8 @@ export class TenantsComponent {
           tenantId: data.id,
           createdDate: data.createdBy.ts.split('T')[0],
           updatedDate: data.updatedBy.ts.split('T')[0],
-          created: data.createdBy.name,
-          updated: data.updatedBy.name,
+          created: data.createdBy.userName,
+          updated: data.updatedBy.userName,
           name: data.name,
           type: data.type,
           status: data.status

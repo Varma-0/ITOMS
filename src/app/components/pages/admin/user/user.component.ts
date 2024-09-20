@@ -8,6 +8,7 @@ import { ActiveComponent } from 'src/app/components/dialogs/active/active.compon
 import { createNewUserEvent, createUserData } from 'src/app/services/login/body/event-data';
 import { createNewUserBody, createUserEvent } from 'src/app/services/login/body/event';
 import { createNewUser, createUser } from 'src/app/services/login/body/body';
+import { ViewTenantComponent } from 'src/app/components/dialogs/view-tenant/view-tenant.component';
 
 @Component({
   selector: 'app-user',
@@ -102,6 +103,22 @@ export class UserComponent {
         });
       }
     )
+  }
+
+  openViewDialog(data) {
+    const dialogRef = this.dialog.open(ViewTenantComponent,{
+      data : {
+        id: data.userId,
+      },
+     width : '60%'
+    });
+    console.log("result",data);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("result",result);
+      if(result) {
+       
+      }
+    });
   }
 
   openCreateDialog(data?,edit?): void {
