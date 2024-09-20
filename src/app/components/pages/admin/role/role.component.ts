@@ -37,7 +37,7 @@ export class RoleComponent {
     this.dataService.roleData().subscribe(
       response => {
         console.log(response);
-        this.roles = response.event.eventData.tenantRoles.map(data => ({
+        this.roles = response.event.eventData.map(data => ({
           roleId: data.id,
           fulldate: data.createdBy.ts.split('T')[0],
           name: data.name,

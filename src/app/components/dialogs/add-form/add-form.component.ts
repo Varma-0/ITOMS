@@ -202,19 +202,21 @@ export class AddFormComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
         console.log(result);
-        this.userForm.get('tenants').value.push(
-            {
-                'tenant': {
-                    'id': result.tenant,
-                    'name' : result.tenantName
-                },
-                'role':{
-                    'id': result.role,
-                    'name' : result.roleName
-                },
-                'alerts': result.alerts
-            }
-        )
+        if(result){
+            this.userForm.get('tenants').value.push(
+                {
+                    'tenant': {
+                        'id': result.tenant,
+                        'name' : result.tenantName
+                    },
+                    'role':{
+                        'id': result.role,
+                        'name' : result.roleName
+                    },
+                    'alerts': result.alerts
+                }
+            )
+        }
     });
   }
 
@@ -231,9 +233,11 @@ export class AddFormComponent {
         if(this.userForm.invalid){
             return;
         }
-        this.userForm.get('tenantName').setValue(this.getObjectById(this.userForm.get('tenant').value,this.tenantOptionNames).name)
+        if(this.loginData != 'true'){
+            this.userForm.get('tenantName').setValue(this.getObjectById(this.userForm.get('tenant').value,this.tenantOptionNames).name)
         this.userForm.get('roleName').setValue(this.getObjectById(this.userForm.get('role').value,this.roleOptionNames).name)
         this.userForm.get('alertName').setValue(this.getObjectById(this.userForm.get('alert').value,this.alertOptionNames).name)
+        }
         this.dialogRef.close(this.userForm.value);
       }else if(this.title == 'Add Role' || this.title == 'Edit Role'){
         this.dialogRef.close({
