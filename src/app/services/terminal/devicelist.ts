@@ -137,7 +137,7 @@ export class TerminalService {
     }
 
     addNewUser(options: createNewUser): Observable<any> {
-        return this.http.post<any>(`${environment.userApiUrl}/user/`,options, {headers: this.httpHeaders});
+        return this.http.post<any>(`${environment.userApiUrl}/user/getTenantUsers`,options, {headers: this.httpHeaders});
     }
 
     addNewUserBySA(options: createNewUser): Observable<any> {
