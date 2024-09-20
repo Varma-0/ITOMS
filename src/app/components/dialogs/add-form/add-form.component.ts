@@ -66,7 +66,7 @@ export class AddFormComponent {
         altemail: ['',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
         altphone: ['',[Validators.required,Validators.pattern(/^\+?[1-9]\d{1,14}$/)]],
         altcountry: ['',Validators.required],
-        tenants:[[]]
+        tenants:this.fb.array([]),
       });
       this.roleForm = this.fb.group({
         name: [''],
@@ -173,8 +173,12 @@ export class AddFormComponent {
     this.items.removeAt(index);
   }
 
+  // removeTenant(index: number): void {
+  //   this.userForm.get('tenants').value.removeAt(index);
+  // }
   removeTenant(index: number): void {
-    this.userForm.get('tenants').value.removeAt(index);
+    const tenantsArray = this.userForm.get('tenants') as FormArray;
+    tenantsArray.removeAt(index);
   }
 
   openDialog(): void {
@@ -191,34 +195,36 @@ export class AddFormComponent {
   }
 
   openTenantDialog(): void {
-    const dialogRef = this.dialog.open(AddPermissionComponent,{
-        data : {
-            tenantNames : this.tenantOptionNames,
-            alertNames  : this.alertOptionNames,
-            roleNames   : this.roleOptionNames,
-            title : 'Role'
-        },
-        width: '40%'
+    const dialogRef = this.dialog.open(AddPermissionComponent, {
+      data: {
+        tenantNames: this.tenantOptionNames,
+        alertNames: this.alertOptionNames,
+        roleNames: this.roleOptionNames,
+        title: 'Role',
+      },
+      width: '40%',
     });
+  
     dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
-        if(result){
-            this.userForm.get('tenants').value.push(
-                {
-                    'tenant': {
-                        'id': result.tenant,
-                        'name' : result.tenantName
-                    },
-                    'role':{
-                        'id': result.role,
-                        'name' : result.roleName
-                    },
-                    'alerts': result.alerts
-                }
-            )
-        }
+      if (result) {
+        const tenantsArray = this.userForm.get('tenants') as FormArray;
+        tenantsArray.push(
+          this.fb.group({
+            tenant: {
+              id: result.tenant,
+              name: result.tenantName,
+            },
+            role: {
+              id: result.role,
+              name: result.roleName,
+            },
+            alerts: this.fb.array(result.alerts),
+          })
+        );
+      }
     });
   }
+  
 
   getObjectById(id,list) {
     return list.find(obj => obj.id === id);

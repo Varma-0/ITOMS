@@ -55,12 +55,11 @@ export class RoleComponent {
       response => {
         this.permissionsData = response.event.eventData.permissions
         this.permissionsData.forEach(name => {
-          console.log("ythefuckisObje",name.name);
           this.permissionsNames.push({
             name : name.name,
             id : name.id
           });
-          console.log("ythefuckisObje",this.permissionsNames);
+          console.log("perapi",this.permissionsNames);
 
         });
       }
