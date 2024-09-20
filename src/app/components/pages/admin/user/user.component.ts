@@ -143,6 +143,7 @@ export class UserComponent {
         }
         else if(!edit) {
           console.log(result);
+
           result.userLinkDataList = [
             {
                 "tenant": {
@@ -161,18 +162,34 @@ export class UserComponent {
                 ]
             },
         ]
-          const event = new createNewUserEvent(result.firstName,result.lastName,result.dob,result.email,result.phone,result.country,result.altemail,result.altphone,result.altcountry,result.userLinkDataList); //pass uid based on user selected
-          const eventData = new createNewUserBody(event,'USER','CREATE');
-          const eventType = new createNewUser(eventData);
-          console.log("1212",eventType);
-          this.dataService.addNewUser(eventType).subscribe(
-            response => {
-              console.log(response);
-            }
-          );
+        this.loginData === 'true' ? this.addNewUserBySA(result.firstName,result.lastName,result.dob,result.email,result.phone,result.country,result.altemail,result.altphone,result.altcountry,result.userLinkDataList) : this.createdNewUser(result.firstName,result.lastName,result.dob,result.email,result.phone,result.country,result.altemail,result.altphone,result.altcountry,result.userLinkDataList);
         }
       }
     });
+  }
+
+  addNewUserBySA(firstName,lastName,dob,email,phone,country,altemail,altphone,altcountry,userLinkDataList) {
+    const event = new createNewUserEvent(firstName,lastName,dob,email,phone,country,altemail,altphone,altcountry,userLinkDataList); //pass uid based on user selected
+    const eventData = new createNewUserBody(event,'USER','CREATE');
+    const eventType = new createNewUser(eventData);
+    console.log("1212",eventType);
+    this.dataService.addNewUserBySA(eventType).subscribe(
+      response => {
+        console.log(response);
+      }
+    );
+  }
+
+  createdNewUser(firstName,lastName,dob,email,phone,country,altemail,altphone,altcountry,userLinkDataList) {
+    const event = new createNewUserEvent(firstName,lastName,dob,email,phone,country,altemail,altphone,altcountry,userLinkDataList); //pass uid based on user selected
+    const eventData = new createNewUserBody(event,'USER','CREATE');
+    const eventType = new createNewUser(eventData);
+    console.log("1212",eventType);
+    this.dataService.addNewUser(eventType).subscribe(
+      response => {
+        console.log(response);
+      }
+    );
   }
 
   search(): void {
