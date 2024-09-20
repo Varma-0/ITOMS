@@ -142,8 +142,28 @@ export class UserComponent {
           )
         }
         else if(!edit) {
-          console.log(result);
-          result.userLinkDataList = result.tenants;
+         if(this.loginData != 'true'){
+            result.userLinkDataList = [
+                {
+                    "tenant": {
+                        "id": result.tenant,
+                        "name": result.tenantName
+                    },
+                    "role": {
+                        "id": result.role,
+                        "name": result.roleName
+                    },
+                    "alerts": [
+                        {
+                            "id": result.alert,
+                            "name": result.alertName
+                        }
+                    ]
+                },
+            ]
+         }else{
+            result.userLinkDataList = result.tenants;
+         }
         this.loginData === 'true' ? this.addNewUserBySA(result.firstName,result.lastName,result.dob,result.email,result.phone,result.country,result.altemail,result.altphone,result.altcountry,result.userLinkDataList) : this.createdNewUser(result.firstName,result.lastName,result.dob,result.email,result.phone,result.country,result.altemail,result.altphone,result.altcountry,result.userLinkDataList);
         }
       }

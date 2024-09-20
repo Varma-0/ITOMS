@@ -82,7 +82,7 @@ export class TenantsComponent {
   }
 
   toggleStatus(tenant: any, i: number,isChecked: boolean): void {
-    const updatedStatus = isChecked ? 'ACTIVE' : 'INACTIVE';
+    const updatedStatus = isChecked ? 'ACTIVATE' : 'DEACTIVATE';
     // this.filteredtenants[i].status = updatedStatus;
     // tenant.status = updatedStatus;
     // console.log(`${tenant.tenantId} status is now: ${tenant.status}`);

@@ -219,11 +219,13 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { ProfileChartComponent } from './components/charts/profile-chart/profile-chart.component';
 import { SettingDialogComponent } from './components/dialogs/setting-dialog/setting-dialog.component';
 import { FilterPipe } from './components/dialogs/filter.pipe';
-import { AddTenantComponent } from './components/dialogs/add-tenants/add-tenant.component';
+import { OtpComponent } from './components/dialogs/otp/otp.component';
+import { PasswordComponent } from './components/dialogs/password/password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PasswordComponent,
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
@@ -247,7 +249,7 @@ import { AddTenantComponent } from './components/dialogs/add-tenants/add-tenant.
     CardComponent,
     BasicCardComponent,
     ColorsCardComponent,
-    AddTenantComponent,
+    OtpComponent,
     StatisticsCardComponent,
     FormComponent,
     FormLayoutComponent,

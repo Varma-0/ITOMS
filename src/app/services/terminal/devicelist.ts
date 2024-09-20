@@ -72,7 +72,7 @@ export class TerminalService {
     }
 
     tenantUpdateStatus(options): Observable<any> {
-        return this.http.patch<any>(`${environment.userApiUrl}/tenant/`,options,{headers: this.httpHeaders})
+        return this.http.post<any>(`${environment.userApiUrl}/tenant/updateStatus`,options,{headers: this.httpHeaders})
     }
 
     addTerminal(options): Observable<any> {

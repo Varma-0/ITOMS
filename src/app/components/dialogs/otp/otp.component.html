@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Validate User</h2>
+<mat-dialog-content>
+    <form [formGroup]="otpForm" class="merchant-form">
+        <div class="form-group">
+            <label for="otp">OTP <span style="color: red;">*</span></label>
+            <input id="otp" formControlName="otp"[ngStyle]=" otpFor.otp.errors && ( otpFor.otp.touched || otpFor.otp.dirty || submitted) ? errorStyle : null "/>
+            <div style="font-size: 12px;color: red;" *ngIf="otpFor.otp.errors && ( otpFor.otp.touched || otpFor.otp.dirty || submitted)">Please enter otp</div>
+          </div>
+      </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="d-flex justify-content-evenly">
+  <button class="btn btn-secondary" mat-dialog-close>Cancel</button>
+  <button class="btn btn-primary" (click)="onConfirm()">Confirm</button>
+</mat-dialog-actions>
