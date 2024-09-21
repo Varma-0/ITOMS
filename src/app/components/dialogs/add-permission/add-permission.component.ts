@@ -54,6 +54,10 @@ export class AddPermissionComponent {
         return this.tenantForm.controls;
     }
 
+    get pl(){
+        return this.permissionForm.controls;
+    }
+
     getObjectById(id,list) {
         return list.find(obj => obj.id === id);
     }
@@ -63,9 +67,11 @@ export class AddPermissionComponent {
 
   onConfirm(): void {
     if(this.title != 'Role'){
-        if (this.permissionForm.valid) {
+        if (this.permissionForm.valid && (this.pl.checkbox1.value || this.pl.checkbox2.value || this.pl.checkbox3.value )) {
             this.permissionForm.get('name').setValue(this.getObjectById(this.permissionForm.get('permission').value,this.permissionOptionNames).name)
             this.dialogRef.close(this.permissionForm.value);
+        }else{
+            alert("Please check the data");
         }
     }else if(this.title == 'Role'){
         this.submitted = true;
@@ -89,6 +95,9 @@ export class AddPermissionComponent {
   change(){
     if (this.permissionForm.get('checkbox3').value == true) {
         this.permissionForm.get('checkbox2').setValue(true);
+        this.permissionForm.get('checkbox1').setValue(true);
+        this.permissionForm.updateValueAndValidity();
+    }else if(this.permissionForm.get('checkbox2').value == true){
         this.permissionForm.get('checkbox1').setValue(true);
         this.permissionForm.updateValueAndValidity();
     }

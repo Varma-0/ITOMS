@@ -3,13 +3,13 @@
 <!-- merchant-form.component.html -->
 <ng-container *ngIf="title == 'Add User' || title == 'Edit User'">
   <form [formGroup]="userForm" class="merchant-form">
-    <div class="form-group" *ngIf="loginData != 'true' &&  title == 'Add User' ">
+    <!-- <div class="form-group" *ngIf="loginData != 'true' &&  title == 'Add User' ">
       <label for="tenant">Tenant <span style="color: red;">*</span></label>
       <mat-select formControlName="tenant" [ngStyle]=" ul.tenant.errors && ( ul.tenant.touched || ul.tenant.dirty || submitted) ? errorStyle : null ">
         <mat-option *ngFor="let tenant of tenantOptionNames" [value]="tenant.id">{{ tenant.name }}</mat-option>
      </mat-select>
      <div style="font-size: 12px;color: red;" *ngIf="ul.tenant.errors && ( ul.tenant.touched || ul.tenant.dirty || submitted)">Please select Tenant</div>
-    </div>
+    </div> -->
 
     <div class="form-group" *ngIf="loginData != 'true' &&  title == 'Add User'">
       <label for="role">Role <span style="color: red;">*</span></label>
@@ -110,8 +110,9 @@
 <ng-container *ngIf="title == 'Add Role' || title == 'Edit Role'">
     <form [formGroup]="roleForm" class="merchant-form">
         <div class="form-group">
-          <label for="name">Name:</label>
-          <input id="name" type="text" formControlName="name" [readonly]="title === 'Edit Role'" [ngClass]="{'readonly-input': title === 'Edit Role'}">
+          <label for="name">Name <span style="color: red;">*</span></label>
+          <input id="name" type="text" formControlName="name" [readonly]="title === 'Edit Role'" [ngClass]="{'readonly-input': title === 'Edit Role'}" [ngStyle]=" rl.name.errors && ( rl.name.touched || rl.name.dirty || submitted) ? errorStyle : null ">
+          <div style="font-size: 12px;color: red;" *ngIf="rl.name.errors && ( rl.name.touched || rl.name.dirty || submitted)">Please enter name</div>
         </div>
         <div class="form-group">
           <label for="description">Description:</label>
@@ -131,7 +132,7 @@
                 <div class="checkboxes">
                   <mat-checkbox formControlName="allowView">View</mat-checkbox>
                   <mat-checkbox formControlName="allowEdit">Edit</mat-checkbox>
-                  <mat-checkbox formControlName="allowView">Delete</mat-checkbox>
+                  <mat-checkbox formControlName="allowDelete">Delete</mat-checkbox>
                 </div>
               </div>
             </div>
@@ -142,13 +143,13 @@
         <div class="form-group">
             <div class="form-group">
                 <label for="name">Name <span style="color: red;">*</span></label>
-                <input id="name" type="text" formControlName="name" [ngStyle]=" al.name.errors && ( al.name.touched || al.name.dirty || submitted) ? errorStyle : null ">
+                <input id="name" type="text" formControlName="name" [readonly]="title === 'Edit Alert'" [ngClass]="{'readonly-input': title === 'Edit Alert'}" [ngStyle]=" al.name.errors && ( al.name.touched || al.name.dirty || submitted) ? errorStyle : null ">
                 <div style="font-size: 12px;color: red;" *ngIf="al.name.errors && ( al.name.touched || al.name.dirty || submitted)">Please enter valid name</div>
               </div>
           <label for="originator">Originator <span style="color: red;">*</span></label>
           <select id="originator" formControlName="originator" [ngStyle]=" al.originator.errors && ( al.originator.touched || al.originator.dirty || submitted) ? errorStyle : null ">
             <option value="SERVER">SERVER</option>
-            <option value="SERVER">DEVICE</option>
+            <option value="DEVICE">DEVICE</option>
           </select>
           <div style="font-size: 12px;color: red;" *ngIf="al.originator.errors && ( al.originator.touched || al.originator.dirty || submitted)">Please select Originator</div>
         </div>
@@ -164,7 +165,7 @@
           <div class="form-group">
             <label for="template">Template <span style="color: red;">*</span></label>
             <select id="template" formControlName="template" [ngStyle]=" al.template.errors && ( al.template.touched || al.template.dirty || submitted) ? errorStyle : null ">
-              <option value="Email">Email</option>
+              <option value="EMAIL">EMAIL</option>
             </select>
             <div style="font-size: 12px;color: red;" *ngIf="al.template.errors && ( al.template.touched || al.template.dirty || submitted)">Please select Template</div>
           </div>
@@ -228,8 +229,8 @@
         <div class="form-group">
             <label for="permission">Permission Type:</label>
             <select id="permission" formControlName="permission">
-              <option value="Default">Default</option>
-              <option value="Custom">Custom</option>
+              <option value="DEFAULT">DEFAULT</option>
+              <option value="CUSTOM">CUSTOM</option>
             </select>
           </div>
           <div class="form-group checkbox-group">

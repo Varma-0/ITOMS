@@ -4,7 +4,7 @@
       <li class="item">Alerts</li>
     </ol>
   </div>
-  
+
   <div class="search-container">
     <input [(ngModel)]="searchTerm" placeholder="Alerts" (input)="search()">
     <button class="headerIcons" (click)="search()"><i class="bx bx-search"></i></button>
@@ -14,16 +14,20 @@
     <thead>
       <tr>
         <th>Alert Name</th>
-        <th>User Name</th>
+        <th>Created By</th>
+        <th>Updated By</th>
         <th>Created Date</th>
+        <th>Updated Date</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody *ngFor="let device of filteredalerts">
       <tr>
         <td>{{ device.name }}</td>
-        <td>{{ device.userName }}</td>
-        <td>{{ device.fulldate }}</td>
+        <td>{{ device.createdBy.userName }}</td>
+        <td>{{ device.updatedBy.userName }}</td>
+        <td>{{ device.createdBy.ts.split('T')[0] }}</td>
+        <td>{{ device.updatedBy.ts.split('T')[0] }}</td>
         <td>
           <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
           <mat-icon>more_vert</mat-icon>

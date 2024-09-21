@@ -224,7 +224,7 @@ export class UserComponent {
         const event = new createNewUserEvent(firstName, lastName, dob, email, phone, country, altemail, altcountry, altphone, userLinkDataList); //pass uid based on user selected
         const eventData = new createNewUserBody(event, 'USER', 'CREATE');
         const eventType = new createNewUser(eventData);
-        this.dataService.addNewUser(eventType).subscribe(
+        this.dataService.addNewUserBySA(eventType).subscribe(
             response => {
                 this.openOTPDialog(email, id);
             }

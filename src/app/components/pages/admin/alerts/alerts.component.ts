@@ -41,12 +41,7 @@ export class AlertComponent {
         this.dataService.alertData().subscribe(
             response => {
                 console.log(response);
-                this.alerts = response.event.eventData.alerts.map(data => ({
-                    fulldate: data.createdBy.ts.split('T')[0],
-                    userName: data.createdBy.name,
-                    name: data.name,
-                    uid: data.id
-                }));
+                this.alerts = response.event.eventData.map(data => data);
                 this.search();
             },
             error => {
@@ -57,7 +52,7 @@ export class AlertComponent {
 
     search(): void {
         this.filteredalerts = this.alerts.filter(device =>
-            device.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
+            device.name?.toLowerCase().includes(this.searchTerm?.toLowerCase()) && device.status != "INACTIVE"
         );
         this.updatePagination();
     }
@@ -115,7 +110,32 @@ export class AlertComponent {
             if (result) {
                 console.log(result);
                 if (edit) {
-
+                    const payload = {
+                        "event": {
+                            "eventData": {
+                                "id" : data.id,
+                                "originator": result.originator,
+                                "description": result.description,
+                                "priority": result.alert,
+                                "thresholdApplicable": result.checkbox1 ? true : false,
+                                "customAlert": result.checkbox2 ? true : false,
+                                "allowAutoClose": result.checkbox3 ? true : false,
+                                "thresholdValue": result.tvalue,
+                                "defaultValue": result.dvalue,
+                                "minVal": result.minvalue,
+                                "maxVal": result.minvalue,
+                                "templateId": result.templateId,
+                                "templateType": result.template
+                            },
+                            "eventType": "ALERT",
+                            "eventSubType": "UPDATE"
+                        }
+                    }
+                    this.dataService.updateAlert(payload).subscribe(
+                        response => {
+                            this.loadAlerts();
+                        }
+                    )
                 } else {
                     const payload = {
                         "event": {
@@ -140,7 +160,6 @@ export class AlertComponent {
                     }
                     this.dataService.addAlert(payload).subscribe(
                         response => {
-                            console.log("response", response)
                             this.loadAlerts();
                         }
                     )
@@ -157,7 +176,7 @@ export class AlertComponent {
                 const finals = {
                     "event": {
                         "eventData": {
-                            "id": alert.uid
+                            "id": alert.id
                         },
                         "eventType": "ALERT",
                         "eventSubType": "DEACTIVATE"

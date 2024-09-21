@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
     logout(): void {
       localStorage.removeItem('jwtToken');
       localStorage.removeItem('SA');
-      this.router.navigate(['/login']);
+      this.router.navigate(['/landing']);
     }
 
     changeTenant(tid){
@@ -52,10 +52,11 @@ export class HeaderComponent implements OnInit {
             //   localStorage.setItem('Email',this.username);
               localStorage.setItem("SA",`${this.superAdmin}`);
               localStorage.setItem('jwtToken', jwtToken);
-              this.router.navigate(['/dashboard/analytics']).then(()=>{
+              if(this.router.url == '/dashboard/analytics'){
                 window.location.reload();
-              });
-
+              }else{
+                this.router.navigate(['/dashboard/analytics'])
+              }
             //   this.loadingDropdown = false;
             },
             error => {

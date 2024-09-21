@@ -21,13 +21,13 @@
     <tbody *ngFor="let device of paginatedDevices">
       <tr>
         <td>{{ device.name }}</td>
-        <td>{{ device.fulldate }}</td>
+        <td>{{ device.createdBy.ts.split('T')[0] }}</td>
         <td>
           <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="openCreateDialog(device,true)">
+          <button mat-menu-item (click)="editData(device)">
             <mat-icon color="green">edit</mat-icon>
             <span>Edit</span>
           </button>

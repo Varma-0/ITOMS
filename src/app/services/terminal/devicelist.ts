@@ -99,16 +99,20 @@ export class TerminalService {
         return this.http.post<any>(`${environment.userApiUrl}/alert/`, options, { headers: this.httpHeaders });
     }
 
+    updateAlert(options): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/alert/update`, options, { headers: this.httpHeaders });
+    }
+
     getAlertData(options): Observable<any> {
         return this.http.post<any>(`${environment.userApiUrl}/alert/getAlert`, options, { headers: this.httpHeaders });
     }
 
     deleteAlertData(options): Observable<any> {
-        return this.http.post<any>(`${environment.userApiUrl}/alert/`, options, { headers: this.httpHeaders });
+        return this.http.post<any>(`${environment.userApiUrl}/alert/updateStatus`, options, { headers: this.httpHeaders });
     }
 
     deleteRole(options): Observable<any> {
-        return this.http.patch<any>(`${environment.userApiUrl}/role/`, options, { headers: this.httpHeaders });
+        return this.http.post<any>(`${environment.userApiUrl}/role/updateStatus`, options, { headers: this.httpHeaders });
     }
 
     deleteMerchant(options:merchantDelete): Observable<any> {
@@ -141,7 +145,7 @@ export class TerminalService {
     }
 
     addNewUser(options: createNewUser): Observable<any> {
-        return this.http.post<any>(`${environment.userApiUrl}/user/getTenantUsers`,options, {headers: this.httpHeaders});
+        return this.http.post<any>(`${environment.userApiUrl}/user/`,options, {headers: this.httpHeaders});
     }
 
     addNewUserBySA(options: createNewUser): Observable<any> {
@@ -150,7 +154,11 @@ export class TerminalService {
 
 
     updateRoles(options): Observable<any> {
-        return this.http.put<any>(`${environment.userApiUrl}/role/`,options, {headers: this.httpHeaders});
+        return this.http.post<any>(`${environment.userApiUrl}/role/update`,options, {headers: this.httpHeaders});
+    }
+
+    getRole(options): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/role/getRole`,options, {headers: this.httpHeaders});
     }
 
 
@@ -223,7 +231,7 @@ export class TerminalService {
     }
 
     updateUserStatus(options):Observable<any> {
-        return this.http.post<any>(`${environment.userApiUrl}/user/`,options, {headers: this.httpHeaders});
+        return this.http.post<any>(`${environment.userApiUrl}/user/updateStatus`,options, {headers: this.httpHeaders});
     }
 
     alertData(): Observable<any> {
