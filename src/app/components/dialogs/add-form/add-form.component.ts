@@ -109,6 +109,8 @@ export class AddFormComponent {
       });
       if(this.title == 'Edit User'){
         this.userForm.patchValue(this.userData.form);
+        this.ul.firstName.disable()
+        this.ul.lastName.disable()
       }else if(this.title == 'Edit Role'){
         this.roleForm.patchValue(this.userData.form);
         this.userData.form.roles?.forEach(roleData => {
@@ -127,6 +129,15 @@ export class AddFormComponent {
         this.tenantForm.patchValue(this.userData.form);
       }else if(this.title == 'Edit Merchant'){
         this.merchantForm.patchValue(this.userData.form);
+      }
+      if (this.loginData != 'true') {
+        this.ul.tenant.setValidators(Validators.required)
+        this.ul.role.setValidators(Validators.required)
+        this.ul.alert.setValidators(Validators.required)
+      }else{
+        this.ul.tenant.setValidators([])
+        this.ul.role.setValidators([])
+        this.ul.alert.setValidators([])
       }
   }
 
@@ -204,7 +215,7 @@ export class AddFormComponent {
       },
       width: '40%',
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const tenantsArray = this.userForm.get('tenants') as FormArray;
@@ -224,7 +235,7 @@ export class AddFormComponent {
       }
     });
   }
-  
+
 
   getObjectById(id,list) {
     return list.find(obj => obj.id === id);

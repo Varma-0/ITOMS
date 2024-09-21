@@ -128,6 +128,10 @@ export class TerminalService {
         return this.http.post<any>(`${environment.userApiUrl}/user/getUser`,options, {headers: this.httpHeaders});
     }
 
+    updateUser(options): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/user/update`,options, {headers: this.httpHeaders});
+    }
+
     addNewDevice(options: addDeviceBody): Observable<any> {
         return this.http.post(`${environment.tmsApiUrl}/tms/device`,options, { headers: this.httpHeaders});
     }
@@ -212,6 +216,14 @@ export class TerminalService {
 
     viewTenants(options):Observable<any> {
         return this.http.post<any>(`${environment.userApiUrl}/user/getUserTenantLinks`,options, {headers: this.httpHeaders});
+    }
+
+    updateTenantsStatusBySA(options):Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/user/updateStatusBySA`,options, {headers: this.httpHeaders});
+    }
+
+    updateUserStatus(options):Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/user/`,options, {headers: this.httpHeaders});
     }
 
     alertData(): Observable<any> {

@@ -1,24 +1,28 @@
 <h2 mat-dialog-title>{{title}}</h2>
 <mat-dialog-content>
-    <div>
+    <!-- <div>
         <input type="text" placeholder="Search..." [(ngModel)]="searchText" (input)="filterItems()">
-      </div>
-    <div>
+      </div> -->
+    <div *ngIf="filteredItems.length > 0; else noTenants">
         <label>
           <input type="checkbox" (change)="selectAll($event)" [checked]="areAllChecked()"> Select All
         </label>
 
-        <div *ngFor="let item of filteredItems">
-          <label>
-            <input type="checkbox" [(ngModel)]="item.checked" (change)="updateSelectAllState()">
-            {{ item.label }}
-          </label>
-        </div>
+            <div *ngFor="let item of filteredItems">
+              <label>
+                <input type="checkbox" [(ngModel)]="item.checked" (change)="updateSelectAllState()">
+                {{ item.name }}
+              </label>
+            </div>
+            {{selectedCount}} Tenants selected
       </div>
-      {{selectedCount}} Tenants selected
+
+      <ng-template #noTenants>
+        <p>No {{title}}</p>
+      </ng-template>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button class="btn btn-secondary" mat-dialog-close>Cancel</button>&nbsp;
-  <button class="btn btn-danger" [mat-dialog-close]="true">{{ title == 'In Active Tenants' ? 'Activate' : 'In-Activate'}}</button>
+  <button class="btn btn-danger" [disabled]="selectedCount == 0" (click)="onConfirm()">{{ title == 'In Active Tenants' ? 'Activate' : 'In-Activate'}}</button>
 </mat-dialog-actions>

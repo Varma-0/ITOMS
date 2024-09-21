@@ -38,7 +38,10 @@ export class PasswordComponent {
 
   onConfirm(): void {
     this.submitted = true;
-    this.dialogRef.close(true);
+    if(this.pForm.invalid || this.pForm.password.value != this.pForm.cpassword.value){
+        return;
+    }
+    this.dialogRef.close(this.passwordForm.value);
   }
 
   ngOnDestroy(){

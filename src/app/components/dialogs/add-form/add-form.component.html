@@ -3,7 +3,7 @@
 <!-- merchant-form.component.html -->
 <ng-container *ngIf="title == 'Add User' || title == 'Edit User'">
   <form [formGroup]="userForm" class="merchant-form">
-    <div class="form-group" *ngIf="loginData != 'true'">
+    <div class="form-group" *ngIf="loginData != 'true' &&  title == 'Add User' ">
       <label for="tenant">Tenant <span style="color: red;">*</span></label>
       <mat-select formControlName="tenant" [ngStyle]=" ul.tenant.errors && ( ul.tenant.touched || ul.tenant.dirty || submitted) ? errorStyle : null ">
         <mat-option *ngFor="let tenant of tenantOptionNames" [value]="tenant.id">{{ tenant.name }}</mat-option>
@@ -11,7 +11,7 @@
      <div style="font-size: 12px;color: red;" *ngIf="ul.tenant.errors && ( ul.tenant.touched || ul.tenant.dirty || submitted)">Please select Tenant</div>
     </div>
 
-    <div class="form-group" *ngIf="loginData != 'true'">
+    <div class="form-group" *ngIf="loginData != 'true' &&  title == 'Add User'">
       <label for="role">Role <span style="color: red;">*</span></label>
       <mat-select id="role" formControlName="role" [ngStyle]=" ul.role.errors && ( ul.role.touched || ul.role.dirty || submitted) ? errorStyle : null ">
         <mat-option *ngFor="let role of roleOptionNames" [value]="role.id">{{ role.name }}</mat-option>
@@ -19,7 +19,7 @@
       <div style="font-size: 12px;color: red;" *ngIf="ul.role.errors && ( ul.role.touched || ul.role.dirty || submitted)">Please select Role</div>
     </div>
 
-    <div class="form-group" *ngIf="loginData != 'true'">
+    <div class="form-group" *ngIf="loginData != 'true' &&  title == 'Add User'">
       <label for="alert">Alert <span style="color: red;">*</span></label>
       <mat-select formControlName="alert" multiple="true" [ngStyle]=" ul.alert.errors && ( ul.alert.touched || ul.alert.dirty || submitted) ? errorStyle : null ">
         <mat-option *ngFor="let alert of alertOptionNames" [value]="alert.id">{{ alert.name }}</mat-option>
@@ -103,7 +103,7 @@
         <div *ngFor="let i of item.alerts">
             <p>{{ i.name}}</p>
         </div>
-      </div>  
+      </div>
     </div>
   </form>
 </ng-container>
