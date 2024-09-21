@@ -160,6 +160,8 @@ export class UserComponent {
                         "event": {
                             "eventData": {
                                 "id": data.uid,
+                                "firstName" : result.firstName,
+                                "lastName" : result.lastName,
                                 "dob": result.dob,
                                 "email": result.email,
                                 "phone": result.phone,

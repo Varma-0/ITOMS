@@ -152,7 +152,7 @@ export class TenantsComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const eventType = new deleteTenantEVent(tenants.tenantId,'PERMISSION','ACTIVATE');
+        const eventType = new deleteTenantEVent(tenants.tenantId,'TENANT','DEACTIVATE');
         const finals = new tenantDelete(eventType);
         this.dataService.deleteTenant(finals).subscribe(
           response => {

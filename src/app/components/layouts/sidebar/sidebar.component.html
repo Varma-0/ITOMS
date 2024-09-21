@@ -48,7 +48,7 @@
                             <span class="menu-title">Role</span>
                         </a>
                     </li>
-                    <li class="nav-item" *ngIf=" hasAccess('alert')" routerLinkActive="active">
+                    <!-- <li class="nav-item" *ngIf=" hasAccess('alert')" routerLinkActive="active">
                         <a routerLink="/admin/alert" class="nav-link">
                             <span class="icon"><i class='bx bxs-bell-plus'></i></span>
                             <span class="menu-title">Alert</span>
@@ -59,7 +59,7 @@
                             <span class="icon"><i class='bx bx-bar-chart-square'></i></span>
                             <span class="menu-title">Permission</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item" routerLinkActive="active" *ngIf="hasAccess('tenants')">
                         <a routerLink="/admin/tenants" class="nav-link">
                             <span class="icon"><i class='bx bx-color'></i></span>

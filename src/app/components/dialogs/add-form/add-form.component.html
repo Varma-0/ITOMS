@@ -271,20 +271,24 @@
 <ng-container *ngIf="title == 'Add Merchant' || title == 'Edit Merchant'">
     <form [formGroup]="merchantForm" class="merchant-form">
         <div class="form-group">
-          <label for="name">Merchant Name:</label>
-          <input id="name" type="text" formControlName="name">
+          <label for="name">Merchant Name <span style="color: red;">*</span></label>
+          <input id="name" type="text" formControlName="name" [ngStyle]=" ml.name.errors && ( ml.name.touched || ml.name.dirty || submitted) ? errorStyle : null ">
+          <div style="font-size: 12px;color: red;" *ngIf="ml.name.errors && ( ml.name.touched || ml.name.dirty || submitted)">Please enter name</div>
         </div>
         <div class="form-group">
-          <label for="cname">Contact Name::</label>
-          <input id="cname" type="text" formControlName="cname">
+          <label for="cname">Contact Name <span style="color: red;">*</span></label>
+          <input id="cname" type="text" formControlName="cname" [ngStyle]=" ml.cname.errors && ( ml.cname.touched || ml.cname.dirty || submitted) ? errorStyle : null ">
+          <div style="font-size: 12px;color: red;" *ngIf="ml.cname.errors && ( ml.cname.touched || ml.cname.dirty || submitted)">Please enter name</div>
         </div>
           <div class="form-group">
-            <label for="email">Email:</label>
-            <input id="email" type="text" formControlName="email">
+            <label for="email">Email <span style="color: red;">*</span></label>
+            <input id="email" type="text" formControlName="email" [ngStyle]=" ml.email.errors && ( ml.email.touched || ml.email.dirty || submitted) ? errorStyle : null ">
+            <div style="font-size: 12px;color: red;" *ngIf="ml.email.errors && ( ml.email.touched || ml.email.dirty || submitted)">Please enter name</div>
           </div>
           <div class="form-group">
-            <label for="phone">Phone Number:</label>
-            <input id="phone" type="text" formControlName="phone">
+            <label for="phone">Phone Number <span style="color: red;">*</span></label>
+            <input id="phone" type="text" formControlName="phone" [ngStyle]=" ml.phone.errors && ( ml.phone.touched || ml.phone.dirty || submitted) ? errorStyle : null ">
+            <div style="font-size: 12px;color: red;" *ngIf="ml.phone.errors && ( ml.phone.touched || ml.phone.dirty || submitted)">Please enter name</div>
           </div>
       </form>
 </ng-container>

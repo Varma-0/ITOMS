@@ -60,11 +60,11 @@ export class TerminalService {
     }
 
     updateTenant(options:tenantUpdate): Observable<any> {
-        return this.http.put<any>(`${environment.userApiUrl}/tenant/`, options, { headers: this.httpHeaders });
+        return this.http.post<any>(`${environment.userApiUrl}/tenant/update`, options, { headers: this.httpHeaders });
     }
 
     deleteTenant(options:tenantDelete): Observable<any> {
-        return this.http.patch<any>(`${environment.userApiUrl}/tenant/`, options, { headers: this.httpHeaders });
+        return this.http.post<any>(`${environment.userApiUrl}/tenant/updateStatus`, options, { headers: this.httpHeaders });
     }
 
     addTenant(options:tenantAdd): Observable<any> {

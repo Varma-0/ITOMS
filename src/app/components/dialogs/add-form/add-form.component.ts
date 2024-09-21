@@ -102,15 +102,13 @@ export class AddFormComponent {
         type: ['',Validators.required],
       });
       this.merchantForm = this.fb.group({
-        name: [''],
-        cname: [''],
-        email: [''],
-        phone: [''],
+        name: ['',Validators.required],
+        cname: ['',Validators.required],
+        email: ['',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+        phone: ['',[Validators.required,Validators.pattern(/^\+?[1-9]\d{1,14}$/)]],
       });
       if(this.title == 'Edit User'){
         this.userForm.patchValue(this.userData.form);
-        this.ul.firstName.disable()
-        this.ul.lastName.disable()
       }else if(this.title == 'Edit Role'){
         this.roleForm.patchValue(this.userData.form);
         this.userData.form.roles?.forEach(roleData => {
@@ -152,6 +150,10 @@ export class AddFormComponent {
 
   get al(){
     return this.alertForm.controls;
+  }
+
+  get ml(){
+    return this.merchantForm.controls;
   }
 
   get tl(){
@@ -276,6 +278,10 @@ export class AddFormComponent {
         }
         this.dialogRef.close(this.tenantForm.value);
       }else if(this.title == 'Add Merchant' || this.title == 'Edit Merchant'){
+        this.submitted = true;
+        if(this.merchantForm.invalid){
+            return;
+        }
         this.dialogRef.close(this.merchantForm.value);
       }
 
