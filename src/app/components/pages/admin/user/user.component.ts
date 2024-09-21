@@ -184,20 +184,11 @@ export class UserComponent {
                     if (this.loginData != 'true') {
                         result.userLinkDataList = [
                             {
-                                "tenant": {
-                                    "id": result.tenant,
-                                    "name": result.tenantName
-                                },
                                 "role": {
                                     "id": result.role,
                                     "name": result.roleName
                                 },
-                                "alerts": [
-                                    {
-                                        "id": result.alert,
-                                        "name": result.alertName
-                                    }
-                                ]
+                                "alerts": result.alert
                             },
                         ]
                     } else {

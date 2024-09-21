@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationCancel, NavigationEnd } from '@angular/router';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { filter } from 'rxjs/operators';
+import { SharedServices } from './services/shared.service';
 declare let $: any;
 
 @Component({
@@ -19,10 +20,11 @@ export class AppComponent implements OnInit, OnDestroy {
     location: any;
     routerSubscription: any;
 
-    constructor(private router: Router) {
+    constructor(private router: Router,private shared:SharedServices) {
     }
 
     ngOnInit(){
+        // this.shared.showSuccess("created successfully")
         this.recallJsFuntions();
     }
 

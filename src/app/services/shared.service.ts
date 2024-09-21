@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { ToastrService } from "ngx-toastr";
 import { BehaviorSubject } from "rxjs";
 
 @Injectable({
@@ -17,12 +18,16 @@ export class SharedServices{
     setSidebarState(active: boolean): void {
       this.sidebarActive.next(active);
     }
-    constructor(){}
+    constructor(private toastr: ToastrService){}
+
+    showSuccess(msg){
+        this.toastr.success(msg, 'Hurray');
+    }
 
     setLoginData(data: any) {
       this.loginData = data;
     }
-  
+
     getLoginData() {
       return this.loginData;
     }

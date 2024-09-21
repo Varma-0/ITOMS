@@ -222,6 +222,7 @@ import { FilterPipe } from './components/dialogs/filter.pipe';
 import { OtpComponent } from './components/dialogs/otp/otp.component';
 import { PasswordComponent } from './components/dialogs/password/password.component';
 import { ViewTenantComponent } from './components/dialogs/view-tenant/view-tenant.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -449,11 +450,12 @@ import { ViewTenantComponent } from './components/dialogs/view-tenant/view-tenan
     MatProgressSpinner,
     ReactiveFormsModule,
     MultiSelectModule,
-    MatStepperModule
+    MatStepperModule,
+    ToastrModule.forRoot(),
 ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent]
 })
