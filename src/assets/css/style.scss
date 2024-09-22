@@ -579,7 +579,7 @@ Navbar Area CSS
                 visibility: hidden;
                 border-radius: 0;
                 transition: all 0.3s ease-in-out;
-                margin-top: 20px;
+                // margin-top: 20px;
                 border-top: 2px solid $main-color;
                 padding: 0;
 
@@ -826,7 +826,7 @@ Navbar Area CSS
                 .dropdown-menu {
                     opacity: 1;
                     visibility: visible;
-                    top: 100%;
+                    // top: 100%;
                     margin-top: 0;
                 }
             }
@@ -7407,7 +7407,7 @@ Top Navbar CSS
                     right: 0;
                     left: auto;
                     border-radius: 2px;
-                    margin-top: 20px;
+                    // margin-top: 20px;
                     border: none;
                     display: block;
                     transition: .3s;
@@ -7417,7 +7417,7 @@ Top Navbar CSS
                     background-color: $white-color;
 
                     &.show {
-                        margin-top: 10px;
+                        // margin-top: 10px;
                         opacity: 1;
                         visibility: visible;
                     }
@@ -8513,7 +8513,7 @@ Main Content CSS
                 right: 0;
 
                 &.show {
-                    margin-top: 25px;
+                    // margin-top: 25px;
                     opacity: 1;
                     visibility: visible;
                 }
