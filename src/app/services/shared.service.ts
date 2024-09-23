@@ -24,6 +24,10 @@ export class SharedServices{
         this.toastr.success(msg, 'Hurray');
     }
 
+    showError(msg) {
+      this.toastr.error(msg, 'Error');
+    }    
+
     setLoginData(data: any) {
       this.loginData = data;
     }

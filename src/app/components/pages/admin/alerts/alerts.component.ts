@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
+import { SharedServices } from 'src/app/services/shared.service';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 
 @Component({
@@ -10,12 +11,6 @@ import { TerminalService } from 'src/app/services/terminal/devicelist';
     styleUrl: './alerts.component.scss'
 })
 export class AlertComponent {
-    // day = 'Tue'
-    // date = '20';
-    // month = 'Aug';
-    // alertName = 'DEVICE SWAPPED';
-    // userDetails = 'sandeepreddymukku143@gmail.com on 2024-06-06';
-    // constructor(public dialog: MatDialog) {}
     alerts: any = []
     time: any = '';
     fulldate: any = '';
@@ -30,7 +25,7 @@ export class AlertComponent {
     itemsPerPage = 5;
     totalPages = 1;
     itemsPerPageOptions = [5, 10, 15];
-    constructor(public dialog: MatDialog, private dataService: TerminalService) { }
+    constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
     ngOnInit(): void {
         this.loadAlerts();
@@ -133,7 +128,10 @@ export class AlertComponent {
                     }
                     this.dataService.updateAlert(payload).subscribe(
                         response => {
-                            this.loadAlerts();
+                            if(response.status == 200) {
+                                this.loadAlerts();
+                                this.shared.showSuccess("Alert Created successfully!")
+                            }
                         }
                     )
                 } else {
@@ -160,7 +158,10 @@ export class AlertComponent {
                     }
                     this.dataService.addAlert(payload).subscribe(
                         response => {
-                            this.loadAlerts();
+                            if(response.status == 200) {
+                                this.loadAlerts();
+                                this.shared.showSuccess("Alert Updated successfully!")
+                            }
                         }
                     )
                 }
@@ -184,8 +185,11 @@ export class AlertComponent {
                 }
                 this.dataService.deleteAlertData(finals).subscribe(
                     response => {
-                      console.log("respoonse",response);
-                      this.loadAlerts();
+                        if(response.status == 200) {
+                            console.log("respoonse",response);
+                            this.loadAlerts();
+                            this.shared.showSuccess("Role Deleted successfully");
+                        }
                     }
                   )
             }

@@ -5,6 +5,7 @@ import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm
 import { roleAdd, roleUpdate } from 'src/app/services/login/body/body';
 import { addRoleBody, updateRoleBody } from 'src/app/services/login/body/event';
 import { addRoleData, updateRoleData } from 'src/app/services/login/body/event-data';
+import { SharedServices } from 'src/app/services/shared.service';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 @Component({
     selector: 'app-role',
@@ -26,7 +27,7 @@ export class RoleComponent {
     itemsPerPage = 5;
     totalPages = 1;
     itemsPerPageOptions = [5, 10, 15];
-    constructor(public dialog: MatDialog, private dataService: TerminalService) { }
+    constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
     ngOnInit(): void {
         this.loadRoles();
@@ -36,11 +37,14 @@ export class RoleComponent {
     loadRoles() {
         this.dataService.roleData().subscribe(
             response => {
-                console.log(response);
-                this.roles = response.event.eventData.map(data => data);
-                this.search();
+                if(response.status == 200) {
+                    console.log(response);
+                    this.roles = response.event.eventData.map(data => data);
+                    this.search();
+                }
             },
             error => {
+                this.shared.showError(error.message);
                 console.error('Error:', error);
             }
         );
@@ -140,8 +144,11 @@ export class RoleComponent {
                     }
                     this.dataService.updateRoles(payload).subscribe(
                         response => {
-                            console.log("resssss", response);
-                            this.loadRoles();
+                            if(response.status == 200) {
+                                this.loadRoles();
+                                console.log("resssss", response);
+                                this.shared.showSuccess("Role Updated successfully!")
+                            }
                         }
                     )
                 }
@@ -152,8 +159,11 @@ export class RoleComponent {
                     const finals = new roleAdd(eventType);
                     this.dataService.addRoles(finals).subscribe(
                         response => {
-                            console.log("resssss", response);
-                            this.loadRoles();
+                            if(response.status == 200) {
+                                console.log("resssss", response);
+                                this.loadRoles();
+                                this.shared.showSuccess("Role created successfully")
+                            }
                         }
                     )
                 }
@@ -175,8 +185,11 @@ export class RoleComponent {
                     }
                 }
                 this.dataService.deleteRole(payload).subscribe((res) => {
-                    console.log(res);
-                    this.loadRoles();
+                    if(res.status == 200) {
+                        console.log(res);
+                        this.loadRoles();
+                        this.shared.showSuccess("Role Deleted successfully");
+                    }
                 })
             }
         });

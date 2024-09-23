@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
 import { terminalBody } from 'src/app/services/terminal/body/body';
 import { timeout } from 'rxjs';
+import { SharedServices } from 'src/app/services/shared.service';
 
 interface HierarchyItem {
     id: string;
@@ -63,7 +64,7 @@ export class HierarchyLevelComponent implements OnInit {
     mId = "";
     levelIndex: any;
 
-    constructor(private router: Router, public dialog: MatDialog, private fb: FormBuilder, private dataService: TerminalService) { }
+    constructor(private router: Router, public dialog: MatDialog, private fb: FormBuilder, private dataService: TerminalService, private shared: SharedServices) { }
 
     ngOnInit() {
         this.itemForm = this.fb.group({
@@ -84,19 +85,22 @@ export class HierarchyLevelComponent implements OnInit {
         const payload = new terminalBody(event);
         this.dataService.hierarchyLevelData(payload).subscribe(
             response => {
-                this.hierarchyLevels.push({
-                    name: "MERCHANT",
-                    pid: "",
-                    items: [],
-                    selectedItem: null
-                });
-                response.event.eventData.map(data => this.hierarchyLevels.push({
-                    name: data.name,
-                    pid: data.id,
-                    items: [],
-                    selectedItem: null
-                }));
-                this.loadMerchants();
+                if(response.status == 200) {
+                    this.hierarchyLevels.push({
+                        name: "MERCHANT",
+                        pid: "",
+                        items: [],
+                        selectedItem: null
+                    });
+                    response.event.eventData.map(data => this.hierarchyLevels.push({
+                        name: data.name,
+                        pid: data.id,
+                        items: [],
+                        selectedItem: null
+                    }));
+                    this.loadMerchants();
+                    // this.shared.showSuccess("Level Updated successfully!")
+                }
             },
             error => {
                 this.hierarchyLevels.push({
@@ -107,6 +111,7 @@ export class HierarchyLevelComponent implements OnInit {
                 });
                 this.loadMerchants();
                 console.error('Error:', error);
+                // this.shared.showError(error.message);
             }
         )
     }
@@ -122,6 +127,7 @@ export class HierarchyLevelComponent implements OnInit {
                 }));
             },
             error => {
+                this.shared.showError(error.message);
                 console.error('Error:', error);
             }
         )
@@ -352,15 +358,18 @@ export class HierarchyLevelComponent implements OnInit {
         }
         this.dataService.hierarchySearchData(payload).subscribe(
             response => {
-                response.event.eventData.map(data => data.parentId == null ? this.hierarchyLevels[1].items.push({
-                    name: data.name,
-                    pid: data.parentId,
-                    hid: data.hlId,
-                    mid: data.mid,
-                    id: data.id
-                }) : null);
+                if(response.status == 200) {
+                    response.event.eventData.map(data => data.parentId == null ? this.hierarchyLevels[1].items.push({
+                        name: data.name,
+                        pid: data.parentId,
+                        hid: data.hlId,
+                        mid: data.mid,
+                        id: data.id
+                    }) : null);
+                }
             },
             error => {
+                this.shared.showError(error.message);
                 console.error('Error:', error);
             }
         )
@@ -450,15 +459,20 @@ export class HierarchyLevelComponent implements OnInit {
         }
         this.dataService.hierarchyChildData(payload).subscribe(
             response => {
-                response.event.eventData.map(data =>this.hierarchyLevels[this.levelIndex + 1].items.push({
-                    name: data.name,
-                    pid: data.parentId,
-                    hid: data.hlId,
-                    mid: data.mid,
-                    id: data.id
-                }));
+                if(response.status == 200) {
+                    if(response.status == 200) {
+                        response.event.eventData.map(data =>this.hierarchyLevels[this.levelIndex + 1].items.push({
+                            name: data.name,
+                            pid: data.parentId,
+                            hid: data.hlId,
+                            mid: data.mid,
+                            id: data.id
+                        }));
+                    }
+                }
             },
             error => {
+                this.shared.showError(error.message);
                 console.error('Error:', error);
             }
         )
@@ -480,6 +494,7 @@ export class HierarchyLevelComponent implements OnInit {
                             this.getLevels();
                     },
                     error => {
+                        this.shared.showError(error.message);
                         console.error('Error:', error);
                     }
                 )
@@ -500,6 +515,7 @@ export class HierarchyLevelComponent implements OnInit {
                     this.getSearchData(this.mId);
             },
             error => {
+                this.shared.showError(error.message);
                 console.error('Error:', error);
             }
         )

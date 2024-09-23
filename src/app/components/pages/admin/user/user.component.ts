@@ -48,11 +48,14 @@ export class UserComponent {
     loadDevices() {
         this.dataService.userData().subscribe(
             response => {
-                this.users = response.event.eventData.users.map(data => data);
-                console.log(this.users);
-                this.search();
+                if(response.status == 200) {
+                    this.users = response.event.eventData.users.map(data => data);
+                    console.log(this.users);
+                    this.search();
+                }
             },
             error => {
+                this.shared.showError(error.message)
                 console.error('Error:', error);
             }
         );
@@ -176,7 +179,10 @@ export class UserComponent {
                     }
                     this.dataService.updateUser(payload).subscribe(
                         response => {
-                            this.loadDevices()
+                            if(response.status == 200) {
+                                this.shared.showSuccess("User Edited Successfully");
+                                this.loadDevices();
+                            }
                         }
                     );
                 }
@@ -206,7 +212,10 @@ export class UserComponent {
         const eventType = new createNewUser(eventData);
         this.dataService.addNewUserBySA(eventType).subscribe(
             response => {
-                this.openOTPDialog(email, id);
+                if(response.status == 200) {
+                    this.openOTPDialog(email, id);
+                    this.shared.showSuccess("User Created Successfully");
+                }
             }
         );
     }
@@ -217,7 +226,10 @@ export class UserComponent {
         const eventType = new createNewUser(eventData);
         this.dataService.addNewUserBySA(eventType).subscribe(
             response => {
-                this.openOTPDialog(email, id);
+                if(response.status == 200) {
+                    this.openOTPDialog(email, id);
+                    this.shared.showSuccess("User Created Successfully");
+                }
             }
         );
     }
@@ -280,7 +292,10 @@ export class UserComponent {
                 }
             }
             this.dataService.updateUserStatus(payload).subscribe(res => {
-                this.loadDevices()
+                if(res.status == 200) {
+                    this.shared.showSuccess("Status update successful!");
+                    this.loadDevices()
+                }
             })
         }
     }

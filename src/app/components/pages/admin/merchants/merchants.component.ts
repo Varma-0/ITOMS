@@ -5,6 +5,7 @@ import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm
 import { merchantAdd, merchantDelete } from 'src/app/services/login/body/body';
 import { addMerchantBody, deleteMerchantEVent } from 'src/app/services/login/body/event';
 import { addMerchantData } from 'src/app/services/login/body/event-data';
+import { SharedServices } from 'src/app/services/shared.service';
 import { terminalBody } from 'src/app/services/terminal/body/body';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
@@ -34,7 +35,7 @@ export class MerchantsComponent {
   itemsPerPage = 5;
   totalPages = 1;
   itemsPerPageOptions = [5, 10, 15];
-  constructor(public dialog: MatDialog, private dataService: TerminalService) { }
+  constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
   ngOnInit(): void {
    
@@ -46,16 +47,19 @@ export class MerchantsComponent {
     const merchantRequest = new terminalBody(event);
     this.merchants = this.dataService.merchantData(merchantRequest).subscribe(
       response => {
-        this.merchants = response.event.eventData.map(data => ({
-          merchantId: data.id,
-          fulldate: data.createdBy.ts.split("T")[0],
-          name: data.name,
-          email: data.email,
-          contactName: data.contactName
-        }));
-        this.search();
+        if(response.status == 200) {
+          this.merchants = response.event.eventData.map(data => ({
+            merchantId: data.id,
+            fulldate: data.createdBy.ts.split("T")[0],
+            name: data.name,
+            email: data.email,
+            contactName: data.contactName
+          }));
+          this.search();
+        }
       },
       error => {
+        this.shared.showError(error.message)
         console.error('Error:', error);
       }
     )
@@ -128,8 +132,11 @@ export class MerchantsComponent {
         const finals = new merchantAdd(eventType);
         this.dataService.addMerchant(finals).subscribe(
           response => {
-            console.log("response",response)
-            this.loadMerchants();
+            if(response.status == 200) {
+              console.log('response', response);
+              this.loadMerchants();
+              this.shared.showSuccess("Merchant Created successfully!")
+            }
           }
         )
       }
@@ -145,8 +152,11 @@ export class MerchantsComponent {
         const finals = new merchantDelete(eventType);
         this.dataService.deleteMerchant(finals).subscribe(
           response => {
-            console.log("respoonse",response);
-            this.loadMerchants();
+            if(response.status == 200) {
+              console.log('response', response);
+              this.loadMerchants();
+              this.shared.showSuccess("Merchant Deleted successfully!");
+            }
           }
         )
     }

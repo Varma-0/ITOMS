@@ -5,6 +5,7 @@ import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm
 import { tenantUpdate, permissionAdd, tenantAdd, tenantDelete } from 'src/app/services/login/body/body';
 import { editTenantBody, addPermissionBody, addTenantBody, deleteTenantEVent } from 'src/app/services/login/body/event';
 import { editTenantData, addPermissionData, addTenantData } from 'src/app/services/login/body/event-data';
+import { SharedServices } from 'src/app/services/shared.service';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 
 @Component({
@@ -21,7 +22,7 @@ export class TenantsComponent {
   itemsPerPage: number = 5;
   totalPages: number = 1;
 
-  constructor(public dialog: MatDialog, private dataService: TerminalService) {}
+  constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) {}
 
   ngOnInit(): void {
     this.loadTenants();
@@ -96,8 +97,11 @@ export class TenantsComponent {
     this.dataService.tenantUpdateStatus(payload).subscribe(
       response => {
         // Update the device status in the UI if the API call is successful
-        console.log('Device status updated successfully:', response);
-        this.loadTenants();
+        if(response.status == 200) {
+          console.log('Device status updated successfully:', response);
+          this.loadTenants();
+          this.shared.showSuccess(`Tenant ${updatedStatus.toLowerCase()}d successfully!`)
+        }
       },
       error => {
         // Handle any errors here
@@ -128,8 +132,11 @@ export class TenantsComponent {
           const finals = new tenantUpdate(eventType);
           this.dataService.updateTenant(finals).subscribe(
             response => {
-              console.log('response', response);
-              this.loadTenants();
+              if(response.status == 200) {
+                console.log('response', response);
+                this.loadTenants();
+                this.shared.showSuccess("Tenant Updated successfully!")
+              }
             }
           );
         } else {
@@ -138,8 +145,11 @@ export class TenantsComponent {
           const finals = new tenantAdd(eventType);
           this.dataService.addTenant(finals).subscribe(
             response => {
-              console.log('response', response);
-              this.loadTenants();
+              if(response.status == 200) {
+                console.log('response', response);
+                this.loadTenants();
+                this.shared.showSuccess("Tenant Created successfully!")
+              }
             }
           );
         }
@@ -156,8 +166,11 @@ export class TenantsComponent {
         const finals = new tenantDelete(eventType);
         this.dataService.deleteTenant(finals).subscribe(
           response => {
-            console.log('response', response);
-            this.loadTenants();
+            if(response.status == 200) {
+              console.log('response', response);
+              this.loadTenants();
+              this.shared.showSuccess("Status Updated successfully!")
+            }
           }
         );
       }

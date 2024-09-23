@@ -73,8 +73,11 @@ export class OtpComponent {
     const updatePassRequest = new emailBody(event);
     this.authService.otpConfirmationforPassReset(updatePassRequest).subscribe(
       response => {
-        this.id = response.event.eventData.uid;
-        this.openPasswordDialog()
+        if(response.status == 200) {
+          this.shared.showSuccess("Otp Validated Successfully");
+          this.id = response.event.eventData.uid;
+          this.openPasswordDialog();
+        }
       },
       error => {
       }
@@ -88,7 +91,10 @@ export class OtpComponent {
     const updatePassRequest = new passBody(event);
     this.authService.resetPass(updatePassRequest).subscribe(
       response => {
-        this.dialogRef.close(true);
+        if(response.status == 200) {
+          this.dialogRef.close(true);
+          this.shared.showSuccess("Password change successful! You're all set.")
+        }
       },
       error => {
         this.dialogRef.close(true);
