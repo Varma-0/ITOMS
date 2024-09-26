@@ -12,12 +12,14 @@ export class HeaderComponent implements OnInit {
     welcome: string;
     email: string;
     tenants:any;
+    display: string;
     superAdmin: boolean;
 
     constructor(private router: Router,private authService: AuthService,private shared:SharedServices) { }
 
     ngOnInit() {
       this.welcome = localStorage.getItem('User Name')
+      this.display = localStorage.getItem('selectedOption');
       this.email = localStorage.getItem('Email')
       this.tenants = JSON.parse(localStorage.getItem('tenants'))
     }

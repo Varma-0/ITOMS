@@ -201,6 +201,7 @@ export class DLogInComponent implements OnInit{
   onSubmitDropdown(): void {
    this.loadingDropdown = true;
    if(this.selectedOption) {
+    console.log('fwffw',this.selectedOption);
     localStorage.setItem('uid',this.uid);
     localStorage.setItem('ina',this.inasecretkey)
     const eventData = new dropData(this.selectedOption["id"],this.uid, this.inasecretkey);
@@ -218,6 +219,7 @@ export class DLogInComponent implements OnInit{
         localStorage.setItem('Email',this.username);
         localStorage.setItem("SA",`${this.superAdmin}`);
         localStorage.setItem('jwtToken', jwtToken);
+        localStorage.setItem('selectedOption', this.selectedOption['name']);
         this.router.navigate(['/dashboard/analytics']);
         this.loadingDropdown = false;
       },

@@ -45,9 +45,10 @@ This files table contents are outlined below>>>>>
 Default CSS
 =================================================*/
 
-$font-family: 'Poppins', sans-serif;
+$font-family: 'Poppins';
 $main-color: #13c4a1;
 $optional-color: #ff612f;
+$blue-color: #29359E;
 $black-color: #080a3c;
 $white-color: #ffffff;
 $paragraph-color: #4a6f8a;
@@ -5202,7 +5203,7 @@ Login Area CSS
                     text-decoration: underline;
 
                     &:hover {
-                        color: $optional-color;
+                        color: #ff612f;
                     }
                 }
             }
@@ -6746,7 +6747,7 @@ This files table contents are outlined below>>>>>
 /*================================================
 Default CSS
 =================================================*/
-$font-family: 'Nunito', sans-serif;
+$font-family: 'Poppins';
 $main-color: #e1000a;
 $black-color: #2a2a2a;
 $white-color: #ffffff;
@@ -6961,7 +6962,7 @@ Sidemenu CSS
             }
             .nav-item {
                 .nav-link {
-                    color: #7e7e7e;
+                    color: #424242;
                     padding: 10px 20px;
                     position: relative;
                     z-index: 1;
@@ -7002,7 +7003,8 @@ Sidemenu CSS
                         height: 100%;
                         width: 0;
                         transition: $transition;
-                        background: $main-color;
+                        // background: $main-color;
+                        background: #29359E;
                     }
                     &.collapsed-nav-link {
                         position: relative;
@@ -7024,27 +7026,34 @@ Sidemenu CSS
                         }
                     }
                     &:hover {
-                        background-color: #f9ecef;
-                        color: $main-color;
+                        // background-color: #f9ecef;
+                        background-color: #F9F9FF;
+                        // color: $main-color;
+                        color: #29359E;
 
                         &::before {
                             width: 3px;
                         }
                         .icon {
                             transform: rotateY(-180deg);
-                            color: $main-color;
+                            // color: $main-color;
+                            color: #29359E;
+
                         }
                     }
                 }
                 &.mm-active, &.active {
                     .nav-link {
-                        color: $main-color;
+                        // color: $main-color;
+                        color: #29359E;
 
                         &::before {
                             width: 3px;
                         }
                         .icon {
-                            color: $main-color;
+                            // color: $main-color;
+                            color: #29359E;
+
                         }
                         &.collapsed-nav-link {
                             &::after {
@@ -7079,19 +7088,25 @@ Sidemenu CSS
                                 }
                             }
                             &:hover {
-                                color: $main-color;
+                                // color: $main-color;
+                                color: #29359E;
 
                                 .icon {
-                                    color: $main-color;
+                                    // color: $main-color;
+                                    color: #29359E;
+
                                 }
                             }
                         }
                         &.mm-active, &.active {
                             .nav-link {
-                                color: $main-color;
+                                // color: $main-color;
+                                color: #29359E;
 
                                 .icon {
-                                    color: $main-color;
+                                    // color: $main-color;
+                                    color: #29359E;
+
                                 }
                                 &.collapsed-nav-link {
                                     &::after {

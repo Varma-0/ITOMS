@@ -114,7 +114,7 @@
             <li class="nav-item dropdown language-switch-nav-item">
                 <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <!-- <img src="assets/img/us-flag.jpg" alt="image"> -->
-                    <span>Tenants <i class='bx bx-chevron-down'></i></span>
+                    <span>{{display}} <i class='bx bx-chevron-down'></i></span>
                 </button>
                 <div class="dropdown-menu">
                     <a *ngFor="let i of tenants" (click)="changeTenant(i.id)" class="dropdown-item d-flex justify-content-between align-items-center">
