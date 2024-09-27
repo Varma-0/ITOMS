@@ -32,6 +32,7 @@ export class RoleComponent {
     constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
     ngOnInit(): void {
+        this.shared.showLoader.next(true);
         this.loadRoles();
         this.permissionApiResponse();
         if(localStorage.getItem("SA") == 'true'){
@@ -43,6 +44,7 @@ export class RoleComponent {
             this.hasEdit = item[0].isAllowEdit
             this.hasDelete = item[0].isAllowDelete
         }
+        this.shared.showLoader.next(false);
     }
 
     loadRoles() {

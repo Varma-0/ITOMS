@@ -39,6 +39,7 @@ export class UserComponent {
     constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
     ngOnInit(): void {
+        this.shared.showLoader.next(true);
         this.loginData = localStorage.getItem("SA");
         if(this.loginData == 'true'){
             this.hasEdit = true;
@@ -53,6 +54,7 @@ export class UserComponent {
         this.tenantsApiResponse()
         this.roleApiResponse();
         this.alertApiResponse();
+        this.shared.showLoader.next(false);
     }
 
     loadDevices() {

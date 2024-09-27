@@ -30,6 +30,7 @@ export class AlertComponent {
     constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
     ngOnInit(): void {
+        this.shared.showLoader.next(true);
         this.loadAlerts();
         if(localStorage.getItem("SA") == 'true'){
             this.hasEdit = true;
@@ -40,6 +41,7 @@ export class AlertComponent {
             this.hasEdit = item[0].isAllowEdit
             this.hasDelete = item[0].isAllowDelete
         }
+        this.shared.showLoader.next(false);
     }
 
     loadAlerts() {

@@ -40,6 +40,7 @@ export class MerchantsComponent {
   constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
   ngOnInit(): void {
+    this.shared.showLoader.next(true);
     if(localStorage.getItem("SA") == 'true'){
         this.hasEdit = true;
         this.hasDelete = true;
@@ -50,6 +51,7 @@ export class MerchantsComponent {
         this.hasDelete = item[0].isAllowDelete
     }
     this.loadMerchants();
+    this.shared.showLoader.next(false);
   }
 
   loadMerchants() {

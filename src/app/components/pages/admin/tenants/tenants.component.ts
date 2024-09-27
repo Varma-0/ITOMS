@@ -27,6 +27,7 @@ export class TenantsComponent {
   constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) {}
 
   ngOnInit(): void {
+    this.shared.showLoader.next(true);
     this.loadTenants();
     if(localStorage.getItem("SA") == 'true'){
         this.hasEdit = true;
@@ -37,6 +38,7 @@ export class TenantsComponent {
         this.hasEdit = item[0].isAllowEdit
         this.hasDelete = item[0].isAllowDelete
     }
+    this.shared.showLoader.next(false);
   }
 
   loadTenants() {

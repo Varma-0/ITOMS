@@ -69,6 +69,7 @@ export class HierarchyLevelComponent implements OnInit {
     constructor(private router: Router, public dialog: MatDialog, private fb: FormBuilder, private dataService: TerminalService, private shared: SharedServices) { }
 
     ngOnInit() {
+        this.shared.showLoader.next(true);
         this.itemForm = this.fb.group({
             name: ['', Validators.required],
             description: [''],
@@ -88,6 +89,7 @@ export class HierarchyLevelComponent implements OnInit {
             this.hasEdit = item[0].isAllowEdit
             this.hasDelete = item[0].isAllowDelete
         }
+        this.shared.showLoader.next(false);
     }
 
     getLevels() {
