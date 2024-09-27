@@ -223,6 +223,8 @@ import { OtpComponent } from './components/dialogs/otp/otp.component';
 import { PasswordComponent } from './components/dialogs/password/password.component';
 import { ViewTenantComponent } from './components/dialogs/view-tenant/view-tenant.component';
 import { ToastrModule } from 'ngx-toastr';
+import { LoaderComponent } from './components/pages/ui-components/loader/loader.component';
+import { Loader2Component } from './components/pages/ui-components/loader2/loader2.component';
 
 @NgModule({
   declarations: [
@@ -419,7 +421,9 @@ import { ToastrModule } from 'ngx-toastr';
     ProfileChartComponent,
     SettingDialogComponent,
     FilterPipe,
-    ViewTenantComponent
+    ViewTenantComponent,
+    LoaderComponent,
+    Loader2Component
   ],
   imports: [
     BrowserModule,

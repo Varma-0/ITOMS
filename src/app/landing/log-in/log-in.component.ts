@@ -54,6 +54,7 @@ export class DLogInComponent implements OnInit{
 
   onSubmitEmail(): void {
     this.loadingEmail = true;
+    this.shared.showLoader.next(true);
     const eventData = new emailData(this.username, 'EMAIL');
     const event = new emailEvent(eventData, 'LOGIN', 'USER_ID_VALIDATE');
     const loginRequest = new emailBody(event);
@@ -71,11 +72,13 @@ export class DLogInComponent implements OnInit{
           localStorage.setItem('tenants',JSON.stringify(this.dropdownOptions))
         }
         this.loadingEmail = false;
+        this.shared.showLoader.next(false);
       },
       error => {
         this.errorMessage = 'Identity Verification Failed';
         // console.error('Validation failed', error);
         this.loadingEmail = false;
+        this.shared.showLoader.next(false);
       }
     );
   }

@@ -19,8 +19,10 @@ declare let $: any;
 export class AppComponent implements OnInit, OnDestroy {
     location: any;
     routerSubscription: any;
+    showLoader=false;
 
     constructor(private router: Router,private shared:SharedServices) {
+        this.shared.showLoader.subscribe(res => this.showLoader = res)
     }
 
     ngOnInit(){

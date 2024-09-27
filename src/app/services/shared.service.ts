@@ -8,6 +8,7 @@ import { BehaviorSubject } from "rxjs";
 
 export class SharedServices{
     private sidebarActive = new BehaviorSubject<boolean>(true);
+    showLoader = new BehaviorSubject<boolean>(false);
     private loginData: any;
     modelsList=[];
 
@@ -26,7 +27,7 @@ export class SharedServices{
 
     showError(msg) {
       this.toastr.error(msg, 'Error');
-    }    
+    }
 
     setLoginData(data: any) {
       this.loginData = data;
