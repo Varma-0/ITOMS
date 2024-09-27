@@ -5,7 +5,7 @@
         font-size: 25px;
         fill: #27eac8;
         text-anchor: middle;
-        font-family: Roboto;
+        font-family: Poppins;
       }
     </style>
   </defs>
