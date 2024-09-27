@@ -114,6 +114,9 @@ import { ParametersReportComponent } from './components/pages/reports/parameters
 import { SwapReportComponent } from './components/pages/reports/swap/swap.component';
 import { SystemReportComponent } from './components/pages/reports/system/system.component';
 import { PackageAddComponent } from './components/pages/table/packages/package-add/package-add.component';
+import { LandingPreloaderComponent } from './landing/layouts/preloader/preloader.component';
+import { LoaderComponent } from './components/pages/ui-components/loader/loader.component';
+import { Loader2Component } from './components/pages/ui-components/loader2/loader2.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'landing',pathMatch:'full'},
@@ -150,6 +153,7 @@ const routes: Routes = [
     children: [
       {path: 'boxicons', data: { breadcrumb: 'Boxicons' }, component: BoxiconsComponent},
       {path: 'feathericons', data: { breadcrumb: 'Feather Icons' }, component: FeathericonsComponent},
+      {path: 'pre', data: { breadcrumb: 'Feather Icons' }, component: LandingPreloaderComponent},
     ]
   },
   {
@@ -190,6 +194,8 @@ const routes: Routes = [
       {path: 'typography', data: { breadcrumb: 'Typography' }, component: TypographyComponent},
       {path: 'tooltips', data: { breadcrumb: 'Tooltips' }, component: TooltipsComponent},
       {path: 'popovers', data: { breadcrumb: 'Popovers' }, component: PopoversComponent},
+      {path: 'loader', data: { breadcrumb: 'Loader' }, component: LoaderComponent},
+      {path: 'loader2', data: { breadcrumb: 'Loader' }, component: Loader2Component},
     ]
   },
   {
