@@ -34,11 +34,21 @@ export class UserComponent {
     totalPages = 1;
     itemsPerPageOptions = [5, 10, 15];
     loginData: any;
+    hasEdit = false;
+    hasDelete = false;
     constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
     ngOnInit(): void {
         this.loginData = localStorage.getItem("SA");
-        console.log("uigfiqw", this.loginData);
+        if(this.loginData == 'true'){
+            this.hasEdit = true;
+            this.hasDelete = true;
+        }else{
+            let data = JSON.parse(localStorage.getItem("roles"));
+            let item = data.filter(ele => ele.name == "USER");
+            this.hasEdit = item[0].isAllowEdit
+            this.hasDelete = item[0].isAllowDelete
+        }
         this.loadDevices();
         this.tenantsApiResponse()
         this.roleApiResponse();

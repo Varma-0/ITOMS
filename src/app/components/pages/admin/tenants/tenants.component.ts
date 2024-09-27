@@ -21,11 +21,22 @@ export class TenantsComponent {
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalPages: number = 1;
+    hasEdit: boolean;
+    hasDelete: boolean;
 
   constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) {}
 
   ngOnInit(): void {
     this.loadTenants();
+    if(localStorage.getItem("SA") == 'true'){
+        this.hasEdit = true;
+        this.hasDelete = true;
+    }else{
+        let data = JSON.parse(localStorage.getItem("roles"));
+        let item = data.filter(ele => ele.name == "TENANT");
+        this.hasEdit = item[0].isAllowEdit
+        this.hasDelete = item[0].isAllowDelete
+    }
   }
 
   loadTenants() {

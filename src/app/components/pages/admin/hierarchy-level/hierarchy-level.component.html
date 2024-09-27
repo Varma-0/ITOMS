@@ -3,7 +3,7 @@
     <div class="header">
       <h1>Manage Hierarchy</h1>
       <div class="header-buttons">
-        <button class="btn primary" (click)="openDialog()">Manage Hierarchy Level</button>
+        <button class="btn primary" *ngIf="hasEdit" (click)="openDialog()">Manage Hierarchy Level</button>
         <!-- <button class="btn secondary">Upload Hierarchy File</button> -->
       </div>
     </div>

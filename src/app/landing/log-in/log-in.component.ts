@@ -212,6 +212,9 @@ export class DLogInComponent implements OnInit{
       response => {
         const jwtToken = response.event.eventData.jwtToken;
         response.event.eventData.userType == "SA"? this.superAdmin = true : this.superAdmin = false;
+        if(!this.superAdmin){
+            localStorage.setItem("roles",JSON.stringify(response.event.eventData.roleDetailsInfoList[0].rolePermissionsList))
+        }
         const data = this.superAdmin;
         const userName = response.event.eventData.name;
         this.shared.setLoginData(data);

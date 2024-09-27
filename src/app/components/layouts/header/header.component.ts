@@ -25,8 +25,7 @@ export class HeaderComponent implements OnInit {
     }
 
     logout(): void {
-      localStorage.removeItem('jwtToken');
-      localStorage.removeItem('SA');
+      localStorage.clear();
       this.router.navigate(['/landing']);
     }
 
@@ -46,6 +45,9 @@ export class HeaderComponent implements OnInit {
         this.authService.loginWithOption(payload).subscribe(
             response => {
                 response.event.eventData.userType == "SA"? this.superAdmin = true : this.superAdmin = false;
+                if(!this.superAdmin){
+                    localStorage.setItem("roles",JSON.stringify(response.event.eventData.roleDetailsInfoList[0].rolePermissionsList))
+                }
                 const data = this.superAdmin;
               const jwtToken = response.event.eventData.jwtToken;
               const userName = response.event.eventData.name;

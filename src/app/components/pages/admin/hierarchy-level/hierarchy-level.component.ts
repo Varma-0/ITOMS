@@ -63,6 +63,8 @@ export class HierarchyLevelComponent implements OnInit {
     hlId = "";
     mId = "";
     levelIndex: any;
+    hasEdit: boolean;
+    hasDelete: boolean;
 
     constructor(private router: Router, public dialog: MatDialog, private fb: FormBuilder, private dataService: TerminalService, private shared: SharedServices) { }
 
@@ -77,6 +79,15 @@ export class HierarchyLevelComponent implements OnInit {
             timeZone: ['']
         });
         this.getLevels();
+        if(localStorage.getItem("SA") == 'true'){
+            this.hasEdit = true;
+            this.hasDelete = true;
+        }else{
+            let data = JSON.parse(localStorage.getItem("roles"));
+            let item = data.filter(ele => ele.name == "HIERARCHY_LEVEL");
+            this.hasEdit = item[0].isAllowEdit
+            this.hasDelete = item[0].isAllowDelete
+        }
     }
 
     getLevels() {

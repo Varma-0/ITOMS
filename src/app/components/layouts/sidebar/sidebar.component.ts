@@ -11,10 +11,7 @@ declare let $: any;
 export class SidebarComponent implements OnInit {
     isSidebarActive = true;
     superAdmin = localStorage.getItem('SA');
-    sa = ['home','user','role','alert','permission','tenants','hierarchies','merchant','terminal','deployment','resources','parameters','device','model','con','heart','search','software','param','swap','system'];
-    admin = ['hierarchies','merchant','terminal','deployment','resources','parameters','device','model','con','heart','param','swap','system'];
-    user = ['home','user','role','alert','permission','tenants','hierarchies','merchant','terminal','model','con','heart','search','software','param','swap','system'];
-    accessibleOptions: any = this.sa;
+    accessibleOptions: any = [];
     constructor(private router: Router,private shared:SharedServices) {
         router.events.subscribe((event: Event) => {
             if (event instanceof NavigationEnd) {
@@ -39,8 +36,12 @@ export class SidebarComponent implements OnInit {
         this.shared.sidebarActive$.subscribe(
             (active: boolean) => (this.isSidebarActive = active)
           );
+          let permissions = JSON.parse(localStorage.getItem('roles'));
+          permissions.forEach(element => {
+            this.accessibleOptions.push(element.name)
+          });
     }
     hasAccess(option: string): boolean {
-        return this.accessibleOptions.includes(option);
+        return this.superAdmin == 'true' ? true : this.accessibleOptions.includes(option.toUpperCase());
       }
 }

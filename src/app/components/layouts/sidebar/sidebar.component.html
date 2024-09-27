@@ -21,14 +21,14 @@
     <div class="sidemenu-body">
         <ul class="sidemenu-nav metisMenu h-100" id="sidemenu-nav" data-simplebar>
 
-            <li class="nav-item" *ngIf="hasAccess('home')" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active">
                 <a routerLink="/dashboard/analytics" class="nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-home-circle'></i></span>
                     <span class="menu-title">HOME</span>
                 </a>
             </li>
 
-            <li class="nav-item" *ngIf="hasAccess('role') || hasAccess('user') || hasAccess('permission') || hasAccess('tenants') || hasAccess('hierarchies') || hasAccess('merchant') " routerLinkActive="active">
+            <li class="nav-item" *ngIf="hasAccess('role') || hasAccess('user') || hasAccess('permission') || hasAccess('tenant') || hasAccess('hierarchies') || hasAccess('merchant') " routerLinkActive="active">
                 <a class="collapsed-nav-link nav-link" aria-expanded="false">
                     <span class="icon"><i class='bx bx-group'></i></span>
                     <span class="menu-title">Administration</span>
@@ -60,13 +60,13 @@
                             <span class="menu-title">Permission</span>
                         </a>
                     </li> -->
-                    <li class="nav-item" routerLinkActive="active" *ngIf="hasAccess('tenants')">
+                    <li class="nav-item" routerLinkActive="active" *ngIf="hasAccess('tenant')">
                         <a routerLink="/admin/tenants" class="nav-link">
                             <span class="icon"><i class='bx bx-color'></i></span>
                             <span class="menu-title">Tenants</span>
                         </a>
                     </li>
-                    <li class="nav-item" routerLinkActive="active" *ngIf=" hasAccess('hierarchies')">
+                    <li class="nav-item" routerLinkActive="active" *ngIf=" hasAccess('Hierarchy_level')">
                         <a routerLink="/admin/hierarchies" class="nav-link">
                             <span class="icon"><i class='bx bx-network-chart'></i></span>
                             <span class="menu-title">Hierarchies</span>

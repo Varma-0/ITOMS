@@ -8,7 +8,7 @@
 <div class="search-container">
   <input [(ngModel)]="searchTerm" placeholder="Merchants" (input)="search()">
   <button class="headerIcons" (click)="search()"><i class="bx bx-search"></i></button>
-  <button class="headerIcons" (click)="openCreateDialog(false)"><i class="bx bx-plus"></i></button>
+  <button class="headerIcons" *ngIf="hasEdit" (click)="openCreateDialog(false)"><i class="bx bx-plus"></i></button>
 </div>
 <table >
   <thead>
@@ -17,7 +17,7 @@
       <th>Contact Name</th>
       <th>Email</th>
       <th>Created Date</th>
-      <th>Actions</th>
+      <th *ngIf="hasDelete">Actions</th>
     </tr>
   </thead>
   <tbody *ngFor="let device of paginatedDevices">
@@ -26,7 +26,7 @@
       <td><span class="status-inactive">{{ device.contactName }}</span></td>
       <td>{{ device.email }}</td>
       <td>{{ device.fulldate }}</td>
-      <td>
+      <td *ngIf="hasDelete">
         <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
         <mat-icon>more_vert</mat-icon>
       </button>

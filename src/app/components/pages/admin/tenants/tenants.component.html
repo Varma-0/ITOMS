@@ -8,7 +8,7 @@
 <div class="search-container">
   <input [(ngModel)]="searchTerm" placeholder="Tenants" (input)="search()">
   <button class="headerIcons" (click)="search()"><i class="bx bx-search"></i></button>
-  <button class="headerIcons" (click)="openCreateDialog(false)"><i class="bx bx-plus"></i></button>
+  <button class="headerIcons" *ngIf="hasEdit" (click)="openCreateDialog(false)"><i class="bx bx-plus"></i></button>
 </div>
 
 <table style="overflow:auto;">
@@ -20,8 +20,8 @@
       <th>Created Date</th>
       <th>Updated Date</th>
       <th>Tenant Type</th>
-      <th>Status</th>
-      <th>Actions</th>
+      <th *ngIf="hasDelete">Status</th>
+      <th *ngIf="hasEdit">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -32,13 +32,13 @@
       <td>{{ device.createdDate }}</td>
       <td>{{ device.updatedDate }}</td>
       <td>{{ device.type }}</td>
-      <td>
+      <td *ngIf="hasDelete">
         <mat-slide-toggle color="primary" [checked]="device.status === 'ACTIVE'"
           (change)="toggleStatus(device, i, $event.checked)">
           {{ device.status === 'ACTIVE' ? 'Active' : 'Inactive' }}
         </mat-slide-toggle>
       </td>
-      <td>
+      <td *ngIf="hasEdit">
         <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
           <mat-icon>more_vert</mat-icon>
         </button>

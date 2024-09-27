@@ -35,10 +35,20 @@ export class MerchantsComponent {
   itemsPerPage = 5;
   totalPages = 1;
   itemsPerPageOptions = [5, 10, 15];
+    hasEdit: boolean;
+    hasDelete: boolean;
   constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
   ngOnInit(): void {
-   
+    if(localStorage.getItem("SA") == 'true'){
+        this.hasEdit = true;
+        this.hasDelete = true;
+    }else{
+        let data = JSON.parse(localStorage.getItem("roles"));
+        let item = data.filter(ele => ele.name == "MERCHANT");
+        this.hasEdit = item[0].isAllowEdit
+        this.hasDelete = item[0].isAllowDelete
+    }
     this.loadMerchants();
   }
 

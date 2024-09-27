@@ -8,7 +8,7 @@
 <div class="search-container">
   <input [(ngModel)]="searchTerm" placeholder="Users" (input)="search()">
   <button class="headerIcons" (click)="search()"><i class="bx bx-search"></i></button>
-  <button class="headerIcons" (click)="openCreateDialog(false)"><i class="bx bx-plus"></i></button>
+  <button class="headerIcons" *ngIf="hasEdit" (click)="openCreateDialog(false)"><i class="bx bx-plus"></i></button>
 </div>
 <table >
   <thead>
@@ -18,7 +18,7 @@
       <th>Created Date</th>
       <th>Status</th>
       <th>Tenants</th>
-      <th>Actions</th>
+      <th *ngIf="hasEdit || hasDelete">Actions</th>
     </tr>
   </thead>
   <tbody *ngFor="let device of paginatedDevices">
@@ -30,20 +30,20 @@
         {{ device.status }}
       </span></td>
       <td><button mat-icon-button (click)="openViewDialog(device)"><mat-icon>visibility</mat-icon></button></td>
-      <td>
+      <td *ngIf="hasEdit || hasDelete">
         <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="openCreateDialog(device,true)">
+        <button *ngIf="hasEdit" mat-menu-item (click)="openCreateDialog(device,true)">
           <mat-icon color="green">edit</mat-icon>
           <span>Edit</span>
         </button>
-        <button mat-menu-item (click)="openActiveDialog('active',device.uid)">
+        <button *ngIf="hasDelete" mat-menu-item (click)="openActiveDialog('active',device.uid)">
           <mat-icon color="blue">toggle_on</mat-icon>
           <span>Activate</span>
         </button>
-        <button mat-menu-item (click)="openActiveDialog('in-active',device.uid)">
+        <button *ngIf="hasDelete" mat-menu-item (click)="openActiveDialog('in-active',device.uid)">
           <mat-icon color="red">toggle_off</mat-icon>
           <span>In-Activate</span>
         </button>
