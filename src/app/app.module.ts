@@ -225,6 +225,7 @@ import { ViewTenantComponent } from './components/dialogs/view-tenant/view-tenan
 import { ToastrModule } from 'ngx-toastr';
 import { LoaderComponent } from './components/pages/ui-components/loader/loader.component';
 import { Loader2Component } from './components/pages/ui-components/loader2/loader2.component';
+import { ProfilesComponent } from './components/pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -423,7 +424,8 @@ import { Loader2Component } from './components/pages/ui-components/loader2/loade
     FilterPipe,
     ViewTenantComponent,
     LoaderComponent,
-    Loader2Component
+    Loader2Component,
+    ProfilesComponent
   ],
   imports: [
     BrowserModule,

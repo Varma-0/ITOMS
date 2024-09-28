@@ -117,6 +117,7 @@ import { PackageAddComponent } from './components/pages/table/packages/package-a
 import { LandingPreloaderComponent } from './landing/layouts/preloader/preloader.component';
 import { LoaderComponent } from './components/pages/ui-components/loader/loader.component';
 import { Loader2Component } from './components/pages/ui-components/loader2/loader2.component';
+import { ProfilesComponent } from './components/pages/profile/profile.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'landing',pathMatch:'full'},
@@ -132,6 +133,7 @@ const routes: Routes = [
     children: [
       {path: 'analytics', data: { breadcrumb: 'Analytics' }, component: AnalyticsComponent},
       {path: 'e-commerce', data: { breadcrumb: 'eCommerce' }, component: EcommerceComponent},
+      {path: 'profile', data: { breadcrumb: 'profile' }, component: ProfilesComponent},
     ]
   },
   {
