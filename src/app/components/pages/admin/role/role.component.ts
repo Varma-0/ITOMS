@@ -29,6 +29,14 @@ export class RoleComponent {
     itemsPerPageOptions = [5, 10, 15];
     hasEdit: boolean = false;
     hasDelete: boolean = false;
+    columns = [
+        { name: 'Role Name', visible: true },
+        { name: 'Created Date', visible: true },
+      ];
+
+      toggleColumn(index: number): void {
+        this.columns[index].visible = !this.columns[index].visible;
+      }
     constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
     ngOnInit(): void {
@@ -132,11 +140,11 @@ export class RoleComponent {
             data: {
                 title: edit ? 'Edit Role' : 'Add Role',
                 permissionOptionNames: this.permissionsNames,
-                form: {
+                form: edit ? {
                     name: data.name,
                     description: data.description,
                     roles: data.roles,
-                }
+                } : {}
             },
             width: '40%'
         });

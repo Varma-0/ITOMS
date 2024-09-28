@@ -1,57 +1,69 @@
-  <div class="breadcrumb-area">
-    <h1>Administration</h1>
-    <ol class="breadcrumb">
-      <li class="item">Roles</li>
-    </ol>
-  </div>
+<div class="admin-panel">
 
-  <div class="search-container">
-    <input [(ngModel)]="searchTerm" placeholder="Roles" (input)="search()">
-    <button class="headerIcons" (click)="search()"><i class="bx bx-search"></i></button>
-    <button class="headerIcons" *ngIf="hasEdit" (click)="openCreateDialog(false)"><i class="bx bx-plus"></i></button>
-  </div>
-  <table >
+    <div class="breadcrumb-area">
+        <h1>ROLES</h1>
+        <ol class="breadcrumb">
+          <li>Administration</li>
+          <li>Roles</li>
+        </ol>
+      </div>
+
+      <div class="controls-container">
+        <div class="search-container">
+          <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="search()" placeholder="Search users...">
+          <button class="search-button"><i class="material-icons">search</i></button>
+        </div>
+
+        <button class="add-button" (click)="openCreateDialog()">
+          <i class="material-icons">add</i> Add Role
+        </button>
+
+        <div class="column-manager">
+          <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
+            <i class="material-icons">filter_list</i> Columns
+          </button>
+          <div class="column-list" #columnList>
+            <label *ngFor="let column of columns; let i = index">
+              <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(i)">
+              {{ column.name }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+    <table class="user-table">
     <thead>
       <tr>
-        <th>Role Name</th>
-        <th>Created Date</th>
+        <th style="text-align: left;" *ngIf="columns[0].visible">Role Name</th>
+        <th *ngIf="columns[0].visible">Created Date</th>
         <th *ngIf="hasEdit || hasDelete">Actions</th>
       </tr>
     </thead>
     <tbody *ngFor="let device of paginatedDevices">
       <tr>
-        <td>{{ device.name }}</td>
-        <td>{{ device.createdBy.ts.split('T')[0] }}</td>
-        <td *ngIf="hasEdit || hasDelete">
-          <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button *ngIf="hasEdit" mat-menu-item (click)="editData(device)">
-            <mat-icon color="green">edit</mat-icon>
-            <span>Edit</span>
-          </button>
-          <button *ngIf="hasDelete" mat-menu-item (click)="openDeleteDialog(device)">
-            <mat-icon color="red">delete</mat-icon>
-            <span>Delete</span>
-          </button>
-        </mat-menu>
+        <td style="text-align: left;" *ngIf="columns[0].visible">{{ device.name }}</td>
+        <td *ngIf="columns[0].visible">{{ device.createdBy.ts.split('T')[0] }}</td>
+        <td *ngIf="hasEdit || hasDelete" class="actions-cell">
+            <button *ngIf="hasEdit" class="icon-button edit" (click)="editData(device)" data-tooltip="Edit role">
+                <i class="material-icons">edit</i>
+              </button>
+              <button *ngIf="hasDelete" class="icon-button deactivate" (click)="openDeleteDialog(device)" data-tooltip="Delte role">
+                <i class="material-icons">delete</i>
+              </button>
       </td>
       </tr>
     </tbody>
   </table>
-  <div class="pagination-container">
-    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
-      <i class="bx bx-chevron-left"></i> Previous
-    </button>
+  <div class="pagination">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
     <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
-    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">
-      Next <i class="bx bx-chevron-right"></i>
-    </button>
-    <select class="pagination-select" [(ngModel)]="itemsPerPage" (change)="updateItemsPerPage()">
-      <option [ngValue]="5">5 per page</option>
-      <option [ngValue]="10">10 per page</option>
-      <option [ngValue]="20">15 per page</option>
-    </select>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+    <div class="items-per-page">
+      <label for="itemsPerPage">Items per page:</label>
+      <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="updateItemsPerPage()">
+        <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+      </select>
+    </div>
   </div>
   <div style="height: 50px;"></div>

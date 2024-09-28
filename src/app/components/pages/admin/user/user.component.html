@@ -1,70 +1,89 @@
-<div class="breadcrumb-area">
-  <h1>Administration</h1>
-  <ol class="breadcrumb">
-    <li class="item">Users</li>
-  </ol>
-</div>
+<div class="admin-panel">
 
-<div class="search-container">
-  <input [(ngModel)]="searchTerm" placeholder="Users" (input)="search()">
-  <button class="headerIcons" (click)="search()"><i class="bx bx-search"></i></button>
-  <button class="headerIcons" *ngIf="hasEdit" (click)="openCreateDialog(false)"><i class="bx bx-plus"></i></button>
-</div>
-<table >
-  <thead>
-    <tr>
-      <th>User Name</th>
-      <th>Email</th>
-      <th>Created Date</th>
-      <th>Status</th>
-      <th>Tenants</th>
-      <th *ngIf="hasEdit || hasDelete">Actions</th>
-    </tr>
-  </thead>
-  <tbody *ngFor="let device of paginatedDevices">
-    <tr>
-      <td>{{ device.name }}</td>
-      <td>{{ device.email }}</td>
-      <td>{{ device.createdBy.ts.split('T')[0] }}</td>
-      <td> <span [ngClass]="{'status-active': device.status === 'ACTIVE','status-inactive': device.status === 'INACTIVE'}">
-        {{ device.status }}
-      </span></td>
-      <td><button mat-icon-button (click)="openViewDialog(device)"><mat-icon>visibility</mat-icon></button></td>
-      <td *ngIf="hasEdit || hasDelete">
-        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
-        <mat-icon>more_vert</mat-icon>
+    <div class="breadcrumb-area">
+        <h1>USERS</h1>
+        <ol class="breadcrumb">
+          <li>Administration</li>
+          <li>Users</li>
+        </ol>
+      </div>
+
+
+    <div class="controls-container">
+      <div class="search-container">
+        <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="search()" placeholder="Search users...">
+        <button class="search-button"><i class="material-icons">search</i></button>
+      </div>
+
+      <button class="add-button" (click)="openCreateDialog()">
+        <i class="material-icons">add</i> Add User
       </button>
-      <mat-menu #menu="matMenu">
-        <button *ngIf="hasEdit" mat-menu-item (click)="openCreateDialog(device,true)">
-          <mat-icon color="green">edit</mat-icon>
-          <span>Edit</span>
-        </button>
-        <button *ngIf="hasDelete" mat-menu-item (click)="openActiveDialog('active',device.uid)">
-          <mat-icon color="blue">toggle_on</mat-icon>
-          <span>Activate</span>
-        </button>
-        <button *ngIf="hasDelete" mat-menu-item (click)="openActiveDialog('in-active',device.uid)">
-          <mat-icon color="red">toggle_off</mat-icon>
-          <span>In-Activate</span>
-        </button>
-      </mat-menu>
-    </td>
-    </tr>
-  </tbody>
-</table>
-<div class="pagination-container">
-  <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">
-    <i class="bx bx-chevron-left"></i> Previous
-  </button>
-  <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
-  <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">
-    Next <i class="bx bx-chevron-right"></i>
-  </button>
-  <select class="pagination-select" [(ngModel)]="itemsPerPage" (change)="updateItemsPerPage()">
-    <option [ngValue]="5">5 per page</option>
-    <option [ngValue]="10">10 per page</option>
-    <option [ngValue]="15">15 per page</option>
-  </select>
-</div>
 
-<div style="height: 50px;"></div>
+      <div class="column-manager">
+        <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
+          <i class="material-icons">filter_list</i> Columns
+        </button>
+        <div class="column-list" #columnList>
+          <label *ngFor="let column of columns; let i = index">
+            <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(i)">
+            {{ column.name }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th style="text-align: left;" *ngIf="columns[0].visible">User Name</th>
+            <th style="text-align: left;" *ngIf="columns[1].visible">Email</th>
+            <th *ngIf="columns[2].visible">Created Date</th>
+            <th *ngIf="columns[3].visible">Status</th>
+            <th *ngIf="columns[4].visible">Tenants</th>
+            <th *ngIf="hasEdit || hasDelete">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let device of paginatedDevices">
+            <td style="text-align: left;" *ngIf="columns[0].visible">{{ device.name }}</td>
+            <td style="text-align: left;" *ngIf="columns[1].visible">{{ device.email }}</td>
+            <td *ngIf="columns[2].visible">{{ device.createdBy.ts.split('T')[0] }}</td>
+            <td *ngIf="columns[3].visible">
+              <span class="status-badge" [ngClass]="device.status.toLowerCase()">
+                {{ device.status }}
+              </span>
+            </td>
+            <td *ngIf="columns[4].visible">
+              <button class="icon-button" (click)="openViewDialog(device)"  data-tooltip="View Tenants">
+                <i class="material-icons">visibility</i>
+              </button>
+            </td>
+            <td class="actions-cell">
+              <button class="icon-button edit" (click)="openCreateDialog(device, true)"  data-tooltip="Edit user">
+                <i class="material-icons">edit</i>
+              </button>
+              <button class="icon-button activate" (click)="openActiveDialog('active', device.uid)"  data-tooltip="Activate">
+                <i class="material-icons">toggle_on</i>
+              </button>
+              <button  class="icon-button deactivate" (click)="openActiveDialog('inactive', device.uid)"  data-tooltip="Deactivate">
+                <i class="material-icons">toggle_off</i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+        <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+        <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+        <div class="items-per-page">
+          <label for="itemsPerPage">Items per page:</label>
+          <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="updateItemsPerPage()">
+            <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+      </div>
+  </div>

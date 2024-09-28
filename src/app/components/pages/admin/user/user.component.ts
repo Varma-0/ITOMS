@@ -36,10 +36,21 @@ export class UserComponent {
     loginData: any;
     hasEdit = false;
     hasDelete = false;
+    columns = [
+        { name: 'User Name', visible: true },
+        { name: 'Email', visible: true },
+        { name: 'Created Date', visible: true },
+        { name: 'Status', visible: true },
+        { name: 'Tenants', visible: true },
+      ];
+
+      toggleColumn(index: number): void {
+        this.columns[index].visible = !this.columns[index].visible;
+      }
+
     constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
     ngOnInit(): void {
-        this.shared.showLoader.next(true);
         this.loginData = localStorage.getItem("SA");
         if(this.loginData == 'true'){
             this.hasEdit = true;
@@ -54,7 +65,6 @@ export class UserComponent {
         this.tenantsApiResponse()
         this.roleApiResponse();
         this.alertApiResponse();
-        this.shared.showLoader.next(false);
     }
 
     loadDevices() {
@@ -152,7 +162,7 @@ export class UserComponent {
                 tenantOptionNames: this.tenantsNames,
                 roleOptionNames: this.rolesNames,
                 alertOptionNames: this.alertsNames,
-                form: {
+                form: edit ? {
                     firstName: data.firstName,
                     lastName: data.lastName,
                     dob: data.dob,
@@ -162,7 +172,7 @@ export class UserComponent {
                     altemail: data.emailAlt,
                     altphone: data.phoneAlt,
                     altcountry: data.countryAlt,
-                }
+                } : {}
             },
             width: '60%'
         });
