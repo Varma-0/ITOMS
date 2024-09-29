@@ -20,10 +20,22 @@ export class TenantsComponent {
   searchTerm: string = '';
   currentPage: number = 1;
   itemsPerPage: number = 5;
+  itemsPerPageOptions = [5, 10, 15];
   totalPages: number = 1;
     hasEdit: boolean;
     hasDelete: boolean;
+    columns = [
+        { name: 'Tenant Name', visible: true },
+        { name: 'Created By', visible: true },
+        { name: 'Updated By', visible: true },
+        { name: 'Created Date', visible: true },
+        { name: 'Updated Date', visible: true },
+        { name: 'Tenant Type', visible: true }
+      ];
 
+      toggleColumn(index: number): void {
+        this.columns[index].visible = !this.columns[index].visible;
+      }
   constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) {}
 
   ngOnInit(): void {

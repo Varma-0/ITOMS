@@ -27,6 +27,17 @@ export class AlertComponent {
     itemsPerPageOptions = [5, 10, 15];
     hasEdit: boolean;
     hasDelete: boolean;
+    columns = [
+        { name: 'Alert Name', visible: true },
+        { name: 'Created By', visible: true },
+        { name: 'Updated By', visible: true },
+        { name: 'Created Date', visible: true },
+        { name: 'Updated Date', visible: true }
+      ];
+
+      toggleColumn(index: number): void {
+        this.columns[index].visible = !this.columns[index].visible;
+      }
     constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
     ngOnInit(): void {
@@ -94,7 +105,7 @@ export class AlertComponent {
         const dialogRef = this.dialog.open(AddFormComponent, {
             data: {
                 title: edit ? 'Edit Alert' : 'Add Alert',
-                form: {
+                form: edit ? {
                     name: data.name,
                     originator: data.originator,
                     alert: data.priority,
@@ -108,7 +119,7 @@ export class AlertComponent {
                     minvalue: data.minVal,
                     maxvalue: data.maxVal,
                     templateId: data.templateId,
-                }
+                } : {}
             },
             width: '40%'
         });

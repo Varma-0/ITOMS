@@ -37,6 +37,16 @@ export class MerchantsComponent {
   itemsPerPageOptions = [5, 10, 15];
     hasEdit: boolean;
     hasDelete: boolean;
+    columns = [
+        { name: 'Merchant Name', visible: true },
+        { name: 'Contact Name', visible: true },
+        { name: 'Email', visible: true },
+        { name: 'Created Date', visible: true },
+      ];
+
+      toggleColumn(index: number): void {
+        this.columns[index].visible = !this.columns[index].visible;
+      }
   constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
   ngOnInit(): void {
