@@ -41,7 +41,6 @@ export class AlertComponent {
     constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
     ngOnInit(): void {
-        this.shared.showLoader.next(true);
         this.loadAlerts();
         if(localStorage.getItem("SA") == 'true'){
             this.hasEdit = true;
@@ -52,17 +51,19 @@ export class AlertComponent {
             this.hasEdit = item[0].isAllowEdit
             this.hasDelete = item[0].isAllowDelete
         }
-        this.shared.showLoader.next(false);
     }
 
     loadAlerts() {
+        this.shared.showLoader.next(true);
         this.dataService.alertData().subscribe(
             response => {
                 console.log(response);
                 this.alerts = response.event.eventData.map(data => data);
                 this.search();
+                this.shared.showLoader.next(false);
             },
             error => {
+                this.shared.showLoader.next(false);
                 console.error('Error:', error);
             }
         )
@@ -128,6 +129,7 @@ export class AlertComponent {
             if (result) {
                 console.log(result);
                 if (edit) {
+                    this.shared.showLoader.next(true);
                     const payload = {
                         "event": {
                             "eventData": {
@@ -155,9 +157,11 @@ export class AlertComponent {
                                 this.loadAlerts();
                                 this.shared.showSuccess("Alert Created successfully!")
                             }
+                            this.shared.showLoader.next(false);
                         }
                     )
                 } else {
+                    this.shared.showLoader.next(true);
                     const payload = {
                         "event": {
                             "eventData": {
@@ -185,6 +189,7 @@ export class AlertComponent {
                                 this.loadAlerts();
                                 this.shared.showSuccess("Alert Updated successfully!")
                             }
+                            this.shared.showLoader.next(false);
                         }
                     )
                 }
@@ -197,6 +202,7 @@ export class AlertComponent {
         console.log(alert);
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
+                this.shared.showLoader.next(true);
                 const finals = {
                     "event": {
                         "eventData": {
@@ -213,6 +219,7 @@ export class AlertComponent {
                             this.loadAlerts();
                             this.shared.showSuccess("Role Deleted successfully");
                         }
+                        this.shared.showLoader.next(false);
                     }
                   )
             }

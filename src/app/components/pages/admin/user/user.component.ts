@@ -68,6 +68,7 @@ export class UserComponent {
     }
 
     loadDevices() {
+        this.shared.showLoader.next(true);
         this.dataService.userData().subscribe(
             response => {
                 if(response.status == 200) {
@@ -75,6 +76,7 @@ export class UserComponent {
                     console.log(this.users);
                     this.search();
                 }
+                this.shared.showLoader.next(false);
             },
             error => {
                 this.shared.showError(error.message)
@@ -84,6 +86,7 @@ export class UserComponent {
     }
 
     tenantsApiResponse() {
+        this.shared.showLoader.next(true);
         this.dataService.tenantData().subscribe(
             response => {
                 this.tenantsData = response.event.eventData.tenants
@@ -93,11 +96,13 @@ export class UserComponent {
                         id: name.id
                     });
                 });
+                this.shared.showLoader.next(false);
             }
         )
     }
 
     roleApiResponse() {
+        this.shared.showLoader.next(true);
         this.dataService.roleData().subscribe(
             response => {
                 this.rolesData = response.event.eventData
@@ -107,11 +112,13 @@ export class UserComponent {
                         id: name.id
                     });
                 });
+                this.shared.showLoader.next(false);
             }
         )
     }
 
     alertApiResponse() {
+        this.shared.showLoader.next(true);
         this.dataService.alertData().subscribe(
             response => {
                 this.alertsData = response.event.eventData
@@ -121,6 +128,7 @@ export class UserComponent {
                         id: name.id
                     });
                 });
+                this.shared.showLoader.next(false);
             }
         )
     }
@@ -199,12 +207,14 @@ export class UserComponent {
                             "eventSubType": "UPDATE"
                         }
                     }
+                    this.shared.showLoader.next(true);
                     this.dataService.updateUser(payload).subscribe(
                         response => {
                             if(response.status == 200) {
                                 this.shared.showSuccess("User Edited Successfully");
                                 this.loadDevices();
                             }
+                            this.shared.showLoader.next(false);
                         }
                     );
                 }
@@ -229,6 +239,7 @@ export class UserComponent {
     }
 
     addNewUserBySA(firstName, lastName, dob, email, phone, country, altemail, altphone, altcountry, userLinkDataList, id) {
+        this.shared.showLoader.next(true);
         const event = new createNewUserEvent(firstName, lastName, dob, email, phone, country, altemail, altcountry, altphone, userLinkDataList); //pass uid based on user selected
         const eventData = new createNewUserBody(event, 'USER', 'CREATE');
         const eventType = new createNewUser(eventData);
@@ -238,11 +249,13 @@ export class UserComponent {
                     this.openOTPDialog(email, id);
                     this.shared.showSuccess("User Created Successfully");
                 }
+                this.shared.showLoader.next(false);
             }
         );
     }
 
     createdNewUser(firstName, lastName, dob, email, phone, country, altemail, altphone, altcountry, userLinkDataList, id) {
+        this.shared.showLoader.next(true);
         const event = new createNewUserEvent(firstName, lastName, dob, email, phone, country, altemail, altcountry, altphone, userLinkDataList); //pass uid based on user selected
         const eventData = new createNewUserBody(event, 'USER', 'CREATE');
         const eventType = new createNewUser(eventData);
@@ -252,6 +265,7 @@ export class UserComponent {
                     this.openOTPDialog(email, id);
                     this.shared.showSuccess("User Created Successfully");
                 }
+                this.shared.showLoader.next(false);
             }
         );
     }
@@ -304,6 +318,7 @@ export class UserComponent {
                 }
             });
         } else {
+            this.shared.showLoader.next(true);
             const payload = {
                 "event": {
                     "eventData": [
@@ -318,6 +333,7 @@ export class UserComponent {
                     this.shared.showSuccess("Status update successful!");
                     this.loadDevices()
                 }
+                this.shared.showLoader.next(false);
             })
         }
     }

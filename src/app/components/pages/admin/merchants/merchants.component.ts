@@ -50,7 +50,6 @@ export class MerchantsComponent {
   constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
   ngOnInit(): void {
-    this.shared.showLoader.next(true);
     if(localStorage.getItem("SA") == 'true'){
         this.hasEdit = true;
         this.hasDelete = true;
@@ -61,10 +60,10 @@ export class MerchantsComponent {
         this.hasDelete = item[0].isAllowDelete
     }
     this.loadMerchants();
-    this.shared.showLoader.next(false);
   }
 
   loadMerchants() {
+    this.shared.showLoader.next(true);
     const event = new terminalEvent('MERCHANT', 'SEARCH');
     const merchantRequest = new terminalBody(event);
     this.merchants = this.dataService.merchantData(merchantRequest).subscribe(
@@ -79,8 +78,10 @@ export class MerchantsComponent {
           }));
           this.search();
         }
+        this.shared.showLoader.next(false);
       },
       error => {
+        this.shared.showLoader.next(false);
         this.shared.showError(error.message)
         console.error('Error:', error);
       }
@@ -149,6 +150,7 @@ export class MerchantsComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
+        this.shared.showLoader.next(true);
         const event = new addMerchantData(result.name,result.email,result.phone,result.cname);
         const eventType = new addMerchantBody(event,'MERCHANT','CREATE');
         const finals = new merchantAdd(eventType);
@@ -159,6 +161,7 @@ export class MerchantsComponent {
               this.loadMerchants();
               this.shared.showSuccess("Merchant Created successfully!")
             }
+            this.shared.showLoader.next(false);
           }
         )
       }
@@ -170,6 +173,7 @@ export class MerchantsComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.shared.showLoader.next(true);
         const eventType = new deleteMerchantEVent(merchant.merchantId,'MERCHANT','DELETE');
         const finals = new merchantDelete(eventType);
         this.dataService.deleteMerchant(finals).subscribe(
@@ -179,6 +183,7 @@ export class MerchantsComponent {
               this.loadMerchants();
               this.shared.showSuccess("Merchant Deleted successfully!");
             }
+            this.shared.showLoader.next(false);
           }
         )
     }

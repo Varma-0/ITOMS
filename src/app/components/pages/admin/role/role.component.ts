@@ -40,7 +40,6 @@ export class RoleComponent {
     constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
 
     ngOnInit(): void {
-        this.shared.showLoader.next(true);
         this.loadRoles();
         this.permissionApiResponse();
         if(localStorage.getItem("SA") == 'true'){
@@ -52,10 +51,10 @@ export class RoleComponent {
             this.hasEdit = item[0].isAllowEdit
             this.hasDelete = item[0].isAllowDelete
         }
-        this.shared.showLoader.next(false);
     }
 
     loadRoles() {
+        this.shared.showLoader.next(true);
         this.dataService.roleData().subscribe(
             response => {
                 if(response.status == 200) {
@@ -63,8 +62,10 @@ export class RoleComponent {
                     this.roles = response.event.eventData.map(data => data);
                     this.search();
                 }
+                this.shared.showLoader.next(false);
             },
             error => {
+                this.shared.showLoader.next(false);
                 this.shared.showError(error.message);
                 console.error('Error:', error);
             }
@@ -72,6 +73,7 @@ export class RoleComponent {
     }
 
     permissionApiResponse() {
+        this.shared.showLoader.next(true);
         this.dataService.permissionData().subscribe(
             response => {
                 this.permissionsData = response.event.eventData.permissions
@@ -81,6 +83,7 @@ export class RoleComponent {
                         id: name.id
                     });
                 });
+                this.shared.showLoader.next(false);
             }
         )
     }
@@ -119,6 +122,7 @@ export class RoleComponent {
     }
 
     editData(data) {
+        this.shared.showLoader.next(true);
         const payload = {
             "event": {
                 "eventData": data.id,
@@ -130,7 +134,8 @@ export class RoleComponent {
             response => {
                 console.log(response.event.eventData.rolePermissionsList)
                 data.roles = response.event.eventData.rolePermissionsList;
-                this.openCreateDialog(data, true)
+                this.openCreateDialog(data, true);
+                this.shared.showLoader.next(false);
             }
         )
     }
@@ -152,6 +157,7 @@ export class RoleComponent {
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 if (edit) {
+                    this.shared.showLoader.next(true);
                     const payload = {
                         "event": {
                             "eventData": {
@@ -170,10 +176,12 @@ export class RoleComponent {
                                 console.log("resssss", response);
                                 this.shared.showSuccess("Role Updated successfully!")
                             }
+                            this.shared.showLoader.next(true);
                         }
                     )
                 }
                 else if (!edit) {
+                    this.shared.showLoader.next(true);
                     console.log(result);
                     const event = new addRoleData(result.data.name, result.data.description, result.roles);
                     const eventType = new addRoleBody(event, 'ROLE', 'CREATE');
@@ -185,6 +193,7 @@ export class RoleComponent {
                                 this.loadRoles();
                                 this.shared.showSuccess("Role created successfully")
                             }
+                            this.shared.showLoader.next(false);
                         }
                     )
                 }
@@ -196,6 +205,7 @@ export class RoleComponent {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
+                this.shared.showLoader.next(true);
                 const payload = {
                     "event": {
                         "eventData": {
@@ -211,6 +221,7 @@ export class RoleComponent {
                         this.loadRoles();
                         this.shared.showSuccess("Role Deleted successfully");
                     }
+                    this.shared.showLoader.next(false);
                 })
             }
         });

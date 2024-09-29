@@ -39,7 +39,6 @@ export class TenantsComponent {
   constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) {}
 
   ngOnInit(): void {
-    this.shared.showLoader.next(true);
     this.loadTenants();
     if(localStorage.getItem("SA") == 'true'){
         this.hasEdit = true;
@@ -50,10 +49,10 @@ export class TenantsComponent {
         this.hasEdit = item[0].isAllowEdit
         this.hasDelete = item[0].isAllowDelete
     }
-    this.shared.showLoader.next(false);
   }
 
   loadTenants() {
+    this.shared.showLoader.next(true);
     this.dataService.tenantData().subscribe(
       response => {
         this.tenants = response.event.eventData.tenants.map(data => ({
@@ -67,6 +66,7 @@ export class TenantsComponent {
           status: data.status
         }));
         this.search();
+        this.shared.showLoader.next(false);
       },
       error => {
         console.error('Error:', error);
@@ -112,6 +112,7 @@ export class TenantsComponent {
     // this.filteredtenants[i].status = updatedStatus;
     // tenant.status = updatedStatus;
     // console.log(`${tenant.tenantId} status is now: ${tenant.status}`);
+    this.shared.showLoader.next(true);
     const payload = {
       "event": {
         "eventData":tenant.tenantId,
@@ -127,6 +128,7 @@ export class TenantsComponent {
           this.loadTenants();
           this.shared.showSuccess(`Tenant ${updatedStatus.toLowerCase()}d successfully!`)
         }
+        this.shared.showLoader.next(false);
       },
       error => {
         // Handle any errors here
@@ -152,6 +154,7 @@ export class TenantsComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (edit) {
+          this.shared.showLoader.next(true);
           const event = new editTenantData(data.tenantId, result.name, result.description, result.type, result.stype);
           const eventType = new editTenantBody(event, 'TENANT', 'UPDATE');
           const finals = new tenantUpdate(eventType);
@@ -162,9 +165,11 @@ export class TenantsComponent {
                 this.loadTenants();
                 this.shared.showSuccess("Tenant Updated successfully!")
               }
+              this.shared.showLoader.next(false);
             }
           );
         } else {
+          this.shared.showLoader.next(true);
           const event = new addTenantData(result.name, result.description, result.type, result.stype);
           const eventType = new addTenantBody(event, 'TENANT', 'CREATE');
           const finals = new tenantAdd(eventType);
@@ -175,6 +180,7 @@ export class TenantsComponent {
                 this.loadTenants();
                 this.shared.showSuccess("Tenant Created successfully!")
               }
+              this.shared.showLoader.next(false);
             }
           );
         }
@@ -187,6 +193,7 @@ export class TenantsComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.shared.showLoader.next(true);
         const eventType = new deleteTenantEVent(tenants.tenantId,'TENANT','DEACTIVATE');
         const finals = new tenantDelete(eventType);
         this.dataService.deleteTenant(finals).subscribe(
@@ -196,6 +203,7 @@ export class TenantsComponent {
               this.loadTenants();
               this.shared.showSuccess("Status Updated successfully!")
             }
+          this.shared.showLoader.next(false);
           }
         );
       }

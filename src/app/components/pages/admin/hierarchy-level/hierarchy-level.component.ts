@@ -69,7 +69,6 @@ export class HierarchyLevelComponent implements OnInit {
     constructor(private router: Router, public dialog: MatDialog, private fb: FormBuilder, private dataService: TerminalService, private shared: SharedServices) { }
 
     ngOnInit() {
-        this.shared.showLoader.next(true);
         this.itemForm = this.fb.group({
             name: ['', Validators.required],
             description: [''],
@@ -89,11 +88,11 @@ export class HierarchyLevelComponent implements OnInit {
             this.hasEdit = item[0].isAllowEdit
             this.hasDelete = item[0].isAllowDelete
         }
-        this.shared.showLoader.next(false);
     }
 
     getLevels() {
         this.hierarchyLevels = [];
+        this.shared.showLoader.next(true);
         const event = new terminalEvent('MERCHANT', 'SEARCH');
         const payload = new terminalBody(event);
         this.dataService.hierarchyLevelData(payload).subscribe(
@@ -114,8 +113,10 @@ export class HierarchyLevelComponent implements OnInit {
                     this.loadMerchants();
                     // this.shared.showSuccess("Level Updated successfully!")
                 }
+                this.shared.showLoader.next(false);
             },
             error => {
+                this.shared.showLoader.next(false);
                 this.hierarchyLevels.push({
                     name: "MERCHANT",
                     pid: "",
@@ -130,6 +131,7 @@ export class HierarchyLevelComponent implements OnInit {
     }
 
     loadMerchants() {
+        this.shared.showLoader.next(true);
         const event = new terminalEvent('MERCHANT', 'SEARCH');
         const merchantRequest = new terminalBody(event);
         this.dataService.merchantData(merchantRequest).subscribe(
@@ -137,9 +139,11 @@ export class HierarchyLevelComponent implements OnInit {
                 response.event.eventData.map(data => this.hierarchyLevels[0].items.push({
                     name: data.name,
                     mid: data.id,
-                }));
+                }));    
+            this.shared.showLoader.next(false);
             },
             error => {
+                this.shared.showLoader.next(false);
                 this.shared.showError(error.message);
                 console.error('Error:', error);
             }
@@ -360,6 +364,7 @@ export class HierarchyLevelComponent implements OnInit {
     }
 
     getSearchData(item){
+        this.shared.showLoader.next(true);
         const payload = {
             "event": {
                 "eventData": {
@@ -380,6 +385,7 @@ export class HierarchyLevelComponent implements OnInit {
                         id: data.id
                     }) : null);
                 }
+                this.shared.showLoader.next(false);
             },
             error => {
                 this.shared.showError(error.message);
@@ -428,6 +434,7 @@ export class HierarchyLevelComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
+                this.shared.showLoader.next(true);
                 const payload = {
                     "event": {
                         "eventData": {
@@ -453,8 +460,10 @@ export class HierarchyLevelComponent implements OnInit {
                         }else{
                             this.getSearchData(this.mId);
                         }
+                        this.shared.showLoader.next(false);
                     },
                     error => {
+                        this.shared.showLoader.next(false);
                         console.error('Error:', error);
                     }
                 )
@@ -463,6 +472,7 @@ export class HierarchyLevelComponent implements OnInit {
     }
 
     getChild(id){
+        this.shared.showLoader.next(true);
         const payload = {
             "event": {
                 "eventData": id,
@@ -483,8 +493,10 @@ export class HierarchyLevelComponent implements OnInit {
                         }));
                     }
                 }
+                this.shared.showLoader.next(false);
             },
             error => {
+                this.shared.showLoader.next(false);
                 this.shared.showError(error.message);
                 console.error('Error:', error);
             }
@@ -492,6 +504,7 @@ export class HierarchyLevelComponent implements OnInit {
     }
 
     openDialog(): void {
+        this.shared.showLoader.next(true);
         const dialogRef = this.dialog.open(HierarchySelectionComponent, {
             data: {
                 title: 'Hierarchy Levels',
@@ -505,8 +518,10 @@ export class HierarchyLevelComponent implements OnInit {
                 this.dataService.hierarchyAddLevel(result).subscribe(
                     response => {
                             this.getLevels();
+                            this.shared.showLoader.next(false);
                     },
                     error => {
+                        this.shared.showLoader.next(false);
                         this.shared.showError(error.message);
                         console.error('Error:', error);
                     }
@@ -516,6 +531,7 @@ export class HierarchyLevelComponent implements OnInit {
     }
 
     deleteItem(item: HierarchyItem) {
+        this.shared.showLoader.next(true);
         const payload = {
             "event": {
                 "eventData": item.id,
@@ -526,8 +542,10 @@ export class HierarchyLevelComponent implements OnInit {
         this.dataService.hierarchyAddData(payload).subscribe(
             response => {
                     this.getSearchData(this.mId);
+                    this.shared.showLoader.next(false);
             },
             error => {
+                this.shared.showLoader.next(false);
                 this.shared.showError(error.message);
                 console.error('Error:', error);
             }
