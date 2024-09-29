@@ -44,8 +44,8 @@
   <tbody *ngFor="let device of paginatedDevices">
     <tr>
       <td style="text-align: left;" *ngIf="columns[0].visible">{{ device.name }}</td>
-      <td style="text-align: left;" *ngIf="columns[0].visible"><span class="status-inactive">{{ device.contactName }}</span></td>
-      <td style="text-align: left;" *ngIf="columns[0].visible">{{ device.email }}</td>
+      <td style="text-align: left;" *ngIf="columns[1].visible"><span class="status-inactive">{{ device.contactName }}</span></td>
+      <td style="text-align: left;" *ngIf="columns[2].visible">{{ device.email }}</td>
       <td *ngIf="columns[3].visible">{{ device.fulldate }}</td>
       <td *ngIf="hasDelete" class="actions-cell">
         <button class="icon-button deactivate" (click)="openDeleteDialog(device)" data-tooltip="Delte role">

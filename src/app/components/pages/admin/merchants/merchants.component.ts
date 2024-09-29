@@ -138,12 +138,12 @@ export class MerchantsComponent {
     const dialogRef = this.dialog.open(AddFormComponent,{
         data:{
             title: 'Add Merchant',
-            form : {
-              name: data.name,
-              email:data.email,
-              phone: data.permission,
-              cname: data.contactName,
-          }
+          //   form : {
+          //     name: data.name,
+          //     email:data.email,
+          //     phone: data.permission,
+          //     cname: data.contactName,
+          // }
         },
         width:'40%'
     });
