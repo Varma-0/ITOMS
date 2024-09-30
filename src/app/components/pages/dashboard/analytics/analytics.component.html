@@ -1,6 +1,6 @@
 
 <div class="dashboard-container">
-  
+
     <div class="main-row">
       <div class="welcome-card">
         <div class="image-container">
@@ -11,7 +11,7 @@
           <h1 class="user-name">{{ welcome }}</h1>
         </div>
       </div>
-  
+
       <div class="stats-cards">
         <div *ngFor="let stat of statsCards" class="stats-card">
           <div class="stats-card-header">
@@ -29,9 +29,9 @@
       </div>
 
       <div class="settings-dropdown">
-        <button class="settings-button" (click)="toggleDropdown()">
+        <!-- <button class="settings-button" (click)="toggleDropdown()">
           <i class="bx bx-cog"></i>
-        </button>
+        </button> -->
         <div class="dropdown-content" *ngIf="showDropdown">
           <label *ngFor="let chart of availableCharts">
             <input type="checkbox" [checked]="chart.selected" (change)="toggleChart(chart)">
@@ -40,7 +40,7 @@
         </div>
     </div>
     </div>
-  
+
     <div class="charts-container">
       <div class="charts-row">
         <div *ngFor="let chart of selectedCharts" class="chart-card">

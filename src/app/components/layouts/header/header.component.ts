@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
     display: string;
     superAdmin: boolean;
     isScrolled = false;
+    isSidebarActive: boolean;
 
     constructor(private router: Router, private authService: AuthService, private shared: SharedServices) { }
 
@@ -23,6 +24,9 @@ export class HeaderComponent implements OnInit {
       this.display = localStorage.getItem('selectedOption');
       this.email = localStorage.getItem('Email');
       this.tenants = JSON.parse(localStorage.getItem('tenants'));
+      this.shared.sidebarActive$.subscribe(
+        (active: boolean) => (this.isSidebarActive = active)
+      );
     }
 
     @HostListener('window:scroll', [])

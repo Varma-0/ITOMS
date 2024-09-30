@@ -113,3 +113,8 @@
       padding-top: 56px; // This should match the header height
     }
   }
+
+  .inactive {
+    opacity: 0.1;
+    pointer-events: none;
+  }
