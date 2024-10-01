@@ -6,27 +6,27 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle"  id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <img src="assets/img/us-flag.jpg" alt="English" class="flag-icon"> English
             </a>
             <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-              <li><a class="dropdown-item" href="#"><img src="assets/img/germany-flag.jpg" alt="German" class="flag-icon"> German</a></li>
-              <li><a class="dropdown-item" href="#"><img src="assets/img/france-flag.jpg" alt="French" class="flag-icon"> French</a></li>
-              <li><a class="dropdown-item" href="#"><img src="assets/img/spain-flag.jpg" alt="Spanish" class="flag-icon"> Spanish</a></li>
-              <li><a class="dropdown-item" href="#"><img src="assets/img/russia-flag.jpg" alt="Russian" class="flag-icon"> Russian</a></li>
-              <li><a class="dropdown-item" href="#"><img src="assets/img/italy-flag.jpg" alt="Italian" class="flag-icon"> Italian</a></li>
+              <li><a class="dropdown-item" ><img src="assets/img/germany-flag.jpg" alt="German" class="flag-icon"> German</a></li>
+              <li><a class="dropdown-item" ><img src="assets/img/france-flag.jpg" alt="French" class="flag-icon"> French</a></li>
+              <li><a class="dropdown-item" ><img src="assets/img/spain-flag.jpg" alt="Spanish" class="flag-icon"> Spanish</a></li>
+              <li><a class="dropdown-item" ><img src="assets/img/russia-flag.jpg" alt="Russian" class="flag-icon"> Russian</a></li>
+              <li><a class="dropdown-item" ><img src="assets/img/italy-flag.jpg" alt="Italian" class="flag-icon"> Italian</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="tenantDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle"  id="tenantDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{display}}
             </a>
             <ul class="dropdown-menu" aria-labelledby="tenantDropdown">
-              <li *ngFor="let i of tenants"><a class="dropdown-item" href="#" (click)="changeTenant(i.id)">{{i.name}}</a></li>
+              <li *ngFor="let i of tenants"><a class="dropdown-item"  (click)="changeTenant(i.id)">{{i.name}}</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle profile-dropdown" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle profile-dropdown"  id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <img src="assets/img/user1.png" alt="Profile" class="rounded-circle profile-image"> Hi! {{welcome}}
             </a>
             <ul class="dropdown-menu" aria-labelledby="profileDropdown">
@@ -42,7 +42,7 @@
                 </div>
               </li>
               <li><a class="dropdown-item" routerLink="/dashboard/profile">Profile</a></li>
-              <li><a class="dropdown-item" href="#" (click)="logout()">Logout</a></li>
+              <li><a class="dropdown-item"  (click)="logout()">Logout</a></li>
             </ul>
           </li>
         </ul>

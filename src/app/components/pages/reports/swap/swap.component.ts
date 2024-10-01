@@ -3,14 +3,14 @@ import { TerminalService } from 'src/app/services/terminal/devicelist';
 import * as XLSX from 'xlsx';
 
 interface Device {
-  serialNumber: string;
+  currentDeviceSerialNumber: string;
+  currentDeviceHierarchy: string;
+  swappedOutDeviceSerialNumber: string;
+  swappedDeviceHierarchy: string;
   deviceId: string;
-  model: string;
-  deviceStatus: string;
-  hierarchy: string;
-  lastHeartbeat: string;
-  groupNames: string;
-  ipAddress: string;
+  fromModel: string;
+  toModel: string;
+  swappedOn: string;
   view?:Boolean
 }
 
@@ -31,14 +31,14 @@ export class SwapReportComponent implements OnInit {
   filteredDevices: Device[] = [];
   searchTerm: string = '';
   columns: Column[] = [
-    { key: 'serialNumber', label: 'Current Device Serial Number', visible: true },
-    { key: 'deviceId', label: 'Current Device Hierarchy', visible: true },
-    { key: 'model', label: 'Swapped Out Serial Number', visible: true },
-    { key: 'hierarchy', label: 'Swapped Out Hirercy', visible: true },
-    { key: 'deviceStatus', label: 'Device ID', visible: true },
-    { key: 'lastHeartbeat', label: 'From Model', visible: true },
-    { key: 'deviceStatus', label: 'To Model', visible: true },
-    { key: 'lastHeartbeat', label: 'Swapped on', visible: true },
+    { key: 'currentDeviceSerialNumber', label: 'Current Device Serial Number', visible: true },
+    { key: 'currentDeviceHierarchy', label: 'Current Device Hierarchy', visible: true },
+    { key: 'swappedOutDeviceSerialNumber', label: 'Swapped Out Serial Number', visible: true },
+    { key: 'swappedDeviceHierarchy', label: 'Swapped Out Hirercy', visible: true },
+    { key: 'deviceId', label: 'Device ID', visible: true },
+    { key: 'fromModel', label: 'From Model', visible: true },
+    { key: 'toModel', label: 'To Model', visible: true },
+    { key: 'swappedOn', label: 'Swapped on', visible: true },
   ];
 
   currentPage = 1;
@@ -57,7 +57,7 @@ export class SwapReportComponent implements OnInit {
           "eventSubType": "SEARCH"
         }
       }
-    this.dataService.getStatusReport(data).subscribe(
+    this.dataService.getSwapReport(data).subscribe(
         response => {
             console.log(response);
             this.devices = response.event.eventData.responseData[0];

@@ -295,6 +295,7 @@ const routes: Routes = [
   },
   {path: 'apex-charts', component: ApexChartsComponent},
   {path: 'maps', component: MapsComponent},
+  {path:'**',redirectTo:'landing'}
 ];
 
 @NgModule({

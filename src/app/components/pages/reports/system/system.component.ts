@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { TerminalService } from 'src/app/services/terminal/devicelist';
 import * as XLSX from 'xlsx';
 
 interface Device {
-  serialNumber: string;
-  deviceId: string;
-  model: string;
-  deviceStatus: string;
-  hierarchy: string;
-  lastHeartbeat: string;
-  groupNames: string;
-  ipAddress: string;
-  view?:Boolean
+    eventType: string;
+    eventSubType: string;
+    message: string;
+    userName: string;
+    auditTime: string;
+    appCode: string;
+    view?:Boolean
 }
 
 interface Column {
@@ -25,32 +24,55 @@ interface Column {
   styleUrls: ['./system.component.scss']
 })
 export class SystemReportComponent implements OnInit {
-    devices: Device[] = [
-        { serialNumber: '111-111-111', deviceId: '', model: 'VX 520', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed', lastHeartbeat: '', groupNames: '', ipAddress: '',view:true },
-        { serialNumber: '1212121', deviceId: '0837823782378', model: '640P 1', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed >> Girmiti', lastHeartbeat: '', groupNames: '', ipAddress: '' },
-        { serialNumber: '237984329843289', deviceId: '0837823782378', model: '640P 2', deviceStatus: 'PendingRegistration', hierarchy: 'BankMed', lastHeartbeat: '', groupNames: '', ipAddress: '' },
-        { serialNumber: '261-025-797', deviceId: '', model: 'VX 520', deviceStatus: 'Inactive', hierarchy: 'BankMed >> Girmiti', lastHeartbeat: '25/Nov/2020 09:49:...', groupNames: '', ipAddress: '192.168.1.1' },
-        // Add more device data here...
-      ];
+    devices: Device[] = []
 
   filteredDevices: Device[] = [];
   searchTerm: string = '';
   columns: Column[] = [
-    { key: 'serialNumber', label: 'Date Changed', visible: true },
-    { key: 'deviceId', label: 'Description', visible: true },
-    { key: 'model', label: 'Source', visible: true },
-    { key: 'hierarchy', label: 'Modified By', visible: true },
-    { key: 'deviceStatus', label: 'Entity', visible: true },
-    { key: 'lastHeartbeat', label: 'Operation', visible: true },
+    { key: 'auditTime', label: 'Date Changed', visible: true },
+    { key: 'message', label: 'Description', visible: true },
+    { key: 'appCode', label: 'Source', visible: true },
+    { key: 'userName', label: 'Modified By', visible: true },
+    { key: 'eventType', label: 'Entity', visible: true },
+    { key: 'eventSubType', label: 'Operation', visible: true },
   ];
 
   currentPage = 1;
   itemsPerPage = 10;
 
-  constructor() { }
+  constructor(private dataService: TerminalService) { }
 
   ngOnInit(): void {
-    this.applyFilter();
+    this.getData()
+  }
+
+  getData(){
+    const data = {
+        "event": {
+          "eventType": "REPORT",
+          "eventSubType": "SEARCH"
+        }
+      }
+    this.dataService.getAuditReport(data).subscribe(
+        response => {
+            console.log(response);
+            this.devices = [];
+            response.event.eventData.forEach(element => {
+                this.devices.push({
+                    'auditTime' : element.auditTime,
+                    'appCode' : element.appCode,
+                    'eventSubType':element.eventSubType,
+                    'eventType' : element.eventType,
+                    'message':element.message,
+                    'userName':element.updatedBy.userName
+                })
+            });
+            this.applyFilter();
+        },
+        error => {
+            console.error('Error:', error);
+        }
+    )
   }
 
   applyFilter(): void {

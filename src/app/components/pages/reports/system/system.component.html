@@ -33,7 +33,7 @@
             <tbody>
               <tr *ngFor="let device of paginatedDevices">
                 <td *ngFor="let column of visibleColumns" [ngClass]="{'pending': device[column.key] === 'PendingRegistration', 'inactive': device[column.key] === 'Inactive'}">
-                  <span *ngIf="column.key != 'view'"> {{ device[column.key] || 'N/A' }} </span>
+                  <span *ngIf="column.key != 'view'"> {{ column.key != 'auditTime' ? device[column.key] :  device[column.key].split("T")[0] }} </span>
                   <span *ngIf="column.key == 'view'"><button mat-icon-button *ngIf="device[column.key] == true"><mat-icon>visibility</mat-icon></button></span>
                 </td>
               </tr>
