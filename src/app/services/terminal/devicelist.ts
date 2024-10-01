@@ -218,6 +218,10 @@ export class TerminalService {
         return this.http.get<any>(`${environment.userApiUrl}/user/getTenantUsers`, {headers: this.httpHeaders});
     }
 
+    getUserInfo(options): Observable<any> {
+        return this.http.post<any>(`${environment.userApiUrl}/user/getUser`,options, {headers: this.httpHeaders});
+    }
+
     roleData(): Observable<any> {
         return this.http.get<any>(`${environment.userApiUrl}/role/`, {headers: this.httpHeaders});
     }

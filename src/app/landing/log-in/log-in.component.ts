@@ -65,6 +65,7 @@ export class DLogInComponent implements OnInit{
           console.log("qq0")
           this.showPasswordField = true;
           this.uid = response.event.eventData.uid
+          localStorage.setItem("uid",this.uid);
           this.errorMessage='';
         } else if (response.dropdownOptions) {
           this.showDropdown = true;
