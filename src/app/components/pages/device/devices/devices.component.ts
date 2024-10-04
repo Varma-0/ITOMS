@@ -39,6 +39,16 @@ export class DevicesComponent {
   itemsPerPageOptions = [5, 10, 15];
   paginatedDevices = [];
   merchants = [];
+  columns = [
+    { name: 'Serial Number', visible: true },
+    { name: 'Model', visible: true },
+    { name: 'Status', visible: true },
+    { name: 'Created Date', visible: true },
+  ];
+
+  toggleColumn(index: number): void {
+    this.columns[index].visible = !this.columns[index].visible;
+  }
 
   constructor(public dialog: MatDialog, private dataService: TerminalService,private shared:SharedServices) {}
 

@@ -1,14 +1,28 @@
+  <div class="settings-container">
+    <button class="settings-button" (click)="toggleDropdown()">
+      <i class='bx bx-cog'></i>
+    </button>
+    <div class="dropdown-content" [class.show]="showDropdown">
+      <div *ngFor="let chart of availableCharts">
+        <label>
+          <input type="checkbox" 
+                 [checked]="chart.selected" 
+                 (change)="toggleChart(chart)">
+          {{ chart.name }}
+        </label>
+      </div>
+    </div>
+  </div>
 
-<div class="dashboard-container">
-
+  <div class="dashboard-container">
     <div class="main-row">
       <div class="welcome-card">
         <div class="image-container">
-            <object type="image/svg+xml" data="../../../../../assets/img/welcome.svg" width="100" height="100"></object>
+          <object type="image/svg+xml" data="../../../../../assets/img/welcome.svg" width="100" height="100"></object>
         </div>
         <div class="content">
-          <h2 class="welcome-text">Welcome Back,</h2>
-          <h1 class="user-name">{{ welcome }}</h1>
+          <p class="welcome-text">Welcome Back,</p>
+          <h2 class="user-name">{{ welcome }}</h2>
         </div>
       </div>
 
@@ -22,34 +36,40 @@
               <i [class]="stat.icon"></i>
             </div>
             <div class="stats-content">
-              <p class="stats-number">{{ stat.value }}</p>
+              <h4 class="stats-number">{{ stat.value }}</h4>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="settings-dropdown">
-        <!-- <button class="settings-button" (click)="toggleDropdown()">
-          <i class="bx bx-cog"></i>
-        </button> -->
-        <div class="dropdown-content" *ngIf="showDropdown">
-          <label *ngFor="let chart of availableCharts">
-            <input type="checkbox" [checked]="chart.selected" (change)="toggleChart(chart)">
-            {{ chart.name }}
-          </label>
-        </div>
-    </div>
     </div>
 
     <div class="charts-container">
-      <div class="charts-row">
-        <div *ngFor="let chart of selectedCharts" class="chart-card">
-          <h3>{{ chart.name }}</h3>
-            <app-email-send *ngIf="chart.name === 'Device Model Ratio'" [data]="data"></app-email-send>
-            <app-basic-line-chart *ngIf="chart.name === 'New Activated Devices'" [data]="activatedData"></app-basic-line-chart>
-            <app-basic-line-chart1 *ngIf="chart.name === 'Device Online Number'" [data]="deviceOnlineData"></app-basic-line-chart1>
-            <app-basic-line-chart2 *ngIf="chart.name === 'Download Status'" [data]="activatedData"></app-basic-line-chart2>
-        </div>
+      <div class="charts-grid">
+        <ng-container *ngFor="let chart of availableCharts">
+          <div class="chart-card" [style.display]="chart.selected ? 'block' : 'none'">
+            <h3>{{ chart.name }}</h3>
+            <ng-container [ngTemplateOutlet]="getChartTemplate(chart.name)"
+                         [ngTemplateOutletContext]="{ data: getChartData(chart.name) }">
+            </ng-container>
+          </div>
+        </ng-container>
       </div>
     </div>
+    
+    <!-- Chart Templates -->
+    <ng-template #deviceModelRatio let-data="data">
+      <app-email-send [data]="data"></app-email-send>
+    </ng-template>
+    
+    <ng-template #newActivatedDevices let-data="data">
+      <app-basic-line-chart [data]="data"></app-basic-line-chart>
+    </ng-template>
+    
+    <ng-template #deviceOnlineNumber let-data="data">
+      <app-basic-line-chart1 [data]="data"></app-basic-line-chart1>
+    </ng-template>
+    
+    <ng-template #downloadStatus let-data="data">
+      <app-basic-line-chart2 [data]="data"></app-basic-line-chart2>
+    </ng-template>
   </div>

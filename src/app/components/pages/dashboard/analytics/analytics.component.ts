@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { TerminalService } from "src/app/services/terminal/devicelist";
 import {  devicePie } from "src/app/services/login/body/body";
 import { chartsEvent } from "src/app/services/login/body/event";
@@ -16,6 +16,10 @@ interface ChartData {
   styleUrls: ["./analytics.component.scss"]
 })
 export class AnalyticsComponent implements OnInit {
+  @ViewChild('deviceModelRatio') deviceModelRatioTpl!: TemplateRef<any>;
+  @ViewChild('newActivatedDevices') newActivatedDevicesTpl!: TemplateRef<any>;
+  @ViewChild('deviceOnlineNumber') deviceOnlineNumberTpl!: TemplateRef<any>;
+  @ViewChild('downloadStatus') downloadStatusTpl!: TemplateRef<any>;
   welcome: string = '';
   showDropdown: boolean = false;
   statsCards: any[] = [];
@@ -81,6 +85,36 @@ export class AnalyticsComponent implements OnInit {
 
   loadAllData() {
     this.loadCounts();
+  }
+
+  getChartTemplate(chartName: string): TemplateRef<any> {
+    switch (chartName) {
+      case 'Device Model Ratio':
+        return this.deviceModelRatioTpl;
+      case 'New Activated Devices':
+        return this.newActivatedDevicesTpl;
+      case 'Device Online Number':
+        return this.deviceOnlineNumberTpl;
+      case 'Download Status':
+        return this.downloadStatusTpl;
+      default:
+        return this.deviceModelRatioTpl; // default template
+    }
+  }
+
+  getChartData(chartName: string): any {
+    switch (chartName) {
+      case 'Device Model Ratio':
+        return this.data;
+      case 'New Activated Devices':
+        return this.activatedData;
+      case 'Device Online Number':
+        return this.deviceOnlineData;
+      case 'Download Status':
+        return this.activatedData;
+      default:
+        return null;
+    }
   }
 
   loadCounts() {
