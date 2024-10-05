@@ -175,7 +175,7 @@ export class UserComponent {
                     "eventSubType": "SEARCH"
                 }
             };
-            
+
             this.shared.showLoader.next(true);
             this.dataService.getUserInfo(payload).subscribe(
                 response => {
@@ -198,7 +198,7 @@ export class UserComponent {
             this.openDialog(null,null, edit, null);
         }
     }
-    
+
     private openDialog(userData: any,userDataList: any, isEdit: boolean, userId: string | null): void {
         const dialogRef = this.dialog.open(AddFormComponent, {
             data: {
@@ -216,11 +216,12 @@ export class UserComponent {
                     altemail: userData.emailAlt,
                     altphone: userData.phoneAlt,
                     altcountry: userData.countryAlt,
+                    roles : userDataList
                 } : {}
             },
             width: '60%'
         });
-    
+
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 if (isEdit) {
@@ -242,7 +243,7 @@ export class UserComponent {
                             "eventSubType": "UPDATE"
                         }
                     };
-                    
+
                     this.shared.showLoader.next(true);
                     this.dataService.updateUser(payload).subscribe(
                         response => {
@@ -271,30 +272,30 @@ export class UserComponent {
                     } else {
                         result.userLinkDataList = result.tenants;
                     }
-                    this.loginData === 'true' ? 
+                    this.loginData === 'true' ?
                         this.addNewUserBySA(
-                            result.firstName, 
-                            result.lastName, 
-                            result.dob, 
-                            result.email, 
-                            result.phone, 
-                            result.country, 
-                            result.altemail, 
-                            result.altphone, 
-                            result.altcountry, 
+                            result.firstName,
+                            result.lastName,
+                            result.dob,
+                            result.email,
+                            result.phone,
+                            result.country,
+                            result.altemail,
+                            result.altphone,
+                            result.altcountry,
                             result.userLinkDataList,
                             userId
-                        ) : 
+                        ) :
                         this.createdNewUser(
-                            result.firstName, 
-                            result.lastName, 
-                            result.dob, 
-                            result.email, 
-                            result.phone, 
-                            result.country, 
-                            result.altemail, 
-                            result.altphone, 
-                            result.altcountry, 
+                            result.firstName,
+                            result.lastName,
+                            result.dob,
+                            result.email,
+                            result.phone,
+                            result.country,
+                            result.altemail,
+                            result.altphone,
+                            result.altcountry,
                             result.userLinkDataList,
                             userId
                         );

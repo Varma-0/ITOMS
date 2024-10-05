@@ -110,6 +110,34 @@ export class AddFormComponent {
       });
       if(this.title == 'Edit User'){
         this.userForm.patchValue(this.userData.form);
+        console.log(this.userData.form)
+        if(this.loginData == 'true'){
+            const tenantsArray = this.userForm.get('tenants') as FormArray;
+            this.userData.form.roles.forEach(result => {
+                tenantsArray.push(
+                    this.fb.group({
+                      tenant: {
+                        id: result.tenant?.id,
+                        name: result.tenant?.name,
+                      },
+                      role: {
+                        id: result.role?.id,
+                        name: result.role?.name,
+                      },
+                      alerts: this.fb.array(result.alerts),
+                    })
+                  );
+            });
+        }else{
+            this.userForm.get('role').setValue(this.userData.form.roles[0].role.id);
+            this.userData.form.roles[0].alerts.forEach(data => {
+                this.userForm.get('alert').value.push(data.id);
+            })
+            this.roleOptionNames = [this.userData.form.roles[0].role];
+            this.alertOptionNames = this.userData.form.roles[0].alerts;
+            this.userForm.get('role').disable();
+            this.userForm.get('alert').disable();
+        }
       }else if(this.title == 'Edit Role'){
         this.roleForm.patchValue(this.userData.form);
         this.userData.form.roles?.forEach(roleData => {

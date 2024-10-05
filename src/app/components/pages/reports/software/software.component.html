@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <div style="overflow-x: auto;">
+    <div style="overflow-x: auto;white-space: nowrap;">
         <table>
             <thead>
               <tr>
@@ -31,12 +31,24 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let device of paginatedDevices">
-                <td *ngFor="let column of visibleColumns" [ngClass]="{'pending': device[column.key] === 'PendingRegistration', 'inactive': device[column.key] === 'Inactive'}">
-                  <span *ngIf="column.key != 'view'"> {{ device[column.key] || 'N/A' }} </span>
-                  <span *ngIf="column.key == 'view'"><button mat-icon-button (click)="openReportDialog(device[column])" *ngIf="device[column.key] == true"><mat-icon>visibility</mat-icon></button></span>
-                </td>
-              </tr>
+              <ng-container *ngIf="paginatedDevices && paginatedDevices.length > 0; else noData">
+                <tr *ngFor="let device of paginatedDevices; let i = index">
+                  <td *ngFor="let column of visibleColumns"
+                      [ngClass]="{'pending': device[column.key] === 'PendingRegistration', 'inactive': device[column.key] === 'Inactive'}">
+                    <span *ngIf="column.key != 'view'"> {{ device[column.key] || 'N/A' }} </span>
+                    <span *ngIf="column.key == 'view'">
+                      <button mat-icon-button (click)="openReportDialog(paginatedDevices[i].deviceId)">
+                        <mat-icon>visibility</mat-icon>
+                      </button>
+                    </span>
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-template #noData>
+                <tr>
+                  <td [attr.colspan]="visibleColumns.length" class="no-data-message">No Data Available</td>
+                </tr>
+              </ng-template>
             </tbody>
           </table>
     </div>

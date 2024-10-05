@@ -37,7 +37,7 @@ export class SidebarComponent implements OnInit {
             (active: boolean) => (this.isSidebarActive = active)
           );
           let permissions = JSON.parse(localStorage.getItem('roles'));
-          permissions.forEach(element => {
+          permissions?.forEach(element => {
             this.accessibleOptions.push(element.name)
           });
     }
