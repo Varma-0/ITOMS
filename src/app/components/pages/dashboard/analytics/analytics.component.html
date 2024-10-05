@@ -5,8 +5,8 @@
     <div class="dropdown-content" [class.show]="showDropdown">
       <div *ngFor="let chart of availableCharts">
         <label>
-          <input type="checkbox" 
-                 [checked]="chart.selected" 
+          <input type="checkbox"
+                 [checked]="chart.selected"
                  (change)="toggleChart(chart)">
           {{ chart.name }}
         </label>
@@ -55,20 +55,20 @@
         </ng-container>
       </div>
     </div>
-    
+
     <!-- Chart Templates -->
     <ng-template #deviceModelRatio let-data="data">
       <app-email-send [data]="data"></app-email-send>
     </ng-template>
-    
+
     <ng-template #newActivatedDevices let-data="data">
       <app-basic-line-chart [data]="data"></app-basic-line-chart>
     </ng-template>
-    
+
     <ng-template #deviceOnlineNumber let-data="data">
       <app-basic-line-chart1 [data]="data"></app-basic-line-chart1>
     </ng-template>
-    
+
     <ng-template #downloadStatus let-data="data">
       <app-basic-line-chart2 [data]="data"></app-basic-line-chart2>
     </ng-template>
