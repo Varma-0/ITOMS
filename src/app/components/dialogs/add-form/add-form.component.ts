@@ -108,6 +108,10 @@ export class AddFormComponent {
         email: ['',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
         phone: ['',[Validators.required,Validators.pattern(/^\+?[1-9]\d{1,14}$/)]],
       });
+      if(this.loginData == 'true'){
+        this.userForm.get('role').setValidators([Validators.required]);
+        this.userForm.get('alert').setValidators([Validators.required]);
+      }
       if(this.title == 'Edit User'){
         this.userForm.patchValue(this.userData.form);
         console.log(this.userData.form)
@@ -300,6 +304,11 @@ export class AddFormComponent {
             )
         });
         this.userForm.get('alert').setValue(this.userForm.get('alerts').value);
+        }else{
+           if ( this.userForm.get('tenants').value.length == 0) {
+            alert("Add atleast one role to user");
+            return;
+           }
         }
         this.dialogRef.close(this.userForm.value);
       }else if(this.title == 'Add Role' || this.title == 'Edit Role'){

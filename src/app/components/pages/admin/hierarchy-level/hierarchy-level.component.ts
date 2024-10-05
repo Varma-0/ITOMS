@@ -139,7 +139,7 @@ export class HierarchyLevelComponent implements OnInit {
                 response.event.eventData.map(data => this.hierarchyLevels[0].items.push({
                     name: data.name,
                     mid: data.id,
-                }));    
+                }));
             this.shared.showLoader.next(false);
             },
             error => {
@@ -504,7 +504,6 @@ export class HierarchyLevelComponent implements OnInit {
     }
 
     openDialog(): void {
-        this.shared.showLoader.next(true);
         const dialogRef = this.dialog.open(HierarchySelectionComponent, {
             data: {
                 title: 'Hierarchy Levels',
@@ -515,6 +514,7 @@ export class HierarchyLevelComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
+                this.shared.showLoader.next(true);
                 this.dataService.hierarchyAddLevel(result).subscribe(
                     response => {
                             this.getLevels();
