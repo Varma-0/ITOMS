@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ReportsDialogComponent } from 'src/app/components/dialogs/reports/reports.component';
+import { SharedServices } from 'src/app/services/shared.service';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 import * as XLSX from 'xlsx';
 
@@ -43,7 +44,7 @@ export class HeartReportComponent implements OnInit {
   totalPages = 1;
   itemsPerPageOptions = [5, 10, 15];
 
-  constructor(public dialog: MatDialog,private dataService:TerminalService) { }
+  constructor(public dialog: MatDialog,private dataService:TerminalService, private shared: SharedServices) { }
 
   ngOnInit(): void {
     this.getData();
@@ -56,11 +57,15 @@ export class HeartReportComponent implements OnInit {
           "eventSubType": "SEARCH"
         }
       }
+    this.shared.showLoader.next(true);
     this.dataService.getHeartReport(data).subscribe(
         response => {
+          if(response.status == 200) {
             console.log(response);
             this.devices = response.event.eventData.responseData[0];
             this.applyFilter();
+          }
+          this.shared.showLoader.next(false);
         },
         error => {
             console.error('Error:', error);
@@ -160,6 +165,7 @@ export class HeartReportComponent implements OnInit {
               "eventSubType": "SEARCH"
             }
           }
+        this.shared.showLoader.next(true);
         this.dataService.getHeartViewReport(payload).subscribe(
             response => {
                 const dialogRef = this.dialog.open(ReportsDialogComponent,{
@@ -172,6 +178,7 @@ export class HeartReportComponent implements OnInit {
                     console.log('User deleted');
                   }
                 });
+              this.shared.showLoader.next(false);
             },
             error => {
                 console.error('Error:', error);

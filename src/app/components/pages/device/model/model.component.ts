@@ -48,6 +48,7 @@ export class ModelComponent implements OnInit {
   fetchData() {
     const event = new terminalEvent('MODEL', 'SEARCH');
     const terminalRequest = new terminalBody(event);
+    this.shared.showLoader.next(true);
     this.dataService.modelData(terminalRequest).subscribe(
       response => {
         this.devices = response.event.eventData.map(data => ({
@@ -60,9 +61,11 @@ export class ModelComponent implements OnInit {
         }));
         this.shared.modelsList = this.devices.map(device => device.name);
         this.search();
+        this.shared.showLoader.next(false);
       },
       error => {
         console.error('Error:', error);
+        this.shared.showLoader.next(false);
       }
     );
   }
@@ -127,11 +130,16 @@ export class ModelComponent implements OnInit {
     const updateModelRequest = new modelUpdateData(modelId, formData.name, formData.description,formData.oem);
     const event = new updateModelEvent(updateModelRequest, 'MODEL', 'CREATE');
     const update = new updateBody(event);
-
+    this.shared.showLoader.next(true);
     this.dataService.updateModel(update).subscribe(
       response => {
         console.log("Update response", response);
         this.fetchData();
+        this.shared.showLoader.next(false);
+      },
+      error => {
+        console.error('Error:', error);
+        this.shared.showLoader.next(false);
       }
     );
   }
@@ -140,11 +148,16 @@ export class ModelComponent implements OnInit {
     const eventData = new createData(formData.name, formData.description,formData.oem);
     const createModel = new createModelEvent(eventData, 'MODEL', 'CREATE');
     const create = new createBody(createModel);
-
+    this.shared.showLoader.next(true);
     this.dataService.createModel(create).subscribe(
       response => {
         console.log("Create response", response);
         this.fetchData();
+        this.shared.showLoader.next(false);
+      },
+      error => {
+        console.error('Error:', error);
+        this.shared.showLoader.next(false);
       }
     );
   }
@@ -162,11 +175,16 @@ export class ModelComponent implements OnInit {
   deleteModel(modelId: string) {
     const event = new deleteModelEvent(modelId, 'MODEL', 'DELETE');
     const deleteRequest = new deleteBody(event);
-
+    this.shared.showLoader.next(true);
     this.dataService.deleteModel(deleteRequest).subscribe(
       response => {
         console.log("Delete response", response);
         this.fetchData();
+        this.shared.showLoader.next(false);
+      },
+      error => {
+        console.error('Error:', error);
+        this.shared.showLoader.next(false);
       }
     );
   }

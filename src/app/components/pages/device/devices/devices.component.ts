@@ -64,6 +64,7 @@ export class DevicesComponent {
   deviceData() {
     const event = new terminalEvent('DEVICE', 'SEARCH');
     const terminalRequest = new terminalBody(event);
+    this.shared.showLoader.next(true);
     this.dataService.terminalData(terminalRequest).subscribe(
       response => {
         console.log(response);
@@ -87,6 +88,7 @@ export class DevicesComponent {
         });
         // this.filteredDevices = this.device;
         this.search();
+        this.shared.showLoader.next(false);
         // this.paginatedDevices = this.device;
 
         // Log the updated device array
@@ -94,6 +96,7 @@ export class DevicesComponent {
       },
       error => {
         console.error('Error:', error);
+        this.shared.showLoader.next(false);
       }
     );
   }
@@ -101,6 +104,7 @@ export class DevicesComponent {
   deviceDropdown() {
     const event = new terminalEvent('MODEL', 'SEARCH');
     const terminalRequest = new terminalBody(event);
+    this.shared.showLoader.next(true);
     this.dataService.modelData(terminalRequest).subscribe(
       response => {
         console.log(response);
@@ -119,11 +123,13 @@ export class DevicesComponent {
 
           };
         });
+        this.shared.showLoader.next(false);
         // this.filteredDevices = this.device;
         console.log('Updated device data:', this.device);
       },
       error => {
         console.error('Error:', error);
+        this.shared.showLoader.next(false);
       }
     );
   }
@@ -138,12 +144,15 @@ export class DevicesComponent {
   getMerchants(){
     const event = new terminalEvent('MERCHANT', 'SEARCH');
     const merchantRequest = new terminalBody(event);
+    this.shared.showLoader.next(true);
     this.dataService.merchantData(merchantRequest).subscribe(
       response => {
-        this.merchants = response.event.eventData
+        this.merchants = response.event.eventData;
+        this.shared.showLoader.next(false);
       },
       error => {
         console.error('Error:', error);
+        this.shared.showLoader.next(false);
       }
     )
   }
@@ -188,11 +197,16 @@ export class DevicesComponent {
   deleteDevice(deviceId: string) {
     const event = new deleteModelEvent(deviceId, 'DEVICE', 'DELETE');
     const deleteRequest = new deleteBody(event);
-
+    this.shared.showLoader.next(true);
     this.dataService.deleteDevice(deleteRequest).subscribe(
       response => {
         console.log("Delete response", response);
         this.deviceData();
+        this.shared.showLoader.next(false);
+      },
+      error => {
+        console.error('Error:', error);
+        this.shared.showLoader.next(false);
       }
     );
   }
@@ -229,13 +243,16 @@ export class DevicesComponent {
         const terminalRequest = new updateDeviceEvent(event,'DEVICE','UPDATE');
         const editDevice = new updateDevice(terminalRequest);
         console.log("cwicw",editDevice);
+        this.shared.showLoader.next(true);
         this.dataService.updateDevice(editDevice).subscribe(
           response => {
             console.log(response);
             this.deviceData();
+            this.shared.showLoader.next(false);
           },
           error => {
             console.error('Error:', error);
+            this.shared.showLoader.next(false);
           }
         );
        }
@@ -244,13 +261,16 @@ export class DevicesComponent {
           const terminalRequest = new addDeviceEvent(event,'DEVICE','CREATE');
           const editDevice = new addDeviceBody(terminalRequest);
           console.log("cwicw",editDevice);
+          this.shared.showLoader.next(true);
           this.dataService.addNewDevice(editDevice).subscribe(
             response => {
               console.log(response);
               this.deviceData();
+              this.shared.showLoader.next(false);
             },
             error => {
               console.error('Error:', error);
+              this.shared.showLoader.next(false);
             }
           );
         }

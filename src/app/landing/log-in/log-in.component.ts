@@ -93,7 +93,7 @@ export class DLogInComponent implements OnInit{
     const eventData = new passData(this.uid,this.password);
     const event = new passEvent(eventData, 'LOGIN', 'USER_CRD_VALIDATE');
     const loginRequest = new passBody(event);
-
+    this.shared.showLoader.next(true);
     this.authService.loginWithPassword(loginRequest).subscribe(
       response => {
         if(response.status == 200) {
@@ -108,13 +108,13 @@ export class DLogInComponent implements OnInit{
           this.errorMessage = this.errorApiMessage;
         }
         this.loadingPassword = false;
-
+        this.shared.showLoader.next(false);
       },
       error => {
         this.errorMessage = this.errorApiMessage;
         console.error('Password validation failed', this.errorMessage);
         this.loadingPassword = false;
-
+        this.shared.showLoader.next(false);
       }
     );
   }
@@ -130,7 +130,7 @@ export class DLogInComponent implements OnInit{
     console.log(eventData)
     const event = new emailEvent(eventData, 'USER', 'FORGOT_CRED');
     const updatePassRequest = new emailBody(event);
-
+    this.shared.showLoader.next(true);
     this.authService.emailVerificationforPassReset(updatePassRequest).subscribe(
       response => {
         if(response.status == 200) {
@@ -141,11 +141,13 @@ export class DLogInComponent implements OnInit{
           this.errorApiMessage = response.message;
         }
         this.loadingOtp = false;
+        this.shared.showLoader.next(false);
       },
       error => {
         this.errorMessage = this.errorApiMessage;
         // console.error('Password validation failed', error);
         this.loadingOtp = false;
+        this.shared.showLoader.next(false);
       }
     );
   }
@@ -156,6 +158,7 @@ export class DLogInComponent implements OnInit{
     console.log(eventData)
     const event = new emailEvent(eventData, 'USER', 'VERIFY_OTP');
     const updatePassRequest = new emailBody(event);
+    this.shared.showLoader.next(true); // Hide loader on error
     this.authService.otpConfirmationforPassReset(updatePassRequest).subscribe(
       response => {
         if(response.status == 200) {
@@ -167,11 +170,13 @@ export class DLogInComponent implements OnInit{
           this.errorApiMessage = response.message;
         }
         this.validateOtp = false;
+        this.shared.showLoader.next(false);
       },
       error => {
         this.errorMessage = this.errorApiMessage;
         // console.error('Password validation failed', error);
         this.validateOtp = false;
+        this.shared.showLoader.next(false);
       }
     );
   }
@@ -182,6 +187,7 @@ export class DLogInComponent implements OnInit{
     console.log(eventData)
     const event = new passEvent(eventData, 'USER', 'CRD_RESET');
     const updatePassRequest = new passBody(event);
+    this.shared.showLoader.next(true);
     this.authService.resetPass(updatePassRequest).subscribe(
       response => {
         if(response.status == 200) {
@@ -193,11 +199,13 @@ export class DLogInComponent implements OnInit{
           this.errorApiMessage = response.message;
         }
         this.validateOtp = false;
+        this.shared.showLoader.next(false);
       },
       error => {
         this.errorMessage = this.errorApiMessage;
         // console.error('Password validation failed', error);
         this.validateOtp = false;
+        this.shared.showLoader.next(false);
       }
     );
   }
@@ -211,7 +219,7 @@ export class DLogInComponent implements OnInit{
     const eventData = new dropData(this.selectedOption["id"],this.uid, this.inasecretkey);
     const event = new dropEvent(eventData, 'LOGIN', 'GENERATE_TOKEN');
     const loginRequest = new dropBody(event);
-
+    this.shared.showLoader.next(true); // Hide loader on error
     this.authService.loginWithOption(loginRequest).subscribe(
       response => {
         const jwtToken = response.event.eventData.jwtToken;
@@ -229,11 +237,13 @@ export class DLogInComponent implements OnInit{
         localStorage.setItem('selectedOption', this.selectedOption['name']);
         this.router.navigate(['/dashboard/analytics']);
         this.loadingDropdown = false;
+        this.shared.showLoader.next(false);
       },
       error => {
         this.errorMessage = 'Failed to process selected option';
         // console.error('Dropdown option submission failed', error);
         this.loadingDropdown = false;
+        this.shared.showLoader.next(false);
       }
     );
    }

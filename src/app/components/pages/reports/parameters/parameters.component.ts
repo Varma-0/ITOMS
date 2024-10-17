@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ReportsDialogComponent } from 'src/app/components/dialogs/reports/reports.component';
+import { SharedServices } from 'src/app/services/shared.service';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 import * as XLSX from 'xlsx';
 
@@ -48,7 +49,7 @@ export class ParametersReportComponent implements OnInit {
   totalPages = 1;
   itemsPerPageOptions = [5, 10, 15];
 
-  constructor(private dialog:MatDialog,private dataService:TerminalService) { }
+  constructor(private dialog:MatDialog,private dataService:TerminalService, private shared: SharedServices) { }
 
   ngOnInit(): void {
     this.applyFilter();
@@ -72,11 +73,15 @@ export class ParametersReportComponent implements OnInit {
         "eventSubType": "SEARCH"
       }
     }
+    this.shared.showLoader.next(true);
     this.dataService.getParameterReport(payload).subscribe(
       response => {
+        if(response.status == 200) {
           console.log(response);
           this.devices = response.event.eventData.responseData[0];
           this.applyFilter();
+        }
+        this.shared.showLoader.next(false);
       },
       error => {
           console.error('Error:', error);

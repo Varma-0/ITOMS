@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedServices } from 'src/app/services/shared.service';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 import * as XLSX from 'xlsx';
 
@@ -41,7 +42,7 @@ export class StatusReportComponent implements OnInit {
   totalPages = 1;
   itemsPerPageOptions = [5, 10, 15];
 
-  constructor(private dataService: TerminalService) { }
+  constructor(private dataService: TerminalService, private shared: SharedServices) { }
 
   ngOnInit(): void {
     this.getData();
@@ -54,11 +55,15 @@ export class StatusReportComponent implements OnInit {
           "eventSubType": "SEARCH"
         }
       }
+    this.shared.showLoader.next(true);
     this.dataService.getStatusReport(data).subscribe(
         response => {
+          if(response.status == 200) {
             console.log(response);
             this.devices = response.event.eventData.responseData[0];
             this.applyFilter();
+          }
+          this.shared.showLoader.next(false);
         },
         error => {
             console.error('Error:', error);

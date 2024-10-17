@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { TerminalService } from "src/app/services/terminal/devicelist";
 import {  devicePie } from "src/app/services/login/body/body";
 import { chartsEvent } from "src/app/services/login/body/event";
+import { SharedServices } from "src/app/services/shared.service";
 
 declare let $: any;
 
@@ -35,7 +36,7 @@ export class AnalyticsComponent implements OnInit {
     deviceOnlineData1: any;
   selectedCharts: any[] = [];
 
-  constructor(private dataService: TerminalService) {}
+  constructor(private dataService: TerminalService, private shared: SharedServices) {}
 
   ngOnInit() {
     this.welcome = localStorage.getItem('User Name') || 'User';
@@ -49,11 +50,17 @@ export class AnalyticsComponent implements OnInit {
   pieChart() {
     const charts = new chartsEvent('REPORT','SEARCH');
     const chartData = new devicePie(charts);
+    this.shared.showLoader.next(true);
     this.dataService.deviceModelRatio(chartData).subscribe(
       response => {
         console.log("pieMain",response);
         this.data = response.event.eventData.data[0];
         console.log("pie",this.data);
+        this.shared.showLoader.next(false);
+      },
+      error => {
+        console.error('Error:', error);
+        this.shared.showLoader.next(false);
       }
     )
   }
@@ -62,11 +69,17 @@ export class AnalyticsComponent implements OnInit {
   newActivatedGraph() {
     const charts = new chartsEvent('REPORT','SEARCH');
     const chartData = new devicePie(charts);
+    this.shared.showLoader.next(true);
     this.dataService.newActivatedGraphInfo(chartData).subscribe(
       response => {
         console.log("pie",response);
         this.activatedData = response.event.eventData.data;
         console.log("dqoefqoq",this.activatedData);
+        this.shared.showLoader.next(false);
+      },
+      error => {
+        console.error('Error:', error);
+        this.shared.showLoader.next(false);
       }
     )
   }
@@ -74,11 +87,17 @@ export class AnalyticsComponent implements OnInit {
   deviceOnline() {
     const charts = new chartsEvent('REPORT','SEARCH');
     const chartData = new devicePie(charts);
+    this.shared.showLoader.next(true);
     this.dataService.deviceOnlineGraphInfo(chartData).subscribe(
       response => {
         console.log("pie",response);
         this.deviceOnlineData = response.event.eventData.data;
         console.log("pie",this.deviceOnlineData);
+        this.shared.showLoader.next(false);
+      },
+      error => {
+        console.error('Error:', error);
+        this.shared.showLoader.next(false);
       }
     )
   }
@@ -117,22 +136,67 @@ export class AnalyticsComponent implements OnInit {
     }
   }
 
+  // loadCounts() {
+  //   const chartEvent = new chartsEvent('REPORT', 'SEARCH');
+  //   const chartData = new devicePie(chartEvent);
+  //   this.shared.showLoader.next(true);
+  //   this.dataService.terminalCount(chartData).subscribe(
+  //     response => this.updateStatsCard('Terminals', response.event.eventData.total, 'bx bx-terminal', '#007bff')
+      
+  //   );
+
+  //   this.dataService.merchantCount(chartData).subscribe(
+  //     response => this.updateStatsCard('Merchants', response.event.eventData.total, 'bx bx-store', '#13bb37')
+  //   );
+
+  //   this.dataService.apkCountInfo(chartData).subscribe(
+  //     response => this.updateStatsCard('Applications', response.event.eventData.total, 'bx bx-mobile-alt', '#ff4b00')
+  //   );
+  // }
   loadCounts() {
     const chartEvent = new chartsEvent('REPORT', 'SEARCH');
     const chartData = new devicePie(chartEvent);
-
+    this.shared.showLoader.next(true); // Show loader
+  
+    // Fetch terminal count
     this.dataService.terminalCount(chartData).subscribe(
-      response => this.updateStatsCard('Terminals', response.event.eventData.total, 'bx bx-terminal', '#007bff')
-    );
-
-    this.dataService.merchantCount(chartData).subscribe(
-      response => this.updateStatsCard('Merchants', response.event.eventData.total, 'bx bx-store', '#13bb37')
-    );
-
-    this.dataService.apkCountInfo(chartData).subscribe(
-      response => this.updateStatsCard('Applications', response.event.eventData.total, 'bx bx-mobile-alt', '#ff4b00')
+      response => {
+        this.updateStatsCard('Terminals', response.event.eventData.total, 'bx bx-terminal', '#007bff');
+        this.loadMerchantCount(chartData); // Load the next count
+      },
+      error => {
+        console.error('Error fetching terminal count:', error);
+        this.shared.showLoader.next(false); // Hide loader on error
+      }
     );
   }
+  
+  loadMerchantCount(chartData: devicePie) {
+    this.dataService.merchantCount(chartData).subscribe(
+      response => {
+        this.updateStatsCard('Merchants', response.event.eventData.total, 'bx bx-store', '#13bb37');
+        this.loadApkCountInfo(chartData); // Load the next count
+      },
+      error => {
+        console.error('Error fetching merchant count:', error);
+        this.shared.showLoader.next(false); // Hide loader on error
+      }
+    );
+  }
+  
+  loadApkCountInfo(chartData: devicePie) {
+    this.dataService.apkCountInfo(chartData).subscribe(
+      response => {
+        this.updateStatsCard('Applications', response.event.eventData.total, 'bx bx-mobile-alt', '#ff4b00');
+        this.shared.showLoader.next(false); // Hide loader after all requests
+      },
+      error => {
+        console.error('Error fetching APK count:', error);
+        this.shared.showLoader.next(false); // Hide loader on error
+      }
+    );
+  }
+  
 
   updateStatsCard(title: string, value: number, icon: string, color: string) {
     this.statsCards.push({ title, value, icon, color });

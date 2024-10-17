@@ -35,8 +35,10 @@ export class HeaderComponent implements OnInit {
     }
 
     logout(): void {
+      this.shared.showLoader.next(true);
       localStorage.clear();
       this.router.navigate(['/landing']);
+      this.shared.showLoader.next(false);
     }
 
     changeTenant(tid: string) {
@@ -51,7 +53,7 @@ export class HeaderComponent implements OnInit {
                 "eventSubType": "GENERATE_TOKEN"
             }
         };
-
+        this.shared.showLoader.next(true); // Hide loader on error
         this.authService.loginWithOption(payload).subscribe(
             response => {
                 this.superAdmin = response.event.eventData.userType === "SA";
@@ -69,9 +71,11 @@ export class HeaderComponent implements OnInit {
                 } else {
                     this.router.navigate(['/dashboard/analytics']);
                 }
+                this.shared.showLoader.next(false); // Hide loader on error
             },
             error => {
                 console.error('Tenant change failed', error);
+                this.shared.showLoader.next(false); // Hide loader on error
             }
         );
     }
