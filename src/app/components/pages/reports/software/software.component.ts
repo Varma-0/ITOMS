@@ -29,8 +29,8 @@ interface Column {
   styleUrls: ['./software.component.scss']
 })
 export class SoftwareReportComponent implements OnInit {
-    devices: Device[] = [];
-
+  devices: Device[] = [];
+  paginatedDevicess: any[] = [];
   filteredDevices: Device[] = [];
   searchTerm: string = '';
   columns: Column[] = [
@@ -45,6 +45,9 @@ export class SoftwareReportComponent implements OnInit {
 
   currentPage = 1;
   itemsPerPage = 10;
+  totalPages = 1;
+  itemsPerPageOptions = [5, 10, 15];
+
 
   constructor(private dialog:MatDialog,private dataService:TerminalService) { }
 
@@ -60,6 +63,7 @@ export class SoftwareReportComponent implements OnInit {
         value?.toLowerCase().includes(this.searchTerm?.toLowerCase())
       )
     );
+    this.updatePagination();
   }
 
   loadSoftwareData() {
@@ -110,9 +114,6 @@ export class SoftwareReportComponent implements OnInit {
     return this.filteredDevices.length;
   }
 
-  get totalPages(): number {
-    return Math.ceil(this.totalItems / this.itemsPerPage);
-  }
 
   get startIndex(): number {
     return (this.currentPage - 1) * this.itemsPerPage;
@@ -126,9 +127,34 @@ export class SoftwareReportComponent implements OnInit {
     return this.filteredDevices.slice(this.startIndex, this.endIndex);
   }
 
-  goToPage(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
+  // goToPage(page: number): void {
+  //   if (page >= 1 && page <= this.totalPages) {
+  //     this.currentPage = page;
+  //   }
+  // }
+  updatePagination() {
+    this.totalPages = Math.ceil(this.filteredDevices.length / this.itemsPerPage);
+    this.currentPage = 1;
+    this.paginate();
+  }
+
+  paginate() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedDevicess = this.filteredDevices.slice(startIndex, endIndex);
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.paginate();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.paginate();
     }
   }
 

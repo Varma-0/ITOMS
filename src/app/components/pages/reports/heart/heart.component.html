@@ -1,4 +1,4 @@
-<div class="report-container">
+<!-- <div class="report-container">
     <h1>Device Heart Beat Report</h1>
 
     <div class="breadcrumb">
@@ -64,4 +64,81 @@
         <button (click)="goToPage(totalPages)" [disabled]="currentPage === totalPages">&gt;&gt;</button>
       </div>
     </div>
+  </div> -->
+  <div class="report-panel">
+    
+    <div class="breadcrumb-area">
+      <h1>Device Heart Beat Report</h1>
+      <ol class="bredcrumb">
+        <li>Reports</li>
+        <li>Standard Reports</li>
+        <li>Device</li>
+        <li>Device Heart Beat Report</li>
+      </ol>
+    </div>
+  
+    <div class="controls-container">
+      <div class="search-container">
+        <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search devices...">
+        <button class="search-button"><i class="material-icons">search</i></button>
+      </div>
+      <button class="export-button" (click)="exportToExcel()">
+        Export to Excel
+      </button>
+  
+      <div class="column-manager">
+        <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
+          <i class="material-icons">filter_list</i> Columns
+        </button>
+        <div class="column-list" #columnList>
+          <label *ngFor="let column of columns; let i = index">
+            <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(column)">
+            {{ column.label }}
+          </label>
+        </div>
+      </div>
+    </div>
+  
+    <div class="table-container">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th *ngFor="let column of visibleColumns">{{ column.label }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="paginatedDevices && paginatedDevices.length > 0; else noData">
+            <tr *ngFor="let device of paginatedDevices; let i = index">
+              <td *ngFor="let column of visibleColumns"
+                  [ngClass]="{'pending': device[column.key] === 'PendingRegistration', 'inactive': device[column.key] === 'Inactive'}">
+                <span *ngIf="column.key != 'view'"> {{ device[column.key] || 'N/A' }} </span>
+                <span *ngIf="column.key == 'view'">
+                  <button mat-icon-button  (click)="openReportDialog(paginatedDevices[i].deviceId)">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+                </span>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-template #noData>
+            <tr>
+              <td [attr.colspan]="visibleColumns.length" class="no-data-message">No Data Available</td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+  
+    <div class="pagination">
+        <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+        <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+        <div class="items-per-page">
+          <label for="itemsPerPage">Items per page:</label>
+          <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="updatePagination()">
+            <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+      </div>
+      <div style="height: 50px;"></div>
+  </div>
   </div>

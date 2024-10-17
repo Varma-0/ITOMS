@@ -24,8 +24,8 @@ interface Column {
   styleUrls: ['./system.component.scss']
 })
 export class SystemReportComponent implements OnInit {
-    devices: Device[] = []
-
+  devices: Device[] = []
+  paginatedDevicess: any[] = [];
   filteredDevices: Device[] = [];
   searchTerm: string = '';
   columns: Column[] = [
@@ -39,6 +39,9 @@ export class SystemReportComponent implements OnInit {
 
   currentPage = 1;
   itemsPerPage = 10;
+  totalPages = 1;
+  itemsPerPageOptions = [5, 10, 15];
+
 
   constructor(private dataService: TerminalService) { }
 
@@ -58,8 +61,9 @@ export class SystemReportComponent implements OnInit {
             console.log(response);
             this.devices = [];
             response.event.eventData.forEach(element => {
+              const auditDate = new Date(element.auditTime).toISOString().split('T')[0];
                 this.devices.push({
-                    'auditTime' : element.auditTime,
+                    'auditTime' : auditDate,
                     'appCode' : element.appCode,
                     'eventSubType':element.eventSubType,
                     'eventType' : element.eventType,
@@ -82,6 +86,7 @@ export class SystemReportComponent implements OnInit {
         value?.toLowerCase().includes(this.searchTerm?.toLowerCase())
       )
     );
+    this.updatePagination();
   }
 
   exportToExcel(): void {
@@ -113,9 +118,6 @@ export class SystemReportComponent implements OnInit {
     return this.filteredDevices.length;
   }
 
-  get totalPages(): number {
-    return Math.ceil(this.totalItems / this.itemsPerPage);
-  }
 
   get startIndex(): number {
     return (this.currentPage - 1) * this.itemsPerPage;
@@ -129,9 +131,34 @@ export class SystemReportComponent implements OnInit {
     return this.filteredDevices.slice(this.startIndex, this.endIndex);
   }
 
-  goToPage(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
+  // goToPage(page: number): void {
+  //   if (page >= 1 && page <= this.totalPages) {
+  //     this.currentPage = page;
+  //   }
+  // }
+  updatePagination() {
+    this.totalPages = Math.ceil(this.filteredDevices.length / this.itemsPerPage);
+    this.currentPage = 1;
+    this.paginate();
+  }
+
+  paginate() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedDevicess = this.filteredDevices.slice(startIndex, endIndex);
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.paginate();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.paginate();
     }
   }
 }
