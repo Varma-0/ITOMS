@@ -388,6 +388,7 @@ export class HierarchyLevelComponent implements OnInit {
                 this.shared.showLoader.next(false);
             },
             error => {
+                this.shared.showLoader.next(false);
                 this.shared.showError(error.message);
                 console.error('Error:', error);
             }
@@ -464,6 +465,7 @@ export class HierarchyLevelComponent implements OnInit {
                     },
                     error => {
                         this.shared.showLoader.next(false);
+                        // this.shared.showError(error.message)
                         console.error('Error:', error);
                     }
                 )

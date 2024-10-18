@@ -84,6 +84,11 @@ export class RoleComponent {
                     });
                 });
                 this.shared.showLoader.next(false);
+            },
+            error => {
+                this.shared.showLoader.next(false);
+                this.shared.showError(error.message)
+                console.error('Error:', error);
             }
         )
     }
@@ -136,6 +141,11 @@ export class RoleComponent {
                 data.roles = response.event.eventData.rolePermissionsList;
                 this.openCreateDialog(data, true);
                 this.shared.showLoader.next(false);
+            },
+            error => {
+                this.shared.showLoader.next(false);
+                this.shared.showError(error.message)
+                console.error('Error:', error);
             }
         )
     }
@@ -177,6 +187,11 @@ export class RoleComponent {
                                 this.shared.showSuccess("Role Updated successfully!")
                             }
                             this.shared.showLoader.next(true);
+                        },
+                        error => {
+                            this.shared.showLoader.next(false);
+                            this.shared.showError(error.message)
+                            console.error('Error:', error);
                         }
                     )
                 }
@@ -194,6 +209,11 @@ export class RoleComponent {
                                 this.shared.showSuccess("Role created successfully")
                             }
                             this.shared.showLoader.next(false);
+                        },
+                        error => {
+                            this.shared.showLoader.next(false);
+                            this.shared.showError(error.message)
+                            console.error('Error:', error);
                         }
                     )
                 }
@@ -222,7 +242,12 @@ export class RoleComponent {
                         this.shared.showSuccess("Role Deleted successfully");
                     }
                     this.shared.showLoader.next(false);
-                })
+                }),
+                error => {
+                    this.shared.showLoader.next(false);
+                    this.shared.showError(error.message)
+                    console.error('Error:', error);
+                }
             }
         });
     }

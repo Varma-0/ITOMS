@@ -69,6 +69,8 @@ export class TenantsComponent {
         this.shared.showLoader.next(false);
       },
       error => {
+        this.shared.showLoader.next(false);
+        this.shared.showError(error.message)
         console.error('Error:', error);
       }
     );
@@ -132,6 +134,8 @@ export class TenantsComponent {
       },
       error => {
         // Handle any errors here
+        this.shared.showLoader.next(false);
+        this.shared.showError(error.message)
         console.error('Error updating device status:', error);
       }
     );
@@ -166,6 +170,11 @@ export class TenantsComponent {
                 this.shared.showSuccess("Tenant Updated successfully!")
               }
               this.shared.showLoader.next(false);
+            },
+            error => {
+              this.shared.showLoader.next(false);
+              this.shared.showError(error.message)
+              console.error('Error:', error);
             }
           );
         } else {
@@ -181,6 +190,11 @@ export class TenantsComponent {
                 this.shared.showSuccess("Tenant Created successfully!")
               }
               this.shared.showLoader.next(false);
+            },
+            error => {
+              this.shared.showLoader.next(false);
+              this.shared.showError(error.message)
+              console.error('Error:', error);
             }
           );
         }
@@ -203,7 +217,12 @@ export class TenantsComponent {
               this.loadTenants();
               this.shared.showSuccess("Status Updated successfully!")
             }
-          this.shared.showLoader.next(false);
+            this.shared.showLoader.next(false);
+          },
+          error => {
+            this.shared.showLoader.next(false);
+            this.shared.showError(error.message)
+            console.error('Error:', error);
           }
         );
       }

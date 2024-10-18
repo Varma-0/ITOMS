@@ -80,6 +80,7 @@ export class UserComponent {
                 this.shared.showLoader.next(false);
             },
             error => {
+                this.shared.showLoader.next(false);
                 this.shared.showError(error.message)
                 console.error('Error:', error);
             }
@@ -98,6 +99,11 @@ export class UserComponent {
                     });
                 });
                 this.shared.showLoader.next(false);
+            },
+            error => {
+                this.shared.showLoader.next(false);
+                this.shared.showError(error.message)
+                console.error('Error:', error);
             }
         )
     }
@@ -114,6 +120,11 @@ export class UserComponent {
                     });
                 });
                 this.shared.showLoader.next(false);
+            },
+            error => {
+                this.shared.showLoader.next(false);
+                this.shared.showError(error.message)
+                console.error('Error:', error);
             }
         )
     }
@@ -130,6 +141,11 @@ export class UserComponent {
                     });
                 });
                 this.shared.showLoader.next(false);
+            },
+            error => {
+                this.shared.showLoader.next(false);
+                this.shared.showError(error.message)
+                console.error('Error:', error);
             }
         )
     }
@@ -316,6 +332,11 @@ export class UserComponent {
                     this.shared.showSuccess("User Created Successfully");
                 }
                 this.shared.showLoader.next(false);
+            },
+            error => {
+                this.shared.showLoader.next(false);
+                this.shared.showError(error.message)
+                console.error('Error:', error);
             }
         );
     }
@@ -332,6 +353,11 @@ export class UserComponent {
                     this.shared.showSuccess("User Created Successfully");
                 }
                 this.shared.showLoader.next(false);
+            },
+            error => {
+                this.shared.showLoader.next(false);
+                this.shared.showError(error.message)
+                console.error('Error:', error);
             }
         );
     }
@@ -400,7 +426,12 @@ export class UserComponent {
                     this.loadDevices()
                 }
                 this.shared.showLoader.next(false);
-            })
+            }),
+            error => {
+                this.shared.showLoader.next(false);
+                this.shared.showError(error.message)
+                console.error('Error:', error);
+            }
         }
     }
 

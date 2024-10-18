@@ -162,6 +162,11 @@ export class MerchantsComponent {
               this.shared.showSuccess("Merchant Created successfully!")
             }
             this.shared.showLoader.next(false);
+          },
+          error => {
+            this.shared.showLoader.next(false);
+            this.shared.showError(error.message)
+            console.error('Error:', error);
           }
         )
       }
@@ -184,6 +189,11 @@ export class MerchantsComponent {
               this.shared.showSuccess("Merchant Deleted successfully!");
             }
             this.shared.showLoader.next(false);
+          },
+          error => {
+            this.shared.showLoader.next(false);
+            this.shared.showError(error.message)
+            console.error('Error:', error);
           }
         )
     }

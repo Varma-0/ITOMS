@@ -97,6 +97,7 @@ export class DevicesComponent {
       error => {
         console.error('Error:', error);
         this.shared.showLoader.next(false);
+        this.shared.showError(error.message)
       }
     );
   }
@@ -130,6 +131,7 @@ export class DevicesComponent {
       error => {
         console.error('Error:', error);
         this.shared.showLoader.next(false);
+        this.shared.showError(error.message)
       }
     );
   }
@@ -153,6 +155,7 @@ export class DevicesComponent {
       error => {
         console.error('Error:', error);
         this.shared.showLoader.next(false);
+        this.shared.showError(error.message)
       }
     )
   }
@@ -207,6 +210,7 @@ export class DevicesComponent {
       error => {
         console.error('Error:', error);
         this.shared.showLoader.next(false);
+        this.shared.showError(error.message)
       }
     );
   }
@@ -253,6 +257,7 @@ export class DevicesComponent {
           error => {
             console.error('Error:', error);
             this.shared.showLoader.next(false);
+            this.shared.showError(error.message)
           }
         );
        }
@@ -271,6 +276,7 @@ export class DevicesComponent {
             error => {
               console.error('Error:', error);
               this.shared.showLoader.next(false);
+              this.shared.showError(error.message)
             }
           );
         }

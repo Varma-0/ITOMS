@@ -85,7 +85,9 @@ export class SoftwareReportComponent implements OnInit {
         this.shared.showLoader.next(false);
       },
       error => {
-          console.error('Error:', error);
+        this.shared.showLoader.next(false);
+        console.error('Error:', error);
+        this.shared.showError(error.message)
       }
   )
   }

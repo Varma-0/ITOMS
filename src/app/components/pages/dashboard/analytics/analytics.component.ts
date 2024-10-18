@@ -61,6 +61,7 @@ export class AnalyticsComponent implements OnInit {
       error => {
         console.error('Error:', error);
         this.shared.showLoader.next(false);
+        this.shared.showError(error.message)
       }
     )
   }
@@ -80,6 +81,7 @@ export class AnalyticsComponent implements OnInit {
       error => {
         console.error('Error:', error);
         this.shared.showLoader.next(false);
+        this.shared.showError(error.message)
       }
     )
   }
@@ -98,6 +100,7 @@ export class AnalyticsComponent implements OnInit {
       error => {
         console.error('Error:', error);
         this.shared.showLoader.next(false);
+        this.shared.showError(error.message)
       }
     )
   }
@@ -167,6 +170,7 @@ export class AnalyticsComponent implements OnInit {
       error => {
         console.error('Error fetching terminal count:', error);
         this.shared.showLoader.next(false); // Hide loader on error
+        this.shared.showError(error.message)
       }
     );
   }
@@ -180,6 +184,7 @@ export class AnalyticsComponent implements OnInit {
       error => {
         console.error('Error fetching merchant count:', error);
         this.shared.showLoader.next(false); // Hide loader on error
+        this.shared.showError(error.message)
       }
     );
   }
@@ -193,6 +198,7 @@ export class AnalyticsComponent implements OnInit {
       error => {
         console.error('Error fetching APK count:', error);
         this.shared.showLoader.next(false); // Hide loader on error
+        this.shared.showError(error.message)
       }
     );
   }

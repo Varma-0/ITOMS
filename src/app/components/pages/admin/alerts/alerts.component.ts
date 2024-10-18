@@ -64,6 +64,7 @@ export class AlertComponent {
             },
             error => {
                 this.shared.showLoader.next(false);
+                this.shared.showError(error.message)
                 console.error('Error:', error);
             }
         )
@@ -158,6 +159,11 @@ export class AlertComponent {
                                 this.shared.showSuccess("Alert Created successfully!")
                             }
                             this.shared.showLoader.next(false);
+                        },
+                        error => {
+                            this.shared.showLoader.next(false);
+                            this.shared.showError(error.message)
+                            console.error('Error:', error);
                         }
                     )
                 } else {
@@ -190,6 +196,11 @@ export class AlertComponent {
                                 this.shared.showSuccess("Alert Updated successfully!")
                             }
                             this.shared.showLoader.next(false);
+                        },
+                        error => {
+                            this.shared.showLoader.next(false);
+                            this.shared.showError(error.message)
+                            console.error('Error:', error);
                         }
                     )
                 }
@@ -220,6 +231,11 @@ export class AlertComponent {
                             this.shared.showSuccess("Role Deleted successfully");
                         }
                         this.shared.showLoader.next(false);
+                    },
+                    error => {
+                        this.shared.showLoader.next(false);
+                        this.shared.showError(error.message)
+                        console.error('Error:', error);
                     }
                   )
             }
