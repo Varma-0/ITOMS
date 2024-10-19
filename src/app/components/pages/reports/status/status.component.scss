@@ -79,7 +79,7 @@ $danger-red: #f44336;
 .report-panel {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 90vh;
   overflow: hidden;
 }
 
@@ -345,6 +345,8 @@ $danger-red: #f44336;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+  position: sticky;
+  bottom: 0;
 }
 
 .pagination-button {
@@ -413,7 +415,7 @@ $danger-red: #f44336;
 
   .table-container {
     padding: 10px;
-  }  
+  }
 
   .export-button, .column-manager {
     align-self: flex-start;

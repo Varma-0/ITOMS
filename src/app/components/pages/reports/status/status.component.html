@@ -10,7 +10,7 @@
         <li>Device Connected Report</li>
       </ol>
     </div>
-  
+
     <div class="controls-container">
       <div class="search-container">
         <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search devices...">
@@ -19,7 +19,7 @@
       <button class="export-button" (click)="exportToExcel()">
         Export to Excel
       </button>
-  
+
       <div class="column-manager">
         <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
           <i class="material-icons">filter_list</i> Columns
@@ -66,18 +66,16 @@
         </ng-template>
       </tbody>
     </table>
-
-  <div class="pagination">
-      <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
-      <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
-      <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
-      <div class="items-per-page">
-        <label for="itemsPerPage">Items per page:</label>
-        <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="updatePagination()">
-          <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
-        </select>
-      </div>
-    </div>
-    <div style="height: 50px;"></div>
 </div>
+<div class="pagination">
+    <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+    <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+    <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+    <div class="items-per-page">
+      <label for="itemsPerPage">Items per page:</label>
+      <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="updatePagination()">
+        <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+  </div>
 </div>
