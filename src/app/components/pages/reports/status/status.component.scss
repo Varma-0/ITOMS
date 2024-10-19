@@ -198,7 +198,7 @@ $danger-red: #f44336;
 //   overflow-x: auto;
 // }
 .table-container {
-  flex: 1;
+  // flex: 1;
   overflow-y: auto;
   background-color: $background-white;
   padding: 20px;
@@ -345,8 +345,8 @@ $danger-red: #f44336;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  position: sticky;
-  bottom: 0;
+  // position: sticky;
+  // bottom: 0;
 }
 
 .pagination-button {

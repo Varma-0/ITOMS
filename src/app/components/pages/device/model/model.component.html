@@ -1,36 +1,37 @@
   <div class="admin-panel">
 
-    <div class="breadcrumb-area">
-        <h1>Model</h1>
-        <ol class="breadcrumb">
-          <li>Device Management</li>
-          <li>Model</li>
-        </ol>
+    <div class="fixed-header">
+      <div class="breadcrumb-area">
+          <h1>Model</h1>
+          <ol class="breadcrumb">
+            <li>Device Management</li>
+            <li>Model</li>
+          </ol>
       </div>
-  
-  
-    <div class="controls-container">
-      <div class="search-container">
-        <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="search()" placeholder="Search Models...">
-        <button class="search-button"><i class="material-icons">search</i></button>
-      </div>
-  
-      <button class="add-button" (click)="openCreateDialog(false)">
-        <i class="material-icons">add</i> Add Model
-      </button>
-  
-      <div class="column-manager">
-        <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
-          <i class="material-icons">filter_list</i> Columns
+    
+      <div class="controls-container">
+        <div class="search-container">
+          <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="search()" placeholder="Search Models...">
+          <button class="search-button"><i class="material-icons">search</i></button>
+        </div>
+    
+        <button class="add-button" (click)="openCreateDialog(false)">
+          <i class="material-icons">add</i> Add Model
         </button>
-        <div class="column-list" #columnList>
-          <label *ngFor="let column of columns; let i = index">
-            <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(i)">
-            {{ column.name }}
-          </label>
+    
+        <div class="column-manager">
+          <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
+            <i class="material-icons">filter_list</i> Columns
+          </button>
+          <div class="column-list" #columnList>
+            <label *ngFor="let column of columns; let i = index">
+              <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(i)">
+              {{ column.name }}
+            </label>
+          </div>
         </div>
       </div>
-    </div>
+  </div>
   
     <div class="table-container">
       <table class="user-table">
@@ -60,8 +61,9 @@
           </tr>
         </tbody>
       </table>
+    </div>
   
-    <div class="pagination">
+      <div class="pagination">
         <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
         <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
         <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
@@ -72,7 +74,5 @@
           </select>
         </div>
       </div>
-      <div style="height: 50px;"></div>
-  </div>
   </div>
   

@@ -1,99 +1,35 @@
-<!-- <div class="report-container">
-    <h1>Device Search Report</h1>
-
-    <div class="breadcrumb">
-      Reports / Standard Reports / Device / Device Search Report
-    </div>
-
-    <div class="search-container">
-      <input type="text" [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search devices...">
-    </div>
-
-    <div class="actions-container">
-      <button (click)="exportToExcel()">Export to Excel</button>
-
-      <div class="dropdown">
-        <button class="dropbtn"><mat-icon>filter_list</mat-icon></button>
-        <div class="dropdown-content">
-          <label *ngFor="let column of columns">
-            <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(column)">
-            {{ column.label }}
-          </label>
-        </div>
-      </div>
-    </div>
-
-<div style="overflow-x: auto;white-space: nowrap;">
-    <table>
-        <thead>
-          <tr>
-            <th *ngFor="let column of visibleColumns">{{ column.label }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ng-container *ngIf="paginatedDevices && paginatedDevices.length > 0; else noData">
-            <tr *ngFor="let device of paginatedDevices; let i = index">
-              <td *ngFor="let column of visibleColumns"
-                  [ngClass]="{'pending': device[column.key] === 'PendingRegistration', 'inactive': device[column.key] === 'Inactive'}">
-                <span *ngIf="column.key != 'view'"> {{ device[column.key] || 'N/A' }} </span>
-                <span *ngIf="column.key == 'view'">
-                  <button mat-icon-button>
-                    <mat-icon>visibility</mat-icon>
-                  </button>
-                </span>
-              </td>
-            </tr>
-          </ng-container>
-          <ng-template #noData>
-            <tr>
-              <td [attr.colspan]="visibleColumns.length" class="no-data-message">No Data Available</td>
-            </tr>
-          </ng-template>
-        </tbody>
-      </table>
-</div>
-
-    <div class="pagination">
-      <span>Showing: {{ startIndex + 1 }}-{{ endIndex }} of {{ totalItems }}</span>
-      <div class="pagination-controls">
-        <button (click)="goToPage(1)" [disabled]="currentPage === 1">&lt;&lt;</button>
-        <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">&lt;</button>
-        <span>Page {{ currentPage }} / {{ totalPages }}</span>
-        <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">&gt;</button>
-        <button (click)="goToPage(totalPages)" [disabled]="currentPage === totalPages">&gt;&gt;</button>
-      </div>
-    </div>
-  </div> -->
   <div class="report-panel">
 
-    <div class="breadcrumb-area">
-      <h1>Device Search Report</h1>
-      <ol class="bredcrumb">
-        <li>Reports</li>
-        <li>Standard Reports</li>
-        <li>Device</li>
-        <li>Device Search Report</li>
-      </ol>
-    </div>
-
-    <div class="controls-container">
-      <div class="search-container">
-        <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search devices...">
-        <button class="search-button"><i class="material-icons">search</i></button>
+    <div class="fixed-header">
+      <div class="breadcrumb-area">
+        <h1>Device Search Report</h1>
+        <ol class="bredcrumb">
+          <li>Reports</li>
+          <li>Standard Reports</li>
+          <li>Device</li>
+          <li>Device Search Report</li>
+        </ol>
       </div>
-      <button class="export-button" (click)="exportToExcel()">
-        Export to Excel
-      </button>
 
-      <div class="column-manager">
-        <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
-          <i class="material-icons">filter_list</i> Columns
+      <div class="controls-container">
+        <div class="search-container">
+          <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search devices...">
+          <button class="search-button"><i class="material-icons">search</i></button>
+        </div>
+        <button class="export-button" (click)="exportToExcel()">
+          Export to Excel
         </button>
-        <div class="column-list" #columnList>
-          <label *ngFor="let column of columns; let i = index">
-            <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(column)">
-            {{ column.label }}
-          </label>
+
+        <div class="column-manager">
+          <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
+            <i class="material-icons">filter_list</i> Columns
+          </button>
+          <div class="column-list" #columnList>
+            <label *ngFor="let column of columns; let i = index">
+              <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(column)">
+              {{ column.label }}
+            </label>
+          </div>
         </div>
       </div>
     </div>
@@ -130,6 +66,7 @@
           </ng-template>
         </tbody>
       </table>
+    </div>
 
     <div class="pagination">
         <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
@@ -141,7 +78,5 @@
             <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
           </select>
         </div>
-      </div>
-      <div style="height: 50px;"></div>
-  </div>
+    </div>
   </div>

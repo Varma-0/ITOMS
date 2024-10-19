@@ -1,60 +1,65 @@
 <div class="admin-panel">
 
+  <div class="fixed-header">
     <div class="breadcrumb-area">
-        <h1>ROLES</h1>
-        <ol class="breadcrumb">
-          <li>Administration</li>
-          <li>Roles</li>
-        </ol>
+      <h1>ROLES</h1>
+      <ol class="breadcrumb">
+        <li>Administration</li>
+        <li>Roles</li>
+      </ol>
+    </div>
+
+    <div class="controls-container">
+      <div class="search-container">
+        <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="search()"
+          placeholder="Search roles...">
+        <button class="search-button"><i class="material-icons">search</i></button>
       </div>
 
-      <div class="controls-container">
-        <div class="search-container">
-          <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="search()" placeholder="Search roles...">
-          <button class="search-button"><i class="material-icons">search</i></button>
-        </div>
+      <button class="add-button" (click)="openCreateDialog()">
+        <i class="material-icons">add</i> Add Role
+      </button>
 
-        <button class="add-button" (click)="openCreateDialog()">
-          <i class="material-icons">add</i> Add Role
+      <div class="column-manager">
+        <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
+          <i class="material-icons">filter_list</i> Columns
         </button>
-
-        <div class="column-manager">
-          <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
-            <i class="material-icons">filter_list</i> Columns
-          </button>
-          <div class="column-list" #columnList>
-            <label *ngFor="let column of columns; let i = index">
-              <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(i)">
-              {{ column.name }}
-            </label>
-          </div>
+        <div class="column-list" #columnList>
+          <label *ngFor="let column of columns; let i = index">
+            <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(i)">
+            {{ column.name }}
+          </label>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div class="table-container">
+  <div class="table-container">
     <table class="user-table">
-    <thead>
-      <tr>
-        <th style="text-align: left;" *ngIf="columns[0].visible">Role Name</th>
-        <th *ngIf="columns[1].visible">Created Date</th>
-        <th *ngIf="hasEdit || hasDelete">Actions</th>
-      </tr>
-    </thead>
-    <tbody *ngFor="let device of paginatedDevices">
-      <tr>
-        <td style="text-align: left;" *ngIf="columns[0].visible">{{ device.name }}</td>
-        <td *ngIf="columns[1].visible">{{ device.createdBy.ts.split('T')[0] }}</td>
-        <td *ngIf="hasEdit || hasDelete" class="actions-cell">
+      <thead>
+        <tr>
+          <th style="text-align: left;" *ngIf="columns[0].visible">Role Name</th>
+          <th *ngIf="columns[1].visible">Created Date</th>
+          <th *ngIf="hasEdit || hasDelete">Actions</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let device of paginatedDevices">
+        <tr>
+          <td style="text-align: left;" *ngIf="columns[0].visible">{{ device.name }}</td>
+          <td *ngIf="columns[1].visible">{{ device.createdBy.ts.split('T')[0] }}</td>
+          <td *ngIf="hasEdit || hasDelete" class="actions-cell">
             <button *ngIf="hasEdit" class="icon-button edit" (click)="editData(device)" data-tooltip="Edit role">
-                <i class="material-icons">edit</i>
-              </button>
-              <button *ngIf="hasDelete" class="icon-button deactivate" (click)="openDeleteDialog(device)" data-tooltip="Delte role">
-                <i class="material-icons">delete</i>
-              </button>
-      </td>
-      </tr>
-    </tbody>
-  </table>
+              <i class="material-icons">edit</i>
+            </button>
+            <button *ngIf="hasDelete" class="icon-button deactivate" (click)="openDeleteDialog(device)"
+              data-tooltip="Delte role">
+              <i class="material-icons">delete</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <div class="pagination">
     <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
     <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
@@ -66,5 +71,4 @@
       </select>
     </div>
   </div>
-  <div style="height: 50px;"></div>
-      </div></div>
+</div>

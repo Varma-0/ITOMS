@@ -1,72 +1,77 @@
 <div class="admin-panel">
 
+  <div class="fixed-header">
     <div class="breadcrumb-area">
-        <h1>TENANTS</h1>
-        <ol class="breadcrumb">
-          <li>Administration</li>
-          <li>Tenants</li>
-        </ol>
+      <h1>TENANTS</h1>
+      <ol class="breadcrumb">
+        <li>Administration</li>
+        <li>Tenants</li>
+      </ol>
+    </div>
+    <div class="controls-container">
+      <div class="search-container">
+        <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="search()"
+          placeholder="Search tenants...">
+        <button class="search-button"><i class="material-icons">search</i></button>
       </div>
-      <div class="controls-container">
-        <div class="search-container">
-          <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="search()" placeholder="Search tenants...">
-          <button class="search-button"><i class="material-icons">search</i></button>
-        </div>
 
-        <button class="add-button" (click)="openCreateDialog()">
-          <i class="material-icons">add</i> Add Tenants
+      <button class="add-button" (click)="openCreateDialog()">
+        <i class="material-icons">add</i> Add Tenants
+      </button>
+
+      <div class="column-manager">
+        <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
+          <i class="material-icons">filter_list</i> Columns
         </button>
-
-        <div class="column-manager">
-          <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
-            <i class="material-icons">filter_list</i> Columns
-          </button>
-          <div class="column-list" #columnList>
-            <label *ngFor="let column of columns; let i = index">
-              <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(i)">
-              {{ column.name }}
-            </label>
-          </div>
+        <div class="column-list" #columnList>
+          <label *ngFor="let column of columns; let i = index">
+            <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(i)">
+            {{ column.name }}
+          </label>
         </div>
       </div>
-
+    </div>
+  </div>
   <div class="table-container">
- <table class="user-table">
-  <thead>
-    <tr style="white-space: nowrap;">
-      <th style="text-align: left;" *ngIf="columns[0].visible">Tenant Name</th>
-      <th style="text-align: left;"*ngIf="columns[1].visible">Created By</th>
-      <th style="text-align: left;"*ngIf="columns[2].visible">Updated By</th>
-      <th *ngIf="columns[3].visible">Created Date</th>
-      <th *ngIf="columns[4].visible">Updated Date</th>
-      <th *ngIf="columns[5].visible">Tenant Type</th>
-      <th *ngIf="hasDelete">Status</th>
-      <th *ngIf="hasEdit">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let device of paginatedDevices; let i = index" style="white-space: nowrap;">
-      <td style="text-align: left;" *ngIf="columns[0].visible">{{ device.name }}</td>
-      <td style="text-align: left;"*ngIf="columns[1].visible">{{ device.created }}</td>
-      <td style="text-align: left;"*ngIf="columns[2].visible">{{ device.updated }}</td>
-      <td *ngIf="columns[3].visible">{{ device.createdDate }}</td>
-      <td *ngIf="columns[4].visible">{{ device.updatedDate }}</td>
-      <td *ngIf="columns[5].visible">{{ device.type }}</td>
-      <td *ngIf="hasDelete">
-        <mat-slide-toggle color="primary" [checked]="device.status === 'ACTIVE'"
-          (change)="toggleStatus(device, i, $event.checked)">
-          {{ device.status === 'ACTIVE' ? 'Active' : 'Inactive' }}
-        </mat-slide-toggle>
-      </td>
-      <td *ngIf="hasEdit"  class="actions-cell">
-        <button *ngIf="hasEdit" class="icon-button edit" (click)="openCreateDialog(device,true)" data-tooltip="Edit role">
-            <i class="material-icons">edit</i>
-          </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<div class="pagination">
+    <table class="user-table">
+      <thead>
+        <tr style="white-space: nowrap;">
+          <th style="text-align: left;" *ngIf="columns[0].visible">Tenant Name</th>
+          <th style="text-align: left;" *ngIf="columns[1].visible">Created By</th>
+          <th style="text-align: left;" *ngIf="columns[2].visible">Updated By</th>
+          <th *ngIf="columns[3].visible">Created Date</th>
+          <th *ngIf="columns[4].visible">Updated Date</th>
+          <th *ngIf="columns[5].visible">Tenant Type</th>
+          <th *ngIf="hasDelete">Status</th>
+          <th *ngIf="hasEdit">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let device of paginatedDevices; let i = index" style="white-space: nowrap;">
+          <td style="text-align: left;" *ngIf="columns[0].visible">{{ device.name }}</td>
+          <td style="text-align: left;" *ngIf="columns[1].visible">{{ device.created }}</td>
+          <td style="text-align: left;" *ngIf="columns[2].visible">{{ device.updated }}</td>
+          <td *ngIf="columns[3].visible">{{ device.createdDate }}</td>
+          <td *ngIf="columns[4].visible">{{ device.updatedDate }}</td>
+          <td *ngIf="columns[5].visible">{{ device.type }}</td>
+          <td *ngIf="hasDelete">
+            <mat-slide-toggle color="primary" [checked]="device.status === 'ACTIVE'"
+              (change)="toggleStatus(device, i, $event.checked)">
+              {{ device.status === 'ACTIVE' ? 'Active' : 'Inactive' }}
+            </mat-slide-toggle>
+          </td>
+          <td *ngIf="hasEdit" class="actions-cell">
+            <button *ngIf="hasEdit" class="icon-button edit" (click)="openCreateDialog(device,true)"
+              data-tooltip="Edit role">
+              <i class="material-icons">edit</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
     <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
     <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
     <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
@@ -77,6 +82,4 @@
       </select>
     </div>
   </div>
-  <div style="height: 50px;"></div>
-</div>
 </div>
