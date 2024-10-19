@@ -5,7 +5,7 @@ import { TerminalProfileComponent } from "src/app/components/dialogs/terminal-pr
 import { TerminalService } from "src/app/services/terminal/devicelist";
 
 @Component({
-  selector: 'app-profile',
+  selector: 'app-profile-params',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })

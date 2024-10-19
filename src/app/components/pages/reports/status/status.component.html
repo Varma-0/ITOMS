@@ -1,5 +1,5 @@
 <div class="report-panel">
-    
+
   <div class="breadcrumb-area">
     <h1>Device Connected Report</h1>
     <ol class="bredcrumb">
@@ -41,13 +41,13 @@
       </thead>
       <tbody>
         <ng-container *ngIf="paginatedDevices && paginatedDevices.length > 0; else noData">
-          <tr *ngFor="let device of paginatedDevices; let i = index">
+          <tr *ngFor="let device of paginatedDevices; let i = index" style="white-space: nowrap;">
             <td *ngFor="let column of visibleColumns"
                 [ngClass]="{'pending': device[column.key] === 'PendingRegistration', 'inactive': device[column.key] === 'Inactive'}">
               <!-- <span *ngIf="column.key != 'view'"> {{ device[column.key] || 'N/A' }} </span> -->
               <span *ngIf="column.key === 'lastHeartBeat' && device[column.key]">{{ device[column.key] | date:'yyyy-MM-dd' }}</span>
-              <span *ngIf="column.key !== 'lastHeartBeat' && column.key !== 'view'"> 
-                {{ device[column.key] || 'N/A' }} 
+              <span *ngIf="column.key !== 'lastHeartBeat' && column.key !== 'view'">
+                {{ device[column.key] || 'N/A' }}
               </span>
               <span *ngIf="column.key == 'view'">
                 <button mat-icon-button>

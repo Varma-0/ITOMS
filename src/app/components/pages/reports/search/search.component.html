@@ -65,7 +65,7 @@
     </div>
   </div> -->
   <div class="report-panel">
-    
+
     <div class="breadcrumb-area">
       <h1>Device Search Report</h1>
       <ol class="bredcrumb">
@@ -75,7 +75,7 @@
         <li>Device Search Report</li>
       </ol>
     </div>
-  
+
     <div class="controls-container">
       <div class="search-container">
         <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search devices...">
@@ -84,7 +84,7 @@
       <button class="export-button" (click)="exportToExcel()">
         Export to Excel
       </button>
-  
+
       <div class="column-manager">
         <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
           <i class="material-icons">filter_list</i> Columns
@@ -97,7 +97,7 @@
         </div>
       </div>
     </div>
-  
+
     <div class="table-container">
       <table class="user-table">
         <thead>
@@ -107,13 +107,13 @@
         </thead>
         <tbody>
           <ng-container *ngIf="paginatedDevices && paginatedDevices.length > 0; else noData">
-            <tr *ngFor="let device of paginatedDevices; let i = index">
+            <tr *ngFor="let device of paginatedDevices; let i = index" style="white-space: nowrap;">
               <td *ngFor="let column of visibleColumns"
                   [ngClass]="{'pending': device[column.key] === 'PendingRegistration', 'inactive': device[column.key] === 'Inactive'}">
                 <!-- <span *ngIf="column.key != 'view'"> {{ device[column.key] || 'N/A' }} </span> -->
                 <span *ngIf="column.key === 'lastHeartBeat' && device[column.key]">{{ device[column.key] | date:'yyyy-MM-dd' }}</span>
-                <span *ngIf="column.key !== 'lastHeartBeat' && column.key !== 'view'"> 
-                  {{ device[column.key] || 'N/A' }} 
+                <span *ngIf="column.key !== 'lastHeartBeat' && column.key !== 'view'">
+                  {{ device[column.key] || 'N/A' }}
                 </span>
                 <span *ngIf="column.key == 'view'">
                   <button mat-icon-button>
@@ -130,7 +130,7 @@
           </ng-template>
         </tbody>
       </table>
-  
+
     <div class="pagination">
         <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
         <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>

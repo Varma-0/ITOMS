@@ -38,6 +38,7 @@ export class DLogInComponent implements OnInit{
   loadingOtp: boolean = false;
   validateOtp: boolean = false;
   validatePass: boolean = false;
+newCPassword: any;
 
   constructor(private authService: AuthService, private router: Router,private shared:SharedServices) {}
 
@@ -111,8 +112,8 @@ export class DLogInComponent implements OnInit{
         this.shared.showLoader.next(false);
       },
       error => {
-        this.errorMessage = this.errorApiMessage;
-        console.error('Password validation failed', this.errorMessage);
+        this.errorMessage = this.errorApiMessage ? this.errorApiMessage : 'Password validation failed';
+        console.error('Password validation failed', this.errorApiMessage);
         this.loadingPassword = false;
         this.shared.showLoader.next(false);
       }
@@ -122,6 +123,7 @@ export class DLogInComponent implements OnInit{
   onForgotPasswordClick() {
     this.showPasswordField = false;
     this.forgotPassword = true;
+    this.errorMessage = ''
   }
 
   onSubmitEmailforOtp() {
@@ -136,6 +138,7 @@ export class DLogInComponent implements OnInit{
         if(response.status == 200) {
           console.log("EmailforOtp",response);
           this.forgotPassword = false;
+          this.errorMessage = '';
           this.enterOtp = true;
         } else {
           this.errorApiMessage = response.message;
@@ -144,7 +147,7 @@ export class DLogInComponent implements OnInit{
         this.shared.showLoader.next(false);
       },
       error => {
-        this.errorMessage = this.errorApiMessage;
+        this.errorMessage = this.errorApiMessage ? this.errorApiMessage : 'Identity Verification Failed';
         // console.error('Password validation failed', error);
         this.loadingOtp = false;
         this.shared.showLoader.next(false);
@@ -182,6 +185,12 @@ export class DLogInComponent implements OnInit{
   }
 
   onSubmitNewPass() {
+    if (this.newPassword != this.newCPassword) {
+        this.errorMessage = 'password and confirm password are not same'
+        return;
+    }else{
+        this.errorMessage = '';
+    }
     this.validatePass = true;
     const eventData = new passData(this.uidVerify,this.newPassword);
     console.log(eventData)
