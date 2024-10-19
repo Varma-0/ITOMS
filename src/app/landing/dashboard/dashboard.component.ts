@@ -12,10 +12,10 @@ export class LandingComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    // setInterval(() => {
-    //     this.index = this.index == 5 ? 0 : this.index+1;
-    //     this.title = this.titles[this.index];
-    //   }, 5000);
+    setInterval(() => {
+        this.index = this.index == 5 ? 0 : this.index+1;
+        this.title = this.titles[this.index];
+      }, 5000);
   }
 
   titleChange(name){

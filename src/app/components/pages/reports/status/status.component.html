@@ -1,33 +1,35 @@
 <div class="report-panel">
 
-  <div class="breadcrumb-area">
-    <h1>Device Connected Report</h1>
-    <ol class="bredcrumb">
-      <li>Reports</li>
-      <li>Standard Reports</li>
-      <li>Device</li>
-      <li>Device Connected Report</li>
-    </ol>
-  </div>
-
-  <div class="controls-container">
-    <div class="search-container">
-      <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search devices...">
-      <button class="search-button"><i class="material-icons">search</i></button>
+  <div class="fixed-header">
+    <div class="breadcrumb-area">
+      <h1>Device Connected Report</h1>
+      <ol class="bredcrumb">
+        <li>Reports</li>
+        <li>Standard Reports</li>
+        <li>Device</li>
+        <li>Device Connected Report</li>
+      </ol>
     </div>
-    <button class="export-button" (click)="exportToExcel()">
-      Export to Excel
-    </button>
-
-    <div class="column-manager">
-      <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
-        <i class="material-icons">filter_list</i> Columns
+  
+    <div class="controls-container">
+      <div class="search-container">
+        <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Search devices...">
+        <button class="search-button"><i class="material-icons">search</i></button>
+      </div>
+      <button class="export-button" (click)="exportToExcel()">
+        Export to Excel
       </button>
-      <div class="column-list" #columnList>
-        <label *ngFor="let column of columns; let i = index">
-          <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(column)">
-          {{ column.label }}
-        </label>
+  
+      <div class="column-manager">
+        <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
+          <i class="material-icons">filter_list</i> Columns
+        </button>
+        <div class="column-list" #columnList>
+          <label *ngFor="let column of columns; let i = index">
+            <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(column)">
+            {{ column.label }}
+          </label>
+        </div>
       </div>
     </div>
   </div>
