@@ -1,6 +1,5 @@
 
 .page-container {
-  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   margin-top: 2%;
@@ -157,5 +156,26 @@
 @media (max-width: 480px) {
     .features-grid {
       grid-template-columns: 1fr;
+    }
+  }
+
+  .arrows {
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    svg {
+      width: 32px; // Adjust size
+      height: 32px;
+    }
+
+    &:hover svg {
+      fill: #007bff;
     }
   }

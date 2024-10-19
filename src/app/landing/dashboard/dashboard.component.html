@@ -1,295 +1,344 @@
-<!-- app.component.html -->
+<app-landing-navbar></app-landing-navbar>
+<div class="saas-banner">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div class="container max-width-1290">
+                <div class="row align-items-center pt-5">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="saas-image mt-70">
+                            <img src="assets/img/saas-shape/arrow.png" class="wow animate__animated animate__fadeInDown" data-wow-delay="0.6s" alt="arrow">
+                            <img src="assets/img/saas-shape/box1.png" class="wow animate__animated animate__fadeInUp" data-wow-delay="0.6s" alt="box1">
+                            <img src="assets/img/saas-shape/boy1.png" class="wow animate__animated animate__fadeInLeft" data-wow-delay="0.6s" alt="boy1">
+                            <img src="assets/img/saas-shape/boy2.png" class="wow animate__animated animate__zoomIn" data-wow-delay="0.6s" alt="boy2">
+                            <img src="assets/img/saas-shape/boy3.png" class="wow animate__animated animate__bounceIn" data-wow-delay="0.6s" alt="boy3">
+                            <img src="assets/img/saas-shape/digital-screen.png" class="wow animate__animated animate__fadeInDown" data-wow-delay="0.6s" alt="digital-screen">
+                            <img src="assets/img/saas-shape/filter1.png" class="wow animate__animated animate__zoomIn" data-wow-delay="0.6s" alt="filter1">
+                            <img src="assets/img/saas-shape/filter2.png" class="wow animate__animated animate__fadeInUp" data-wow-delay="0.6s" alt="filter2">
+                            <img src="assets/img/saas-shape/filter3.png" class="wow animate__animated animate__rotateIn" data-wow-delay="0.6s" alt="filter3">
+                            <img src="assets/img/saas-shape/girl1.png" class="wow animate__animated animate__fadeInUp" data-wow-delay="0.6s" alt="girl1">
+                            <img src="assets/img/saas-shape/girl2.png" class="wow animate__animated animate__zoomIn" data-wow-delay="0.6s" alt="girl2">
+                            <img src="assets/img/saas-shape/monitor.png" class="wow animate__animated animate__zoomIn" data-wow-delay="0.6s" alt="monitor">
+                            <!-- Main image -->
+                            <img src="assets/img/saas-shape/main-image.png" class="wow animate__animated animate__zoomIn" data-wow-delay="0.6s" alt="main-image.png">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="hero-content pl-4">
+                            <h1>Manage your business strategy in one placeholder</h1>
+                            <p>Our passion to work hard and deliver excellent results. It could solve the needs of your customers and develop innovation. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shape-rotate rotateme">
+        <img src="assets/img/saas-shape/shape-rotate.png" alt="img">
+    </div>
+    <div id="particles-js"></div>
+</div>
 <div class="page-container">
     <!-- Header Section -->
         <header class="header">
-            <div class="row">
-                <a class="navbar-brand col-2" routerLink="/">
-                    <img src="assets/img/ina-logo.png" alt="logo">
-                </a>
-                <h1 class="title col-8">Terminal Lifecycle Management</h1>
-                <a routerLink="/login" class="optional-btn col-2"><i class="bx bx-log-in"></i>Log In<span></span></a>
-            </div>
-            <nav class="tabs">
+                <h1 class="title">Terminal Lifecycle Management</h1>
+            <!-- <nav class="tabs">
               <button class="tab" [ngClass]="{'active':title == 'zero'}" (click)="titleChange('zero')">Zero Touch Deployment</button>
               <button class="tab" [ngClass]="{'active':title == 'multi'}" (click)="titleChange('multi')">Multi-Dimensional</button>
               <button class="tab" [ngClass]="{'active':title == 'firm'}" (click)="titleChange('firm')">Firmware and App</button>
               <button class="tab" [ngClass]="{'active':title == 'device'}" (click)="titleChange('device')">Device Monitoring</button>
               <button class="tab" [ngClass]="{'active':title == 'remote'}" (click)="titleChange('remote')">Remote Assistance</button>
               <button class="tab" [ngClass]="{'active':title == 'custom'}" (click)="titleChange('custom')">Customization</button>
-            </nav>
+            </nav> -->
           </header>
+<div class="row">
+    <div class="col-1" style="display: flex;align-content: center;">
+        <button class="left-arrow" (click)="previousSlide()">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+    </div>
+    <div class="col-10">
+        <ng-container *ngIf="title == 'zero'">
+            <!-- Content Section -->
+            <section class="deployment-content">
+                <div class="content-left">
+                  <h2 class="content-title">Zero Touch Deployment</h2>
+                  <img src="assets/img/Zero Touch Deployment/BlueIcon.svg" class="blue-icon" />
+                  <p class="content-description">
+                    Zero Touch Deployment automates the configuration and setup process for large-scale terminal deployments. This process reduces the need for manual intervention and ensures that each terminal is ready to use out of the box.
+                  </p>
+                  <p class="content-description">
+                    With pre-installed configurations and batch deployment options, Zero Touch Deployment ensures that devices are configured consistently and reliably across various environments.
+                  </p>
+                  <p class="content-description">
+                      With pre-installed configurations and batch deployment options, Zero Touch Deployment ensures that devices are configured consistently and reliably across various environments.
+                  </p>
+                  <p class="content-description">
+                      With pre-installed configurations and batch deployment options, Zero Touch Deployment ensures that devices are configured consistently and reliably across various environments.
+                  </p>
+                </div>
+                <div class="content-right">
+                  <img src="assets/img/Zero Touch Deployment/content.svg" alt="Zero Touch Deployment Illustration" class="content-image" />
+                </div>
+              </section>
 
-<ng-container *ngIf="title == 'zero'">
+              <!-- Features Section -->
+              <section class="features-grid">
+                <div class="feature-box">
+                  <img src="assets/img/Zero Touch Deployment/Box.svg" alt="Out of the box" />
+                  <h3>Out-of-the-box</h3>
+                  <p>The TOMS client is pre-installed, enabling access to the platform instantly when booted.</p>
+                </div>
+                <div class="feature-box">
+                  <img src="assets/img/Zero Touch Deployment/Batch Deployment.svg" alt="Batch Deployment" />
+                  <h3>Batch Deployment</h3>
+                  <p>Templates can be used for batch deployments, ensuring fast and uniform terminal setups.</p>
+                </div>
+                <div class="feature-box">
+                  <img src="assets/img/Zero Touch Deployment/Auto Pre Installation.svg" alt="Auto Pre-installation" />
+                  <h3>Auto Pre-installation</h3>
+                  <p>Firmware and applications are pre-installed, making deployment quicker and more efficient.</p>
+                </div>
+                <div class="feature-box">
+                  <img src="assets/img/Zero Touch Deployment/Zerp Touch Transfer.svg" alt="Zero-touch Transfer" />
+                  <h3>Zero-touch Transfer</h3>
+                  <p>Pre-configured settings allow seamless transfers without manual intervention.</p>
+                </div>
+              </section>
+    </ng-container>
+    <ng-container *ngIf="title == 'multi'">
         <!-- Content Section -->
         <section class="deployment-content">
             <div class="content-left">
-              <h2 class="content-title">Zero Touch Deployment</h2>
+              <h2 class="content-title">Multi Dimensional</h2>
               <img src="assets/img/Zero Touch Deployment/BlueIcon.svg" class="blue-icon" />
               <p class="content-description">
-                Zero Touch Deployment automates the configuration and setup process for large-scale terminal deployments. This process reduces the need for manual intervention and ensures that each terminal is ready to use out of the box.
+                Multi Dimensional automates the configuration and setup process for large-scale terminal deployments. This process reduces the need for manual intervention and ensures that each terminal is ready to use out of the box.
               </p>
               <p class="content-description">
-                With pre-installed configurations and batch deployment options, Zero Touch Deployment ensures that devices are configured consistently and reliably across various environments.
+                With pre-installed configurations and batch deployment options, Multi Dimensional ensures that devices are configured consistently and reliably across various environments.
               </p>
               <p class="content-description">
-                  With pre-installed configurations and batch deployment options, Zero Touch Deployment ensures that devices are configured consistently and reliably across various environments.
+                  With pre-installed configurations and batch deployment options, Multi Dimensional ensures that devices are configured consistently and reliably across various environments.
               </p>
               <p class="content-description">
-                  With pre-installed configurations and batch deployment options, Zero Touch Deployment ensures that devices are configured consistently and reliably across various environments.
+                  With pre-installed configurations and batch deployment options, Multi Dimensional ensures that devices are configured consistently and reliably across various environments.
               </p>
             </div>
             <div class="content-right">
-              <img src="assets/img/Zero Touch Deployment/content.svg" alt="Zero Touch Deployment Illustration" class="content-image" />
+              <img src="assets/img/Multi Dimensional/OBJECTS.svg" alt="Multi Dimensional Illustration" class="content-image" />
             </div>
           </section>
 
           <!-- Features Section -->
           <section class="features-grid">
             <div class="feature-box">
-              <img src="assets/img/Zero Touch Deployment/Box.svg" alt="Out of the box" />
-              <h3>Out-of-the-box</h3>
+              <img src="assets/img/Multi Dimensional/Organization.svg" alt="Organization" />
+              <h3>Organization</h3>
               <p>The TOMS client is pre-installed, enabling access to the platform instantly when booted.</p>
             </div>
             <div class="feature-box">
-              <img src="assets/img/Zero Touch Deployment/Batch Deployment.svg" alt="Batch Deployment" />
-              <h3>Batch Deployment</h3>
+              <img src="assets/img/Multi Dimensional/Group.svg" alt="Group" />
+              <h3>Group</h3>
               <p>Templates can be used for batch deployments, ensuring fast and uniform terminal setups.</p>
             </div>
             <div class="feature-box">
-              <img src="assets/img/Zero Touch Deployment/Auto Pre Installation.svg" alt="Auto Pre-installation" />
-              <h3>Auto Pre-installation</h3>
+              <img src="assets/img/Multi Dimensional/Schedule Update.svg" alt="Scheduled Update" />
+              <h3>Scheduled Update</h3>
               <p>Firmware and applications are pre-installed, making deployment quicker and more efficient.</p>
             </div>
             <div class="feature-box">
-              <img src="assets/img/Zero Touch Deployment/Zerp Touch Transfer.svg" alt="Zero-touch Transfer" />
-              <h3>Zero-touch Transfer</h3>
+              <img src="assets/img/Multi Dimensional/Single Device Management.svg" alt="Single Device Management" />
+              <h3>Single Device Management</h3>
               <p>Pre-configured settings allow seamless transfers without manual intervention.</p>
             </div>
           </section>
-</ng-container>
-<ng-container *ngIf="title == 'multi'">
-    <!-- Content Section -->
-    <section class="deployment-content">
-        <div class="content-left">
-          <h2 class="content-title">Multi Dimensional</h2>
-          <img src="assets/img/Zero Touch Deployment/BlueIcon.svg" class="blue-icon" />
-          <p class="content-description">
-            Multi Dimensional automates the configuration and setup process for large-scale terminal deployments. This process reduces the need for manual intervention and ensures that each terminal is ready to use out of the box.
-          </p>
-          <p class="content-description">
-            With pre-installed configurations and batch deployment options, Multi Dimensional ensures that devices are configured consistently and reliably across various environments.
-          </p>
-          <p class="content-description">
-              With pre-installed configurations and batch deployment options, Multi Dimensional ensures that devices are configured consistently and reliably across various environments.
-          </p>
-          <p class="content-description">
-              With pre-installed configurations and batch deployment options, Multi Dimensional ensures that devices are configured consistently and reliably across various environments.
-          </p>
-        </div>
-        <div class="content-right">
-          <img src="assets/img/Multi Dimensional/OBJECTS.svg" alt="Multi Dimensional Illustration" class="content-image" />
-        </div>
-      </section>
+    </ng-container>
+    <ng-container *ngIf="title == 'firm'">
+        <!-- Content Section -->
+        <section class="deployment-content">
+            <div class="content-left">
+              <h2 class="content-title">Firmware and App</h2>
+              <img src="assets/img/Zero Touch Deployment/BlueIcon.svg" class="blue-icon" />
+              <p class="content-description">
+                Firmware automates the configuration and setup process for large-scale terminal deployments. This process reduces the need for manual intervention and ensures that each terminal is ready to use out of the box.
+              </p>
+              <p class="content-description">
+                With pre-installed configurations and batch deployment options, Firmware ensures that devices are configured consistently and reliably across various environments.
+              </p>
+              <p class="content-description">
+                  With pre-installed configurations and batch deployment options, Firmware ensures that devices are configured consistently and reliably across various environments.
+              </p>
+              <p class="content-description">
+                  With pre-installed configurations and batch deployment options, Firmware ensures that devices are configured consistently and reliably across various environments.
+              </p>
+            </div>
+            <div class="content-right">
+              <img src="assets/img/Firmware/Firmware.svg" alt="Firmware Illustration" class="content-image" />
+            </div>
+          </section>
 
-      <!-- Features Section -->
-      <section class="features-grid">
-        <div class="feature-box">
-          <img src="assets/img/Multi Dimensional/Organization.svg" alt="Organization" />
-          <h3>Organization</h3>
-          <p>The TOMS client is pre-installed, enabling access to the platform instantly when booted.</p>
-        </div>
-        <div class="feature-box">
-          <img src="assets/img/Multi Dimensional/Group.svg" alt="Group" />
-          <h3>Group</h3>
-          <p>Templates can be used for batch deployments, ensuring fast and uniform terminal setups.</p>
-        </div>
-        <div class="feature-box">
-          <img src="assets/img/Multi Dimensional/Schedule Update.svg" alt="Scheduled Update" />
-          <h3>Scheduled Update</h3>
-          <p>Firmware and applications are pre-installed, making deployment quicker and more efficient.</p>
-        </div>
-        <div class="feature-box">
-          <img src="assets/img/Multi Dimensional/Single Device Management.svg" alt="Single Device Management" />
-          <h3>Single Device Management</h3>
-          <p>Pre-configured settings allow seamless transfers without manual intervention.</p>
-        </div>
-      </section>
-</ng-container>
-<ng-container *ngIf="title == 'firm'">
-    <!-- Content Section -->
-    <section class="deployment-content">
-        <div class="content-left">
-          <h2 class="content-title">Firmware and App</h2>
-          <img src="assets/img/Zero Touch Deployment/BlueIcon.svg" class="blue-icon" />
-          <p class="content-description">
-            Firmware automates the configuration and setup process for large-scale terminal deployments. This process reduces the need for manual intervention and ensures that each terminal is ready to use out of the box.
-          </p>
-          <p class="content-description">
-            With pre-installed configurations and batch deployment options, Firmware ensures that devices are configured consistently and reliably across various environments.
-          </p>
-          <p class="content-description">
-              With pre-installed configurations and batch deployment options, Firmware ensures that devices are configured consistently and reliably across various environments.
-          </p>
-          <p class="content-description">
-              With pre-installed configurations and batch deployment options, Firmware ensures that devices are configured consistently and reliably across various environments.
-          </p>
-        </div>
-        <div class="content-right">
-          <img src="assets/img/Firmware/Firmware.svg" alt="Firmware Illustration" class="content-image" />
-        </div>
-      </section>
+          <!-- Features Section -->
+          <section class="features-grid">
+            <div class="feature-box">
+              <img src="assets/img/Firmware/Remote Management.svg" alt="Remote Management" />
+              <h3>Remote Management</h3>
+              <p>The TOMS client is pre-installed, enabling access to the platform instantly when booted.</p>
+            </div>
+            <div class="feature-box">
+              <img src="assets/img/Firmware/Parameter Template.svg" alt="Parameter Template" />
+              <h3>Parameter Template</h3>
+              <p>Templates can be used for batch deployments, ensuring fast and uniform terminal setups.</p>
+            </div>
+            <div class="feature-box">
+              <img src="assets/img/Firmware/Auto Run.svg" alt="Auto Run" />
+              <h3>Auto Run</h3>
+              <p>Firmware and applications are pre-installed, making deployment quicker and more efficient.</p>
+            </div>
+            <div class="feature-box">
+              <img src="assets/img/Firmware/Kiosk Mode.svg" alt="Kiosk Mode" />
+              <h3>Kiosk Mode</h3>
+              <p>Pre-configured settings allow seamless transfers without manual intervention.</p>
+            </div>
+          </section>
+    </ng-container>
+    <ng-container *ngIf="title == 'device'">
+      <!-- Content Section -->
+      <section class="deployment-content">
+          <div class="content-left">
+            <h2 class="content-title">Device Monitoring</h2>
+            <img src="assets/img/Device Monitoring/BlueIcon.svg" class="blue-icon" />
+            <p class="content-description">
+              Device Monitoring automates the configuration and setup process for large-scale terminal deployments. This process reduces the need for manual intervention and ensures that each terminal is ready to use out of the box.
+            </p>
+            <p class="content-description">
+              With pre-installed configurations and batch deployment options, Device Monitoring ensures that devices are configured consistently and reliably across various environments.
+            </p>
+            <p class="content-description">
+                With pre-installed configurations and batch deployment options, Device Monitoring ensures that devices are configured consistently and reliably across various environments.
+            </p>
+            <p class="content-description">
+                With pre-installed configurations and batch deployment options, Device Monitoring ensures that devices are configured consistently and reliably across various environments.
+            </p>
+          </div>
+          <div class="content-right">
+            <img src="assets/img/Device Monitoring/Device-Moni.svg" alt="Device Monitoring Illustration" class="content-image" />
+          </div>
+        </section>
 
-      <!-- Features Section -->
-      <section class="features-grid">
-        <div class="feature-box">
-          <img src="assets/img/Firmware/Remote Management.svg" alt="Remote Management" />
-          <h3>Remote Management</h3>
-          <p>The TOMS client is pre-installed, enabling access to the platform instantly when booted.</p>
-        </div>
-        <div class="feature-box">
-          <img src="assets/img/Firmware/Parameter Template.svg" alt="Parameter Template" />
-          <h3>Parameter Template</h3>
-          <p>Templates can be used for batch deployments, ensuring fast and uniform terminal setups.</p>
-        </div>
-        <div class="feature-box">
-          <img src="assets/img/Firmware/Auto Run.svg" alt="Auto Run" />
-          <h3>Auto Run</h3>
-          <p>Firmware and applications are pre-installed, making deployment quicker and more efficient.</p>
-        </div>
-        <div class="feature-box">
-          <img src="assets/img/Firmware/Kiosk Mode.svg" alt="Kiosk Mode" />
-          <h3>Kiosk Mode</h3>
-          <p>Pre-configured settings allow seamless transfers without manual intervention.</p>
-        </div>
-      </section>
-</ng-container>
-<ng-container *ngIf="title == 'device'">
-  <!-- Content Section -->
-  <section class="deployment-content">
-      <div class="content-left">
-        <h2 class="content-title">Device Monitoring</h2>
-        <img src="assets/img/Device Monitoring/BlueIcon.svg" class="blue-icon" />
-        <p class="content-description">
-          Device Monitoring automates the configuration and setup process for large-scale terminal deployments. This process reduces the need for manual intervention and ensures that each terminal is ready to use out of the box.
-        </p>
-        <p class="content-description">
-          With pre-installed configurations and batch deployment options, Device Monitoring ensures that devices are configured consistently and reliably across various environments.
-        </p>
-        <p class="content-description">
-            With pre-installed configurations and batch deployment options, Device Monitoring ensures that devices are configured consistently and reliably across various environments.
-        </p>
-        <p class="content-description">
-            With pre-installed configurations and batch deployment options, Device Monitoring ensures that devices are configured consistently and reliably across various environments.
-        </p>
-      </div>
-      <div class="content-right">
-        <img src="assets/img/Device Monitoring/Device-Moni.svg" alt="Device Monitoring Illustration" class="content-image" />
-      </div>
-    </section>
+        <!-- Features Section -->
+        <section class="features-grid">
+          <div class="feature-box">
+            <img src="assets/img/Device Monitoring/Rich Chart.svg" alt="Rich Chart" />
+            <h3>Rich Chart</h3>
+            <p>The TOMS client is pre-installed, enabling access to the platform instantly when booted.</p>
+          </div>
+          <div class="feature-box">
+            <img src="assets/img/Device Monitoring/Geo Location.svg" alt="Geo Location" />
+            <h3>Geo Location</h3>
+            <p>Templates can be used for batch deployments, ensuring fast and uniform terminal setups.</p>
+          </div>
+          <div class="feature-box">
+            <img src="assets/img/Device Monitoring/History.svg" alt="History" />
+            <h3>History</h3>
+            <p>Firmware and applications are pre-installed, making deployment quicker and more efficient.</p>
+          </div>
+          <div class="feature-box">
+            <img src="assets/img/Device Monitoring/More Profile Info.svg" alt="More Profile Info" />
+            <h3>More Profile Info</h3>
+            <p>Pre-configured settings allow seamless transfers without manual intervention.</p>
+          </div>
+        </section>
+    </ng-container>
+    <ng-container *ngIf="title == 'remote'">
+      <!-- Content Section -->
+      <section class="deployment-content">
+          <div class="content-left">
+            <h2 class="content-title">Remote Assistance</h2>
+            <img src="assets/img/Remote Assistance/BlueIcon.svg" class="blue-icon" />
+            <p class="content-description">
+              Remote Assistance automates the configuration and setup process for large-scale terminal deployments. This process reduces the need for manual intervention and ensures that each terminal is ready to use out of the box.
+            </p>
+            <p class="content-description">
+              With pre-installed configurations and batch deployment options, Remote Assistance ensures that devices are configured consistently and reliably across various environments.
+            </p>
+            <p class="content-description">
+                With pre-installed configurations and batch deployment options, Remote Assistance ensures that devices are configured consistently and reliably across various environments.
+            </p>
+            <p class="content-description">
+                With pre-installed configurations and batch deployment options, Remote Assistance ensures that devices are configured consistently and reliably across various environments.
+            </p>
+          </div>
+          <div class="content-right">
+            <img src="assets/img/Remote Assistance/content.svg" alt="Remote Assistance Illustration" class="content-image" />
+          </div>
+        </section>
 
-    <!-- Features Section -->
-    <section class="features-grid">
-      <div class="feature-box">
-        <img src="assets/img/Device Monitoring/Rich Chart.svg" alt="Rich Chart" />
-        <h3>Rich Chart</h3>
-        <p>The TOMS client is pre-installed, enabling access to the platform instantly when booted.</p>
-      </div>
-      <div class="feature-box">
-        <img src="assets/img/Device Monitoring/Geo Location.svg" alt="Geo Location" />
-        <h3>Geo Location</h3>
-        <p>Templates can be used for batch deployments, ensuring fast and uniform terminal setups.</p>
-      </div>
-      <div class="feature-box">
-        <img src="assets/img/Device Monitoring/History.svg" alt="History" />
-        <h3>History</h3>
-        <p>Firmware and applications are pre-installed, making deployment quicker and more efficient.</p>
-      </div>
-      <div class="feature-box">
-        <img src="assets/img/Device Monitoring/More Profile Info.svg" alt="More Profile Info" />
-        <h3>More Profile Info</h3>
-        <p>Pre-configured settings allow seamless transfers without manual intervention.</p>
-      </div>
-    </section>
-</ng-container>
-<ng-container *ngIf="title == 'remote'">
-  <!-- Content Section -->
-  <section class="deployment-content">
-      <div class="content-left">
-        <h2 class="content-title">Remote Assistance</h2>
-        <img src="assets/img/Remote Assistance/BlueIcon.svg" class="blue-icon" />
-        <p class="content-description">
-          Remote Assistance automates the configuration and setup process for large-scale terminal deployments. This process reduces the need for manual intervention and ensures that each terminal is ready to use out of the box.
-        </p>
-        <p class="content-description">
-          With pre-installed configurations and batch deployment options, Remote Assistance ensures that devices are configured consistently and reliably across various environments.
-        </p>
-        <p class="content-description">
-            With pre-installed configurations and batch deployment options, Remote Assistance ensures that devices are configured consistently and reliably across various environments.
-        </p>
-        <p class="content-description">
-            With pre-installed configurations and batch deployment options, Remote Assistance ensures that devices are configured consistently and reliably across various environments.
-        </p>
-      </div>
-      <div class="content-right">
-        <img src="assets/img/Remote Assistance/content.svg" alt="Remote Assistance Illustration" class="content-image" />
-      </div>
-    </section>
+        <!-- Features Section -->
+        <section class="features-grid">
+          <div class="feature-box">
+            <img src="assets/img/Remote Assistance/Device Diagnostics.svg" alt="Device Diagnostics" />
+            <h3>Device Diagnostics</h3>
+            <p>The TOMS client is pre-installed, enabling access to the platform instantly when booted.</p>
+          </div>
+          <div class="feature-box">
+            <img src="assets/img/Remote Assistance/Remote Desktop.svg" alt="Remote Desktop" />
+            <h3>Remote Desktop</h3>
+            <p>Templates can be used for batch deployments, ensuring fast and uniform terminal setups.</p>
+          </div>
+          <div class="feature-box">
+            <img src="assets/img/Remote Assistance/Extract Logs.svg" alt="Extract Logs" />
+            <h3>Extract Logs</h3>
+            <p>Firmware and applications are pre-installed, making deployment quicker and more efficient.</p>
+          </div>
+          <div class="feature-box">
+            <img src="assets/img/Remote Assistance/Extract Files.svg" alt="Extract Files" />
+            <h3>Extract Files</h3>
+            <p>Pre-configured settings allow seamless transfers without manual intervention.</p>
+          </div>
+        </section>
+    </ng-container>
+    <ng-container *ngIf="title == 'custom'">
+      <!-- Content Section -->
+      <section class="deployment-content">
+          <div class="content-left">
+            <h2 class="content-title">Customization</h2>
+            <img src="assets/img/Customization/BlueIcon.svg" class="blue-icon" />
+            <p class="content-description">
+              Customization automates the configuration and setup process for large-scale terminal deployments. This process reduces the need for manual intervention and ensures that each terminal is ready to use out of the box.
+            </p>
+            <p class="content-description">
+              With pre-installed configurations and batch deployment options, Customization ensures that devices are configured consistently and reliably across various environments.
+            </p>
+            <p class="content-description">
+                With pre-installed configurations and batch deployment options, Customization ensures that devices are configured consistently and reliably across various environments.
+            </p>
+            <p class="content-description">
+                With pre-installed configurations and batch deployment options, Customization ensures that devices are configured consistently and reliably across various environments.
+            </p>
+          </div>
+          <div class="content-right">
+            <img src="assets/img/Customization/Cloud.svg" alt="Customization Illustration" class="content-image" />
+          </div>
+        </section>
 
-    <!-- Features Section -->
-    <section class="features-grid">
-      <div class="feature-box">
-        <img src="assets/img/Remote Assistance/Device Diagnostics.svg" alt="Device Diagnostics" />
-        <h3>Device Diagnostics</h3>
-        <p>The TOMS client is pre-installed, enabling access to the platform instantly when booted.</p>
-      </div>
-      <div class="feature-box">
-        <img src="assets/img/Remote Assistance/Remote Desktop.svg" alt="Remote Desktop" />
-        <h3>Remote Desktop</h3>
-        <p>Templates can be used for batch deployments, ensuring fast and uniform terminal setups.</p>
-      </div>
-      <div class="feature-box">
-        <img src="assets/img/Remote Assistance/Extract Logs.svg" alt="Extract Logs" />
-        <h3>Extract Logs</h3>
-        <p>Firmware and applications are pre-installed, making deployment quicker and more efficient.</p>
-      </div>
-      <div class="feature-box">
-        <img src="assets/img/Remote Assistance/Extract Files.svg" alt="Extract Files" />
-        <h3>Extract Files</h3>
-        <p>Pre-configured settings allow seamless transfers without manual intervention.</p>
-      </div>
-    </section>
-</ng-container>
-<ng-container *ngIf="title == 'custom'">
-  <!-- Content Section -->
-  <section class="deployment-content">
-      <div class="content-left">
-        <h2 class="content-title">Customization</h2>
-        <img src="assets/img/Customization/BlueIcon.svg" class="blue-icon" />
-        <p class="content-description">
-          Customization automates the configuration and setup process for large-scale terminal deployments. This process reduces the need for manual intervention and ensures that each terminal is ready to use out of the box.
-        </p>
-        <p class="content-description">
-          With pre-installed configurations and batch deployment options, Customization ensures that devices are configured consistently and reliably across various environments.
-        </p>
-        <p class="content-description">
-            With pre-installed configurations and batch deployment options, Customization ensures that devices are configured consistently and reliably across various environments.
-        </p>
-        <p class="content-description">
-            With pre-installed configurations and batch deployment options, Customization ensures that devices are configured consistently and reliably across various environments.
-        </p>
-      </div>
-      <div class="content-right">
-        <img src="assets/img/Customization/Cloud.svg" alt="Customization Illustration" class="content-image" />
-      </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features-grid">
-      <div class="feature-box">
-        <img src="assets/img/Customization/Customization_Icon.svg" alt="Customization_Icon" />
-        <h3>Customization_Icon</h3>
-        <p>Pre-configured settings allow seamless transfers without manual intervention.</p>
-      </div>
-    </section>
-</ng-container>
+        <!-- Features Section -->
+        <section class="features-grid">
+          <div class="feature-box">
+            <img src="assets/img/Customization/Customization_Icon.svg" alt="Customization_Icon" />
+            <h3>Customization_Icon</h3>
+            <p>Pre-configured settings allow seamless transfers without manual intervention.</p>
+          </div>
+        </section>
+    </ng-container>
+    </div>
+    <div class="col-1" style="display: flex;align-content: center;">
+        <button class="right-arrow" (click)="nextSlide()">
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+    </div>
+</div>
   </div>
+
+<section class="free-trial-area pb-100 bg-f4f5fe">
+</section>
+<app-landing-footer></app-landing-footer>
