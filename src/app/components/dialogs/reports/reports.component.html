@@ -38,7 +38,14 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of paginatedDevices">
-          <td *ngFor="let key of keys">{{ item[key] }}</td>
+          <td *ngFor="let key of keys">
+            <ng-container *ngIf="key === 'receivedTime'; else defaultCell">
+              {{ item[key] | date: 'yyyy-MM-dd' }}
+            </ng-container>
+            <ng-template #defaultCell>
+              {{ item[key] }}
+            </ng-template>
+          </td>
         </tr>
       </tbody>
     </table>

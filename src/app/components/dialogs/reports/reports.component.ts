@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { SharedServices } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-reports-dialog',
@@ -14,12 +15,13 @@ export class ReportsDialogComponent {
   itemsPerPage = 5;
   totalPages = 1;
   itemsPerPageOptions = [5, 10, 15];
-  constructor(public dialogRef: MatDialogRef<ReportsDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any[]) {
+  constructor(public dialogRef: MatDialogRef<ReportsDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any[],private shared:SharedServices) {
     if (data && data.length) {
       this.dataArray = data;
       this.keys = Object.keys(data[0]);
       this.hasData = true;
     }
+    this.shared.setSidebarState(false);
   }
 
   ngOnInit(): void {
@@ -61,5 +63,9 @@ export class ReportsDialogComponent {
   get paginatedDevices(): any[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     return this.data.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  ngOnDestroy(){
+    this.shared.setSidebarState(true);
   }
 }
