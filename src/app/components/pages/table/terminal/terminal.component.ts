@@ -24,9 +24,14 @@ export class TerminalComponent implements OnInit {
   views = true;
   insideView = false;
   selectedDevice:any;
-  columns: string[] = ['Serial Number', 'Model', 'Status'];   // 'Activation Time'
-  columns1: string[] = ['Serial Number', 'Model', 'Status'];  // 'Activation Time'
-  columnsVisibility = [true, true, true, true, true,true];
+//   columns: string[] = ['Serial Number', 'Model', 'Status'];   // 'Activation Time'
+//   columns1: string[] = ['Serial Number', 'Model', 'Status'];  // 'Activation Time'
+//   columnsVisibility = [true, true, true, true, true,true];
+columns = [
+    { name: 'Serial Number', visible: true },
+    { name: 'Model', visible: true },
+    { name: 'Status', visible: true },
+  ];
   filteredData: TerminalElement[] = []; // Your original data
   terminalElements: TerminalElement[] = []; // Data to display
   data: TerminalElement[] = [];
@@ -51,7 +56,7 @@ export class TerminalComponent implements OnInit {
   }
 
   toggleColumn(index: number) {
-    this.columnsVisibility[index] = !this.columnsVisibility[index];
+    this.columns[index].visible = !this.columns[index].visible;
   }
 
   clearValues() {
@@ -177,6 +182,10 @@ export class TerminalComponent implements OnInit {
     return this.paginatedDevices.filter(device => device.selected).length;
   }
 
+  updateItemsPerPage(): void {
+    this.currentPage = 1;
+    this.updatePagination();
+}
 
   applyFilter() {
     this.currentPage = 1; // Reset to first page when filtering

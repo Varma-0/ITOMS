@@ -1,253 +1,131 @@
-<div class="container-fluid" *ngIf="views">
-  <!-- Header Section -->
-  <div class="row align-items-center py-3">
-    <div class="col">
-      <h2 class="mb-0">Terminal <span class="badge bg-grey text-dark fs-6">{{data.length}}</span></h2>
-    </div>
-  </div>
-
-  <!-- Buttons Section -->
-  <div class="row align-items-center">
-    <div class="col d-flex flex-wrap">
-      <button class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
-        <span class="material-symbols-outlined">schedule</span>
-        <span>Device Event Log</span>
-      </button>
-      <button class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
-        <span class="material-symbols-outlined">download</span>
-        <span>Export</span>
-      </button>
-      <button class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
-        <span class="material-symbols-outlined">location_on</span>
-        <span>Device Location</span>
-      </button>
-      <button class="btn btn-outline-primary butt d-flex justify-content-center align-items-center">
-        <span class="material-symbols-outlined">edit</span>
-        <span>TID Batch Modification</span>
-      </button>
-    </div>
-  </div>
-
-  <hr style="border: 1px solid grey; opacity: 0.1;">
-
-  <!-- Filter and Search Section -->
-<div class="row mb-4">
-  <div class="col-md-2">
-    <input type="text" class="form-control" placeholder="Device SN / TID" [(ngModel)]="searchText" (input)="applyFilter()">
-  </div>
-  <div class="col-md-2">
-    <select class="form-select" [(ngModel)]="selectedOption1" (change)="applyFilter()">
-      <option value="" disabled selected>Status</option>
-      <option *ngFor="let option of optionStatus" [value]="option">{{ option }}</option>
-    </select>
-  </div>
-  <div class="col-md-2">
-    <select class="form-select" [(ngModel)]="selectedOption2" (change)="applyFilter()">
-      <option value="" disabled selected>Model</option>
-      <option *ngFor="let option of optionModel" [value]="option">{{ option }}</option>
-    </select>
-  </div>
-  <div class="col-md-2 d-flex">
-    <button *ngIf="searchText || selectedOption1 || selectedOption2 " class="btn btn-primary me-2" style="height: 40px;" (click)="clearValues()">
-      <i class="bx bx-x-circle"></i>
-    </button>
-    <button mat-icon-button [matMenuTriggerFor]="filterMenu">
-      <mat-icon>filter_list</mat-icon>
-    </button>
-    <mat-menu #filterMenu="matMenu">
-      <button mat-menu-item *ngFor="let column of columns; let i = index">
-        <mat-checkbox [checked]="columnsVisibility[i]" (change)="toggleColumn(i)">
-          {{ column }}
-        </mat-checkbox>
-      </button>
-    </mat-menu>
-  </div>
-</div>
-
-
-<!-- 
-  <div class="row align-items-center"
-  [ngClass]="{'bg-light-grey': getSelectedCount() === 0,'cursor-not-allowed': getSelectedCount() === 0}">
-<div class="col-md-2 sel">
- <span>{{ getSelectedCount() }} Selected</span>
-</div>
-<div class="col d-inline-flex text-start">
- <div class="button-group">
-   <button class="btn btn-outline-primary"
-           [disabled]="getSelectedCount() === 0"
-           [ngClass]="{'btn-active': getSelectedCount() > 0}">
-     <mat-icon>lock</mat-icon> Lock
-   </button>
-   <button class="btn btn-outline-primary"
-           [disabled]="getSelectedCount() === 0"
-           [ngClass]="{'btn-active': getSelectedCount() > 0}">
-     <mat-icon>lock_open</mat-icon> Unlock
-   </button>
-   <button class="btn btn-outline-primary"
-           [disabled]="getSelectedCount() === 0"
-           [ngClass]="{'btn-active': getSelectedCount() > 0}">
-     <mat-icon>group_add</mat-icon> Add to Group
-   </button>
- </div>
-</div>
-</div> -->
-
-<!-- Table Section -->
-<!-- <div class="table-responsive">
-  <table class="table table-hover table-bordered">
-    <thead class="table-light">
-      <tr>
-        <th>
-          <div class="checkbox">
-            <input class="inp-cbx" id="cbx" type="checkbox" style="display: none;" (change)="toggleSelectAll($event)"/>
-            <label class="cbx" for="cbx">
-                <span>
-                    <svg width="12px" height="10px" viewbox="0 0 12 10">
-                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                    </svg>
-                </span>
-            </label>
-        </div>
-        </th>
-        <th *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">
-          {{ column }}
-        </th>
-      </tr>
-    </thead>
-    <tbody class="dataRowColor">
-      <tr *ngFor="let device of paginatedDevices" (click)="row(device)">
-        <td>
-          <div class="checkbox" (click)="$event.stopPropagation()">
-            <input class="inp-cbx" id="cbx{{device.id}}" type="checkbox" style="display: none;"  [(ngModel)]="device.selected"/>
-            <label class="cbx" for="cbx{{device.id}}">
-                <span>
-                    <svg width="12px" height="10px" viewbox="0 0 12 10">
-                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                    </svg>
-                </span>
-            </label>
-        </div>
-        </td>
-        <td *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">
-          <ng-container [ngSwitch]="column">
-            <span *ngSwitchCase="'Serial Number'">{{ device.serialNumber || 'N/A' }}</span>
-            <span *ngSwitchCase="'Model'">{{ device.modelName || 'N/A' }}</span>
-            <span *ngSwitchCase="'Status'">{{ device.status || 'N/A' }}</span>
-            <span *ngSwitchDefault>{{ 'N/A' }}</span>
-          </ng-container>
-        </td>
-        <td>
-          <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="edit(device)">
-              <mat-icon>edit</mat-icon>
-              <span>Edit</span>
-            </button>
-            <button mat-menu-item (click)="openDeleteDialog(device)">
-              <mat-icon>delete</mat-icon>
-              <span>Delete</span>
-            </button>
-          </mat-menu>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div> -->
-<div class="action-bar"  [ngClass]="{'bg-light-grey': getSelectedCount() === 0,'cursor-not-allowed': getSelectedCount() === 0}">
-  <span>{{ getSelectedCount() }} Selected</span>
-  <button class="btn-primary" [disabled]=" getSelectedCount() === 0" [ngClass]="{'btn-active': getSelectedCount() > 0,'cursor-not-allowed': getSelectedCount() === 0}">
-    <i class='bx bx-lock'></i>  Lock
-  </button>
-  <button class="btn-primary" [disabled]=" getSelectedCount() === 0" [ngClass]="{'btn-active': getSelectedCount() > 0,'cursor-not-allowed': getSelectedCount() === 0}">
-    <i class='bx bx-lock-open'></i>  Unlock
-  </button>
-</div>
-<table>
-  <thead>
-    <tr>
-      <th>
-        <div class="checkbox">
-          <input class="inp-cbx" id="cbx" type="checkbox" style="display: none;" (change)="toggleSelectAll($event)"/>
-          <label class="cbx" for="cbx">
-              <span>
-                  <svg width="12px" height="10px" viewbox="0 0 12 10">
-                      <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                  </svg>
-              </span>
-          </label>
-        </div>
-      </th>
-      <th *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">
-        {{ column }}
-      </th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngIf="paginatedDevices.length === 0">
-      <td colspan="5" class="no-data">No Data</td>
-    </tr>
-    <tr *ngFor="let device of paginatedDevices" (click)="row(device)">
-      <td>
-        <div class="checkbox" (click)="$event.stopPropagation()">
-          <input class="inp-cbx" id="cbx{{device.id}}" type="checkbox" style="display: none;"  [(ngModel)]="device.selected"/>
-          <label class="cbx" for="cbx{{device.id}}">
-              <span>
-                  <svg width="12px" height="10px" viewbox="0 0 12 10">
-                      <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                  </svg>
-              </span>
-          </label>
+<div class="admin-panel" *ngIf="views">
+    <div class="fixed-header">
+      <div class="breadcrumb-area">
+        <h1 style="color: white;">Terminal <span class="badge">{{data.length}}</span></h1>
+        <ol class="breadcrumb">
+          <li>TMS</li>
+          <li>Terminal</li>
+        </ol>
       </div>
-      </td>
-      <td *ngFor="let column of columns; let i = index" [hidden]="!columnsVisibility[i]">
-        <ng-container [ngSwitch]="column">
-          <span *ngSwitchCase="'Serial Number'">{{ device.serialNumber || 'N/A' }}</span>
-          <span *ngSwitchCase="'Model'">{{ device.modelName || 'N/A' }}</span>
-          <span *ngSwitchCase="'Status'">{{ device.status || 'N/A' }}</span>
-          <span *ngSwitchDefault>{{ 'N/A' }}</span>
-        </ng-container>
-      </td>
-      <td>
-        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
-          <mat-icon>more_vert</mat-icon>
+
+      <div class="controls-container">
+        <div class="button-actions">
+          <button class="action-button">
+            <i class="material-icons">schedule</i>
+            <span>Device Event Log</span>
+          </button>
+          <button class="action-button">
+            <i class="material-icons">download</i>
+            <span>Export</span>
+          </button>
+          <button class="action-button">
+            <i class="material-icons">location_on</i>
+            <span>Device Location</span>
+          </button>
+          <button class="action-button">
+            <i class="material-icons">edit</i>
+            <span>TID Batch Modification</span>
+          </button>
+        </div>
+
+        <div class="filters-container">
+          <input type="text" class="search-input" placeholder="Device SN / TID" [(ngModel)]="searchText" (input)="applyFilter()">
+
+          <div class="select-container">
+            <select class="custom-select" [(ngModel)]="selectedOption1" (change)="applyFilter()">
+              <option value="" disabled selected>Status</option>
+              <option *ngFor="let option of optionStatus" [value]="option">{{option}}</option>
+            </select>
+          </div>
+
+          <div class="select-container">
+            <select class="custom-select" [(ngModel)]="selectedOption2" (change)="applyFilter()">
+              <option value="" disabled selected>Model</option>
+              <option *ngFor="let option of optionModel" [value]="option">{{option}}</option>
+            </select>
+          </div>
+
+          <button *ngIf="searchText || selectedOption1 || selectedOption2 " class="btn btn-primary me-2" style="height: 40px;" (click)="clearValues()">
+            <i class="bx bx-x-circle"></i>
+          </button>
+
+          <div class="column-manager">
+            <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
+              <i class="material-icons">filter_list</i> Columns
+            </button>
+            <div class="column-list" #columnList>
+              <label *ngFor="let column of columns; let i = index">
+                <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(i)">
+                {{ column.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-bar" [ngClass]="{'bg-light-grey': getSelectedCount() === 0, 'cursor-not-allowed': getSelectedCount() === 0}">
+        <span>{{ getSelectedCount() }} Selected</span>
+        <button class="action-button-lock" [disabled]="getSelectedCount() === 0">
+          <i class="material-icons">lock</i>
+          <span>Lock</span>
         </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="edit(device)">
-            <mat-icon>edit</mat-icon>
-            <span>Edit</span>
-          </button>
-          <button mat-menu-item (click)="openDeleteDialog(device)">
-            <mat-icon>delete</mat-icon>
-            <span>Delete</span>
-          </button>
-        </mat-menu>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        <button class="action-button-lock" [disabled]="getSelectedCount() === 0">
+          <i class="material-icons">lock_open</i>
+          <span>Unlock</span>
+        </button>
+      </div>
+    </div>
 
+    <div class="table-container">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>
+              <input type="checkbox" (change)="toggleSelectAll($event)">
+            </th>
+            <th *ngIf="columns[0].visible">Serial Number</th>
+            <th *ngIf="columns[1].visible">Model</th>
+            <th *ngIf="columns[2].visible">Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let device of paginatedDevices" (click)="row(device)">
+            <td>
+              <input type="checkbox" [(ngModel)]="device.selected" (click)="$event.stopPropagation()">
+            </td>
+            <td *ngIf="columns[0].visible">{{device.serialNumber}}</td>
+            <td *ngIf="columns[1].visible">{{device.modelName}}</td>
+            <td *ngIf="columns[2].visible">
+              <span class="status-badge" [ngClass]="device.status.toLowerCase()">
+                {{device.status}}
+              </span>
+            </td>
+            <td class="actions-cell">
+              <button class="icon-button">
+                <i class="material-icons">edit</i>
+              </button>
+              <button class="icon-button" style="color: red;">
+                <i class="material-icons">delete</i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <!-- Pagination Section -->
-  <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-      <li class="page-item" [class.disabled]="currentPage === 1">
-        <a class="page-link" href="javascript:void(0);" (click)="previousPage()">Previous</a>
-      </li>
-      <li *ngFor="let page of pages" class="page-item" [class.active]="page === currentPage">
-        <a class="page-link" href="javascript:void(0);" (click)="goToPage(page)">{{ page }}</a>
-      </li>
-      <li class="page-item" [class.disabled]="currentPage === totalPages">
-        <a class="page-link" href="javascript:void(0);" (click)="nextPage()">Next</a>
-      </li>
-    </ul>
-  </nav>
-</div>
-
-<div style="height: 50px;" *ngIf="views"></div>
-
-<ng-container *ngIf="insideView">
-  <app-terminal-view [device]="selectedDevice" [view]="views" [insideview]="insideView" (viewChange)="onViewChange($event)" (insideviewChange)="onInsideViewChange($event)"></app-terminal-view>
-</ng-container>
+    <div class="pagination">
+        <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+        <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+        <div class="items-per-page">
+          <label for="itemsPerPage">Items per page:</label>
+          <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="updateItemsPerPage()">
+            <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+      </div>
+  </div>
+  <ng-container *ngIf="insideView">
+    <app-terminal-view [device]="selectedDevice" [view]="views" [insideview]="insideView" (viewChange)="onViewChange($event)" (insideviewChange)="onInsideViewChange($event)"></app-terminal-view>
+  </ng-container>
