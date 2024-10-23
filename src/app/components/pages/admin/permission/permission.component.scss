@@ -21,6 +21,12 @@ input {
   border-radius: 4px;
   margin-left: 10px;
 }
+thead {
+    position: sticky;
+    top: 0;
+    background-color: #fff; /* Ensure the header has a background when it sticks */
+    z-index: 1; /* Ensures header stays above table content */
+  }
 table {
   width: 100%;
   border-collapse:collapse;
@@ -42,7 +48,7 @@ td{
 
 tr {
   border-bottom: 2px solid rgb(255, 249, 249);
-  
+
 }
 
 .status-active {
@@ -112,4 +118,3 @@ tr {
 .pagination-select:focus {
   border-color: #007bff;
 }
- 

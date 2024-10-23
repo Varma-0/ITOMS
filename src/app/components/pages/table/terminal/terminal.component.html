@@ -102,10 +102,10 @@
               </span>
             </td>
             <td class="actions-cell">
-              <button class="icon-button">
+              <button class="icon-button" (click)="$event.stopPropagation();edit(device)">
                 <i class="material-icons">edit</i>
               </button>
-              <button class="icon-button" style="color: red;">
+              <button class="icon-button" style="color: red;" (click)="$event.stopPropagation();openDeleteDialog(device)">
                 <i class="material-icons">delete</i>
               </button>
             </td>

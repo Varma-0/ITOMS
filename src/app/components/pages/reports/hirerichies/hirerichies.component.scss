@@ -13,7 +13,12 @@
     color: grey;
     font-style: italic;
   }
-
+  thead {
+    position: sticky;
+    top: 0;
+    background-color: #fff; /* Ensure the header has a background when it sticks */
+    z-index: 1; /* Ensures header stays above table content */
+  }
   h1 {
     color: #333;
     margin-bottom: 10px;

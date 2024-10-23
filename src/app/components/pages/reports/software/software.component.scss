@@ -23,6 +23,13 @@ $danger-red: #f44336;
   }
 }
 
+thead {
+    position: sticky;
+    top: 0;
+    background-color: #fff; /* Ensure the header has a background when it sticks */
+    z-index: 1; /* Ensures header stays above table content */
+  }
+
 /* Page Header */
 /* Page Header Styling */
 .breadcrumb-area {
@@ -201,7 +208,6 @@ $danger-red: #f44336;
   // flex: 1;
   overflow-y: auto;
   background-color: $background-white;
-  padding: 20px;
 }
 
 .user-table {
