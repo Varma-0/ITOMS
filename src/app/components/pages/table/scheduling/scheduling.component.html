@@ -97,70 +97,56 @@
           <button class="btn-primary btn-icon" (click)="openCreateTerminalDialog(true)"><i class="bx bx-plus"></i></button>
           <button class="btn-primary btn-icon" (click)="openCreateTerminalDialog(false)"><i class="bx bx-trash"></i></button>
         </div>
+    
         <div class="action-bar">
-          <span>{{ selectedCount }} Selected</span>
-          <button class="btn-danger" [disabled]="selectedCount === 0">
-            <i class='bx bx-trash' [ngStyle]="{ 'color': selectedCount === 0 ? '#6c757d' : 'white' }"> </i> Delete
+          <span>{{ getSelectedCount() }} Selected</span>
+          <button class="btn-danger" [disabled]="getSelectedCount() === 0">
+            <i class='bx bx-trash' [ngStyle]="{ 'color': getSelectedCount() === 0 ? '#6c757d' : 'white' }"></i> Delete
           </button>
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th>
-                <!-- <input type="checkbox" (change)="masterToggle()" [checked]="isAllSelected()"> -->
-                <div class="checkbox">
-                    <input class="inp-cbx" id="cbx" type="checkbox" style="display: none;" (change)="toggleSelectAll($event)" [checked]="isAllSelected()"/>
-                    <label class="cbx" for="cbx">
-                        <span>
-                            <svg width="12px" height="10px" viewbox="0 0 12 10">
-                                <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                            </svg>
-                        </span>
-                    </label>
-                </div>
-              </th>
-              <th>SN</th>
-              <!-- <th>Model</th> -->
-              <th>Status</th>
-              <th>Online Status</th>
-              <th>Binding Time</th>
-              <th>Process</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody *ngFor="let terminal of filteredTerminals">
-            <tr *ngIf="filteredTerminals.length === 0">
-              <td colspan="5" class="no-data">No Data</td>
-            </tr>
-            <tr *ngIf="terminal.deleted == false">
-              <td>
-                <!-- <input type="checkbox" 
-                       (change)="toggleSelection(terminal)"
-                       [checked]="isSelected(terminal)"> -->
-
-                       <div class="checkbox">
-                        <input class="inp-cbx" id="cbx.terminal" type="checkbox" style="display: none;" (change)="toggleSelection(terminal)" [checked]="isSelected(terminal)"/>
-                        <label class="cbx" for="cbx.terminal">
-                            <span>
-                                <svg width="12px" height="10px" viewbox="0 0 12 10">
-                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                                </svg>
-                            </span>
-                        </label>
-                    </div>
-              </td>
-              <td>{{ terminal.serialNumber }}</td>
-              <!-- <td>{{ terminal.modelName }}</td> -->
-              <td>{{ terminal.status }}</td>
-              <td>{{ terminal.onlineStatus }}</td>
-              <td>{{ terminal.bindingTime.split('T')[0] }}</td>
-              <td>{{ terminal.processPercentage }}</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+    
+        <div class="table-container">
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th>
+                  <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="isAllSelected()">
+                </th>
+                <th *ngIf="columns[0].visible">SN</th>
+                <th *ngIf="columns[1].visible">Status</th>
+                <th *ngIf="columns[2].visible">Online Status</th>
+                <th *ngIf="columns[3].visible">Binding Time</th>
+                <th *ngIf="columns[4].visible">Process</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let terminal of paginatedTerminals">
+                <td>
+                  <input type="checkbox" [(ngModel)]="terminal.selected" (change)="toggleSelection(terminal)" (click)="$event.stopPropagation()">
+                </td>
+                <td *ngIf="columns[0].visible">{{ terminal.serialNumber }}</td>
+                <td *ngIf="columns[1].visible">{{ terminal.status }}</td>
+                <td *ngIf="columns[2].visible">{{ terminal.onlineStatus }}</td>
+                <td *ngIf="columns[3].visible">{{ terminal.bindingTime.split('T')[0] }}</td>
+                <td *ngIf="columns[4].visible">{{ terminal.processPercentage }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    
+        <div class="pagination">
+          <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+          <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+          <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+          <div class="items-per-page">
+            <label for="itemsPerPage">Items per page:</label>
+            <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="updateItemsPerPage()">
+              <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+            </select>
+          </div>
+        </div>
       </div>
-    </div>
+    </div>    
     <div *ngIf="selectedTab === 'settings'">
       <mat-card class="cardInS">
         <mat-card-title>

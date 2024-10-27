@@ -60,6 +60,18 @@ export class SchedulingComponent {
     { date: '2024-09-05', value: 0 },
     { date: '2024-09-06', value: 0 }
   ];
+  columns = [
+    { name: 'SN', visible: true },
+    { name: 'Status', visible: true },
+    { name: 'Online Status', visible: true },
+    { name: 'Binding Time', visible: true },
+    { name: 'Process', visible: true }
+  ];
+  currentPage = 1;
+itemsPerPage = 5;
+itemsPerPageOptions = [5, 10, 20, 50];
+totalPages: number;
+paginatedTerminals: any[] = [];
   searchTerm: string = '';
   selectedTerminals: Set<any> = new Set();
 
@@ -79,6 +91,7 @@ export class SchedulingComponent {
 
   ngOnInit() {
     this.loadDeploymentsData();
+    // this.updatePagination();
   }
 
   loadDeploymentsData() {
@@ -93,6 +106,7 @@ export class SchedulingComponent {
         // console.log("qdoog",response);
         this.deployments = response.event.eventData;
         this.filteredDeployments = this.deployments;
+        this.updatePagination();
       }
     )
   }
@@ -112,6 +126,44 @@ export class SchedulingComponent {
       this.filteredDeployments = this.deployments;
     }
   }
+
+  toggleColumn(index: number) {
+    console.log(this.columns[index])
+  }
+
+  getSelectedCount() {
+    return this.paginatedTerminals.filter(device => device.selected).length;
+  }
+
+  updatePagination() {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.paginatedTerminals = this.filteredTerminals.slice(start, end);
+    this.totalPages = Math.ceil(this.filteredTerminals.length / this.itemsPerPage);
+  }
+  
+  // Change items per page
+  updateItemsPerPage() {
+    this.currentPage = 1; // Reset to first page
+    this.updatePagination();
+  }
+  
+  // Go to previous page
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
+  }
+  
+  // Go to next page
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
+    }
+  }
+  
 
   openCreateTerminalDialog(edit?: any,data?: any): void {
     const dialogRef = this.dialog.open(DevicesFormComponent, {
@@ -316,6 +368,7 @@ export class SchedulingComponent {
           this.settingsInTerminal = [];
           this.filteredTerminals = this.settingsInTerminal
         }
+        this.updatePagination();
       }
     );
   }
@@ -420,6 +473,7 @@ export class SchedulingComponent {
       device.serialNumber?.toLowerCase().includes(this.searchTerms?.toLowerCase()) &&
       (this.statusFilter === '' || device.status === this.statusFilter)
     );
+    this.updatePagination();
   }
 
   masterToggle(): void {

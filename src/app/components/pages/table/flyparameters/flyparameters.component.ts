@@ -30,6 +30,10 @@ this.showDynamicKeys = true;
   selectedItem: any;
   labelsm: string[] = ['Pending Publish','Published','Downloaded','Download failed'];
   seriesm: number[] = [0,0,0,0];
+  pageSize = 5; 
+  pageSizeOptions = [5, 10, 15, 20]; 
+  currentPage = 1;
+  totalPages = 1;
   colors: string[] = [
     '#FF6B6B',  // Bright Red
     '#4ECDC4',  // Teal
@@ -38,6 +42,7 @@ this.showDynamicKeys = true;
   ];
   showDynamicKeys = true;
   filteredDevices= [];
+  paginatedDevices= [];
   statusFilter = '';
   devices = [];
     profile: any;
@@ -54,6 +59,32 @@ this.showDynamicKeys = true;
       });
     // Initialize filteredDeployments with all deployments on load
     this.getPacks();
+    this.updatePagination();
+  }
+
+  updatePagination() {
+    this.totalPages = Math.ceil(this.filteredDevices.length / this.pageSize);
+    this.paginateDevices();
+  }
+
+  paginateDevices() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedDevices = this.filteredDevices.slice(startIndex, endIndex);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.paginateDevices();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.paginateDevices();
+    }
   }
 
   getPacks(){
@@ -276,6 +307,7 @@ this.showDynamicKeys = true;
           this.seriesm.push(data.jobsUpdateStatistics.published);
           this.seriesm.push(data.jobsUpdateStatistics.downloaded);
           this.seriesm.push(data.jobsUpdateStatistics.downloadFailed);
+          this.updatePagination();
         }
       )
   }

@@ -78,47 +78,62 @@
               <button class="menu-button"><i class="bx bx-menu"></i></button>
             </div>
 
-            <table class="device-table">
-              <thead>
-                <tr>
-                  <th class="th-device-sn">Device SN</th>
-                  <th class="th-file-status">Status</th>
-                  <th class="th-publish-time">Publish Time</th>
-                  <th class="th-publish-time">Updated Time</th>
-                  <th class="th-operation">Operation</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngIf="filteredDevices.length === 0">
+            <div class="table-container">
+              <table class="device-table">
+                <thead class="the">
+                  <tr>
+                    <th style="text-align: left;" >Device SN</th>
+                    <th style="text-align: left;" >Status</th>
+                    <th >Publish Time</th>
+                    <th >Updated Time</th>
+                    <th >Operation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="paginatedDevices.length === 0">
                     <td colspan="5" class="no-data-message">No data available</td>
-                </tr>
-                <tr *ngFor="let device of filteredDevices" style="height: 50px;">
-                  <td class="td-device-sn" style="white-space: nowrap;">{{ device.serialNumber }}</td>
-                  <td class="td-file-status" style="white-space: nowrap;">
-                    <span>
-                      {{ device.jobStatus  }}
-                    </span>
-                  </td>
-                  <td class="td-publish-time" style="white-space: nowrap;">{{ device.createdBy.ts | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-                  <td class="td-publish-time" style="white-space: nowrap;">{{ device.updatedBy.ts | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-                  <td class="td-operation">
-                    <button mat-icon-button [matMenuTriggerFor]="menu">
-                      <i class="bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                      <button mat-menu-item (click)="edit()">
-                        <mat-icon>edit</mat-icon>
-                        Edit
+                  </tr>
+                  <tr *ngFor="let device of paginatedDevices" style="height: 50px;">
+                    <td style="text-align: left;"  class="td-device-sn">{{ device.serialNumber }}</td>
+                    
+                    <td style="text-align: left;" class="td-file-status">
+                      <span class="status-badge" [ngClass]="device.jobStatus.toLowerCase()">{{ device.jobStatus }}</span>
+                    </td>
+                    
+                    <td class="td-publish-time">{{ device.createdBy.ts | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                    
+                    <td class="td-publish-time">{{ device.updatedBy.ts | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                    
+                    <td class="actions-cell td-operation">
+                      <button class="icon-button" mat-icon-button [matMenuTriggerFor]="menu" data-tooltip="More Actions">
+                        <i class="bx bx-dots-vertical-rounded"></i>
                       </button>
-                      <button mat-menu-item (click)="delete(device.id)">
-                        <mat-icon>delete</mat-icon>
-                        Delete
-                      </button>
-                    </mat-menu>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="edit()">
+                          <mat-icon>edit</mat-icon>
+                          Edit
+                        </button>
+                        <button mat-menu-item (click)="delete(device.id)">
+                          <mat-icon>delete</mat-icon>
+                          Delete
+                        </button>
+                      </mat-menu>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="pagination">
+                <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+                <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+                <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+                <div class="items-per-page">
+                  <label for="itemsPerPage">Items per page:</label>
+                  <select id="itemsPerPage" [(ngModel)]="pageSize" (change)="updatePagination()">
+                    <option *ngFor="let option of pageSizeOptions" [value]="option">{{ option }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>            
           </div>
           <div *ngIf="selectedTab === 'emptyData'">
             <div class="centered-div">

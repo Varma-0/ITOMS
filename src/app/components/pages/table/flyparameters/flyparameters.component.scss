@@ -1,4 +1,13 @@
-
+$primary-blue: #1976d2;
+$secondary-blue: #1565c0;
+$background-light: #f5f7fa;
+$background-white: #ffffff;
+$text-dark: #333333;
+$text-light: #ffffff;
+$border-color: #e0e0e0;
+$success-green: #4caf50;
+$warning-orange: #ff9800;
+$danger-red: #f44336;
 
 .container {
     display: flex;
@@ -67,6 +76,84 @@
 
   .deployment-item {
     margin-bottom: 10px;
+  }
+
+  thead tr th {
+    background-color: #e7f1ff !important;
+  }
+
+  @mixin button-style {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  
+    &:hover {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    // position: sticky;
+    // bottom: 0;
+  }
+
+  .pagination-button {
+    @include button-style;
+    background-color: $background-white;
+    color: $primary-blue;
+    margin: 0 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: $primary-blue;
+      color: $text-light;
+    }
+  }
+
+  .pagination-info {
+    margin: 0 10px;
+    font-size: 14px;
+    color: $text-dark;
+  }
+
+  .items-per-page {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+
+    label {
+      margin-right: 10px;
+      font-size: 14px;
+      color: $text-dark;
+    }
+
+    select {
+      padding: 5px 10px;
+      border: 1px solid $border-color;
+      border-radius: 4px;
+      font-size: 14px;
+      color: $text-dark;
+      background-color: $background-white;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-blue;
+      }
+    }
   }
 
   .grp {
