@@ -67,11 +67,15 @@
         <span>{{ getSelectedCount() }} Selected</span>
         <button class="action-button-lock" [disabled]="getSelectedCount() === 0">
           <i class="material-icons">lock</i>
-          <span>Lock</span>
+          <span>Block</span>
         </button>
         <button class="action-button-lock" [disabled]="getSelectedCount() === 0">
           <i class="material-icons">lock_open</i>
-          <span>Unlock</span>
+          <span>Unblock</span>
+        </button>
+        <button class="action-button-lock" [disabled]="getSelectedCount() === 0">
+          <i class="material-icons">layers</i>
+          <span>Add to group</span>
         </button>
       </div>
     </div>
