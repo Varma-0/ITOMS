@@ -11,6 +11,15 @@
   background-color: transparent;
 }
 
+.file-upload-container.disabled {
+  pointer-events: none;
+  opacity: 0.6; /* or any styling to show disabled */
+}
+
+.disabled-text {
+  color: gray; /* to show text in disabled color */
+}
+
 h4.mb-0::before {
   content: "|";
   flex-grow: 1;

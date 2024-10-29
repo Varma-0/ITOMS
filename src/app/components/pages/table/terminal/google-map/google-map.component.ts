@@ -7,8 +7,8 @@ import { GoogleMap } from '@angular/google-maps';
   styleUrls: ['./google-map.component.scss']
 })
 export class GoogleMapComponent implements AfterViewInit {
-  @Input() latitude: number = 28.592294;
-  @Input() longitude: number = 76.992886;
+  @Input() latitude: number;
+  @Input() longitude: number;
 
   ngAfterViewInit(): void {
     this.loadMap();

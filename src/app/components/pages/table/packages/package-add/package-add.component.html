@@ -11,7 +11,7 @@
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <mat-horizontal-stepper labelPosition="bottom" [selectedIndex]="currentStep - 1" #stepper>
+        <mat-horizontal-stepper labelPosition="bottom" [selectedIndex]="currentStep - 1" #stepper linear>
           <mat-step *ngFor="let step of steps; let i = index" [completed]="currentStep > i + 1">
             <ng-template matStepLabel>{{ step }}</ng-template>
           </mat-step>
@@ -52,10 +52,12 @@
       <div *ngIf="currentStep === 1">
         <div *ngIf="!isUploaded && !isUploading; else uploadingOrUploaded" 
              class="file-upload-container" 
-             (dragover)="onDragOver($event)"
-             (dragleave)="onDragLeave($event)" 
-             (drop)="onDrop($event)" 
-             (click)="fileInput.click()">
+             [class.disabled]="!selectedType"
+             (dragover)="selectedType ? onDragOver($event) : null"
+             (dragleave)="selectedType ? onDragLeave($event) : null"
+             (drop)="selectedType ? onDrop($event) : null"
+             (click)="selectedType ? fileInput.click() : null"
+             matTooltip="Please select an application type first">
           <input type="file" (change)="onFileSelected($event)" #fileInput hidden accept=".zip">
           <div class="upload-icon">
             <i class="material-icons">cloud_upload</i>

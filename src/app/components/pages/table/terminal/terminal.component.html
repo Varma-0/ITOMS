@@ -65,15 +65,15 @@
 
       <div class="action-bar" [ngClass]="{'bg-light-grey': getSelectedCount() === 0, 'cursor-not-allowed': getSelectedCount() === 0}">
         <span>{{ getSelectedCount() }} Selected</span>
-        <button class="action-button-lock" [disabled]="getSelectedCount() === 0">
+        <button class="action-button-lock" [disabled]="getSelectedCount() === 0" (click)="blockSelectedRow()">
           <i class="material-icons">lock</i>
           <span>Block</span>
         </button>
-        <button class="action-button-lock" [disabled]="getSelectedCount() === 0">
+        <button class="action-button-lock" [disabled]="getSelectedCount() === 0" (click)="unblockSelectedRow()">
           <i class="material-icons">lock_open</i>
           <span>Unblock</span>
         </button>
-        <button class="action-button-lock" [disabled]="getSelectedCount() === 0">
+        <button class="action-button-lock" [disabled]="getSelectedCount() === 0" (click)="addToGroup()">
           <i class="material-icons">layers</i>
           <span>Add to group</span>
         </button>
@@ -96,7 +96,7 @@
         <tbody>
           <tr *ngFor="let device of paginatedDevices" (click)="row(device)">
             <td>
-              <input type="checkbox" [(ngModel)]="device.selected" (click)="$event.stopPropagation()">
+              <input type="checkbox" [(ngModel)]="device.selected" (click)="$event.stopPropagation();toggleDeviceSelection(device)">
             </td>
             <td *ngIf="columns[0].visible">{{device.serialNumber}}</td>
             <td *ngIf="columns[1].visible">{{device.modelName}}</td>

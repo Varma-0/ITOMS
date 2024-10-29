@@ -75,9 +75,28 @@ h4.mb-0::before {
   }
   .cards-container {
     display: flex;
-    justify-content: space-between; /* Distributes space between the cards */
-    gap: 20px; /* Adds space between the cards */
+    justify-content: space-between;
+    gap: 20px;  
   }
+
+  .cards-container .card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease; /* Adds smooth transition for hover effects */
+  }
+
+  .cards-container .card:hover {
+      transform: translateY(-2px); /* Slightly lifts the card */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Adds a soft shadow */
+  }
+
+  .cards-container .custom-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Adds smooth transition for hover effects */
+  }
+
+  .cards-container .custom-card:hover {
+      transform: translateY(-2px); /* Slightly lifts the card */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Adds a soft shadow */
+  }
+
 
   .card {
     // background-color: #f8f9fa; /* Light grey background */
@@ -143,12 +162,16 @@ h4.mb-0::before {
     width: 39%;
   }
 
+  .card-100 {
+    width: 100%;
+  }
+
   .card-50 {
     width: 49.5%;
   }
 
   .card-header-title {
-    // font-weight: bold;
+    font-weight: normal;
     font-size: 16px;
   }
 
@@ -163,7 +186,9 @@ h4.mb-0::before {
   }
 
 
-  .buttonsHeader .location-button {
+   .location-button {
+    font-size: 16px;
+    font-weight: normal;
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -406,7 +431,7 @@ h4.mb-0::before {
   margin: 20px;
 }
 .history-card {
-  width: 48%;
+  width: 50%;
 }
 .last-table {
   width: 100%;

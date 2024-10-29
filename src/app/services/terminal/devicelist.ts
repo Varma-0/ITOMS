@@ -26,6 +26,14 @@ export class TerminalService {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/device/search`, options, { headers: this.httpHeaders });
     }
 
+    blockTerminal(options):Observable<any> {
+        return this.http.post(`${environment.tmsApiUrl}/tms/device/updateStatus`,options, { headers: this.httpHeaders});
+    }
+
+    getTerminalReport(options):Observable<any> {
+        return this.http.post(`${environment.tmsApiUrl}/tms/reports/getTerminalReport`,options, { headers: this.httpHeaders});
+    }
+
     modelData(options: terminalBody): Observable<any> {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/model/search`, options, { headers: this.httpHeaders });
     }

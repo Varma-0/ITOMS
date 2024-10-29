@@ -39,32 +39,30 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <!-- Card with 60% width -->
-      <mat-card class="custom-card card-60">
+    <div class="cards-container">
+      <mat-card class="custom-card card-50">
         <mat-card-header>
-          <span class="card-header-title">Activity (Minutes)</span>
+          <mat-card-title class="card-header-title">Card Method (Current Month)</mat-card-title>
         </mat-card-header>
         <hr style="border: 1px solid grey; opacity: 0.1;">
-        <div class="card-content">
-          <app-web-analytics></app-web-analytics>
-        </div>
+        <mat-card-content>
+          <app-activity-timeline></app-activity-timeline>
+        </mat-card-content>
       </mat-card>
 
-      <!-- Card with 40% width -->
-      <mat-card class="custom-card card-38">
-        <mat-card-header class="buttonsHeader">
-          <span class="location-button" (click)="abc()">Location (28.592294, 76.992886)</span>
+      <mat-card class="custom-card card-50">
+        <mat-card-header class="d-flex justify-content-between">
+          <mat-card-title class="location-button" (click)="abc()">Location ({{latitude}}, {{longitude}})</mat-card-title>
           <input type="checkbox" id="toggleSwitch" class="custom-switch ms-2" (change)="onToggleChange($event)">
         </mat-card-header>
         <hr style="border: 1px solid grey; opacity: 0.1;">
         <mat-card-content style="height: 300px;">
-            <app-google-map [latitude]="28.592294" [longitude]="76.992886"></app-google-map>
+            <app-google-map [latitude]="latitude" [longitude]="longitude"></app-google-map>
         </mat-card-content>
       </mat-card>
     </div>
     <div class="cards-container">
-      <mat-card class="custom-cards">
+      <!-- <mat-card class="custom-cards">
         <mat-card-header>
           <div class="d-flex align-items-center justify-content-between">
             <span>Traffic</span>
@@ -87,19 +85,23 @@
             <app-traffic-source></app-traffic-source>
           </mat-card-content>
         </div>
-      </mat-card>
+      </mat-card> -->
 
-      <mat-card class="custom-cards">
+
+      <mat-card class="custom-card card-100">
         <mat-card-header>
-          <span class="card-header-title">Card Method (Current Month)</span>
+          <mat-card-title class="card-header-title">Activity (Minutes)</mat-card-title>
         </mat-card-header>
-        <hr class="card-divider">
-        <mat-card-content>
-          <app-activity-timeline></app-activity-timeline>
-        </mat-card-content>
+        <hr style="border: 1px solid grey; opacity: 0.1;">
+        <!-- <div class="card-content"> -->
+          <mat-card-content>
+
+            <app-web-analytics></app-web-analytics>
+          </mat-card-content>
+        <!-- </div> -->
       </mat-card>
     </div>
-    <div>
+    <!-- <div>
       <mat-card>
         <mat-card-header>
           <mat-card-title>
@@ -111,19 +113,19 @@
           <app-area-datetime-x-axis></app-area-datetime-x-axis>
         </mat-card-content>
       </mat-card>
-    </div>
-    <div>
-      <div class="last-container">
-        <mat-card class="history-card">
-          <mat-card-header>
-            <mat-card-title>Command History</mat-card-title>
-            <div class="col-md-5">
+    </div> -->
+      <div class="cards-container">
+        <mat-card class="custom-card card-50">
+          <mat-card-header class="d-flex justify-content-between">
+            <mat-card-title class="card-header-title">Command History</mat-card-title>
+            <div class="col-md-4">
               <select class="form-select" > <!-- [(ngModel)]="selectedOption2" (change)="applyFilter()" -->
                 <option value="" disabled selected>Check Update</option>
                 <!-- <option *ngFor="let option of optionModel" [value]="option">{{ option }}</option> -->
               </select>
             </div>
           </mat-card-header>
+          <hr style="border: 1px solid grey; opacity: 0.1;">
           <mat-card-content>
             <table mat-table class="last-table" [dataSource]="commandDataSource">
               <ng-container matColumnDef="date">
@@ -153,10 +155,11 @@
           </mat-card-content>
         </mat-card>
 
-        <mat-card class="history-card">
+        <mat-card class="custom-card card-50">
           <mat-card-header>
-            <mat-card-title>Estate Lifecycle</mat-card-title>
+            <mat-card-title class="card-header-title">Estate Lifecycle</mat-card-title>  
           </mat-card-header>
+          <hr style="border: 1px solid grey; opacity: 0.1;">
           <mat-card-content>
             <table mat-table [dataSource]="estateDataSource">
               <ng-container matColumnDef="action">
@@ -176,7 +179,6 @@
           </mat-card-content>
         </mat-card>
       </div>
-    </div>
 
   </div>
   <div class="container" *ngIf="selectedTab === 'basicinfo'">
@@ -187,7 +189,7 @@
       <mat-card-content>
         <div class="details-row">
           <div class="detail-item">
-            <span>Creation Time</span><span>08/26/2024 15:07:18</span>
+            <span>Creation Time</span><span>{{ creationTime | date:'dd/MM/yyyy HH:mm:ss' }}</span>
           </div>
           <div class="detail-item">
             <span>Last Boot Time(Device Time)</span><span>08/28/2024 14:24:15</span>

@@ -5,6 +5,7 @@ import { terminalBody } from 'src/app/services/terminal/body/body';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SharedServices } from 'src/app/services/shared.service';
 
 export interface TerminalElement {
   serialNumber: string;
@@ -34,6 +35,7 @@ columns = [
   ];
   filteredData: TerminalElement[] = []; // Your original data
   terminalElements: TerminalElement[] = []; // Data to display
+   selectedDevices: TerminalElement[] = [];
   data: TerminalElement[] = [];
   itemsPerPageOptions = [5, 10, 15, 20];
   itemsPerPage = 5; // Default items per page
@@ -43,11 +45,11 @@ columns = [
   searchText: string = '';
   selectedOption1: string = '';
   selectedOption2: string = '';
-  optionStatus: string[] = [];
+  optionStatus: string[] = ['ACTIVE','BLOCK'];
   optionModel: string[] = [];
   isDropdownOpen: string | null = null;
 
-  constructor(private http: HttpClient, private terminalService: TerminalService, public dialog: MatDialog) {
+  constructor(private http: HttpClient, private terminalService: TerminalService, public dialog: MatDialog, private shared: SharedServices) {
     this.terminalElements = this.filteredData;
   }
 
@@ -102,8 +104,8 @@ columns = [
   }
 
   updateOptions() {
-    this.optionStatus = [...new Set(this.data.map(device => device.status))];
-    this.optionModel = [...new Set(this.data.map(device => device.model))];
+    // this.optionStatus = [...new Set(this.data.map(device => device.status))];
+    this.optionModel = [...new Set(this.data.map(device => device['modelName']))];
   }
 
   updatePagination() {
@@ -121,7 +123,7 @@ columns = [
 
     // Filter by model if selected
     if (this.selectedOption2) {
-      filteredData = filteredData.filter(device => device.model === this.selectedOption2);
+      filteredData = filteredData.filter(device => device['modelName'] === this.selectedOption2);
     }
 
     // Update the terminalElements to display the filtered data
@@ -171,7 +173,19 @@ columns = [
     this.data.forEach(device => {
       device.selected = isChecked;
     });
+    this.updateSelectedDevices();
   }
+
+  updateSelectedDevices() {
+    this.selectedDevices = this.data.filter(device => device.selected);
+  }
+
+  // Adjust existing toggleSelect method to update selected devices
+  toggleDeviceSelection(device: TerminalElement) {
+    device.selected = !device.selected;
+    this.updateSelectedDevices();
+  }
+
 
   // toggleSelectAll(event: any) {
   //   const isChecked = event.target.checked;
@@ -180,6 +194,68 @@ columns = [
 
   getSelectedCount() {
     return this.paginatedDevices.filter(device => device.selected).length;
+  }
+
+  blockSelectedRow() {
+    if (this.selectedDevices.length) {
+      console.log("Blocking devices:", this.selectedDevices);
+      const payload = {
+        "event": {
+            "eventData": {
+                "deviceId": this.selectedDevices[0]['id']
+            },
+            "eventType": "DEVICE",
+            "eventSubType": "BLOCK"
+        }
+      }
+      this.terminalService.blockTerminal(payload).subscribe(
+        response => {
+          console.log(response);
+          this.updateOptions();
+          this.updatePagination();
+          this.shared.showSuccess("Terminal Blocked Successfully");
+          this.fetchData();
+        },
+        error => {
+          this.shared.showError(error.message)
+          console.error('Error:', error);
+        }
+      )
+      // Call your block service or perform necessary action here with selectedDevices
+    }
+  }
+
+  unblockSelectedRow() {
+    if (this.selectedDevices.length) {
+      console.log("Blocking devices:", this.selectedDevices);
+      const payload = {
+        "event": {
+            "eventData": {
+                "deviceId": this.selectedDevices[0]['id']
+            },
+            "eventType": "DEVICE",
+            "eventSubType": "UNBLOCK"
+        }
+      }
+      this.terminalService.blockTerminal(payload).subscribe(
+        response => {
+          console.log(response);
+          this.updateOptions();
+          this.updatePagination();
+          this.shared.showSuccess("Terminal Unblocked Successfully");
+          this.fetchData();
+        },
+        error => {
+          this.shared.showError(error.message)
+          console.error('Error:', error);
+        }
+      )
+      // Call your block service or perform necessary action here with selectedDevices
+    }
+  }
+
+  addToGroup() {
+    
   }
 
   updateItemsPerPage(): void {

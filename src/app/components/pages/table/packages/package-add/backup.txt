@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import * as JSZip from 'jszip';
@@ -8,7 +8,6 @@ import { SelectCfgComponent } from 'src/app/components/dialogs/select-cfg/select
 import { terminalBody } from 'src/app/services/terminal/body/body';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
-import { ZipExtractorService } from 'src/app/services/zipExtractor.service';
 
 interface SelectedCard {
   id: string;
@@ -31,8 +30,8 @@ export class PackageAddComponent {
   maxFileSize: number = 500;
 
   appTypes = [
-    { name: 'apk', type:'Android', icon: 'assets/img/android-logo.png' },
-    { name: 'nld', type: 'Linux', icon: 'assets/img/linux-icon.png' },
+    { name: 'Android', icon: 'assets/img/android-logo.png' },
+    { name: 'Linux', icon: 'assets/img/linux-icon.png' },
     // { name: 'RTOS', icon: 'assets/img/rtos.png' }
   ];
   selectedType: any = null;
@@ -57,7 +56,7 @@ export class PackageAddComponent {
   blobFile: File;
   randomSize: string = '';
 
-  constructor(private http: HttpClient, private dataService: TerminalService,private router:Router,private zipExtractorService: ZipExtractorService) {}
+  constructor(private http: HttpClient, private dataService: TerminalService,private router:Router) {}
 
   selectType(type: any) {
     this.selectedType = type;
@@ -108,37 +107,73 @@ export class PackageAddComponent {
   }
 
   async handleFile(file: File) {
-    try {
-      const { appFile, imageBase64, zipBlob } = await this.zipExtractorService.extractZip(file, this.selectedType.name.toLowerCase());
-      if (appFile) {
-        this.fileName = appFile.name; // Get the name of the application file
-        console.log(this.fileName);
-    
-        const parts = this.fileName.split('.');
-        // Remove the extension from the file name
-        this.fileName = parts.length > 1 ? parts.slice(0, -1).join('.') : '';
-        // Extract the only name and version from the file name
-        const nameParts = this.fileName.split('_');
-        this.onlyName = nameParts[0]; // Assuming name is the first part
-        this.version = nameParts.length > 1 ? nameParts[1] : ''; // Assuming version is the second part
-        this.fileSize = file.size; // Get the size of the uploaded file
-        console.log("File Name:", this.fileName, "File Size:", this.fileSize);
-        
-        this.isUploaded = true; // Set upload status to true
-        if (zipBlob) {
-          this.blobFile = new File([zipBlob], appFile.name, { type: 'application/octet-stream' });
-          const blobUrl = URL.createObjectURL(zipBlob);
-          console.log("Blob URL:", blobUrl); // This URL can be used to download the blob
-        }
-      } else {
-        throw new Error('App file not found in the ZIP archive.'); // Handle case where appFile is null
-      }
-    
-    } catch (error) {
-      console.error('Error extracting ZIP:', error);
-      alert(error.message); // Alert if there’s an error
+    if (file.size > this.maxFileSize * 1024 * 1024) {
+      alert(`File size exceeds ${this.maxFileSize}MB limit.`);
+      return;
     }
     
+    if (file.name.toLowerCase().endsWith('.zip')) {
+      this.isUploading = true;
+      try {
+        const zip = new JSZip();
+        const contents = await zip.loadAsync(file);
+        console.log(contents.files)
+        let appFile: JSZip.JSZipObject | null = null;
+        console.log(appFile);
+
+
+        // contents.forEach((relativePath, zipEntry) => {
+        // console.log(relativePath,zipEntry)
+
+        //   if (relativePath['name'].endsWith('.apk') || relativePath['name'].endsWith('.nld')) {
+        //     appFile = zipEntry;
+        //   } 
+        // });
+        contents.forEach((relativePath, zipEntry) => {
+          // if (this.selectedType.name === 'Android' && relativePath.endsWith('.apk')  || relativePath.endsWith('.APK')) {
+            this.type = "apk"
+            appFile = zipEntry;
+          // } else if (this.selectedType.name === 'Linux' && relativePath.endsWith('.nld')  || relativePath.endsWith('.NLD')) {
+          //   this.type = "nld"
+          //   appFile = zipEntry;
+          // }
+        });
+
+        if (appFile) {
+          // Extract info from APK or NLD file
+          var appInfoData = await appFile.async('blob'); // Get the file data as a Blob
+          this.blobFile = new File([appInfoData], appFile.name, { type: 'application/octet-stream' });
+          const appData = await appFile.async('uint8array');
+          const { name, version } = await this.extractAppInfo(appData, appFile.name);
+
+          this.extractedInfo = { name, version };
+          // this.nextStep();
+          this.fileName = appFile.name;
+          console.log(this.fileName);
+          const parts = this.fileName.split('.');
+          parts.length > 1 ? this.fileName =  parts.slice(0, -1).join('.'):''
+          this.onlyName = this.fileName.split('_')[0]
+          this.version = this.fileName.split('_')[1]
+          this.fileSize = file.size;
+          console.log("efqq",this.fileName,this.fileSize);
+          this.isUploaded = true;
+          setTimeout(() => {
+            this.fileName = file.name;
+            this.fileSize = file.size;
+            this.isUploading = false;
+            this.isUploaded = true;
+          }, 2000);
+          // this.uploadedFile = file;
+        } else {
+          alert('ZIP file must contain one APK or NLD file.');
+        }
+      } catch (error) {
+        console.error('Error processing ZIP file:', error);
+        alert('Error processing ZIP file. Please try again.');
+      }
+    } else {
+      alert('Please upload a ZIP file.');
+    }
   }
 
   // selectCard(card: any): void {
@@ -185,18 +220,17 @@ export class PackageAddComponent {
     const jsonData = {
         "event":{
            "eventData":{
-              "name":`${this.onlyName}.${this.selectedType.name.toLowerCase()}`,
+              "name":`${this.onlyName}.${this.type}`,
               "description":"sample package for testing",
               "version":this.version,
-              // "type":`${this.selectedType.name.toLowerCase()}`,
               "type":"apk",
               "postInstallationAction":"REBOOT",
-              "platformType":`${this.selectedType.type.toUpperCase()}`,
+              "platformType":"ANDROID",
               "packageTypeIdentifier":"APPLICATION",
               "tags":"",
               "packageFile":{
                  "filePath":"INA-TMS/INA-TMS/TMS-PACKAGES",
-                 "fileSize":this.fileSize,
+                 "fileSize":this.randomSize,
                  "fileName":"InaImagePackage"
               },
               "models":this.selectedCards
@@ -227,6 +261,37 @@ export class PackageAddComponent {
     this.extractedInfo = { name: '', version: '' };
   }
 
+  async extractAppInfo(data: Uint8Array, fileName: string): Promise<{ name: string, version: string }> {
+    if (fileName.toLowerCase().endsWith('.apk') || fileName.toLowerCase().endsWith('.APK')) {
+      return this.extractApkInfo(data);
+    } else if (fileName.toLowerCase().endsWith('.nld') || fileName.toLowerCase().endsWith('.NLD')) {
+      return this.extractNldInfo(data);
+    } else {
+      throw new Error('Unsupported file type');
+    }
+  }
+  
+  extractApkInfo(data: Uint8Array): { name: string, version: string } {
+    const content = new TextDecoder().decode(data);
+    const nameMatch = content.match(/application-label:'(.+?)'/);
+    const versionMatch = content.match(/versionName='(.+?)'/);
+    
+    return {
+      name: nameMatch ? nameMatch[1] : 'Unknown',
+      version: versionMatch ? versionMatch[1] : 'Unknown'
+    };
+  }
+  
+  extractNldInfo(data: Uint8Array): { name: string, version: string } {
+    const content = new TextDecoder().decode(data);
+    const nameMatch = content.match(/NAME:\s*(.+)/i);
+    const versionMatch = content.match(/VERSION:\s*(.+)/i);
+    
+    return {
+      name: nameMatch ? nameMatch[1].trim() : 'Unknown',
+      version: versionMatch ? versionMatch[1].trim() : 'Unknown'
+    };
+  }
 
   async getModelsApi() {
     const event = new terminalEvent('MODEL', 'SEARCH');

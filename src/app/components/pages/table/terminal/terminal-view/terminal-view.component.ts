@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { SharedServices } from 'src/app/services/shared.service';
+import { TerminalService } from 'src/app/services/terminal/devicelist';
 
 
 export interface AppData {
@@ -40,7 +42,7 @@ export class TerminalViewComponent {
 
   commandColumns: string[] = ['date', 'command', 'status', 'info'];
   estateColumns: string[] = ['action', 'date'];
-
+  data = []
   commandDataSource!: MatTableDataSource<CommandHistory>;
   estateDataSource!: MatTableDataSource<EstateLifecycle>;
   selectedTab: string = 'overview';
@@ -61,12 +63,8 @@ export class TerminalViewComponent {
     {icon:'lock',header: 'Payment Modules'},
     {icon:'battery_full',header: 'Battery'},
   ]
-  cards = [
-    { header: 'Storage', percentage: 60,icon:'file_present' },
-    { header: 'Modules', percentage: 70,icon:'view_module' },
-    { header: 'Traffic', percentage: 50,icon:'traffic' },
-    { header: 'Battery', percentage: 80,icon:'battery_4_bar' }
-  ];
+  cards = [];
+  creationTime = '';
   cards_remote = [
     {
       title: 'Hardware Diagnostics',
@@ -111,7 +109,11 @@ export class TerminalViewComponent {
       isActive: false
     }
   ];
+  latitude: any;
+  longitude: any;
+  constructor( private terminalService: TerminalService, private shared: SharedServices) {}
   ngOnInit() {
+    this.fetchData();
     // Sample data - replace with your actual data fetching logic
     const commandHistory: CommandHistory[] = [
       { date: '07/29/2024 18:59', command: 'Check Update', status: 'Success' },
@@ -128,6 +130,35 @@ export class TerminalViewComponent {
 
     this.commandDataSource = new MatTableDataSource(commandHistory);
     this.estateDataSource = new MatTableDataSource(estateLifecycle);
+  }
+
+  fetchData() {
+    console.log("adcgwguowe",this.device);
+    const payload = {
+      "event": {
+        "eventData":this.device.id,
+        "eventType": "REPORT",
+        "eventSubType": "SEARCH"
+      }
+    }
+    this.terminalService.getTerminalReport(payload).subscribe(
+      reponse => {
+        this.data = reponse.event.eventData
+        this.cards = [
+          { header: 'Storage', percentage: this.data['storage'], icon: 'file_present' },
+          { header: 'Modules', percentage: this.data['modules'], icon: 'view_module' },
+          { header: 'Traffic', percentage: this.data['traffic'], icon: 'traffic' },
+          { header: 'Battery', percentage: this.data['battery'], icon: 'battery_4_bar' }
+        ];
+        this.creationTime = this.data['deviceCreation']
+        this.latitude = this.data['latitude']
+        this.longitude = this.data['longitude']
+      },
+      error => {
+        console.error(error)
+        this.shared.showError(error.message)
+      }
+    )
   }
 
   ngAfterViewInit() {
