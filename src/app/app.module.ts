@@ -226,6 +226,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { LoaderComponent } from './components/pages/ui-components/loader/loader.component';
 import { Loader2Component } from './components/pages/ui-components/loader2/loader2.component';
 import { ProfilesComponent } from './components/pages/profile/profile.component';
+import { ContactComponent } from './landing/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -359,6 +360,7 @@ import { ProfilesComponent } from './components/pages/profile/profile.component'
     ColumnWithNegativeValuesComponent,
     DynamicLoadedColumnComponent,
     BasicBarChartComponent,
+    ContactComponent,
     GroupedBarComponent,
     StackedBarComponent,
     StackedBarHundredPercentComponent,
