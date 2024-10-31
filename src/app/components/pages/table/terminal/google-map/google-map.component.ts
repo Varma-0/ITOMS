@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, Input } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
+import { SharedServices } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-google-map',
@@ -10,8 +11,14 @@ export class GoogleMapComponent implements AfterViewInit {
   @Input() latitude: number;
   @Input() longitude: number;
 
+  constructor(private shared:SharedServices){}
+
   ngAfterViewInit(): void {
-    this.loadMap();
+    this.shared.latlong.subscribe(res => {
+        this.latitude = Number(res.lat),
+        this.longitude = Number(res.long),
+        this.loadMap();
+    })
   }
 
   loadMap() {

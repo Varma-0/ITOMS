@@ -153,6 +153,10 @@ export class TerminalViewComponent {
         this.creationTime = this.data['deviceCreation']
         this.latitude = this.data['latitude']
         this.longitude = this.data['longitude']
+        this.shared.latlong.next({
+            lat:this.latitude,
+            long:this.longitude
+        })
       },
       error => {
         console.error(error)
@@ -199,8 +203,8 @@ export class TerminalViewComponent {
   demo(ele) {
     console.log("fkw",ele)
   }
-  
-  
+
+
   changeContent(condition: string) {
     this.contentCondition = condition;
   }

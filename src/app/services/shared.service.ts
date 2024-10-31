@@ -8,6 +8,7 @@ import { BehaviorSubject } from "rxjs";
 
 export class SharedServices{
     private sidebarActive = new BehaviorSubject<boolean>(true);
+    latlong = new BehaviorSubject<any>({lat:'',long:''});
     showLoader = new BehaviorSubject<boolean>(false);
     private loginData: any;
     modelsList=[];
