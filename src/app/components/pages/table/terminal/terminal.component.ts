@@ -68,10 +68,8 @@ columns = [
     this.applyFilter();
 }
 
-  row(individualData){
-    this.selectedDevice = individualData;
-    this.views = !this.views;
-    this.insideView = !this.insideView;
+row(individualData){
+    this.terminalViewData(individualData)
     console.log(this.insideView,"feqqw")
     console.log("fhgssgd",individualData)
   }
@@ -92,6 +90,33 @@ columns = [
         console.error('Error:', error);
       }
     );
+  }
+
+  terminalViewData(individualData) {
+    console.log("adcgwguowe",individualData);
+    const payload = {
+      "event": {
+        "eventData":individualData.id,
+        "eventType": "REPORT",
+        "eventSubType": "SEARCH"
+      }
+    }
+    this.shared.showLoader.next(true);
+    this.terminalService.getTerminalReport(payload).subscribe(
+      reponse => {
+        const data = reponse.event.eventData
+        this.shared.setEventData(data);
+        this.shared.showLoader.next(false);
+        this.selectedDevice = individualData;
+        this.views = !this.views;
+        this.insideView = !this.insideView;
+      },
+      error => {    
+        this.shared.showLoader.next(false);
+        console.error(error)
+        this.shared.showError(error.message)
+      }
+    )
   }
 
   onViewChange(newView: boolean) {
@@ -193,16 +218,23 @@ columns = [
   // }
 
   getSelectedCount() {
+    console.log(this.selectedDevices);
     return this.paginatedDevices.filter(device => device.selected).length;
   }
 
+  getStatusByDisbale() {
+    this.paginatedDevices.filter(device=>device)
+  }
+
   blockSelectedRow() {
-    if (this.selectedDevices.length) {
-      console.log("Blocking devices:", this.selectedDevices);
+    const devicesToBlock = this.selectedDevices.filter(device => device.status !== 'BLOCK');
+    if (devicesToBlock.length) {
+      console.log("Blocking devices:", devicesToBlock);
+      const deviceIds = devicesToBlock.map(device => device['id']);
       const payload = {
         "event": {
             "eventData": {
-                "deviceId": this.selectedDevices[0]['id']
+                "deviceId": deviceIds
             },
             "eventType": "DEVICE",
             "eventSubType": "BLOCK"
@@ -226,12 +258,14 @@ columns = [
   }
 
   unblockSelectedRow() {
-    if (this.selectedDevices.length) {
-      console.log("Blocking devices:", this.selectedDevices);
+    const devicesToUnBlock = this.selectedDevices.filter(device => device.status !== 'ACTIVE');
+    if (devicesToUnBlock.length) {
+      console.log("Blocking devices:", devicesToUnBlock);
+      const deviceIds = devicesToUnBlock.map(device => device['id']);
       const payload = {
         "event": {
             "eventData": {
-                "deviceId": this.selectedDevices[0]['id']
+                "deviceId": deviceIds
             },
             "eventType": "DEVICE",
             "eventSubType": "UNBLOCK"

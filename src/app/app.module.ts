@@ -227,6 +227,7 @@ import { LoaderComponent } from './components/pages/ui-components/loader/loader.
 import { Loader2Component } from './components/pages/ui-components/loader2/loader2.component';
 import { ProfilesComponent } from './components/pages/profile/profile.component';
 import { ContactComponent } from './landing/contact/contact.component';
+import { TerminalChartComponent } from './components/charts/app-terminal-chart/app-terminal.component';
 
 @NgModule({
   declarations: [
@@ -427,6 +428,7 @@ import { ContactComponent } from './landing/contact/contact.component';
     ViewTenantComponent,
     LoaderComponent,
     Loader2Component,
+    TerminalChartComponent,
     ProfilesComponent
   ],
   imports: [

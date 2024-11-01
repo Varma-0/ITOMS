@@ -1,41 +1,71 @@
 import { Injectable } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
+
+// Define an interface for latitude and longitude data
+interface LatLong {
+  lat: string;
+  long: string;
+}
 
 @Injectable({
-    providedIn: 'root'
-  })
+  providedIn: 'root'
+})
+export class SharedServices {
+  private sidebarActive = new BehaviorSubject<boolean>(true);  // Sidebar state
+  latlong = new BehaviorSubject<LatLong>({ lat: '', long: '' });  // Latitude and longitude data
+  private eventDataSubject = new BehaviorSubject<any>({});  // General event data
+  showLoader = new BehaviorSubject<boolean>(false);  // Loader visibility
+  private loginData: any;  // Stores login data
+  terminalViweData:any;
+  modelsList: any[] = [];  // List to store models data
 
-export class SharedServices{
-    private sidebarActive = new BehaviorSubject<boolean>(true);
-    latlong = new BehaviorSubject<any>({lat:'',long:''});
-    showLoader = new BehaviorSubject<boolean>(false);
-    private loginData: any;
-    modelsList=[];
+  // Observable for components to subscribe to event data changes
+  eventData$: Observable<any> = this.eventDataSubject.asObservable();
 
-    // Observable to expose sidebar state
-    sidebarActive$ = this.sidebarActive.asObservable();
+  constructor(private toastr: ToastrService) {}
 
-    // Method to set the sidebar state
-    setSidebarState(active: boolean): void {
-      this.sidebarActive.next(active);
-    }
-    constructor(private toastr: ToastrService){}
+  // Method to update event data
+  setEventData(data: any): void {
+    this.eventDataSubject.next(data);
+  }
 
-    showSuccess(msg){
-        this.toastr.success(msg, 'Hurray');
-    }
+  // Method to retrieve the latest event data value
+  getEventData(): any {
+    return this.eventDataSubject.value;
+  }
 
-    showError(msg) {
-      this.toastr.error(msg, 'Error');
-    }
+  // Observable to expose sidebar state
+  sidebarActive$ = this.sidebarActive.asObservable();
 
-    setLoginData(data: any) {
-      this.loginData = data;
-    }
+  // Method to set the sidebar state
+  setSidebarState(active: boolean): void {
+    this.sidebarActive.next(active);
+  }
 
-    getLoginData() {
-      return this.loginData;
-    }
+  // Toastr notification methods
+  showSuccess(msg: string): void {
+    this.toastr.success(msg, 'Hurray');
+  }
 
+  showError(msg: string): void {
+    this.toastr.error(msg, 'Error');
+  }
+
+  // Methods for managing login data
+  setLoginData(data: any): void {
+    this.loginData = data;
+  }
+
+  setTerminalViewData(data: any): void {
+    this.terminalViweData = data;
+  }
+
+  getTerminalViewData() {
+    return this.terminalViweData;
+  }
+
+  getLoginData(): any {
+    return this.loginData;
+  }
 }

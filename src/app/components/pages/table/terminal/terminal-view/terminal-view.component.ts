@@ -15,10 +15,10 @@ export interface AppData {
   operation: string;
 }
 
-interface CommandHistory {
-  date: string;
-  command: string;
-  status: string;
+interface DeviceCommand {
+  commandStatus: string;
+  deviceCommands: string;
+  ts: string;
 }
 
 interface EstateLifecycle {
@@ -41,9 +41,15 @@ export class TerminalViewComponent {
   @ViewChild('estatePaginator') estatePaginator!: MatPaginator;
 
   commandColumns: string[] = ['date', 'command', 'status', 'info'];
+  currentPage: number = 1;
+  itemsPerPage: number = 5; // Default items per page
+  itemsPerPageOptions: number[] = [5, 10, 20]; // Options for items per page
+  totalItems: number = 0; // Total number of items
+  totalPages: number = 0;
+  paginatedDataSource: any[] = [];
   estateColumns: string[] = ['action', 'date'];
   data = []
-  commandDataSource!: MatTableDataSource<CommandHistory>;
+  commandDataSource = new MatTableDataSource<DeviceCommand>([]);
   estateDataSource!: MatTableDataSource<EstateLifecycle>;
   selectedTab: string = 'overview';
   selectedTabApp:string =  'deployment';
@@ -64,6 +70,13 @@ export class TerminalViewComponent {
     {icon:'battery_full',header: 'Battery'},
   ]
   cards = [];
+  applicationActivity: any;
+  cardMethodStatisticsData: any;
+  colors: string[] = [
+    '#4682B4',  // Dark Blue
+    '#00FFFF',  // Teal
+    '#90EE90',  // Light Gray
+  ];
   creationTime = '';
   cards_remote = [
     {
@@ -110,17 +123,20 @@ export class TerminalViewComponent {
     }
   ];
   latitude: any;
+  latestData:any;
   longitude: any;
+  labelsm: string[] = ['Contactless Card','Swipe Card','Contact Card'];
+  seriesm: number[]= [0,0,0];
+  datesArray: string[];
+  valuesArray: unknown[];
+  lastBootTime: any;
   constructor( private terminalService: TerminalService, private shared: SharedServices) {}
   ngOnInit() {
-    this.fetchData();
-    // Sample data - replace with your actual data fetching logic
-    const commandHistory: CommandHistory[] = [
-      { date: '07/29/2024 18:59', command: 'Check Update', status: 'Success' },
-      { date: '07/29/2024 16:52', command: 'Check Update', status: 'Success' },
-      { date: '07/29/2024 16:43', command: 'Check Update', status: 'Terminal Offline' },
-      // ... add more data
-    ];
+    this.shared.eventData$.subscribe(data => {
+      this.latestData = data;
+      this.fetchData();
+    });
+    // this.latestData = this.shared.getTerminalViewData();
 
     const estateLifecycle: EstateLifecycle[] = [
       { action: 'Import Device', date: '07/15/2024 16:59:39' },
@@ -128,41 +144,80 @@ export class TerminalViewComponent {
       { action: 'Import Device', date: '02/19/2024 13:43:31' },
     ];
 
-    this.commandDataSource = new MatTableDataSource(commandHistory);
+    this.commandDataSource = new MatTableDataSource(this.latestData.deviceCommandHistory);
+    this.totalItems = this.commandDataSource.data.length;
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.updatePagination();
     this.estateDataSource = new MatTableDataSource(estateLifecycle);
   }
 
-  fetchData() {
-    console.log("adcgwguowe",this.device);
-    const payload = {
-      "event": {
-        "eventData":this.device.id,
-        "eventType": "REPORT",
-        "eventSubType": "SEARCH"
-      }
+  updatePagination(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    this.commandDataSource.data = this.latestData.deviceCommandHistory.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
     }
-    this.terminalService.getTerminalReport(payload).subscribe(
-      reponse => {
-        this.data = reponse.event.eventData
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
+  }
+
+  updateItemsPerPage() {
+    this.currentPage = 1; // Reset to first page when items per page changes
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.updatePagination();
+  }
+
+  fetchData() {
+    console.log("adcgwguowe",this.latestData);
+    // const payload = {
+    //   "event": {
+    //     "eventData":this.latestData.id,
+    //     "eventType": "REPORT",
+    //     "eventSubType": "SEARCH"
+    //   }
+    // }
+    // this.shared.showLoader.next(true);
+    // this.terminalService.getTerminalReport(payload).subscribe(
+    //   reponse => {
+    //     const data = reponse.event.eventData
         this.cards = [
-          { header: 'Storage', percentage: this.data['storage'], icon: 'file_present' },
-          { header: 'Modules', percentage: this.data['modules'], icon: 'view_module' },
-          { header: 'Traffic', percentage: this.data['traffic'], icon: 'traffic' },
-          { header: 'Battery', percentage: this.data['battery'], icon: 'battery_4_bar' }
+          { header: 'Storage', percentage: this.latestData['storage'], icon: 'file_present' },
+          { header: 'Modules', percentage: this.latestData['modules'], icon: 'view_module' },
+          { header: 'Traffic', percentage: this.latestData['traffic'], icon: 'traffic' },
+          { header: 'Battery', percentage: this.latestData['battery'], icon: 'battery_4_bar' }
         ];
-        this.creationTime = this.data['deviceCreation']
-        this.latitude = this.data['latitude']
-        this.longitude = this.data['longitude']
-        this.shared.latlong.next({
-            lat:this.latitude,
-            long:this.longitude
-        })
-      },
-      error => {
-        console.error(error)
-        this.shared.showError(error.message)
-      }
-    )
+        this.creationTime = this.latestData['deviceCreation']
+        this.lastBootTime = this.latestData['lastBootTime']
+        this.latitude = this.latestData['latitude']
+        this.longitude = this.latestData['longitude']
+        console.log("fwww",this.latestData['cardMethodStatistics']['Contactless Card'])
+        this.seriesm = [];
+        this.seriesm.push(this.latestData['cardMethodStatistics']['Contactless Card'])
+        this.seriesm.push(this.latestData['cardMethodStatistics']['Swipe Card'])
+        this.seriesm.push(this.latestData['cardMethodStatistics']['Contact Card'])
+        this.cardMethodStatisticsData = this.latestData['cardMethodStatistics']
+        this.applicationActivity = this.latestData['applicationActivity']
+        const entries = Object.entries(this.applicationActivity);
+        // this.datesArray = entries.map(([date]) => date); // Extract keys (dates)
+        // this.valuesArray = entries.map(([, value]) => value); // Extract values
+        console.log("efwwfw",this.applicationActivity);
+        this.shared.showLoader.next(false);
+    //   },
+    //   error => {    
+    //     this.shared.showLoader.next(false);
+    //     console.error(error)
+    //     this.shared.showError(error.message)
+    //   }
+    // )
   }
 
   ngAfterViewInit() {
