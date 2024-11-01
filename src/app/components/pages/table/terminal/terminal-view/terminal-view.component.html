@@ -138,22 +138,22 @@
                   <th mat-header-cell *matHeaderCellDef>Device Commands</th>
                   <td mat-cell *matCellDef="let element">{{element.deviceCommands}}</td>
                 </ng-container>
-                
+
                 <ng-container matColumnDef="commandStatus">
                   <th mat-header-cell *matHeaderCellDef>Command Status</th>
                   <td mat-cell *matCellDef="let element">{{element.commandStatus}}</td>
                 </ng-container>
-                
+
                 <ng-container matColumnDef="ts">
                   <th mat-header-cell *matHeaderCellDef>Timestamp</th>
                   <td mat-cell *matCellDef="let element">{{element.ts | date:'dd/MM/yyyy HH:mm:ss'}}</td>
                 </ng-container>
-                
-                <tr mat-header-row *matHeaderRowDef="['deviceCommands', 'commandStatus', 'ts']"></tr>
+
+                <tr mat-header-row *matHeaderRowDef="['deviceCommands', 'commandStatus', 'ts'];sticky:true"></tr>
                 <tr mat-row *matRowDef="let row; columns: ['deviceCommands', 'commandStatus', 'ts'];"></tr>
               </table>
             </div>
-            
+
             <!-- Fixed Pagination at the Footer -->
             <div class="pagination">
               <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
@@ -167,13 +167,13 @@
               </div>
             </div>
           </mat-card-content>
-          
-          
+
+
         </mat-card>
 
         <mat-card class="custom-card card-40">
           <mat-card-header>
-            <mat-card-title class="card-header-title">Estate Lifecycle</mat-card-title>  
+            <mat-card-title class="card-header-title">Estate Lifecycle</mat-card-title>
           </mat-card-header>
           <hr style="border: 1px solid grey; opacity: 0.1;">
           <mat-card-content>
@@ -187,7 +187,7 @@
                 <td mat-cell *matCellDef="let element">{{element.date}}</td>
               </ng-container>
 
-              <tr mat-header-row *matHeaderRowDef="estateColumns"></tr>
+              <tr mat-header-row *matHeaderRowDef="estateColumns;sticky:true"></tr>
               <tr mat-row *matRowDef="let row; columns: estateColumns;"></tr>
             </table>
             <mat-paginator #estatePaginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10]"
@@ -442,7 +442,7 @@
                 </td>
               </ng-container>
 
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
           </mat-card-content>
