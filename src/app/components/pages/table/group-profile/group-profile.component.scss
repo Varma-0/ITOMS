@@ -1,0 +1,509 @@
+$primary-blue: #1976d2;
+$secondary-blue: #1565c0;
+$background-light: #f5f7fa;
+$background-white: #ffffff;
+$text-dark: #333333;
+$text-light: #ffffff;
+$border-color: #e0e0e0;
+$success-green: #4caf50;
+$warning-orange: #ff9800;
+$danger-red: #f44336;
+
+.textarea-container {
+    margin: 0 0 30px 10px;
+    border: 1px dotted #ccc; /* Dotted border around the entire container */
+    padding: 10px;           /* Padding inside the container */
+    border-radius: 5px;      /* Rounded corners */
+    position: relative;      /* To position the close icon */
+    display: inline-block;   /* Keeps the textarea and close button together */
+    width: auto;             /* Let the container width adjust based on the textarea */
+    max-width: 100%;         /* Prevent the container from exceeding the width of its parent */
+    box-sizing: border-box;  /* Include padding and border in width */
+  }
+
+  .form-group{
+    margin-bottom: 10px;
+  }
+
+  .textarea-container.active-form {
+    border-color: #007bff; /* Blue border for the active form */
+    border-width: 2px; /* Thicker border for better visibility */
+  }
+
+  .add-textarea-button {
+    width: 95%; /* Adjust width to match textarea width minus margins */
+    height: 50px; /* Same height as text areas */
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: black;
+    font-size: 14px;
+    text-align: center;
+    line-height: 34px; /* Center the text vertically */
+    cursor: pointer;
+  }
+
+  .textarea-label {
+    display: block;          /* Ensure the label is on a new line */
+    font-size: 14px;         /* Font size for the label */
+    margin-bottom: 5px;      /* Space between the label and textarea */
+    color: #333;             /* Label color */
+  }
+
+  .textarea-container textarea {
+    width: 100%;             /* Full width of the container */
+    padding: 8px;            /* Padding inside the textarea */
+    border: 1px solid #ddd;  /* Solid border for the textarea itself */
+    border-radius: 4px;      /* Rounded corners */
+    box-sizing: border-box;  /* Include padding in width */
+    resize: both;            /* Allow resizing in both directions */
+    overflow: auto;          /* Handle overflow when resizing */
+  }
+
+  .textarea-container input {
+    width: 100%;             /* Full width of the container */
+    padding: 8px;            /* Padding inside the textarea */
+    border: 1px solid #ddd;  /* Solid border for the textarea itself */
+    border-radius: 4px;      /* Rounded corners */
+    box-sizing: border-box;  /* Include padding in width */
+    margin-bottom: 5px;
+  }
+
+  .boolean {
+    width: 100%;             /* Full width of the container */
+    padding: 8px;            /* Padding inside the textarea */
+    border: 1px solid #ddd;  /* Solid border for the textarea itself */
+    border-radius: 4px;      /* Rounded corners */
+    box-sizing: border-box;  /* Include padding in width */
+    margin-bottom: 10px;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .mode-toggle {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin: 0 10px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+  }
+
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  .editable-content {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .editable-content input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+  }
+
+  input[type="checkbox"] {
+    width: auto;
+  }
+
+  .textarea-container .close-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 14px;         /* Size of the close icon */
+  }
+
+  .char-count {
+    text-align: right;
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+  }
+
+  /* simple-layout.component.scss */
+  .containers {
+    // font-family: Arial, sans-serif;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    border-bottom: 1px solid #979797;
+  }
+  .tab {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  .tab.active {
+    color: #1890ff;
+    border-bottom: 2px solid #1890ff;
+  }
+
+  .header-icons {
+    font-size: 1.25rem;
+  }
+
+  .main-container {
+    display: flex;
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    overflow-x: hidden; /* Prevent horizontal scrolling if not needed */
+    height: calc(100vh - 60px); /* Adjust height to fit the view */
+  }
+
+  .left-body {
+    flex: 3; /* 75% of the width */
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  .right-body {
+    flex: 1; /* 25% of the width */
+    padding: 20px;
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  /* For WebKit-based browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 12px;  /* Width of the scrollbar */
+    height: 12px; /* Height of the scrollbar (for horizontal scrollbars) */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background of the scrollbar track */
+    border-radius: 10px;  /* Roundness of the scrollbar track */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar thumb */
+    border-radius: 10px;    /* Roundness of the scrollbar thumb */
+    border: 3px solid #f1f1f1; /* Padding around the scrollbar thumb */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color of the scrollbar thumb when hovered */
+  }
+
+  /* For Firefox */
+  * {
+    scrollbar-width: thin; /* Width of the scrollbar */
+    scrollbar-color: #888 #f1f1f1; /* Thumb color and track color */
+  }
+
+  /* Optional: Apply styles to specific element */
+  .custom-scrollbar {
+    overflow-y: scroll; /* Enables vertical scrollbar */
+    scrollbar-width: thin; /* Width of the scrollbar */
+    scrollbar-color: #888 #f1f1f1; /* Thumb color and track color */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+    border: 3px solid #f1f1f1;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+  /* Wrapper for left tabs with horizontal scrolling */
+.left-tabs-wrapper {
+    display: flex;
+    align-items: center;
+    max-width: 70%; /* Adjust width as needed */
+    overflow-x: auto;
+    white-space: nowrap;
+    position: relative;
+    padding: 0 20px;
+  }
+
+  /* Chevron controls for scrolling */
+  .scroll-control {
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 5px;
+  }
+
+  .left-tabs {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .tab {
+    padding: 8px 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tab.active {
+    color: #1890ff;
+    font-weight: bold;
+  }
+
+  .close-tab {
+    cursor: pointer;
+    font-size: 0.8em;
+    margin-left: 5px;
+  }
+
+  .right-tabs {
+    display: flex;
+  }
+
+  .right-tabs .tab {
+    padding: 8px 16px;
+  }
+
+  .left-tabs-wrapper::-webkit-scrollbar {
+    display: none; /* Hide scrollbar */
+  }
+  .table-container {
+    display: flex;
+    padding-top: 30px;
+    overflow-y: auto;
+    justify-content: center;
+    background-color: $background-white;
+  }
+
+  .user-table {
+    width: 50%;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    th, td {
+      padding: 16px;
+      text-align: center;
+      vertical-align: middle;
+      border-bottom: 1px solid $border-color;
+    }
+
+    th {
+      background-color: #f0f4f8;
+      color: $text-dark;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    tr:hover {
+      background-color: rgba($primary-blue, 0.05);
+    }
+  }
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $primary-blue;
+    transition: all 0.3s ease;
+    padding: 8px;
+    border-radius: 50%;
+    font-size: 18px;
+
+    &:hover {
+      color: $secondary-blue;
+      background-color: rgba($primary-blue, 0.1);
+    }
+
+    &.activate {
+      color: $success-green;
+    }
+
+    &.deactivate {
+      color: $danger-red;
+    }
+  }
+
+  @mixin button-style {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .add-button {
+    @include button-style;
+    background-color: $success-green;
+    color: $text-light;
+    display: flex;
+    padding: 10px ;
+    align-items: center;
+
+    i {
+      margin-right: 5px;
+    }
+  }
+
+  /* Modal background */
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    z-index: 1000;
+  }
+
+  /* Modal content box */
+  .modal-content {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+  }
+
+  /* Modal title */
+  .modal-content h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #333;
+  }
+
+  /* Input field */
+  .modal-content input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+  }
+
+  .modal-content input[type="text"]:focus {
+    border-color: #007bff; /* Blue border on focus */
+    outline: none;
+  }
+
+  /* Action buttons */
+  .modal-actions {
+    margin-top: 20px;
+  }
+
+  .modal-actions button {
+    padding: 8px 16px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: background-color 0.3s;
+  }
+
+  /* Submit button */
+  .modal-actions button:first-of-type {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  .modal-actions button:first-of-type:hover {
+    background-color: #0056b3;
+  }
+
+  /* Cancel button */
+  .modal-actions button:last-of-type {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+
+  .modal-actions button:last-of-type:hover {
+    background-color: #c6c6c6;
+  }
+

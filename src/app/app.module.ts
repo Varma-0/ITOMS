@@ -228,6 +228,8 @@ import { Loader2Component } from './components/pages/ui-components/loader2/loade
 import { ProfilesComponent } from './components/pages/profile/profile.component';
 import { ContactComponent } from './landing/contact/contact.component';
 import { TerminalChartComponent } from './components/charts/app-terminal-chart/app-terminal.component';
+import { GroupProfileComponent } from './components/pages/table/group-profile/group-profile.component';
+import { SubProfileDialogComponent } from './components/dialogs/sub-profile/sub-profile.component';
 
 @NgModule({
   declarations: [
@@ -429,7 +431,9 @@ import { TerminalChartComponent } from './components/charts/app-terminal-chart/a
     LoaderComponent,
     Loader2Component,
     TerminalChartComponent,
-    ProfilesComponent
+    ProfilesComponent,
+    GroupProfileComponent,
+    SubProfileDialogComponent
   ],
   imports: [
     BrowserModule,
