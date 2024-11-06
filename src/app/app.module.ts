@@ -167,7 +167,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MerchantComponent } from './components/pages/merchant/merchant.component';
 import { MatCardModule } from '@angular/material/card';
 import { AdministrationComponent } from './components/pages/admin/administration/administration.component';
-import { UserComponent } from './components/pages/admin/user/user.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RoleComponent } from './components/pages/admin/role/role.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -229,7 +228,8 @@ import { ProfilesComponent } from './components/pages/profile/profile.component'
 import { ContactComponent } from './landing/contact/contact.component';
 import { TerminalChartComponent } from './components/charts/app-terminal-chart/app-terminal.component';
 import { GroupProfileComponent } from './components/pages/table/group-profile/group-profile.component';
-import { SubProfileDialogComponent } from './components/dialogs/sub-profile/sub-profile.component';
+import { UserComponent } from './components/pages/admin/user/user.component';
+
 
 @NgModule({
   declarations: [
@@ -432,8 +432,8 @@ import { SubProfileDialogComponent } from './components/dialogs/sub-profile/sub-
     Loader2Component,
     TerminalChartComponent,
     ProfilesComponent,
-    GroupProfileComponent,
-    SubProfileDialogComponent
+    GroupProfileComponent
+    
   ],
   imports: [
     BrowserModule,

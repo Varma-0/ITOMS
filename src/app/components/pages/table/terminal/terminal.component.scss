@@ -201,7 +201,10 @@ thead {
 }
 
 .column-manager {
+  display: flex;
     position: relative;
+    flex-direction: row;
+    gap: 16px;;
     padding: 8px 12px;
 
     .column-manager-button {

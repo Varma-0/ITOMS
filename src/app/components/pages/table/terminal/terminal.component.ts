@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
 import { terminalBody } from 'src/app/services/terminal/body/body';
@@ -6,6 +6,7 @@ import { TerminalService } from 'src/app/services/terminal/devicelist';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedServices } from 'src/app/services/shared.service';
+import { ExcelService } from 'src/app/services/excel.service';
 
 export interface TerminalElement {
   serialNumber: string;
@@ -22,6 +23,7 @@ export interface TerminalElement {
   styleUrls: ['./terminal.component.scss']
 })
 export class TerminalComponent implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef;
   views = true;
   insideView = false;
   selectedDevice:any;
@@ -48,8 +50,12 @@ columns = [
   optionStatus: string[] = ['ACTIVE','BLOCK'];
   optionModel: string[] = [];
   isDropdownOpen: string | null = null;
+  excelData: any[] = [];
+  headers: string[] = [];
+  missingColumns: any[] = [];
+  requiredColumns = []
 
-  constructor(private http: HttpClient, private terminalService: TerminalService, public dialog: MatDialog, private shared: SharedServices) {
+  constructor(private http: HttpClient, private terminalService: TerminalService, public dialog: MatDialog, private shared: SharedServices,private excelService: ExcelService,private dataService:TerminalService) {
     this.terminalElements = this.filteredData;
   }
 
@@ -59,6 +65,56 @@ columns = [
 
   toggleColumn(index: number) {
     this.columns[index].visible = !this.columns[index].visible;
+  }
+
+  triggerFileUpload(): void {
+    this.fileInput.nativeElement.click(); // Programmatically click the hidden file input
+  }
+
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.uploadFile(file);
+    }
+  }
+  
+  async uploadFile(file: File): Promise<void> {
+    try {
+      const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
+      this.headers = result.headers; // Store headers
+      this.excelData = result.data; // Store data
+      console.log("Column Names (Headers):", this.headers,this.excelData);
+      this.uploadBulkTerminals();
+    } catch (error) {
+      console.error("Error:", error.message);
+      this.shared.showError(error.message); // Handle error
+    } finally {
+      // Reset the file input value
+      this.fileInput.nativeElement.value = ''; // Reset the input field
+      this.missingColumns = [];
+    }
+  }
+
+  uploadBulkTerminals() {
+    const payload = {
+      "event": {
+          "eventData": this.excelData,
+          "eventType": "TERMINAL",
+          "eventSubType": "CREATE"
+      }
+    }
+    this.shared.showLoader.next(true);
+    this.dataService.terminalBulkUpload(payload).subscribe(
+      response=>{
+        console.log("efwaa",response);
+        this.shared.showLoader.next(false);
+        this.shared.showSuccess("Models Uploaded Successfully")
+      },
+      error => {
+        this.shared.showLoader.next(false);
+        this.shared.showError(error.message)
+      }
+    )
   }
 
   clearValues() {
@@ -233,9 +289,7 @@ row(individualData){
       const deviceIds = devicesToBlock.map(device => device['id']);
       const payload = {
         "event": {
-            "eventData": {
-                "deviceId": deviceIds
-            },
+            "eventData": deviceIds,
             "eventType": "DEVICE",
             "eventSubType": "BLOCK"
         }
@@ -264,9 +318,7 @@ row(individualData){
       const deviceIds = devicesToUnBlock.map(device => device['id']);
       const payload = {
         "event": {
-            "eventData": {
-                "deviceId": deviceIds
-            },
+            "eventData":  deviceIds,
             "eventType": "DEVICE",
             "eventSubType": "UNBLOCK"
         }

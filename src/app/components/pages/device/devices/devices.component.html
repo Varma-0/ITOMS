@@ -19,6 +19,11 @@
         <i class="material-icons">add</i> Add Device
       </button>
 
+      <button class="add-button" (click)="triggerFileUpload()">
+        <i class="material-icons">upload</i> Upload Devices
+      </button>
+      <input type="file" #fileInput (change)="onFileChange($event)" accept=".xlsx, .xls" style="display: none" />
+
       <div class="column-manager">
         <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
           <i class="material-icons">filter_list</i> Columns

@@ -18,6 +18,11 @@
         <button class="add-button" (click)="openCreateDialog(false)">
           <i class="material-icons">add</i> Add Model
         </button>
+
+        <button class="add-button" (click)="triggerFileUpload()">
+          <i class="material-icons">upload</i> Upload Models
+        </button>
+        <input type="file" #fileInput (change)="onFileChange($event)" accept=".xlsx, .xls" style="display: none" />
     
         <div class="column-manager">
           <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
@@ -48,7 +53,7 @@
           <tr *ngFor="let device of paginatedDevices">
             <td style="text-align: left;" *ngIf="columns[0].visible">{{ device.name }}</td>
             <td style="text-align: left;" *ngIf="columns[1].visible">{{ device.oem }}</td>
-            <td style="text-align: left;" *ngIf="columns[2].visible">{{ device.description }}</td>
+            <td  *ngIf="columns[2].visible">{{ device.description }}</td>
             <td *ngIf="columns[3].visible">{{ device.fulldate }}</td>
             <td class="actions-cell">
               <button class="icon-button edit" (click)="openCreateDialog(device, true)"  data-tooltip="Edit Device">

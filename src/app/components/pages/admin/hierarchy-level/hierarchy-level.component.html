@@ -4,6 +4,10 @@
       <h1>Manage Hierarchy</h1>
       <div class="header-buttons">
         <button class="btn primary" *ngIf="hasEdit" (click)="openDialog()">Manage Hierarchy Level</button>
+        <button class="btn primary" (click)="triggerFileUpload()">
+          <span class="material-icons">upload</span> Upload Hierarchies
+        </button>
+        <input type="file" #fileInput (change)="onFileChange($event)" accept=".xlsx, .xls" style="display: none" />
         <!-- <button class="btn secondary">Upload Hierarchy File</button> -->
       </div>
     </div>

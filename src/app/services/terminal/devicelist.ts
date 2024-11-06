@@ -46,6 +46,26 @@ export class TerminalService {
         return this.http.post<any>(`${environment.tmsApiUrl}/tms/device/delete`, options, { headers: this.httpHeaders });
     }
 
+    modelBulkUpload(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/model/modelsBulk`,options, { headers: this.httpHeaders })
+    }
+
+    deviceBulkUpload(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/device/deviceBulk`,options, { headers: this.httpHeaders })
+    }
+
+    terminalBulkUpload(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/device/deviceBulk`,options, { headers: this.httpHeaders })
+    }
+
+    merchantBulkUpload(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/merchant/merchantBulkCreate`,options, { headers: this.httpHeaders })
+    }
+
+    hierarchiesBulkUpload(options): Observable<any> {
+        return this.http.post<any>(`${environment.tmsApiUrl}/tms/hierarchy/hierarchyBulkUpload`,options, { headers: this.httpHeaders })
+    }
+
     updateModel(options:updateBody): Observable<any> {
         return this.http.put<any>(`${environment.tmsApiUrl}/tms/model`, options, { headers: this.httpHeaders });
     }

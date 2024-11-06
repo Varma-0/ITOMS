@@ -1,7 +1,6 @@
 import { Component, ElementRef, QueryList, Renderer2, ViewChildren, AfterViewInit, OnInit, Input, ChangeDetectorRef, AfterViewChecked, EventEmitter, Output, SimpleChanges } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { SubProfileDialogComponent } from "src/app/components/dialogs/sub-profile/sub-profile.component";
 import { TerminalProfileComponent } from "src/app/components/dialogs/terminal-profile/terminal-profile.component";
 import { TerminalService } from "src/app/services/terminal/devicelist";
 

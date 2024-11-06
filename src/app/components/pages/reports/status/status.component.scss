@@ -23,6 +23,13 @@ $danger-red: #f44336;
   }
 }
 
+thead {
+    position: sticky;
+    top: 0;
+    background-color: #fff; /* Ensure the header has a background when it sticks */
+    z-index: 1; /* Ensures header stays above table content */
+  }
+
 /* Page Header */
 /* Page Header Styling */
 .breadcrumb-area {
@@ -203,24 +210,25 @@ $danger-red: #f44336;
   background-color: $background-white;
 }
 
-thead {
-    position: sticky;
-    top: 0;
-    background-color: #fff; /* Ensure the header has a background when it sticks */
-    z-index: 1; /* Ensures header stays above table content */
-  }
-
 .user-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
 
-  th, td {
+  th {
     padding: 16px;
     text-align: center;
     vertical-align: middle;
     border-bottom: 1px solid $border-color;
   }
+
+  td {
+    padding: 14px;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid $border-color;
+  }
+
 
   th {
     background-color: #f0f4f8;

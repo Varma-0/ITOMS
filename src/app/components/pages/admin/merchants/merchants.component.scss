@@ -68,6 +68,13 @@ $danger-red: #f44336;
     content: '';
   }
 
+  thead {
+    position: sticky;
+    top: 0;
+    background-color: #fff; /* Ensure the header has a background when it sticks */
+    z-index: 1; /* Ensures header stays above table content */
+  }
+
 
 // Styles
 // .admin-panel {
@@ -209,8 +216,15 @@ $danger-red: #f44336;
   border-collapse: separate;
   border-spacing: 0;
 
-  th, td {
+  th {
     padding: 16px;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid $border-color;
+  }
+
+  td {
+    padding: 5px;
     text-align: center;
     vertical-align: middle;
     border-bottom: 1px solid $border-color;
@@ -451,10 +465,3 @@ $danger-red: #f44336;
 .hide-column {
   display: none;
 }
-
-thead {
-    position: sticky;
-    top: 0;
-    background-color: #fff; /* Ensure the header has a background when it sticks */
-    z-index: 1; /* Ensures header stays above table content */
-  }

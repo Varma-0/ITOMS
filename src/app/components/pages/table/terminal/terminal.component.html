@@ -1,135 +1,139 @@
 <div class="admin-panel" *ngIf="views">
-    <div class="fixed-header">
-      <div class="breadcrumb-area">
-        <h1 style="color: white;">Terminal <span class="badge">{{data.length}}</span></h1>
-        <ol class="breadcrumb">
-          <li>TMS</li>
-          <li>Terminal</li>
-        </ol>
-      </div>
-
-      <div class="controls-container">
-        <div class="button-actions">
-          <button class="action-button">
-            <i class="material-icons">schedule</i>
-            <span>Device Event Log</span>
-          </button>
-          <button class="action-button">
-            <i class="material-icons">download</i>
-            <span>Export</span>
-          </button>
-          <button class="action-button">
-            <i class="material-icons">location_on</i>
-            <span>Device Location</span>
-          </button>
-          <button class="action-button">
-            <i class="material-icons">edit</i>
-            <span>TID Batch Modification</span>
-          </button>
-        </div>
-
-        <div class="filters-container">
-          <input type="text" class="search-input" placeholder="Device SN / TID" [(ngModel)]="searchText" (input)="applyFilter()">
-
-          <div class="select-container">
-            <select class="custom-select" [(ngModel)]="selectedOption1" (change)="applyFilter()">
-              <option value="" disabled selected>Status</option>
-              <option *ngFor="let option of optionStatus" [value]="option">{{option}}</option>
-            </select>
-          </div>
-
-          <div class="select-container">
-            <select class="custom-select" [(ngModel)]="selectedOption2" (change)="applyFilter()">
-              <option value="" disabled selected>Model</option>
-              <option *ngFor="let option of optionModel" [value]="option">{{option}}</option>
-            </select>
-          </div>
-
-          <button *ngIf="searchText || selectedOption1 || selectedOption2 " class="btn btn-primary me-2" style="height: 40px;" (click)="clearValues()">
-            <i class="bx bx-x-circle"></i>
-          </button>
-
-          <div class="column-manager">
-            <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
-              <i class="material-icons">filter_list</i> Columns
-            </button>
-            <div class="column-list" #columnList>
-              <label *ngFor="let column of columns; let i = index">
-                <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(i)">
-                {{ column.name }}
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="action-bar" [ngClass]="{'bg-light-grey': getSelectedCount() === 0, 'cursor-not-allowed': getSelectedCount() === 0}">
-        <span>{{ getSelectedCount() }} Selected</span>
-        <button class="action-button-lock" [disabled]="getSelectedCount() === 0" (click)="blockSelectedRow()">
-          <i class="material-icons">lock</i>
-          <span>Block</span>
-        </button>
-        <button class="action-button-lock" [disabled]="getSelectedCount() === 0" (click)="unblockSelectedRow()">
-          <i class="material-icons">lock_open</i>
-          <span>Unblock</span>
-        </button>
-        <button class="action-button-lock" [disabled]="getSelectedCount() === 0" (click)="addToGroup()">
-          <i class="material-icons">layers</i>
-          <span>Add to group</span>
-        </button>
-      </div>
+  <div class="fixed-header">
+    <div class="breadcrumb-area">
+      <h1 style="color: white;">Terminal <span class="badge">{{data.length}}</span></h1>
+      <ol class="breadcrumb">
+        <li>TMS</li>
+        <li>Terminal</li>
+      </ol>
     </div>
 
-    <div class="table-container">
-      <table class="user-table">
-        <thead>
-          <tr>
-            <th style="padding: 5px">
-              <input type="checkbox" (change)="toggleSelectAll($event)">
-            </th>
-            <th *ngIf="columns[0].visible">Serial Number</th>
-            <th *ngIf="columns[1].visible">Model</th>
-            <th *ngIf="columns[2].visible">Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let device of paginatedDevices" (click)="row(device)">
-            <td>
-              <input type="checkbox" [(ngModel)]="device.selected" (click)="$event.stopPropagation();toggleDeviceSelection(device)">
-            </td>
-            <td *ngIf="columns[0].visible">{{device.serialNumber}}</td>
-            <td *ngIf="columns[1].visible">{{device.modelName}}</td>
-            <td *ngIf="columns[2].visible">
-              <span class="status-badge" [ngClass]="device.status.toLowerCase()">
-                {{device.status}}
-              </span>
-            </td>
-            <td class="actions-cell">
-              <button class="icon-button" (click)="$event.stopPropagation();edit(device)">
-                <i class="material-icons">edit</i>
-              </button>
-              <button class="icon-button" style="color: red;" (click)="$event.stopPropagation();openDeleteDialog(device)">
-                <i class="material-icons">delete</i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="controls-container">
+      <div class="button-actions">
+        <button class="action-button">
+          <i class="material-icons">schedule</i>
+          <span>Device Event Log</span>
+        </button>
+        <button class="action-button">
+          <i class="material-icons">download</i>
+          <span>Export</span>
+        </button>
+        <button class="action-button">
+          <i class="material-icons">location_on</i>
+          <span>Device Location</span>
+        </button>
+        <button class="action-button">
+          <i class="material-icons">edit</i>
+          <span>TID Batch Modification</span>
+        </button>
+      </div>
 
-    <div class="pagination">
-        <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
-        <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
-        <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
-        <div class="items-per-page">
-          <label for="itemsPerPage">Items per page:</label>
-          <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="updateItemsPerPage()">
-            <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+      <div class="filters-container">
+        <input type="text" class="search-input" placeholder="Device SN / TID" [(ngModel)]="searchText" (input)="applyFilter()">
+
+        <div class="select-container">
+          <select class="custom-select" [(ngModel)]="selectedOption1" (change)="applyFilter()">
+            <option value="" disabled selected>Status</option>
+            <option *ngFor="let option of optionStatus" [value]="option">{{option}}</option>
           </select>
         </div>
+
+        <div class="select-container">
+          <select class="custom-select" [(ngModel)]="selectedOption2" (change)="applyFilter()">
+            <option value="" disabled selected>Model</option>
+            <option *ngFor="let option of optionModel" [value]="option">{{option}}</option>
+          </select>
+        </div>
+
+        <button *ngIf="searchText || selectedOption1 || selectedOption2 " class="btn btn-primary me-2" style="height: 40px;" (click)="clearValues()">
+          <i class="bx bx-x-circle"></i>
+        </button>
+
+        <div class="column-manager">
+          <button class="column-manager-button" (click)="triggerFileUpload()">
+            <i class="material-icons">upload</i> Upload Terminals
+          </button>
+          <input type="file" #fileInput (change)="onFileChange($event)" accept=".xlsx, .xls" style="display: none" />
+          <button class="column-manager-button" (click)="columnList.classList.toggle('active')">
+            <i class="material-icons">filter_list</i> Columns
+          </button>
+          <div class="column-list" #columnList>
+            <label *ngFor="let column of columns; let i = index">
+              <input type="checkbox" [checked]="column.visible" (change)="toggleColumn(i)">
+              {{ column.name }}
+            </label>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <div class="action-bar" [ngClass]="{'bg-light-grey': getSelectedCount() === 0, 'cursor-not-allowed': getSelectedCount() === 0}">
+      <span>{{ getSelectedCount() }} Selected</span>
+      <button class="action-button-lock" [disabled]="getSelectedCount() === 0" (click)="blockSelectedRow()">
+        <i class="material-icons">lock</i>
+        <span>Block</span>
+      </button>
+      <button class="action-button-lock" [disabled]="getSelectedCount() === 0" (click)="unblockSelectedRow()">
+        <i class="material-icons">lock_open</i>
+        <span>Unblock</span>
+      </button>
+      <button class="action-button-lock" [disabled]="getSelectedCount() === 0" (click)="addToGroup()">
+        <i class="material-icons">layers</i>
+        <span>Add to group</span>
+      </button>
+    </div>
   </div>
-  <ng-container *ngIf="insideView">
-    <app-terminal-view [device]="selectedDevice" [view]="views" [insideview]="insideView" (viewChange)="onViewChange($event)" (insideviewChange)="onInsideViewChange($event)"></app-terminal-view>
-  </ng-container>
+
+  <div class="table-container">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th style="padding: 5px;">
+            <input type="checkbox" (change)="toggleSelectAll($event)">
+          </th>
+          <th *ngIf="columns[0].visible">Serial Number</th>
+          <th *ngIf="columns[1].visible">Model</th>
+          <th *ngIf="columns[2].visible">Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let device of paginatedDevices" (click)="row(device)">
+          <td>
+            <input type="checkbox" [(ngModel)]="device.selected" (click)="$event.stopPropagation();toggleDeviceSelection(device)">
+          </td>
+          <td *ngIf="columns[0].visible">{{device.serialNumber}}</td>
+          <td *ngIf="columns[1].visible">{{device.modelName}}</td>
+          <td *ngIf="columns[2].visible">
+            <span class="status-badge" [ngClass]="device.status.toLowerCase()">
+              {{device.status}}
+            </span>
+          </td>
+          <td class="actions-cell">
+            <button class="icon-button" (click)="$event.stopPropagation();edit(device)">
+              <i class="material-icons">edit</i>
+            </button>
+            <button class="icon-button" style="color: red;" (click)="$event.stopPropagation();openDeleteDialog(device)">
+              <i class="material-icons">delete</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+      <button class="pagination-button" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+      <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+      <button class="pagination-button" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+      <div class="items-per-page">
+        <label for="itemsPerPage">Items per page:</label>
+        <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="updateItemsPerPage()">
+          <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+    </div>
+</div>
+<ng-container *ngIf="insideView">
+  <app-terminal-view [device]="selectedDevice" [view]="views" [insideview]="insideView" (viewChange)="onViewChange($event)" (insideviewChange)="onInsideViewChange($event)"></app-terminal-view>
+</ng-container>

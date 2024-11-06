@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -9,6 +9,7 @@ import { terminalEvent } from 'src/app/services/terminal/body/event-data';
 import { terminalBody } from 'src/app/services/terminal/body/body';
 import { timeout } from 'rxjs';
 import { SharedServices } from 'src/app/services/shared.service';
+import { ExcelService } from 'src/app/services/excel.service';
 
 interface HierarchyItem {
     id: string;
@@ -29,6 +30,8 @@ interface HierarchyLevel {
     styleUrls: ['./hierarchy-level.component.scss']
 })
 export class HierarchyLevelComponent implements OnInit {
+    @ViewChild('fileInput') fileInput!: ElementRef;
+
     hierarchyLevels: HierarchyLevel[] = [];
 
     private countries = ['India', 'United States', 'Canada', 'Germany', 'France'];
@@ -65,8 +68,12 @@ export class HierarchyLevelComponent implements OnInit {
     levelIndex: any;
     hasEdit: boolean;
     hasDelete: boolean;
+    excelData: any[] = [];
+    headers: string[] = [];
+    missingColumns: any[] = [];
+    requiredColumns = ['name'	,'description'	,'parentHierarchy'	,'merchantPhone'	,'hierarchyLevel' ,'merchantName']
 
-    constructor(private router: Router, public dialog: MatDialog, private fb: FormBuilder, private dataService: TerminalService, private shared: SharedServices) { }
+    constructor(private router: Router, public dialog: MatDialog, private fb: FormBuilder, private dataService: TerminalService, private shared: SharedServices,private excelService: ExcelService) { }
 
     ngOnInit() {
         this.itemForm = this.fb.group({
@@ -89,6 +96,56 @@ export class HierarchyLevelComponent implements OnInit {
             this.hasDelete = item[0].isAllowDelete
         }
     }
+
+    triggerFileUpload(): void {
+        this.fileInput.nativeElement.click(); // Programmatically click the hidden file input
+      }
+    
+      onFileChange(event: any): void {
+        const file = event.target.files[0];
+        if (file) {
+          this.uploadFile(file);
+        }
+      }
+      
+      async uploadFile(file: File): Promise<void> {
+        try {
+          const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
+          this.headers = result.headers; // Store headers
+          this.excelData = result.data; // Store data
+          console.log("Column Names (Headers):", this.headers,this.excelData);
+          this.uploadBulkHierarchies();
+        } catch (error) {
+          console.error("Error:", error.message);
+          this.shared.showError(error.message); // Handle error
+        } finally {
+          // Reset the file input value
+          this.fileInput.nativeElement.value = ''; // Reset the input field
+          this.missingColumns = [];
+        }
+      }
+    
+      uploadBulkHierarchies() {
+        const payload = {
+          "event": {
+              "eventData": this.excelData,
+              "eventType": "HIERARCHY",
+              "eventSubType": "CREATE"
+          }
+        }
+        this.shared.showLoader.next(true);
+        this.dataService.hierarchiesBulkUpload(payload).subscribe(
+          response=>{
+            console.log("efwaa",response);
+            this.shared.showLoader.next(false);
+            this.shared.showSuccess("Hierarchies Uploaded Successfully")
+          },
+          error => {
+            this.shared.showLoader.next(false);
+            this.shared.showError(error.message)
+          }
+        )
+      }
 
     getLevels() {
         this.hierarchyLevels = [];

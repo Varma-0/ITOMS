@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
+import { ExcelService } from 'src/app/services/excel.service';
 import { merchantAdd, merchantDelete } from 'src/app/services/login/body/body';
 import { addMerchantBody, deleteMerchantEVent } from 'src/app/services/login/body/event';
 import { addMerchantData } from 'src/app/services/login/body/event-data';
@@ -16,13 +17,7 @@ import { TerminalService } from 'src/app/services/terminal/devicelist';
   styleUrl: './merchants.component.scss'
 })
 export class MerchantsComponent {
-  // day = 'Tue'
-  // date = '20';
-  // month = 'Aug';
-  // merchantName = 'Big_Sale_Mart';
-  // merchantDetails = '2024-06-06';
-  // merchantEmail = 'salebigmart@gmail.com'
-  // merchantType = 'BIG CORP';
+  @ViewChild('fileInput') fileInput!: ElementRef;
   merchants: any = []
   time: any = '';
   fulldate:any = '';
@@ -47,7 +42,11 @@ export class MerchantsComponent {
       toggleColumn(index: number): void {
         this.columns[index].visible = !this.columns[index].visible;
       }
-  constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices) { }
+   excelData: any[] = [];
+   headers: string[] = [];
+   missingColumns :any[]= [];
+   requiredColumns = ['name'	,'contactName'	,'phone']
+  constructor(public dialog: MatDialog, private dataService: TerminalService, private shared: SharedServices,private excelService: ExcelService) { }
 
   ngOnInit(): void {
     if(localStorage.getItem("SA") == 'true'){
@@ -60,6 +59,56 @@ export class MerchantsComponent {
         this.hasDelete = item[0].isAllowDelete
     }
     this.loadMerchants();
+  }
+
+  triggerFileUpload(): void {
+    this.fileInput.nativeElement.click(); // Programmatically click the hidden file input
+  }
+
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.uploadFile(file);
+    }
+  }
+  
+  async uploadFile(file: File): Promise<void> {
+    try {
+      const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
+      this.headers = result.headers; // Store headers
+      this.excelData = result.data; // Store data
+      console.log("Column Names (Headers):", this.headers,this.excelData);
+      this.uploadBulkMerchants();
+    } catch (error) {
+      console.error("Error:", error.message);
+      this.shared.showError(error.message); // Handle error
+    } finally {
+      // Reset the file input value
+      this.fileInput.nativeElement.value = ''; // Reset the input field
+      this.missingColumns = [];
+    }
+  }
+
+  uploadBulkMerchants() {
+    const payload = {
+      "event": {
+          "eventData": this.excelData,
+          "eventType": "MERCHANT",
+          "eventSubType": "CREATE"
+      }
+    }
+    this.shared.showLoader.next(true);
+    this.dataService.merchantBulkUpload(payload).subscribe(
+      response=>{
+        console.log("efwaa",response);
+        this.shared.showLoader.next(false);
+        this.shared.showSuccess("Merchants Uploaded Successfully")
+      },
+      error => {
+        this.shared.showLoader.next(false);
+        this.shared.showError(error.message)
+      }
+    )
   }
 
   loadMerchants() {

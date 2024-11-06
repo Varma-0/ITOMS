@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddFormComponent } from 'src/app/components/dialogs/add-form/add-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { DevicesFormComponent } from 'src/app/components/dialogs/device-form/device-form.component';
+import { ExcelService } from 'src/app/services/excel.service';
 import { addDeviceBody, deleteBody, updateDevice } from 'src/app/services/login/body/body';
 import { addDeviceEvent, deleteModelEvent, updateDeviceEvent } from 'src/app/services/login/body/event';
 import { addDevice, createDevice } from 'src/app/services/login/body/event-data';
@@ -17,6 +18,7 @@ import { TerminalService } from 'src/app/services/terminal/devicelist';
   styleUrl: './devices.component.scss'
 })
 export class DevicesComponent {
+  @ViewChild('fileInput') fileInput!: ElementRef;
   device: any = []
   tenantsData:any;
   rolesData:any;
@@ -46,11 +48,16 @@ export class DevicesComponent {
     { name: 'Created Date', visible: true },
   ];
 
+  excelData: any[] = [];
+  headers: string[] = [];
+  missingColumns: any[] = [];
+  requiredColumns = ['serialNumber'	,'merchantPhone'	,'modelName'	,'hierarchyName'	,'merchantName']
+
   toggleColumn(index: number): void {
     this.columns[index].visible = !this.columns[index].visible;
   }
 
-  constructor(public dialog: MatDialog, private dataService: TerminalService,private shared:SharedServices) {}
+    constructor(public dialog: MatDialog, private dataService: TerminalService,private shared:SharedServices,private excelService: ExcelService) {}
 
   ngOnInit(): void {
     this.loginData = localStorage.getItem("SA");
@@ -59,6 +66,56 @@ export class DevicesComponent {
     this.deviceDropdown();
     this.updatePagination();
     this.getMerchants();
+  }
+
+  triggerFileUpload(): void {
+    this.fileInput.nativeElement.click(); // Programmatically click the hidden file input
+  }
+
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.uploadFile(file);
+    }
+  }
+  
+  async uploadFile(file: File): Promise<void> {
+    try {
+      const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
+      this.headers = result.headers; // Store headers
+      this.excelData = result.data; // Store data
+      console.log("Column Names (Headers):", this.headers,this.excelData);
+      this.uploadBulkDevices();
+    } catch (error) {
+      console.error("Error:", error.message);
+      this.shared.showError(error.message); // Handle error
+    } finally {
+      // Reset the file input value
+      this.fileInput.nativeElement.value = ''; // Reset the input field
+      this.missingColumns = [];
+    }
+  }
+
+  uploadBulkDevices() {
+    const payload = {
+      "event": {
+          "eventData": this.excelData,
+          "eventType": "DEVICE",
+          "eventSubType": "CREATE"
+      }
+    }
+    this.shared.showLoader.next(true);
+    this.dataService.deviceBulkUpload(payload).subscribe(
+      response=>{
+        console.log("efwaa",response);
+        this.shared.showLoader.next(false);
+        this.shared.showSuccess("Devices Uploaded Successfully")
+      },
+      error => {
+        this.shared.showLoader.next(false);
+        this.shared.showError(error.message)
+      }
+    )
   }
 
   deviceData() {

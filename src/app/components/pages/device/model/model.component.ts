@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild,ElementRef, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DevicesFormComponent } from 'src/app/components/dialogs/device-form/device-form.component';
 import { ConfirmDeleteDialogComponent } from 'src/app/components/dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
@@ -9,6 +9,7 @@ import { SharedServices } from 'src/app/services/shared.service';
 import { terminalBody } from 'src/app/services/terminal/body/body';
 import { terminalEvent } from 'src/app/services/terminal/body/event-data';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
+import { ExcelService } from 'src/app/services/excel.service';
 
 @Component({
   selector: 'app-model',
@@ -16,6 +17,7 @@ import { TerminalService } from 'src/app/services/terminal/devicelist';
   styleUrls: ['./model.component.scss']
 })
 export class ModelComponent implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef;
   devices: any[] = [];
   filteredDevices: any[] = [];
   paginatedDevices: any[] = [];
@@ -30,7 +32,10 @@ export class ModelComponent implements OnInit {
     { name: 'Description', visible: true },
     { name: 'Created Date', visible: true },
   ];
-
+  requiredColumns = ['name', 'oem'];
+  excelData: any[] = [];
+  missingColumns: any[] = [];
+  headers: string[] = [];
   toggleColumn(index: number): void {
     this.columns[index].visible = !this.columns[index].visible;
   }
@@ -38,12 +43,65 @@ export class ModelComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private dataService: TerminalService,
-    private shared: SharedServices
+    private shared: SharedServices,
+    private excelService: ExcelService
   ) {}
 
   ngOnInit(): void {
     this.fetchData();
   }
+
+  triggerFileUpload(): void {
+    this.fileInput.nativeElement.click(); // Programmatically click the hidden file input
+  }
+
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.uploadFile(file);
+    }
+  }
+  
+  async uploadFile(file: File): Promise<void> {
+    try {
+      const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
+      this.headers = result.headers; // Store headers
+      this.excelData = result.data; // Store data
+      console.log("Column Names (Headers):", this.headers,this.excelData);
+      // this.uploadBulkModels();
+    } catch (error) {
+      console.error("Error:", error.message);
+      this.shared.showError(error.message); // Handle error
+    } finally {
+      // Reset the file input value
+      this.fileInput.nativeElement.value = ''; // Reset the input field
+      this.missingColumns = [];
+    }
+  }
+
+  uploadBulkModels() {
+    const payload = {
+      "event": {
+          "eventData": this.excelData,
+          "eventType": "MODEL",
+          "eventSubType": "CREATE"
+      }
+    }
+    this.shared.showLoader.next(true);
+    this.dataService.modelBulkUpload(payload).subscribe(
+      response=>{
+        console.log("efwaa",response);
+        this.shared.showLoader.next(false);
+        this.shared.showSuccess("Models Uploaded Successfully")
+      },
+      error => {
+        this.shared.showLoader.next(false);
+        this.shared.showError(error.message)
+      }
+    )
+  }
+  
+  
 
   fetchData() {
     const event = new terminalEvent('MODEL', 'SEARCH');
@@ -193,3 +251,4 @@ export class ModelComponent implements OnInit {
     );
   }
 }
+

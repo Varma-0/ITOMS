@@ -45,7 +45,7 @@
           <th *ngIf="hasEdit || hasDelete">Actions</th>
         </tr>
       </thead>
-      <tbody *ngFor="let device of filteredalerts">
+      <tbody *ngFor="let device of paginatedDevices">
         <tr>
           <td style="text-align: left;" *ngIf="columns[0].visible">{{ device.name }}</td>
           <td style="text-align: left;" *ngIf="columns[1].visible">{{ device.createdBy.userName }}</td>
