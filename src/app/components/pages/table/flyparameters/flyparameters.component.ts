@@ -114,7 +114,7 @@ this.showDynamicKeys = true;
     this.childComponent.performView();
   }
 
-  constructor(public dialog: MatDialog,private dataService: TerminalService,private router:ActivatedRoute){}
+  constructor(public dialog: MatDialog,private dataService: TerminalService,private router:ActivatedRoute,private shared:SharedServices){}
 
   filterDeployments() {
     const filterValue = this.searchTerm.trim()?.toLowerCase();
@@ -150,26 +150,32 @@ this.showDynamicKeys = true;
         }
         this.dataService.getDevicebysn(payload).subscribe(
           response => {
-            this.serialNo = response.event.eventData.serialNumber;
-            this.deviceId = response.event.eventData.id;
-            const payload = {
-                "event": {
-                    "eventData": this.packageId,
-                    "eventType": "DEVICE",
-                    "eventSubType": "SEARCH"
-                }
-            }
-            this.dataService.getParamByPackage(payload).subscribe(
-              response => {
-                this.openCheckDialog(response.event.eventData);
-              },
-              (error)=>{
-                alert("Invalid device")
+            if(response.event.eventData.status != "BLOCK") {
+              this.serialNo = response.event.eventData.serialNumber;
+              this.deviceId = response.event.eventData.id;
+              const payload = {
+                  "event": {
+                      "eventData": this.packageId,
+                      "eventType": "DEVICE",
+                      "eventSubType": "SEARCH"
+                  }
               }
-            )
+              this.dataService.getParamByPackage(payload).subscribe(
+                response => {
+                  this.openCheckDialog(response.event.eventData);
+                },
+                (error)=>{
+                  // alert("Invalid device")
+                  this.shared.showError(error)
+                }
+              );
+            } else {
+              this.shared.showError("Terminal is Blocked in State")
+            }
           },
           (error)=>{
-            alert("Invalid device")
+            // alert("Invalid device")
+            this.shared.showError(error)
           }
         )
       }

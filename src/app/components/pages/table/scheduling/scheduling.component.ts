@@ -190,34 +190,37 @@ paginatedTerminals: any[] = [];
         
           this.dataService.getDevicebysn(payloadForModel).subscribe(
             response => {
-              this.modelNameBasedOnSN = response.event.eventData.modelName;
-        
-              setTimeout(() => {
-                const payload = {
-                  "event": {
-                    "eventData": {
-                      "deploymentId": this.selectedItem.id,
-                      "deploymentName": this.selectedItem.name,
-                      "serialNumber": result,
-                      "model": this.modelNameBasedOnSN,
-                      "status": "PENDING",
-                      "onlineStatus": "OFFLINE"
+              if(response.event.eventData.status != "BLOCK") {
+                this.modelNameBasedOnSN = response.event.eventData.modelName;        
+                setTimeout(() => {
+                  const payload = {
+                    "event": {
+                      "eventData": {
+                        "deploymentId": this.selectedItem.id,
+                        "deploymentName": this.selectedItem.name,
+                        "serialNumber": result,
+                        "model": this.modelNameBasedOnSN,
+                        "status": "PENDING",
+                        "onlineStatus": "OFFLINE"
+                      },
+                      "eventType": "DEPLOYMENT",
+                      "eventSubType": "CREATE"
+                    }
+                  };
+          
+                  this.dataService.addTerminal(payload).subscribe(
+                    response => {
+                      console.log("erecw", response);
+                      this.getTerminalData(); // Refresh terminal data
                     },
-                    "eventType": "DEPLOYMENT",
-                    "eventSubType": "CREATE"
-                  }
-                };
-        
-                this.dataService.addTerminal(payload).subscribe(
-                  response => {
-                    console.log("erecw", response);
-                    this.getTerminalData(); // Refresh terminal data
-                  },
-                  error => {
-                    console.error(error);
-                  }
-                );
-              }, 5000); // Wait for 1 second before executing the next API call
+                    error => {
+                      console.error(error);
+                    }
+                  );
+                }, 5000); // Wait for 1 second before executing the next API call
+              } else {
+                this.shared.showError("Terminal is Blocked in State")
+              }
             },
             error => {
               console.error(error);

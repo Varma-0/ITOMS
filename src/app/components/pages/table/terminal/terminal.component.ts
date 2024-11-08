@@ -126,8 +126,8 @@ columns = [
 
 row(individualData){
     this.terminalViewData(individualData)
-    console.log(this.insideView,"feqqw")
-    console.log("fhgssgd",individualData)
+    // console.log(this.insideView,"feqqw")
+    // console.log("fhgssgd",individualData)
   }
 
 
@@ -149,7 +149,7 @@ row(individualData){
   }
 
   terminalViewData(individualData) {
-    console.log("adcgwguowe",individualData);
+    // console.log("adcgwguowe",individualData);
     const payload = {
       "event": {
         "eventData":individualData.id,
@@ -191,7 +191,7 @@ row(individualData){
 
   updatePagination() {
     let filteredData = this.data;
-    console.log("efw",filteredData);
+    // console.log("efw",filteredData);
     if (this.searchText) {
       filteredData = filteredData.filter(device =>
         (device.serialNumber && device.serialNumber?.toLowerCase().includes(this.searchText?.toLowerCase()))
@@ -274,7 +274,7 @@ row(individualData){
   // }
 
   getSelectedCount() {
-    console.log(this.selectedDevices);
+    // console.log(this.selectedDevices);
     return this.paginatedDevices.filter(device => device.selected).length;
   }
 

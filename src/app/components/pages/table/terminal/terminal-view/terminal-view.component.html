@@ -120,7 +120,7 @@
       </mat-card>
     </div> -->
       <div class="cards-container">
-        <mat-card class="custom-card card-60">
+        <mat-card class="custom-card card-100">
           <mat-card-header class="d-flex justify-content-between">
             <mat-card-title class="card-header-title">Command History</mat-card-title>
             <div class="col-md-4">
@@ -171,27 +171,46 @@
 
         </mat-card>
 
-        <mat-card class="custom-card card-40">
+        <mat-card class="custom-card card-100">
           <mat-card-header>
             <mat-card-title class="card-header-title">Estate Lifecycle</mat-card-title>
           </mat-card-header>
           <hr style="border: 1px solid grey; opacity: 0.1;">
-          <mat-card-content>
-            <table mat-table [dataSource]="estateDataSource">
-              <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef>Action</th>
-                <td mat-cell *matCellDef="let element">{{element.action}}</td>
-              </ng-container>
-              <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef>Date</th>
-                <td mat-cell *matCellDef="let element">{{element.date}}</td>
-              </ng-container>
+          <mat-card-content class="table-container">
+            <div class="table-wrapper">
+              <table mat-table class="last-table" [dataSource]="estateDataSource">
+                <ng-container matColumnDef="deviceId">
+                  <th mat-header-cell *matHeaderCellDef>Device Id</th>
+                  <td mat-cell *matCellDef="let element">{{element.deviceId}}</td>
+                </ng-container>
 
-              <tr mat-header-row *matHeaderRowDef="estateColumns;sticky:true"></tr>
-              <tr mat-row *matRowDef="let row; columns: estateColumns;"></tr>
-            </table>
-            <mat-paginator #estatePaginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10]"
-                           showFirstLastButtons></mat-paginator>
+                <ng-container matColumnDef="estateType">
+                  <th mat-header-cell *matHeaderCellDef>Estate Type</th>
+                  <td mat-cell *matCellDef="let element">{{element.estateType}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="ts">
+                  <th mat-header-cell *matHeaderCellDef>Timestamp</th>
+                  <td mat-cell *matCellDef="let element">{{element.ts | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="['deviceId', 'estateType', 'ts'];sticky:true"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['deviceId', 'estateType', 'ts'];"></tr>
+              </table>
+            </div>
+
+            <!-- Fixed Pagination at the Footer -->
+            <div class="pagination">
+              <button class="pagination-button" (click)="previousPageEstate()" [disabled]="currentPageEstate === 1">Previous</button>
+              <span class="pagination-info">Page {{ currentPageEstate }} of {{ totalPagesEstate }}</span>
+              <button class="pagination-button" (click)="nextPageEstate()" [disabled]="currentPageEstate === totalPagesEstate">Next</button>
+              <div class="items-per-page">
+                <label for="itemsPerPage">Items per page:</label>
+                <select id="itemsPerPage" [(ngModel)]="itemsPerPageEstate" (change)="updateItemsPerPageEstate()">
+                  <option *ngFor="let option of itemsPerPageOptionsEstate" [value]="option">{{ option }}</option>
+                </select>
+              </div>
+            </div>
           </mat-card-content>
         </mat-card>
       </div>

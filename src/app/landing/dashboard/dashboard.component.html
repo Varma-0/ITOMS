@@ -37,23 +37,23 @@
     </div>
     <div id="particles-js"></div>
 </div>
-<div class="page-container">
+<div class="page-container" >
     <!-- Header Section -->
         <header class="header">
                 <h1 class="title">Terminal Lifecycle Management</h1>
-            <!-- <nav class="tabs">
+            <nav class="tabs">
               <button class="tab" [ngClass]="{'active':title == 'zero'}" (click)="titleChange('zero')">Zero Touch Deployment</button>
               <button class="tab" [ngClass]="{'active':title == 'multi'}" (click)="titleChange('multi')">Multi-Dimensional</button>
               <button class="tab" [ngClass]="{'active':title == 'firm'}" (click)="titleChange('firm')">Firmware and App</button>
               <button class="tab" [ngClass]="{'active':title == 'device'}" (click)="titleChange('device')">Device Monitoring</button>
               <button class="tab" [ngClass]="{'active':title == 'remote'}" (click)="titleChange('remote')">Remote Assistance</button>
               <button class="tab" [ngClass]="{'active':title == 'custom'}" (click)="titleChange('custom')">Customization</button>
-            </nav> -->
+            </nav>
           </header>
-<div class="row">
-    <div class="col-1" style="display: flex;align-content: center;">
+<div class="row" style="display: flex;justify-content: center;">
+    <div class="col-1" style="display: flex;align-content: center;" *ngIf="showArrows">
         <button class="left-arrow" (click)="previousSlide()">
-            <mat-icon>arrow_back</mat-icon>
+            <mat-icon>arrow_back_ios_new</mat-icon>
           </button>
     </div>
     <div class="col-10">
@@ -331,9 +331,9 @@
         </section>
     </ng-container>
     </div>
-    <div class="col-1" style="display: flex;align-content: center;">
+    <div class="col-1" style="display: flex;align-content: center;" *ngIf="showArrows">
         <button class="right-arrow" (click)="nextSlide()">
-            <mat-icon>arrow_forward</mat-icon>
+            <mat-icon>arrow_forward_ios_new</mat-icon>
           </button>
     </div>
 </div>

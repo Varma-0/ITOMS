@@ -89,6 +89,14 @@
     }
   }
 
+  @media (max-width: 768px) {
+    .header{
+      .tabs {
+        display: none;
+      }
+    }
+  }
+
 // Features Grid Section
 .features-grid {
     display: grid;

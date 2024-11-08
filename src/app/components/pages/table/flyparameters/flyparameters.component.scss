@@ -16,6 +16,18 @@ $danger-red: #f44336;
     height: 100vh; /* Full height of the viewport */
 }
 
+.btn-primary {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-icon {
+  padding: 8px;
+}
+
 .breadcrumb-area {
   display: flex;
   align-items: center;
