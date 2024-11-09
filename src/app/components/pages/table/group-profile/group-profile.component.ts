@@ -15,7 +15,7 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
   @ViewChildren('textarea') textareas!: QueryList<ElementRef<HTMLTextAreaElement>>;
   private nextIndex = 0;
   activeForm!: FormGroup;
-  types = ['STRING','NUMBER','HEX','BOOLEAN','TIME','DATE','DATETIME','STRING TEXT','HEX TEXT']
+  types = ['STRING','NUMBER','HEX','REFERENCE','BOOLEAN','TIME','DATE','DATETIME','STRING TEXT','HEX TEXT']
   ifDate = ['TIME','DATE','DATETIME']
   maxVal = ['STRING','NUMBER','HEX']
   showProfile = true;
@@ -43,9 +43,10 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
 
   ngOnInit() {
     this.formsArray = this.fb.array([]);
-    this.addGroupWithTitle('profile');
     if(this.profile){
         this.prepopulate();
+    }else{
+        this.addGroupWithTitle('profile');
     }
   }
 
@@ -171,7 +172,13 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
 
   performSave() {
     if(!this.update){
-            const transformedArray = this.formsArray.value.map(this.transformObject);
+        const map = {};
+        const data = this.formsArray.value.map((data) => {
+            const array = data.details.map(this.transformObject);
+            map[data.name] = array;
+        })
+        const transformedArray = [];
+        transformedArray.push(map);
             const payload = {
                 "event": {
                     "eventData": {
@@ -212,7 +219,13 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
             if (index !== -1) {
               this.formsArray.setControl(index, this.activeForm);
             }
-        const transformedArray = this.formsArray.value.map(this.transformObject);
+            const map = {};
+            const data = this.formsArray.value.map((data) => {
+                const array = data.details.map(this.transformObject);
+                map[data.name] = array;
+            })
+            const transformedArray = [];
+            transformedArray.push(map);
         console.log("wew",transformedArray);
     const payload = {
         "event": {
@@ -283,39 +296,108 @@ this.back.emit("");
   }
 
   prepopulate(){
-    this.profile.forEach(item => {
-        if(item.paramLabel && !item.delete){
-            const newForm: FormGroup = this.fb.group({
-                batchId: [item.batchId],
-                id:[item.id],
-                label: [item.paramLabel],
-                key: [item.paramKey],
-                type: [item.valueType],
-                default: [item.defaultValue],
-                maxvalue: [item.maxLength],
-                minvalue: [item.minLength],
-                manadatroy: [item.nullable],
-                description: [item.description]
-              });
-              this.formsArray.push(newForm);
-              this.update = true;
-        }  });
-        this.profile.forEach(item => {
-            if(!item.paramLabel){
-                const newForm: FormGroup = this.fb.group({
-                    label: [this.getLabelValue('label',item)],
-                    key: [this.getLabelValue('key',item)],
-                    type: [this.getLabelValue('type',item)],
-                    default: [this.getLabelValue('default',item)],
-                    maxvalue: [this.getLabelValue('maxvalue',item)],
-                    minvalue: [this.getLabelValue('minvalue',item)],
-                    manadatroy: [''],
-                    description: [this.getLabelValue('description',item)]
-                  });
-                  this.formsArray.push(newForm);
-                  this.update = false;
+    const data = [
+        {
+          "profile": [
+            {
+              "title": "Label 3",
+              "description": "",
+              "paramLabel": "Label 3",
+              "paramKey": "string",
+              "maxLength": "",
+              "minLength": 255,
+              "nullable": false,
+              "defaultValue": "",
+              "valueType": "STRING"
+            },
+            {
+              "title": "Label 4",
+              "description": "",
+              "paramLabel": "Label 4",
+              "paramKey": "string",
+              "maxLength": "",
+              "minLength": 255,
+              "nullable": false,
+              "defaultValue": "",
+              "valueType": "STRING"
             }
-        })
+          ],
+          "Test": [
+            {
+              "title": "Label 0",
+              "description": "",
+              "paramLabel": "Label 0",
+              "paramKey": "string",
+              "maxLength": "",
+              "minLength": 255,
+              "nullable": false,
+              "defaultValue": "",
+              "valueType": "STRING"
+            },
+            {
+              "title": "Label 1",
+              "description": "",
+              "paramLabel": "Label 1",
+              "paramKey": "string",
+              "maxLength": "",
+              "minLength": 255,
+              "nullable": false,
+              "defaultValue": "",
+              "valueType": "STRING"
+            },
+            {
+              "title": "Label 2",
+              "description": "",
+              "paramLabel": "Label 2",
+              "paramKey": "string",
+              "maxLength": "",
+              "minLength": 255,
+              "nullable": false,
+              "defaultValue": "",
+              "valueType": "STRING"
+            }
+          ]
+        }
+      ]
+    Object.keys(data[0]).forEach((key) => {
+        const item = data[0][key];
+        this.addGroupWithTitle(key);
+        const array = this.getDetailsArrayByTitle(key);
+        item.forEach(item => {
+            if(item.paramLabel && !item.delete){
+                const newForm: FormGroup = this.fb.group({
+                    batchId: [item.batchId],
+                    id:[item.id],
+                    label: [item.paramLabel],
+                    key: [item.paramKey],
+                    type: [item.valueType],
+                    default: [item.defaultValue],
+                    maxvalue: [item.maxLength],
+                    minvalue: [item.minLength],
+                    manadatroy: [item.nullable],
+                    description: [item.description]
+                  });
+                  array.push(newForm);
+                  this.update = true;
+            }
+        });
+    });
+        // this.profile.forEach(item => {
+        //     if(!item.paramLabel){
+        //         const newForm: FormGroup = this.fb.group({
+        //             label: [this.getLabelValue('label',item)],
+        //             key: [this.getLabelValue('key',item)],
+        //             type: [this.getLabelValue('type',item)],
+        //             default: [this.getLabelValue('default',item)],
+        //             maxvalue: [this.getLabelValue('maxvalue',item)],
+        //             minvalue: [this.getLabelValue('minvalue',item)],
+        //             manadatroy: [''],
+        //             description: [this.getLabelValue('description',item)]
+        //           });
+        //           this.formsArray.push(newForm);
+        //           this.update = false;
+        //     }
+        // })
     this.cdr.detectChanges(); // Ensure changes are detected after populating
   }
 

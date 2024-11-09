@@ -35,6 +35,7 @@
       </button>
     <div class="table-container">
         <table class="user-table">
+      <div *ngIf="formsArray.value.length > 1; else nodata">
           <thead>
             <tr>
               <th style="text-align: left;" >Name</th>
@@ -43,8 +44,8 @@
           </thead>
           <tbody>
             <tr *ngFor="let device of formsArray.value">
-              <td style="text-align: left;">{{ device.name }}</td>
-              <td class="actions-cell">
+              <td style="text-align: left;" *ngIf="device.name != 'profile'">{{ device.name }}</td>
+              <td class="actions-cell" *ngIf="device.name != 'profile'">
                 <button class="icon-button" (click)="viewProfile(device.name)" data-tooltip="View Data">
                     <i class="material-icons">visibility</i>
                 </button>
@@ -54,6 +55,10 @@
               </td>
             </tr>
           </tbody>
+          </div>
+            <ng-template #nodata>
+              <h4>Curerently there are no sub profiles </h4>
+            </ng-template>
         </table>
     </div>
 </ng-container>
@@ -100,6 +105,10 @@
               </div>
               <div class="col-10">{{ formGroup.get('label')?.value }}</div>
             </div>
+          </div>
+          <div *ngSwitchCase="'REFERENCE'" #textarea>
+                <!-- <mat-label>VIEW</mat-label>
+                <mat-icon>visibility</mat-icon> -->
           </div>
         </ng-container>
         <div class="char-count"
@@ -181,44 +190,44 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let row of formsArray.controls; let i = index" [formGroup]="row">
+        <tr *ngFor="let row of formsArray.value[0].details; let i = index" [formGroup]="row">
           <td>
             <span class="editable-content">
               <input *ngIf="isEditing" formControlName="label">
-              <span *ngIf="!isEditing">{{ row.get('label').value || ' ' }}</span>
+              <span *ngIf="!isEditing">{{ row.label || ' ' }}</span>
             </span>
           </td>
           <td>
             <span class="editable-content">
               <input *ngIf="isEditing" formControlName="key">
-              <span *ngIf="!isEditing">{{ row.get('key').value || ' ' }}</span>
+              <span *ngIf="!isEditing">{{ row.key }}</span>
             </span>
           </td>
           <td>
             <span class="editable-content">
-              <span>{{ row.get('type').value }}</span>
+              <span>{{ row.type }}</span>
             </span>
           </td>
           <td>
             <span class="editable-content">
               <input *ngIf="isEditing" formControlName="default">
-              <span *ngIf="!isEditing">{{ row.get('default').value || ' ' }}</span>
+              <span *ngIf="!isEditing">{{ row.default || ' ' }}</span>
             </span>
           </td>
           <td>
             <span class="editable-content">
-              <span>{{ row.get('maxvalue').value || ' ' }}</span>
+              <span>{{ row.maxvalue || ' ' }}</span>
             </span>
           </td>
           <td>
             <span class="editable-content">
               <input *ngIf="isEditing" type="checkbox" formControlName="manadatroy">
-              <span *ngIf="!isEditing">{{ row.get('manadatroy').value ? 'Yes' : 'No' }}</span>
+              <span *ngIf="!isEditing">{{ row.manadatroy ? 'Yes' : 'No' }}</span>
             </span>
           </td>
           <td>
             <span class="editable-content">
-              <span>{{ row.get('description').value || ' ' }}</span>
+              <span>{{ row.description || ' ' }}</span>
             </span>
           </td>
         </tr>

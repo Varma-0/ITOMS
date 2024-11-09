@@ -61,7 +61,7 @@ $danger-red: #f44336;
     overflow: auto;          /* Handle overflow when resizing */
   }
 
-  .textarea-container input {
+  .textarea-container input,select {
     width: 100%;             /* Full width of the container */
     padding: 8px;            /* Padding inside the textarea */
     border: 1px solid #ddd;  /* Solid border for the textarea itself */
