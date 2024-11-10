@@ -67,14 +67,17 @@ export interface JsonNode {
         padding: 4px 8px;
         cursor: pointer;
         margin-right: 8px;
+        border-radius: 3px;
       }
 
       .format-options button.active {
-        color: #007acc;
+        color: #fff;
+        background-color: #007acc;
       }
 
       .actions button:hover {
         color: #fff;
+        background-color: #2d2d2d;
       }
 
       .json-content {
@@ -83,19 +86,25 @@ export interface JsonNode {
         flex-grow: 1;
       }
 
-      .tree-view, .xml-view {
+      .tree-view {
         font-size: 14px;
         line-height: 1.5;
       }
 
-      .xml-view pre {
-        margin: 0;
-        white-space: pre-wrap;
+      .xml-view {
+        background-color: #1E1E1E;
+        padding: 16px;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 14px;
+        line-height: 1.5;
+        white-space: pre;
+        overflow: auto;
       }
 
-      .xml-tag { color: #569cd6; }
-      .xml-attr { color: #9cdcfe; }
-      .xml-value { color: #ce9178; }
+      .xml-view pre {
+        margin: 0;
+        color: #D4D4D4;
+      }
     `]
   })
   export class JsonViewerComponent implements OnInit {
@@ -120,28 +129,43 @@ export interface JsonNode {
     }
 
     private jsonToXml(obj: any, parentKey: string = 'root'): string {
-      const toXml = (data: any, nodeName: string): string => {
-        if (data === null) return `<${nodeName}/>`;
+      let indent = 0;
+      const INDENT_SIZE = 2;
+
+      const getIndent = (level: number) => ' '.repeat(level * INDENT_SIZE);
+
+      const toXml = (data: any, nodeName: string, level: number): string => {
+        const currentIndent = getIndent(level);
+
+        if (data === null || data === '') {
+          return `${currentIndent}<${nodeName}/>`;
+        }
 
         if (typeof data !== 'object') {
-          return `<${nodeName}>${this.escapeXml(String(data))}</${nodeName}>`;
+          return `${currentIndent}<${nodeName}>${this.escapeXml(String(data))}</${nodeName}>`;
         }
 
         if (Array.isArray(data)) {
-          return data.map(item => toXml(item, 'item')).join('\n');
+          return data.map(item => toXml(item, 'item', level)).join('\n');
         }
 
-        let xml = `<${nodeName}>`;
+        let xml = `${currentIndent}<${nodeName}>`;
+        const childIndent = getIndent(level + 1);
+
         for (const key in data) {
           if (data.hasOwnProperty(key)) {
-            xml += '\n' + toXml(data[key], key);
+            xml += '\n' + toXml(data[key], key, level + 1);
           }
         }
-        xml += `\n</${nodeName}>`;
+
+        if (Object.keys(data).length > 0) {
+          xml += '\n' + currentIndent;
+        }
+        xml += `</${nodeName}>`;
         return xml;
       };
 
-      return toXml(obj, parentKey);
+      return '<?xml version="1.0" encoding="UTF-8"?>\n' + toXml(obj, parentKey, 0);
     }
 
     private escapeXml(unsafe: string): string {
@@ -154,13 +178,30 @@ export interface JsonNode {
     }
 
     private formatXml(xml: string): string {
-      return xml
+      // First escape the XML special characters
+      const escapedXml = xml
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-        .replace(/(".*?")/g, '<span class="xml-value">$1</span>')
-        .replace(/&lt;(\/?[a-zA-Z0-9_.-]+)(?=\s|&gt;)/g, '<span class="xml-tag">&lt;$1</span>')
-        .replace(/([a-zA-Z0-9_.-]+)="([^"]*?)"/g, '<span class="xml-attr">$1</span>="<span class="xml-value">$2</span>"');
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;');
+
+      // Then apply syntax highlighting
+      return escapedXml
+        // XML Declaration
+        .replace(/(&lt;\?xml.*?\?&gt;)/g, '<span style="color: #808080">$1</span>')
+        // Opening tags with attributes
+        .replace(/(&lt;[^\/\s!?][^&]*?&gt;)/g, (match) => {
+          return match.replace(/(&lt;[^\s&]+)/, '<span style="color: #569CD6">$1</span>')
+                     .replace(/([^\s&]+)=(&quot;.*?&quot;)/g, '<span style="color: #9CDCFE">$1</span>=<span style="color: #CE9178">$2</span>');
+        })
+        // Closing tags
+        .replace(/(&lt;\/[^&]*?&gt;)/g, '<span style="color: #569CD6">$1</span>')
+        // Self-closing tags
+        .replace(/(&lt;[^&]*?\/&gt;)/g, (match) => {
+          return match.replace(/(&lt;[^\s&]+)/, '<span style="color: #569CD6">$1</span>')
+                     .replace(/([^\s&]+)=(&quot;.*?&quot;)/g, '<span style="color: #9CDCFE">$1</span>=<span style="color: #CE9178">$2</span>');
+        });
     }
 
     private initializeNodes() {
@@ -367,4 +408,3 @@ export interface JsonNode {
       return keys.length ? `...${keys.length} properties` : '';
     }
   }
-
