@@ -72,7 +72,7 @@
                 <option value="PUBLISHED">Published</option>
               </select>
               <button class="btn-primary btn-icon" (click)="openCreateDialog()"><i class="bx bx-plus"></i></button>
-              
+
               <!-- <button class="icon-button"><i class="bx bx-download"></i></button>
               <button class="icon-button"><i class="bx bx-bar-chart-alt-2"></i></button> -->
               <button class="menu-button"><i class="bx bx-menu"></i></button>
@@ -95,15 +95,15 @@
                   </tr>
                   <tr *ngFor="let device of paginatedDevices" style="height: 50px;">
                     <td style="text-align: left;"  class="td-device-sn">{{ device.serialNumber }}</td>
-                    
+
                     <td style="text-align: left;" class="td-file-status">
                       <span class="status-badge" [ngClass]="device.jobStatus.toLowerCase()">{{ device.jobStatus }}</span>
                     </td>
-                    
+
                     <td class="td-publish-time">{{ device.createdBy.ts | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-                    
+
                     <td class="td-publish-time">{{ device.updatedBy.ts | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-                    
+
                     <td class="actions-cell td-operation">
                       <button class="icon-button" mat-icon-button [matMenuTriggerFor]="menu" data-tooltip="More Actions">
                         <i class="bx bx-dots-vertical-rounded"></i>
@@ -133,7 +133,7 @@
                   </select>
                 </div>
               </div>
-            </div>            
+            </div>
           </div>
           <div *ngIf="selectedTab === 'emptyData'">
             <div class="centered-div">
@@ -238,5 +238,5 @@
           </mat-menu>
       </div>
     </div>
-    <app-profile-params (back)="clicked()" [profile]="profile" [params]="param" [packageId]="packageId"></app-profile-params>
+    <app-group-profile (back)="clicked()" [profile]="profile" [params]="param" [packageId]="packageId"></app-group-profile>
 </ng-container>

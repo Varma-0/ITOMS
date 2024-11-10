@@ -2,6 +2,7 @@ import { Component, ElementRef, QueryList, Renderer2, ViewChildren, AfterViewIni
 import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { TerminalProfileComponent } from "src/app/components/dialogs/terminal-profile/terminal-profile.component";
+import { ViewDataComponent } from "src/app/components/dialogs/view-data/view-data.component";
 import { TerminalService } from "src/app/services/terminal/devicelist";
 
 @Component({
@@ -142,31 +143,58 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
   removeTab(tab) {
     // Logic to remove a tab from the list
     this.leftTabs = this.leftTabs.filter((t) => t !== tab);
+    this.setActiveLeftTab('profile');
   }
   performView(){
-    this.activeForm?.updateValueAndValidity();
-    const index = this.formsArray.controls.indexOf(this.activeForm);
-    if (index !== -1) {
-      this.formsArray.setControl(index, this.activeForm);
-    }
-    const data = [];
-    this.formsArray.value.forEach(element => {
-        data.push({
-            title:element.label,
-            defaultValue: element.default
-        })
-    });
-    const dialogRef = this.dialog.open(TerminalProfileComponent, {
-        data: {
-          // title: 'Profile',
-          items: data
+    const jsonData = {
+        '3rd Party Apps': {
+          '3rdPartyApps_01': ['com.ar.layup'],
+          '3rdPartyApps_02': ['com.triplejumptech.horizon'],
+          '3rdPartyApps_03': ['com.dashpay.vas'],
+          '3rdPartyApps_04': ['com.ar.valueadds'],
+          '3rdPartyApps_05': ['za.co.nedbank.rp'],
+          '3rdPartyApps_06': ['com.payflow.ezagapos'],
+          '3rdPartyApps_07': ['za.co.bbsoft.mobilepos'],
+          '3rdPartyApps_08': ['com.easipolmobile'],
+          '3rdPartyApps_09': ['com.example.mycalculator'],
+          '3rdPartyApps_10': ['com.istatik.mobile'],
+          '3rdPartyApps_11': ['com.waxdpayment.waxdtransport'],
         },
-        width: '60%'
+      };
+      const dialogRef = this.dialog.open(ViewDataComponent, {
+        data: {
+          items: jsonData
+        },
+        width: '50%',  // Adjust the width as needed
+        position: { right: '0' }  // Position the modal on the right side of the screen
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
+        console.log('Modal closed with result:', result);
       });
+    // this.activeForm?.updateValueAndValidity();
+    // const index = this.formsArray.controls.indexOf(this.activeForm);
+    // if (index !== -1) {
+    //   this.formsArray.setControl(index, this.activeForm);
+    // }
+    // const data = [];
+    // this.formsArray.value.forEach(element => {
+    //     data.push({
+    //         title:element.label,
+    //         defaultValue: element.default
+    //     })
+    // });
+    // const dialogRef = this.dialog.open(TerminalProfileComponent, {
+    //     data: {
+    //       // title: 'Profile',
+    //       items: data
+    //     },
+    //     width: '60%'
+    //   });
+
+    //   dialogRef.afterClosed().subscribe(result => {
+    //     console.log(result);
+    //   });
 
   }
 

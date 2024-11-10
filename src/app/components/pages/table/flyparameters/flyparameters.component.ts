@@ -9,6 +9,7 @@ import { deleteModelEvent } from 'src/app/services/login/body/event';
 import { SharedServices } from 'src/app/services/shared.service';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 import { ProfileComponent } from '../profile/profile.component';
+import { GroupProfileComponent } from '../group-profile/group-profile.component';
 
 
 @Component({
@@ -30,8 +31,8 @@ this.showDynamicKeys = true;
   selectedItem: any;
   labelsm: string[] = ['Pending Publish','Published','Downloaded','Download failed'];
   seriesm: number[] = [0,0,0,0];
-  pageSize = 5; 
-  pageSizeOptions = [5, 10, 15, 20]; 
+  pageSize = 5;
+  pageSizeOptions = [5, 10, 15, 20];
   currentPage = 1;
   totalPages = 1;
   colors: string[] = [
@@ -47,7 +48,7 @@ this.showDynamicKeys = true;
   devices = [];
     profile: any;
     param: any;
-    @ViewChild(ProfileComponent) childComponent!: ProfileComponent;
+    @ViewChild(GroupProfileComponent) childComponent!: GroupProfileComponent;
     packageId:any;
     serialNo: any;
     deviceId: any;

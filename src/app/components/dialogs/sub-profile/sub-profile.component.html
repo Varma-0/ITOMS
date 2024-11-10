@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
+    <ng-container *ngIf="title == 'Select Hierarchy'">
+        <div class="hierarchy-values">
+            <div *ngFor="let level of hierarchyLevelsList; let i = index" class="hierarchy-column">
+              <h3>{{ level.name }}</h3>
+              <div class="hierarchy-items">
+                <div *ngFor="let item of level.items"
+                     class="hierarchy-item"
+                     [class.selected]="item === level.selectedItem"
+                     (click)="selectItem(i,level, item)">
+                  {{ item.name }}
+                </div>
+              </div>
+            </div>
+          </div>
+    </ng-container>
+    <ng-container *ngIf="title == 'Hierarchy Levels'">
+        <table>
+            <tr *ngFor="let level of hierarchyLevels; let i = index">
+                <td>Level{{i+1}}:</td>
+                <td><input [(ngModel)]="level.name" /></td>
+                <td><button class="btn add" *ngIf="i == hierarchyLevels.length-1" (click)="addLevel(level)">+</button></td>
+                <!-- <td><button *ngIf="i >= 1" class="btn remove" (click)="removeLevel(i)">×</button></td> -->
+            </tr>
+        </table>
+
+    </ng-container>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button class="btn btn-secondary" mat-dialog-close>Cancel</button>&nbsp;
+  <button class="btn btn-danger" (click)="onConfirm()">Confirm</button>
+</mat-dialog-actions>
