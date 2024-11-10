@@ -61,7 +61,7 @@
             </ng-template>
         </table>
     </div> -->
-    <div class="left-body" style="border-right: none;">
+    <!-- <div class="left-body" style="border-right: none;">
         <ng-container *ngFor="let form of formsArray.value;">
             <div *ngIf="form.name != 'profile'"  class="textarea-container">
                 <label class="textarea-label">{{form.name}}</label>
@@ -76,8 +76,28 @@
                 <span class="close-icon" (click)="deleteGroupByTitle(form.name)">×</span>
               </div>
         </ng-container>
+      </div> -->
+      <div class="card-container">
+        <div class="cards-grid">
+          <div class="card" *ngFor="let card of formsArray.value">
+            <h1 class="title">{{card.name.toUpperCase()}}</h1>
+            <div style="display: flex; align-items: center;">
+              <button class="view-button" (click)="viewProfile(card.name)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                VIEW
+              </button>
+              <button class="close-button" (click)="deleteGroupByTitle(card.name)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-
 </ng-container>
 <ng-container *ngIf="showProfile && activeLeftTab != 'group'">
   <div class="main-container">
