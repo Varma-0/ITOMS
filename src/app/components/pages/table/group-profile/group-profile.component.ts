@@ -40,6 +40,63 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
     this.activeGroup = this.getDetailsArrayByTitle(tab);
     }
 
+    sampleData = {
+        "body": {
+          "3rd_Party_Apps": [],
+          "APN": [
+            {
+              "apn1": [
+                "Enable"
+              ],
+              "apn2": [
+                "Enable"
+              ],
+              "apnAPN1": "resonet.co.za",
+              "apnAPN2": "resonet.co.za",
+              "apnMcc1": "655",
+              "apnMcc2": "655",
+              "apnMnc1": "10",
+              "apnMnc2": "10",
+              "apnName1": "resonet",
+              "apnName2": "resonet",
+              "apnPwd1": "9317",
+              "apnPwd2": "9317"
+            }
+          ],
+          "Account_Types": [
+            {
+              "Cheque": "yes",
+              "ChequeAccountType": "20",
+              "ChequeBins": "-",
+              "ChequeMaxAmount": "999999999.99",
+              "ChequeMinAmount": "0.01",
+              "Credit": "yes",
+              "CreditAccountType": "30",
+              "CreditBins": "-",
+              "CreditMaxAmount": "999999999.99",
+              "CreditMinAmount": "0.01",
+              "Savings": "yes",
+              "SavingsAccountType": "10",
+              "SavingsBins": "-",
+              "SavingsMaxAmount": "999999999.99",
+              "SavingsMinAmount": "0.01"
+            }
+          ],
+          "Acquirer": [
+            {
+              "AcquirerID": "123456",
+              "MerchantID": "789012",
+              "TerminalID": "34567890"
+            }
+          ],
+          "Settings": {
+            "Timeout": 30,
+            "RetryAttempts": 3,
+            "Debug": true
+          }
+        }
+      };
+
   constructor(public dialog: MatDialog,private fb: FormBuilder, private renderer: Renderer2, private cdr: ChangeDetectorRef,private dataService: TerminalService) {}
 
   ngOnInit() {

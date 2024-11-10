@@ -229,8 +229,8 @@ import { ContactComponent } from './landing/contact/contact.component';
 import { TerminalChartComponent } from './components/charts/app-terminal-chart/app-terminal.component';
 import { GroupProfileComponent } from './components/pages/table/group-profile/group-profile.component';
 import { UserComponent } from './components/pages/admin/user/user.component';
-import { ViewDataComponent } from './components/dialogs/view-data/view-data.component';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
+import { JsonViewerComponent, JsonViewerNodeComponent } from './components/pages/table/view-data/view.component';
 
 
 @NgModule({
@@ -435,7 +435,8 @@ import { NgxJsonViewerModule } from 'ngx-json-viewer';
     TerminalChartComponent,
     ProfilesComponent,
     GroupProfileComponent,
-    ViewDataComponent
+    JsonViewerNodeComponent,
+    JsonViewerComponent
   ],
   imports: [
     BrowserModule,
