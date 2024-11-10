@@ -229,6 +229,8 @@ import { ContactComponent } from './landing/contact/contact.component';
 import { TerminalChartComponent } from './components/charts/app-terminal-chart/app-terminal.component';
 import { GroupProfileComponent } from './components/pages/table/group-profile/group-profile.component';
 import { UserComponent } from './components/pages/admin/user/user.component';
+import { ViewDataComponent } from './components/dialogs/view-data/view-data.component';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 
 @NgModule({
@@ -432,8 +434,8 @@ import { UserComponent } from './components/pages/admin/user/user.component';
     Loader2Component,
     TerminalChartComponent,
     ProfilesComponent,
-    GroupProfileComponent
-    
+    GroupProfileComponent,
+    ViewDataComponent
   ],
   imports: [
     BrowserModule,
@@ -460,6 +462,7 @@ import { UserComponent } from './components/pages/admin/user/user.component';
     MatPaginatorModule,
     MatMenuModule,
     MatSlideToggleModule,
+    NgxJsonViewerModule,
     MatProgressBarModule,
     MatProgressSpinner,
     ReactiveFormsModule,
