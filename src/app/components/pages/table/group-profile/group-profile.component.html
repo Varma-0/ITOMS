@@ -33,7 +33,7 @@
     <button class="add-button" style="float: right;" (click)="openModal()">
         <i class="material-icons">add</i> Add Sub Profile
       </button>
-    <div class="table-container">
+    <!-- <div class="table-container">
         <table class="user-table">
       <div *ngIf="formsArray.value.length > 1; else nodata">
           <thead>
@@ -60,7 +60,24 @@
               <h4>Curerently there are no sub profiles </h4>
             </ng-template>
         </table>
-    </div>
+    </div> -->
+    <div class="left-body" style="border-right: none;">
+        <ng-container *ngFor="let form of formsArray.value;">
+            <div *ngIf="form.name != 'profile'"  class="textarea-container">
+                <label class="textarea-label">{{form.name}}</label>
+                <ng-container>
+                  <div #textarea>
+                    <div class="row" style="display: flex; align-items: center; justify-content:center ;">
+                        <mat-label style="margin-top: px;display: flex;justify-content:center ;" >VIEW</mat-label>
+                        <mat-icon style="width: auto;" (click)="viewProfile(form.name)" >visibility</mat-icon>
+                    </div>
+                  </div>
+                </ng-container>
+                <span class="close-icon" (click)="deleteGroupByTitle(form.name)">×</span>
+              </div>
+        </ng-container>
+      </div>
+
 </ng-container>
 <ng-container *ngIf="showProfile && activeLeftTab != 'group'">
   <div class="main-container">
@@ -107,8 +124,10 @@
             </div>
           </div>
           <div *ngSwitchCase="'REFERENCE'" #textarea>
-                <!-- <mat-label>VIEW</mat-label>
-                <mat-icon>visibility</mat-icon> -->
+            <div class="row" style="display: flex; align-items: center; justify-content:center ;">
+                <mat-label style="margin-top: px;display: flex;justify-content:center ;">VIEW</mat-label>
+                <mat-icon style="width: auto;" (click)="view(i)">visibility</mat-icon>
+            </div>
           </div>
         </ng-container>
         <div class="char-count"
@@ -135,6 +154,14 @@
             <option *ngFor="let i of types" [value]="i">{{i}}</option>
           </select>
         </div>
+        <div class="form-group" *ngIf="activeForm.get('type')?.value == 'REFERENCE'">
+            <label for="input3">Reference Tabel</label>
+            <select id="input3" class="form-control" formControlName="table">
+                <ng-container *ngFor="let i of formsArray.value">
+                    <option *ngIf="i.name != 'profile'" [value]="i.name">{{i.name}}</option>
+                  </ng-container>
+            </select>
+          </div>
         <div class="form-group">
           <label for="input4">Default Value</label>
           <input id="input4" type="text" class="form-control"

@@ -43,8 +43,8 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
 
   ngOnInit() {
     this.formsArray = this.fb.array([]);
-    if(this.profile){
-        this.prepopulate();
+    if(this.profile.length > 0){
+        this.prepopulate(this.profile);
     }else{
         this.addGroupWithTitle('profile');
     }
@@ -257,6 +257,7 @@ this.back.emit("");
         description: input.description,
         paramLabel: input.label,
         paramKey: input.key,
+        table:input.table,
         maxLength: input.minvalue,
         minLength: input.maxvalue,
         nullable: input.manadatroy ? true : false,
@@ -295,70 +296,7 @@ this.back.emit("");
     }
   }
 
-  prepopulate(){
-    const data = [
-        {
-          "profile": [
-            {
-              "title": "Label 3",
-              "description": "",
-              "paramLabel": "Label 3",
-              "paramKey": "string",
-              "maxLength": "",
-              "minLength": 255,
-              "nullable": false,
-              "defaultValue": "",
-              "valueType": "STRING"
-            },
-            {
-              "title": "Label 4",
-              "description": "",
-              "paramLabel": "Label 4",
-              "paramKey": "string",
-              "maxLength": "",
-              "minLength": 255,
-              "nullable": false,
-              "defaultValue": "",
-              "valueType": "STRING"
-            }
-          ],
-          "Test": [
-            {
-              "title": "Label 0",
-              "description": "",
-              "paramLabel": "Label 0",
-              "paramKey": "string",
-              "maxLength": "",
-              "minLength": 255,
-              "nullable": false,
-              "defaultValue": "",
-              "valueType": "STRING"
-            },
-            {
-              "title": "Label 1",
-              "description": "",
-              "paramLabel": "Label 1",
-              "paramKey": "string",
-              "maxLength": "",
-              "minLength": 255,
-              "nullable": false,
-              "defaultValue": "",
-              "valueType": "STRING"
-            },
-            {
-              "title": "Label 2",
-              "description": "",
-              "paramLabel": "Label 2",
-              "paramKey": "string",
-              "maxLength": "",
-              "minLength": 255,
-              "nullable": false,
-              "defaultValue": "",
-              "valueType": "STRING"
-            }
-          ]
-        }
-      ]
+  prepopulate(data:any){
     Object.keys(data[0]).forEach((key) => {
         const item = data[0][key];
         this.addGroupWithTitle(key);
@@ -370,6 +308,7 @@ this.back.emit("");
                     id:[item.id],
                     label: [item.paramLabel],
                     key: [item.paramKey],
+                    table : [item.table],
                     type: [item.valueType],
                     default: [item.defaultValue],
                     maxvalue: [item.maxLength],
@@ -426,6 +365,7 @@ this.back.emit("");
       label: [`Label ${this.nextIndex}`],
       key: ['string'],
       type: ['STRING'],
+      table:[''],
       default: [''],
       maxvalue: [255],
       minvalue: [''],
@@ -436,6 +376,14 @@ this.back.emit("");
     this.activeGroup.push(newForm);
     this.nextIndex++;
     this.setActiveForm(newForm); // Set active form to the newly created form
+  }
+
+  view(i){
+    if (this.activeGroup.controls[i].value.table) {
+        this.viewProfile(this.activeGroup.controls[i].value.table);
+    } else {
+        alert("please select reference table")
+    }
   }
 
   setActiveForm(form: FormGroup) {
@@ -477,10 +425,10 @@ this.back.emit("");
   }
 
   removeForm(index: number) {
-    this.deletedArray.push(this.formsArray.value[index]);
-    this.formsArray.removeAt(index);
-    if (this.formsArray.length > 0) {
-      this.activeForm = this.formsArray.at(0) as FormGroup; // Set active form to the first form if any remain
+    this.deletedArray.push(this.activeGroup.controls[index]);
+    this.activeGroup.removeAt(index);
+    if (this.activeGroup.controls.length > 0) {
+      this.activeForm = this.activeGroup.controls[0] as FormGroup; // Set active form to the first form if any remain
     } else {
       this.activeForm = undefined!; // Reset active form if no forms remain
     }
