@@ -1,5 +1,5 @@
-<mat-dialog-content class="json-view">
-      <div >
+<mat-dialog-content>
+
         <!-- <div class="modal-header">
             <h3>JSON Data</h3>
             <button class="close-btn" (click)="closeModal()">✖</button>
@@ -7,10 +7,7 @@
         <div class="modal-content">
           <pre>{{ data.items | json }}</pre>
         </div> -->
-        <div class="modal-header">
-            <button class="close-btn" (click)="closeModal()">✖</button>
-          </div>
-          <div class="modal-content">
+       
             <!-- <div class="json-item" *ngFor="let item of data.items | keyvalue">
               <div class="json-key" (click)="toggleCollapse(item.key)">
                 <strong>{{ item.key }}</strong>
@@ -21,7 +18,8 @@
                 <pre>{{ item.value | json }}</pre>
               </div>
             </div> -->
-            <ngx-json-viewer [json]="data.items"></ngx-json-viewer>
-          </div>
-      </div>
+            <!-- <ngx-json-viewer [json]="data.items"></ngx-json-viewer> -->
+            <app-json-viewer [jsonData]="data.items"></app-json-viewer>
+
+
 </mat-dialog-content>

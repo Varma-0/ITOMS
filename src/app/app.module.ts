@@ -230,7 +230,9 @@ import { TerminalChartComponent } from './components/charts/app-terminal-chart/a
 import { GroupProfileComponent } from './components/pages/table/group-profile/group-profile.component';
 import { UserComponent } from './components/pages/admin/user/user.component';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
-import { JsonViewerComponent, JsonViewerNodeComponent } from './components/pages/table/view-data/view.component';
+import { ViewDataComponent } from './components/dialogs/view-data/view-data.component';
+import { JsonViewerNodeComponent } from './components/dialogs/json-viewer-node/json-viewer-node.component';
+import { JsonViewerComponent } from './components/dialogs/json-viewer/json-viewer.component';
 
 
 @NgModule({
@@ -436,7 +438,8 @@ import { JsonViewerComponent, JsonViewerNodeComponent } from './components/pages
     ProfilesComponent,
     GroupProfileComponent,
     JsonViewerNodeComponent,
-    JsonViewerComponent
+    JsonViewerComponent,
+    ViewDataComponent
   ],
   imports: [
     BrowserModule,

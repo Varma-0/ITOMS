@@ -1,0 +1,37 @@
+<div class="node-wrapper" [style.marginLeft.px]="depth * 20">
+    <div class="tree-node">
+      <span *ngIf="isExpandable(node)"
+            class="expander"
+            (click)="toggle()">
+        {{ node.expanded ? '▼' : '▶' }}
+      </span>
+      <span *ngIf="!isExpandable(node)" class="expander-placeholder"></span>
+      <span class="property">"{{ node.key }}":</span>
+      <span [ngSwitch]="node.type" class="value">
+        <ng-container *ngSwitchCase="'object'">
+          <span class="bracket">
+            {{ isArray(node.value) ? '[' : '{' }}
+            <span *ngIf="!node.expanded">
+              {{ getCollapsedPreview(node.value) }}
+              {{ isArray(node.value) ? ']' : '}' }}
+            </span>
+          </span>
+        </ng-container>
+        <span *ngSwitchCase="'string'" class="string">"{{ node.value }}"</span>
+        <span *ngSwitchCase="'number'" class="number">{{ node.value }}</span>
+        <span *ngSwitchCase="'boolean'" class="boolean">{{ node.value }}</span>
+        <span *ngSwitchCase="'null'" class="null">null</span>
+      </span>
+    </div>
+    <div *ngIf="node.expanded && node.children" class="node-children">
+      <app-json-viewer-node
+        *ngFor="let child of node.children"
+        [node]="child"
+        [depth]="depth + 1"
+        (onToggle)="onToggle.emit($event)">
+      </app-json-viewer-node>
+      <div *ngIf="node.children.length > 0" class="bracket-close">
+        {{ isArray(node.value) ? ']' : '}' }}
+      </div>
+    </div>
+  </div>

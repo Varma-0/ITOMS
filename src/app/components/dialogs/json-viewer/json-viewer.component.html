@@ -1,0 +1,27 @@
+<div class="modal-container">
+    <div class="modal-header">
+      <div class="format-options">
+        <button [class.active]="currentFormat === 'JSON'" (click)="setFormat('JSON')">JSON</button>
+        <button [class.active]="currentFormat === 'XML'" (click)="setFormat('XML')">XML</button>
+      </div>
+      <div class="actions">
+        <button (click)="expandAll()">Expand All</button>
+        <button (click)="collapseAll()">Collapse All</button>
+        <button (click)="copyToClipboard()">📋 Copy</button>
+        <button (click)="closeModal()">✕ Close</button>
+      </div>
+    </div>
+    <div class="json-content">
+      <div class="tree-view" *ngIf="currentFormat === 'JSON'">
+        <app-json-viewer-node
+          *ngFor="let node of jsonNodes"
+          [node]="node"
+          [depth]="0"
+          (onToggle)="handleNodeToggle($event)">
+        </app-json-viewer-node>
+      </div>
+      <div class="xml-view" *ngIf="currentFormat === 'XML'">
+        <pre [innerHTML]="formattedXml"></pre>
+      </div>
+    </div>
+  </div>

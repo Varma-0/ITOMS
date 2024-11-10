@@ -1,0 +1,38 @@
+.node-wrapper {
+    margin: 2px 0;
+  }
+  .tree-node {
+    display: flex;
+    align-items: center;
+    padding: 2px 4px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .tree-node:hover {
+    background-color: #2d2d2d;
+  }
+  .expander {
+    cursor: pointer;
+    width: 20px;
+    display: inline-block;
+    text-align: center;
+    font-size: 10px;
+  }
+  .expander-placeholder {
+    width: 20px;
+    display: inline-block;
+  }
+  .node-children {
+    margin-left: 20px;
+  }
+  .property { color: #9cdcfe; margin-right: 4px; }
+  .string { color: #ce9178; }
+  .number { color: #b5cea8; }
+  .boolean { color: #569cd6; }
+  .null { color: #569cd6; }
+  .bracket { color: #d4d4d4; }
+  .bracket-close {
+    color: #d4d4d4;
+    margin-top: 2px;
+  }
+  .value { margin-left: 4px; }
