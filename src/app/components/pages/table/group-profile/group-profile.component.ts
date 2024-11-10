@@ -40,63 +40,6 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
     this.activeGroup = this.getDetailsArrayByTitle(tab);
     }
 
-    sampleData = {
-        "body": {
-          "3rd_Party_Apps": [],
-          "APN": [
-            {
-              "apn1": [
-                "Enable"
-              ],
-              "apn2": [
-                "Enable"
-              ],
-              "apnAPN1": "resonet.co.za",
-              "apnAPN2": "resonet.co.za",
-              "apnMcc1": "655",
-              "apnMcc2": "655",
-              "apnMnc1": "10",
-              "apnMnc2": "10",
-              "apnName1": "resonet",
-              "apnName2": "resonet",
-              "apnPwd1": "9317",
-              "apnPwd2": "9317"
-            }
-          ],
-          "Account_Types": [
-            {
-              "Cheque": "yes",
-              "ChequeAccountType": "20",
-              "ChequeBins": "-",
-              "ChequeMaxAmount": "999999999.99",
-              "ChequeMinAmount": "0.01",
-              "Credit": "yes",
-              "CreditAccountType": "30",
-              "CreditBins": "-",
-              "CreditMaxAmount": "999999999.99",
-              "CreditMinAmount": "0.01",
-              "Savings": "yes",
-              "SavingsAccountType": "10",
-              "SavingsBins": "-",
-              "SavingsMaxAmount": "999999999.99",
-              "SavingsMinAmount": "0.01"
-            }
-          ],
-          "Acquirer": [
-            {
-              "AcquirerID": "123456",
-              "MerchantID": "789012",
-              "TerminalID": "34567890"
-            }
-          ],
-          "Settings": {
-            "Timeout": 30,
-            "RetryAttempts": 3,
-            "Debug": true
-          }
-        }
-      };
-
   constructor(public dialog: MatDialog,private fb: FormBuilder, private renderer: Renderer2, private cdr: ChangeDetectorRef,private dataService: TerminalService) {}
 
   ngOnInit() {
@@ -203,24 +146,29 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
     this.setActiveLeftTab('profile');
   }
   performView(){
-    const jsonData = {
-        '3rd Party Apps': {
-          '3rdPartyApps_01': ['com.ar.layup'],
-          '3rdPartyApps_02': ['com.triplejumptech.horizon'],
-          '3rdPartyApps_03': ['com.dashpay.vas'],
-          '3rdPartyApps_04': ['com.ar.valueadds'],
-          '3rdPartyApps_05': ['za.co.nedbank.rp'],
-          '3rdPartyApps_06': ['com.payflow.ezagapos'],
-          '3rdPartyApps_07': ['za.co.bbsoft.mobilepos'],
-          '3rdPartyApps_08': ['com.easipolmobile'],
-          '3rdPartyApps_09': ['com.example.mycalculator'],
-          '3rdPartyApps_10': ['com.istatik.mobile'],
-          '3rdPartyApps_11': ['com.waxdpayment.waxdtransport'],
-        },
-      };
+    // const jsonData = {
+    //     '3rd Party Apps': {
+    //       '3rdPartyApps_01': ['com.ar.layup'],
+    //       '3rdPartyApps_02': ['com.triplejumptech.horizon'],
+    //       '3rdPartyApps_03': ['com.dashpay.vas'],
+    //       '3rdPartyApps_04': ['com.ar.valueadds'],
+    //       '3rdPartyApps_05': ['za.co.nedbank.rp'],
+    //       '3rdPartyApps_06': ['com.payflow.ezagapos'],
+    //       '3rdPartyApps_07': ['za.co.bbsoft.mobilepos'],
+    //       '3rdPartyApps_08': ['com.easipolmobile'],
+    //       '3rdPartyApps_09': ['com.example.mycalculator'],
+    //       '3rdPartyApps_10': ['com.istatik.mobile'],
+    //       '3rdPartyApps_11': ['com.waxdpayment.waxdtransport'],
+    //     },
+    //   };
+    const map = {};
+    const data = this.formsArray.value.map((data) => {
+        const array = data.details.map(this.transformObject);
+        map[data.name] = array;
+    })
       const dialogRef = this.dialog.open(ViewDataComponent, {
         data: {
-          items: jsonData
+          items: map
         },
         width: '50%',  // Adjust the width as needed
         height:'90vh',
@@ -383,30 +331,36 @@ this.back.emit("");
   }
 
   prepopulate(data:any){
-    Object.keys(data[0]).forEach((key) => {
-        const item = data[0][key];
-        this.addGroupWithTitle(key);
-        const array = this.getDetailsArrayByTitle(key);
-        item.forEach(item => {
-            if(item.paramLabel && !item.delete){
-                const newForm: FormGroup = this.fb.group({
-                    batchId: [item.batchId],
-                    id:[item.id],
-                    label: [item.paramLabel],
-                    key: [item.paramKey],
-                    table : [item.table],
-                    type: [item.valueType],
-                    default: [item.defaultValue],
-                    maxvalue: [item.maxLength],
-                    minvalue: [item.minLength],
-                    manadatroy: [item.nullable],
-                    description: [item.description]
-                  });
-                  array.push(newForm);
-                  this.update = true;
-            }
+    try{
+        Object.keys(data[0]).forEach((key) => {
+            const item = data[0][key];
+            this.addGroupWithTitle(key);
+            const array = this.getDetailsArrayByTitle(key);
+            item.forEach(item => {
+                if(item.paramLabel && !item.delete){
+                    const newForm: FormGroup = this.fb.group({
+                        batchId: [item.batchId],
+                        id:[item.id],
+                        label: [item.paramLabel],
+                        key: [item.paramKey],
+                        table : [item.table],
+                        type: [item.valueType],
+                        default: [item.defaultValue],
+                        maxvalue: [item.maxLength],
+                        minvalue: [item.minLength],
+                        manadatroy: [item.nullable],
+                        description: [item.description]
+                      });
+                      array.push(newForm);
+                      this.update = true;
+                }
+            });
         });
-    });
+    }catch(e){}
+    console.log(this.getDetailsArrayByTitle('profile'))
+    if(!this.getDetailsArrayByTitle('profile')){
+        this.addGroupWithTitle('profile');
+    }
         // this.profile.forEach(item => {
         //     if(!item.paramLabel){
         //         const newForm: FormGroup = this.fb.group({

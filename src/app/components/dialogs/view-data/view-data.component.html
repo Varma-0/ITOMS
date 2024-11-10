@@ -6,7 +6,7 @@
         </div>
         <pre>{{ data.items | json }}</pre>
         <-- </div> -->
-        
+
         <!-- <div class="json-item" *ngFor="let item of data.items | keyvalue">
             <div class="json-key" (click)="toggleCollapse(item.key)">
                 <strong>{{ item.key }}</strong>
@@ -19,7 +19,7 @@
         </div> -->
         <!-- <ngx-json-viewer [json]="data.items"></ngx-json-viewer> -->
         <div class="modal-content">
-            <app-json-viewer [jsonData]="data.items"></app-json-viewer>
+            <app-json-viewer [jsonData]="data.items" (close)="closeModal()"></app-json-viewer>
         </div>
 
 

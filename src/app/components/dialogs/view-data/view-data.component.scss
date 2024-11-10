@@ -63,6 +63,7 @@
     max-width: 100%;
     margin-top: 10vh;
     overflow-y: auto;
+    scrollbar-width: none !important;
     z-index: 10000;
     max-height: 90vh; /* To ensure content fits in the screen */
   }
@@ -92,8 +93,9 @@
   .modal-content {
     flex-grow: 1;
     background-color: #f4f4f4;
-    padding: 10px;
     border-radius: 4px;
+    scrollbar-width: none !important;
+    padding-top: 20px;
     // overflow-y: auto;
   }
 
@@ -104,7 +106,6 @@
     font-size: 16px;
     cursor: pointer;
     text-align: left;
-    padding: 5px;
     width: 100%;
     display: block;
   }
@@ -123,4 +124,8 @@
     .modal-content {
       max-height: calc(100vh - 60px);
     }
+  }
+
+  ::ng-deep .mdc-dialog__surface {
+    overflow-y: visible !important;
   }

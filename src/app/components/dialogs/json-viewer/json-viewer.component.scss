@@ -61,3 +61,18 @@
     margin: 0;
     color: #D4D4D4;
   }
+
+  .xml-container {
+    background-color: #1E1E1E;
+    padding: 16px;
+    border-radius: 4px;
+    color: #D4D4D4;
+    font-family: 'Consolas', 'Monaco', monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  :host ::ng-deep .xml-declaration { color: #808080; }
+  :host ::ng-deep .xml-tag { color: #569CD6; }
+  :host ::ng-deep .xml-attribute { color: #9CDCFE; }
+  :host ::ng-deep .xml-string { color: #CE9178; }
+  :host ::ng-deep .xml-content { color: #D4D4D4; }

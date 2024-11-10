@@ -79,23 +79,28 @@
       </div> -->
       <div class="card-container">
         <div class="cards-grid">
-          <div class="card" *ngFor="let card of formsArray.value">
-            <h1 class="title">{{card.name.toUpperCase()}}</h1>
-            <div style="display: flex; align-items: center;">
-              <button class="view-button" (click)="viewProfile(card.name)">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
-                  <circle cx="12" cy="12" r="3"/>
-                </svg>
-                VIEW
-              </button>
-              <button class="close-button" (click)="deleteGroupByTitle(card.name)">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/>
-                </svg>
-              </button>
+            <div *ngIf="formsArray.value.length <= 1">
+                <h4>Curerently there are no sub profiles </h4>
             </div>
-          </div>
+            <ng-container *ngFor="let card of formsArray.value">
+                <div class="card" *ngIf="card.name != 'profile'">
+                    <h1 class="title">{{card.name.toUpperCase()}}</h1>
+                    <div style="display: flex; align-items: center;">
+                      <button class="view-button" (click)="viewProfile(card.name)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                          <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        VIEW
+                      </button>
+                      <button class="close-button" (click)="deleteGroupByTitle(card.name)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+            </ng-container>
         </div>
       </div>
 </ng-container>

@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class ViewDataComponent {
 
-  collapsedKeys: Set<string> = new Set(); 
+  collapsedKeys: Set<string> = new Set();
   toggledKeys: { [key: string]: boolean } = {};
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { items: any },
@@ -49,5 +49,6 @@ export class ViewDataComponent {
 
   closeModal() {
     this.isModalOpen = false;
+    this.dialogRef.close(true);
   }
-} 
+}

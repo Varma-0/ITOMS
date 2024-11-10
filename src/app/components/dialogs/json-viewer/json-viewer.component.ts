@@ -20,6 +20,7 @@ export class JsonViewerComponent implements OnInit {
   currentFormat: 'JSON' | 'XML' = 'JSON';
   jsonNodes: JsonNode[] = [];
   formattedXml: string = '';
+  @Output() close = new EventEmitter<void>();
 
   ngOnInit() {
     this.initializeNodes();
@@ -87,29 +88,28 @@ export class JsonViewerComponent implements OnInit {
 
   private formatXml(xml: string): string {
     // First escape the XML special characters
-    const escapedXml = xml
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&apos;');
+    const escapedXml = this.escapeXml(xml);
 
-    // Then apply syntax highlighting
+    // Then apply syntax highlighting using CSS classes instead of inline styles
     return escapedXml
       // XML Declaration
-      .replace(/(&lt;\?xml.*?\?&gt;)/g, '<span style="color: #808080">$1</span>')
+      .replace(/(&lt;\?xml.*?\?&gt;)/g, '<span class="xml-declaration">$1</span>')
       // Opening tags with attributes
       .replace(/(&lt;[^\/\s!?][^&]*?&gt;)/g, (match) => {
-        return match.replace(/(&lt;[^\s&]+)/, '<span style="color: #569CD6">$1</span>')
-                   .replace(/([^\s&]+)=(&quot;.*?&quot;)/g, '<span style="color: #9CDCFE">$1</span>=<span style="color: #CE9178">$2</span>');
+        return match
+          .replace(/(&lt;[^\s&]+)/, '<span class="xml-tag">$1</span>')
+          .replace(/([^\s&]+)=(&quot;.*?&quot;)/g, '<span class="xml-attribute">$1</span>=<span class="xml-string">$2</span>');
       })
       // Closing tags
-      .replace(/(&lt;\/[^&]*?&gt;)/g, '<span style="color: #569CD6">$1</span>')
+      .replace(/(&lt;\/[^&]*?&gt;)/g, '<span class="xml-tag">$1</span>')
       // Self-closing tags
       .replace(/(&lt;[^&]*?\/&gt;)/g, (match) => {
-        return match.replace(/(&lt;[^\s&]+)/, '<span style="color: #569CD6">$1</span>')
-                   .replace(/([^\s&]+)=(&quot;.*?&quot;)/g, '<span style="color: #9CDCFE">$1</span>=<span style="color: #CE9178">$2</span>');
-      });
+        return match
+          .replace(/(&lt;[^\s&]+)/, '<span class="xml-tag">$1</span>')
+          .replace(/([^\s&]+)=(&quot;.*?&quot;)/g, '<span class="xml-attribute">$1</span>=<span class="xml-string">$2</span>');
+      })
+      // Content between tags
+      .replace(/(?<=>)([^<]+?)(?=&lt;)/g, '<span class="xml-content">$1</span>');
   }
 
   private initializeNodes() {
@@ -204,6 +204,6 @@ export class JsonViewerComponent implements OnInit {
   }
 
   closeModal() {
-    // Implement your modal close logic here
+    this.close.emit();
   }
 }
