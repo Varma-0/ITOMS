@@ -39,7 +39,9 @@
     padding: 16px;
     overflow: auto;
     flex-grow: 1;
-    height: 90vh;
+    scrollbar-width: none !important;
+    height: 100vh;
+    padding-bottom: 50px;
   }
 
   .tree-view {

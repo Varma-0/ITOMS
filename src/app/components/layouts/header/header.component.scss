@@ -1,119 +1,153 @@
 :host {
     display: block;
-  }
+    position: relative;
+}
 
-  body {
-    padding-top: 56px; // This should match the header height
-  }
+body {
+    padding-top: 56px;
+}
 
-  .navbar {
+.navbar {
     background-color: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: background-color 0.3s ease;
-    height: 56px; // Explicitly set the navbar height
-  }
-
-  .navbar.fixed-top {
+    height: 56px;
     position: fixed;
     top: 0;
     right: 0;
     left: 0;
     z-index: 1030;
-  }
+}
 
-  .navbar.scrolled {
+.navbar.scrolled {
     background-color: #ffffff;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  }
+}
 
-  .navbar-nav {
+.navbar-nav {
     align-items: center;
-  }
+}
 
-  .nav-link {
+.nav-link {
     color: #333;
     font-size: 14px;
-  }
+    position: relative; // Add this for dropdown positioning context
+}
 
-  .dropdown-toggle::after {
+// Improve dropdown positioning and stacking
+.dropdown-menu {
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: absolute;
+    z-index: 1031; // Higher than navbar
+    background-color: white; // Ensure background is solid
+    min-width: 200px; // Prevent narrow dropdowns
+
+    // Ensure dropdowns appear below their triggers
+    top: 100%;
+    left: auto;
+    right: 0;
+
+    // Hide dropdowns when not active
+    &:not(.show) {
+        display: none !important;
+    }
+}
+
+.dropdown-toggle::after {
     vertical-align: middle;
-  }
+}
 
-  .flag-icon {
+.flag-icon {
     width: 20px;
     height: 15px;
     margin-right: 5px;
-  }
+}
 
-  .profile-image {
+.profile-image {
     width: 32px;
     height: 32px;
     margin-right: 10px;
-  }
+}
 
-  .profile-dropdown {
+.profile-dropdown {
     display: flex;
     align-items: center;
-  }
+}
 
-  .dropdown-menu {
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  }
-
-  .dropdown-item {
+.dropdown-item {
     padding: 8px 16px;
     color: #333;
+    position: relative; // Ensure proper stacking
+    z-index: 1; // Ensure clickability
 
     &:hover {
-      background-color: #f5f5f5;
+        background-color: #f5f5f5;
     }
-  }
+}
 
-  .dropdown-header {
+.dropdown-header {
     padding: 16px;
 
     .figure {
-      margin-bottom: 8px;
+        margin-bottom: 8px;
 
-      img {
-        width: 64px;
-        height: 64px;
-      }
+        img {
+            width: 64px;
+            height: 64px;
+        }
     }
 
     .info {
-      .name {
-        font-weight: bold;
-        margin-bottom: 4px;
-      }
+        .name {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
 
-      .email {
-        font-size: 12px;
-        color: #666;
-      }
+        .email {
+            font-size: 12px;
+            color: #666;
+        }
     }
-  }
+}
 
-  // Add these styles to ensure proper layout
-  ::ng-deep {
+// Improved body layout styles
+::ng-deep {
     body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        position: relative; // Add positioning context
     }
 
     app-header {
-      flex: 0 0 auto;
+        flex: 0 0 auto;
+        position: relative;
+        z-index: 1030; // Match navbar z-index
     }
 
     .main-content {
-      flex: 1 0 auto;
-      padding-top: 56px; // This should match the header height
+        flex: 1 0 auto;
+        padding-top: 56px;
+        position: relative;
+        z-index: 1; // Lower than header
     }
-  }
+}
 
-  .inactive {
+.inactive {
     opacity: 0.1;
     pointer-events: none;
-  }
+}
+
+// Add overlay prevention
+.dropdown-menu.show {
+    // Ensure dropdowns are always on top when shown
+    position: absolute !important;
+    z-index: 1031 !important;
+}
+
+// Prevent interaction with content below when dropdown is open
+.navbar-nav .nav-item.show {
+    position: relative;
+    z-index: 1031;
+}

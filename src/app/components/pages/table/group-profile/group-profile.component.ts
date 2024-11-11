@@ -171,7 +171,6 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
           items: map
         },
         width: '50%',  // Adjust the width as needed
-        height:'90vh',
         position: { right: '0' }  // Position the modal on the right side of the screen
       });
 
