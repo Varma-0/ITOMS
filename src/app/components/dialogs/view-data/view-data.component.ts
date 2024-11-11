@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { SharedServices } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-view-data',
@@ -12,8 +13,10 @@ export class ViewDataComponent {
   toggledKeys: { [key: string]: boolean } = {};
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { items: any },
-    private dialogRef: MatDialogRef<ViewDataComponent>
-  ) {}
+    private dialogRef: MatDialogRef<ViewDataComponent>,private shared:SharedServices
+  ) {
+    this.shared.setSidebarState(false)
+  }
   isModalOpen = false;
   // jsonData = {
   //   '3rd Party Apps': {
@@ -50,5 +53,9 @@ export class ViewDataComponent {
   closeModal() {
     this.isModalOpen = false;
     this.dialogRef.close(true);
+  }
+
+  ngOnDestroy(): void {
+    this.shared.setSidebarState(true)
   }
 }
