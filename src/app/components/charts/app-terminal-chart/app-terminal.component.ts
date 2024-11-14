@@ -4,20 +4,16 @@ import ApexCharts from 'apexcharts';
 @Component({
   selector: 'app-terminal-chart',
   templateUrl: './app-terminal.component.html',
-  styleUrls: ['./app-terminal.component.scss'] 
+  styleUrls: ['./app-terminal.component.scss']
 })
 export class TerminalChartComponent implements OnInit {
-  @Input() labels: [] = []; 
-  @Input() series: [] = []; 
+  @Input() labels: [] = [];
+  @Input() series: [] = [];
   colors: string[] = []; // Default colors for the chart
 
   constructor() { }
 
   ngOnInit() {
-    // Prepare labels and series from cardMethodStatistics
-    // this.labels = Object.keys(this.cardMethodStatistics);
-    // this.series = Object.values(this.cardMethodStatistics);
-
     // Only render the chart if there are data points
     if (this.labels.length && this.series.length) {
       const options = {

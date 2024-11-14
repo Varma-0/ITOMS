@@ -227,9 +227,6 @@ export class AddFormComponent {
     this.items.removeAt(index);
   }
 
-  // removeTenant(index: number): void {
-  //   this.userForm.get('tenants').value.removeAt(index);
-  // }
   removeTenant(index: number): void {
     const tenantsArray = this.userForm.get('tenants') as FormArray;
     tenantsArray.removeAt(index);

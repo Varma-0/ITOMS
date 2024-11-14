@@ -1,8 +1,6 @@
 <h2 mat-dialog-title>{{title}}</h2>
 <mat-dialog-content>
-    <!-- <div>
-        <input type="text" placeholder="Search..." [(ngModel)]="searchText" (input)="filterItems()">
-      </div> -->
+
     <div *ngIf="filteredItems.length > 0; else noTenants">
         <label>
           <input type="checkbox" (change)="selectAll($event)" [checked]="areAllChecked()"> Select All

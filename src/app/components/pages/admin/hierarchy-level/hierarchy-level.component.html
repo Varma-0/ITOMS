@@ -8,7 +8,6 @@
           <span class="material-icons">upload</span> Upload Hierarchies
         </button>
         <input type="file" #fileInput (change)="onFileChange($event)" accept=".xlsx, .xls" style="display: none" />
-        <!-- <button class="btn secondary">Upload Hierarchy File</button> -->
       </div>
     </div>
 
@@ -23,7 +22,6 @@
             {{ item.name }}
             <div class="item-actions" (click)="$event.stopPropagation()">
               <button class="icon-btn add" (click)="addNewItem(i)">+</button>
-              <!-- <button class="icon-btn delete" *ngIf="i > 0" (click)="deleteItem(item)">×</button> -->
             </div>
           </div>
         </div>

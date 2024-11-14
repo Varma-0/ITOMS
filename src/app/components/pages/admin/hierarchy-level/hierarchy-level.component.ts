@@ -100,14 +100,14 @@ export class HierarchyLevelComponent implements OnInit {
     triggerFileUpload(): void {
         this.fileInput.nativeElement.click(); // Programmatically click the hidden file input
       }
-    
+
       onFileChange(event: any): void {
         const file = event.target.files[0];
         if (file) {
           this.uploadFile(file);
         }
       }
-      
+
       async uploadFile(file: File): Promise<void> {
         try {
           const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
@@ -124,7 +124,7 @@ export class HierarchyLevelComponent implements OnInit {
           this.missingColumns = [];
         }
       }
-    
+
       uploadBulkHierarchies() {
         const payload = {
           "event": {
@@ -305,93 +305,6 @@ export class HierarchyLevelComponent implements OnInit {
         }
     }
     loadInitialData() {
-        // this.hierarchyData = {
-        //     "merchants": [
-        //       {
-        //         "id": "m1",
-        //         "name": "MegaMart",
-        //         "countries": [
-        //           {
-        //             "id": "c1",
-        //             "name": "United States",
-        //             "states": [
-        //               {
-        //                 "id": "s1",
-        //                 "name": "California",
-        //                 "cities": [
-        //                   {
-        //                     "id": "city1",
-        //                     "name": "Los Angeles"
-        //                   },
-        //                   {
-        //                     "id": "city2",
-        //                     "name": "San Francisco"
-        //                   }
-        //                 ]
-        //               },
-        //               {
-        //                 "id": "s2",
-        //                 "name": "New York",
-        //                 "cities": [
-        //                   {
-        //                     "id": "city3",
-        //                     "name": "New York City"
-        //                   },
-        //                   {
-        //                     "id": "city4",
-        //                     "name": "Buffalo"
-        //                   }
-        //                 ]
-        //               }
-        //             ]
-        //           },
-        //           {
-        //             "id": "c2",
-        //             "name": "Canada",
-        //             "states": [
-        //               {
-        //                 "id": "s3",
-        //                 "name": "Ontario",
-        //                 "cities": [
-        //                   {
-        //                     "id": "city5",
-        //                     "name": "Toronto"
-        //                   },
-        //                   {
-        //                     "id": "city6",
-        //                     "name": "Ottawa"
-        //                   }
-        //                 ]
-        //               }
-        //             ]
-        //           }
-        //         ]
-        //       },
-        //       {
-        //         "id": "m2",
-        //         "name": "TechWorld",
-        //         "countries": [
-        //           {
-        //             "id": "c3",
-        //             "name": "Germany",
-        //             "states": [
-        //               {
-        //                 "id": "s4",
-        //                 "name": "Bavaria",
-        //                 "cities": [
-        //                   {
-        //                     "id": "city7",
-        //                     "name": "Munich"
-        //                   }
-        //                 ]
-        //               }
-        //             ]
-        //           }
-        //         ]
-        //       }
-        //     ]
-        //   }
-        // console.log(this.hierarchyData);
         this.hierarchyData = {
             'merchants': this.generateMerchantData(this.merchants)
         }

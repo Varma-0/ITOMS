@@ -18,21 +18,6 @@ export class ViewDataComponent {
     this.shared.setSidebarState(false)
   }
   isModalOpen = false;
-  // jsonData = {
-  //   '3rd Party Apps': {
-  //     '3rdPartyApps_01': ['com.ar.layup'],
-  //     '3rdPartyApps_02': ['com.triplejumptech.horizon'],
-  //     '3rdPartyApps_03': ['com.dashpay.vas'],
-  //     '3rdPartyApps_04': ['com.ar.valueadds'],
-  //     '3rdPartyApps_05': ['za.co.nedbank.rp'],
-  //     '3rdPartyApps_06': ['com.payflow.ezagapos'],
-  //     '3rdPartyApps_07': ['za.co.bbsoft.mobilepos'],
-  //     '3rdPartyApps_08': ['com.easipolmobile'],
-  //     '3rdPartyApps_09': ['com.example.mycalculator'],
-  //     '3rdPartyApps_10': ['com.istatik.mobile'],
-  //     '3rdPartyApps_11': ['com.waxdpayment.waxdtransport'],
-  //   },
-  // };
 
   openModal() {
     this.isModalOpen = true;

@@ -1,41 +1,7 @@
-<!-- <div class="breadcrumb-area">
-  <h1>Organization</h1>
-</div> -->
-
 <div class="row">
-  <!-- <div class="sidebar">
-    <div class="heading">
-      <h2>Organization</h2>
-      <button class="mat-icons">
-        <mat-icon>add</mat-icon>
-      </button>
-    </div>
-    <ul class="nolist">
-      <li class="row" *ngFor="let item of sidebarItems">
-        <button class="butt col-9" [ngClass]="{'active-sidebar': selectedItem === item}" (click)="selectItem(item)">
-          <span class="icon"><i class='bx bx-buildings'></i></span>&nbsp;
-          {{ item }}
-          <button class="mat-icons col-3" [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="edit(item)">
-              <mat-icon>edit</mat-icon>
-              <span>Edit</span>
-            </button>
-          </mat-menu>
-        </button>
-      </li>
-    </ul>
-  </div> -->
-
   <div class="main-content">
     <div class="header">
       <div class="header-info">
-        <!-- <div class="title-with-image">
-          <img src="assets/img/computer.png" alt="StandardPos" class="circular-image">
-          <h2>{{ selectedItem }}</h2>
-        </div> -->
       </div>
       <ul class="tabs">
         <li>
@@ -132,7 +98,6 @@
               </app-multiple-radialbar>
             </div>
             <div *ngIf="selectedTabinDevices === 'model'">
-              <!-- <app-email-send [labels]="labelsm" [series]="seriesm" [colors]="colors"></app-email-send> -->
             </div>
           </div>
         </mat-card>

@@ -71,7 +71,7 @@ export class MerchantsComponent {
       this.uploadFile(file);
     }
   }
-  
+
   async uploadFile(file: File): Promise<void> {
     try {
       const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
@@ -187,12 +187,6 @@ export class MerchantsComponent {
     const dialogRef = this.dialog.open(AddFormComponent,{
         data:{
             title: 'Add Merchant',
-          //   form : {
-          //     name: data.name,
-          //     email:data.email,
-          //     phone: data.permission,
-          //     cname: data.contactName,
-          // }
         },
         width:'40%'
     });

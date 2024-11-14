@@ -75,15 +75,6 @@ $danger-red: #f44336;
     z-index: 1; /* Ensures header stays above table content */
   }
 
-
-// Styles
-// .admin-panel {
-//   max-width: 100%;
-//   margin: 0 auto;
-// //   padding: 30px;
-//   background-color: $background-white;
-// //   min-height: 100vh;
-// }
 .admin-panel {
   display: flex;
   flex-direction: column;
@@ -199,12 +190,6 @@ $danger-red: #f44336;
   }
 }
 
-// .table-container {
-//   background-color: $background-white;
-//   border-radius: 8px;
-//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-//   overflow-x: auto;
-// }
 .table-container {
   // flex: 1;
   overflow-y: auto;

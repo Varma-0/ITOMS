@@ -66,7 +66,7 @@ export class AnalyticsComponent implements OnInit {
     )
   }
 
-  
+
   newActivatedGraph() {
     const charts = new chartsEvent('REPORT','SEARCH');
     const chartData = new devicePie(charts);
@@ -139,28 +139,11 @@ export class AnalyticsComponent implements OnInit {
     }
   }
 
-  // loadCounts() {
-  //   const chartEvent = new chartsEvent('REPORT', 'SEARCH');
-  //   const chartData = new devicePie(chartEvent);
-  //   this.shared.showLoader.next(true);
-  //   this.dataService.terminalCount(chartData).subscribe(
-  //     response => this.updateStatsCard('Terminals', response.event.eventData.total, 'bx bx-terminal', '#007bff')
-      
-  //   );
-
-  //   this.dataService.merchantCount(chartData).subscribe(
-  //     response => this.updateStatsCard('Merchants', response.event.eventData.total, 'bx bx-store', '#13bb37')
-  //   );
-
-  //   this.dataService.apkCountInfo(chartData).subscribe(
-  //     response => this.updateStatsCard('Applications', response.event.eventData.total, 'bx bx-mobile-alt', '#ff4b00')
-  //   );
-  // }
   loadCounts() {
     const chartEvent = new chartsEvent('REPORT', 'SEARCH');
     const chartData = new devicePie(chartEvent);
     this.shared.showLoader.next(true); // Show loader
-  
+
     // Fetch terminal count
     this.dataService.terminalCount(chartData).subscribe(
       response => {
@@ -176,7 +159,7 @@ export class AnalyticsComponent implements OnInit {
       }
     );
   }
-  
+
   loadMerchantCount(chartData: devicePie) {
     this.dataService.merchantCount(chartData).subscribe(
       response => {
@@ -192,7 +175,7 @@ export class AnalyticsComponent implements OnInit {
       }
     );
   }
-  
+
   loadApkCountInfo(chartData: devicePie) {
     this.dataService.apkCountInfo(chartData).subscribe(
       response => {
@@ -207,7 +190,7 @@ export class AnalyticsComponent implements OnInit {
       }
     );
   }
-  
+
 
   updateStatsCard(title: string, value: number, icon: string, color: string) {
     this.statsCards.push({ title, value, icon, color });

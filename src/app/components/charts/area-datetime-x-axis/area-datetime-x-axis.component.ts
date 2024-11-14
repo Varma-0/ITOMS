@@ -426,6 +426,5 @@ export class AreaDatetimeXAxisComponent implements OnInit {
                 }
             });
         });
-        // document.querySelector("#ytd").addEventListener('click', function () {});
     }
 }

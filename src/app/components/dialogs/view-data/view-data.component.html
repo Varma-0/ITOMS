@@ -1,26 +1,3 @@
-<!-- <mat-dialog-content class="json-view"> -->
-
-        <!-- <div class="modal-header">
-            <h3>JSON Data</h3>
-            <button class="close-btn" (click)="closeModal()">✖</button>
-        </div>
-        <pre>{{ data.items | json }}</pre>
-        <-- </div> -->
-
-        <!-- <div class="json-item" *ngFor="let item of data.items | keyvalue">
-            <div class="json-key" (click)="toggleCollapse(item.key)">
-                <strong>{{ item.key }}</strong>
-                <span *ngIf="isCollapsed(item.key)">[+]</span>
-                <span *ngIf="!isCollapsed(item.key)">[-]</span>
-            </div>
-            <div *ngIf="!isCollapsed(item.key)" class="json-value">
-                <pre>{{ item.value | json }}</pre>
-            </div>
-        </div> -->
-        <!-- <ngx-json-viewer [json]="data.items"></ngx-json-viewer> -->
         <div class="modal-content">
             <app-json-viewer [jsonData]="data.items" (close)="closeModal()"></app-json-viewer>
         </div>
-
-
-<!-- </mat-dialog-content> -->

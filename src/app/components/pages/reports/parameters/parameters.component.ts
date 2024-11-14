@@ -131,7 +131,7 @@ export class ParametersReportComponent implements OnInit {
 
   get paginatedDevices(): Device[] {
     this.filteredDevices = this.filteredDevices.filter(device => device.serialNumber !== null);
-  
+
   // Return paginated data after filtering
   return this.filteredDevices.slice(this.startIndex, this.endIndex);
   }

@@ -126,12 +126,6 @@ export class HeartReportComponent implements OnInit {
     return this.filteredDevices.slice(this.startIndex, this.endIndex);
   }
 
-  // goToPage(page: number): void {
-  //   if (page >= 1 && page <= this.totalPages) {
-  //     this.currentPage = page;
-  //   }
-  // }
-
   updatePagination() {
     this.totalPages = Math.ceil(this.filteredDevices.length / this.itemsPerPage);
     this.currentPage = 1;
