@@ -64,31 +64,6 @@
       </mat-card>
     </div>
     <div class="cards-container">
-      <!-- <mat-card class="custom-cards">
-        <mat-card-header>
-          <div class="d-flex align-items-center justify-content-between">
-            <span>Traffic</span>
-            <div class="header-buttons buttonsHeader">
-              <button [ngClass]="{'active-tab': contentCondition === 'Device'}"
-                (click)="changeContent('Device')">Device</button>
-              <button [ngClass]="{'active-tab': contentCondition === 'Application'}"
-                (click)="changeContent('Application')">Application</button>
-            </div>
-          </div>
-        </mat-card-header>
-        <hr class="card-divider">
-        <div *ngIf="contentCondition === 'Device'">
-          <mat-card-content>
-            <app-dashed-line></app-dashed-line>
-          </mat-card-content>
-        </div>
-        <div *ngIf="contentCondition === 'Application'">
-          <mat-card-content>
-            <app-traffic-source></app-traffic-source>
-          </mat-card-content>
-        </div>
-      </mat-card> -->
-
 
       <mat-card class="custom-card card-100">
         <mat-card-header>
@@ -105,28 +80,15 @@
           </mat-card-content>
         <!-- </div> -->
       </mat-card>
-    </div>
-    <!-- <div>
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>
-            Average Signal Strength
-            <mat-icon matTooltip="Information about signal strength">info</mat-icon>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <app-area-datetime-x-axis></app-area-datetime-x-axis>
-        </mat-card-content>
-      </mat-card>
-    </div> -->
-      <div class="cards-container">
+    </div>  
+    <div class="cards-container">
         <mat-card class="custom-card card-100">
           <mat-card-header class="d-flex justify-content-between">
             <mat-card-title class="card-header-title">Command History</mat-card-title>
             <div class="col-md-4">
-              <select class="form-select" > <!-- [(ngModel)]="selectedOption2" (change)="applyFilter()" -->
+              <select class="form-select" >
                 <option value="" disabled selected>Check Update</option>
-                <!-- <option *ngFor="let option of optionModel" [value]="option">{{ option }}</option> -->
+                
               </select>
             </div>
           </mat-card-header>

@@ -61,7 +61,6 @@ export class HeartReportComponent implements OnInit {
     this.dataService.getHeartReport(data).subscribe(
         response => {
           if(response.status == 200) {
-            console.log(response);
             this.devices = response.event.eventData.responseData[0];
             this.applyFilter();
           }
@@ -153,7 +152,6 @@ export class HeartReportComponent implements OnInit {
   }
 
   openReportDialog(data): void {
-    console.log(data);
         const payload = {
             "event": {
               "eventData":data,

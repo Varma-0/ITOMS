@@ -27,9 +27,6 @@ export class TerminalComponent implements OnInit {
   views = true;
   insideView = false;
   selectedDevice:any;
-//   columns: string[] = ['Serial Number', 'Model', 'Status'];   // 'Activation Time'
-//   columns1: string[] = ['Serial Number', 'Model', 'Status'];  // 'Activation Time'
-//   columnsVisibility = [true, true, true, true, true,true];
 columns = [
     { name: 'Serial Number', visible: true },
     { name: 'Model', visible: true },
@@ -83,7 +80,6 @@ columns = [
       const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
       this.headers = result.headers; // Store headers
       this.excelData = result.data; // Store data
-      console.log("Column Names (Headers):", this.headers,this.excelData);
       this.uploadBulkTerminals();
     } catch (error) {
       console.error("Error:", error.message);
@@ -106,7 +102,6 @@ columns = [
     this.shared.showLoader.next(true);
     this.dataService.terminalBulkUpload(payload).subscribe(
       response=>{
-        console.log("efwaa",response);
         this.shared.showLoader.next(false);
         this.shared.showSuccess("Models Uploaded Successfully")
       },
@@ -126,8 +121,6 @@ columns = [
 
 row(individualData){
     this.terminalViewData(individualData)
-    // console.log(this.insideView,"feqqw")
-    // console.log("fhgssgd",individualData)
   }
 
 
@@ -137,7 +130,6 @@ row(individualData){
 
     this.terminalService.terminalData(terminalRequest).subscribe(
       response => {
-        console.log(response);
         this.data = response.event.eventData;
         this.updateOptions();
         this.updatePagination();
@@ -149,7 +141,6 @@ row(individualData){
   }
 
   terminalViewData(individualData) {
-    // console.log("adcgwguowe",individualData);
     const payload = {
       "event": {
         "eventData":individualData.id,
@@ -191,7 +182,6 @@ row(individualData){
 
   updatePagination() {
     let filteredData = this.data;
-    // console.log("efw",filteredData);
     if (this.searchText) {
       filteredData = filteredData.filter(device =>
         (device.serialNumber && device.serialNumber?.toLowerCase().includes(this.searchText?.toLowerCase()))
@@ -268,13 +258,8 @@ row(individualData){
   }
 
 
-  // toggleSelectAll(event: any) {
-  //   const isChecked = event.target.checked;
-  //   this.paginatedDevices.forEach(device => device.selected = isChecked);
-  // }
 
   getSelectedCount() {
-    // console.log(this.selectedDevices);
     return this.paginatedDevices.filter(device => device.selected).length;
   }
 
@@ -285,7 +270,6 @@ row(individualData){
   blockSelectedRow() {
     const devicesToBlock = this.selectedDevices.filter(device => device.status !== 'BLOCK');
     if (devicesToBlock.length) {
-      console.log("Blocking devices:", devicesToBlock);
       const deviceIds = devicesToBlock.map(device => device['id']);
       const payload = {
         "event": {
@@ -296,7 +280,6 @@ row(individualData){
       }
       this.terminalService.blockTerminal(payload).subscribe(
         response => {
-          console.log(response);
           this.updateOptions();
           this.updatePagination();
           this.shared.showSuccess("Terminal Blocked Successfully");
@@ -314,7 +297,6 @@ row(individualData){
   unblockSelectedRow() {
     const devicesToUnBlock = this.selectedDevices.filter(device => device.status !== 'ACTIVE');
     if (devicesToUnBlock.length) {
-      console.log("Blocking devices:", devicesToUnBlock);
       const deviceIds = devicesToUnBlock.map(device => device['id']);
       const payload = {
         "event": {
@@ -325,7 +307,6 @@ row(individualData){
       }
       this.terminalService.blockTerminal(payload).subscribe(
         response => {
-          console.log(response);
           this.updateOptions();
           this.updatePagination();
           this.shared.showSuccess("Terminal Unblocked Successfully");
@@ -355,7 +336,6 @@ row(individualData){
   }
 
   edit(element: TerminalElement) {
-    console.log('Edit clicked for:', element);
   }
 
   openDeleteDialog(element: TerminalElement): void {
@@ -365,7 +345,6 @@ row(individualData){
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('User deleted');
       }
     });
   }

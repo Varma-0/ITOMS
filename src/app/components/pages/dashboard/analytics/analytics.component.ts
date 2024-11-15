@@ -53,9 +53,7 @@ export class AnalyticsComponent implements OnInit {
     this.shared.showLoader.next(true);
     this.dataService.deviceModelRatio(chartData).subscribe(
       response => {
-        console.log("pieMain",response);
         this.data = response.event.eventData.data[0];
-        console.log("pie",this.data);
         this.shared.showLoader.next(false);
       },
       error => {
@@ -73,9 +71,7 @@ export class AnalyticsComponent implements OnInit {
     this.shared.showLoader.next(true);
     this.dataService.newActivatedGraphInfo(chartData).subscribe(
       response => {
-        console.log("pie",response);
         this.activatedData = response.event.eventData.data;
-        console.log("dqoefqoq",this.activatedData);
         this.shared.showLoader.next(false);
       },
       error => {
@@ -92,9 +88,7 @@ export class AnalyticsComponent implements OnInit {
     this.shared.showLoader.next(true);
     this.dataService.deviceOnlineGraphInfo(chartData).subscribe(
       response => {
-        console.log("pie",response);
         this.deviceOnlineData = response.event.eventData.data;
-        console.log("pie",this.deviceOnlineData);
         this.shared.showLoader.next(false);
       },
       error => {

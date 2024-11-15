@@ -113,7 +113,6 @@ export class HierarchyLevelComponent implements OnInit {
           const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
           this.headers = result.headers; // Store headers
           this.excelData = result.data; // Store data
-          console.log("Column Names (Headers):", this.headers,this.excelData);
           this.uploadBulkHierarchies();
         } catch (error) {
           console.error("Error:", error.message);
@@ -136,7 +135,6 @@ export class HierarchyLevelComponent implements OnInit {
         this.shared.showLoader.next(true);
         this.dataService.hierarchiesBulkUpload(payload).subscribe(
           response=>{
-            console.log("efwaa",response);
             this.shared.showLoader.next(false);
             this.shared.showSuccess("Hierarchies Uploaded Successfully")
           },
@@ -308,7 +306,6 @@ export class HierarchyLevelComponent implements OnInit {
         this.hierarchyData = {
             'merchants': this.generateMerchantData(this.merchants)
         }
-        console.log
         localStorage.setItem('Hlist', JSON.stringify(this.hierarchyData));
         this.hierarchyLevels[0].items = this.hierarchyData.merchants;
     }
@@ -533,9 +530,7 @@ export class HierarchyLevelComponent implements OnInit {
 
     saveHierarchyPath() {
         if (this.selectedPath) {
-            console.log('Saving hierarchy path:', this.selectedPath);
             // In a real application, you would make an API call here to save the path
-            console.log('Updated hierarchy data:', this.hierarchyData);
         }
     }
 

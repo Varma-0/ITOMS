@@ -123,7 +123,6 @@ export class TenantsComponent {
       response => {
         // Update the device status in the UI if the API call is successful
         if(response.status == 200) {
-          console.log('Device status updated successfully:', response);
           this.loadTenants();
           this.shared.showSuccess(`Tenant ${updatedStatus.toLowerCase()}d successfully!`)
         }
@@ -162,7 +161,6 @@ export class TenantsComponent {
           this.dataService.updateTenant(finals).subscribe(
             response => {
               if(response.status == 200) {
-                console.log('response', response);
                 this.loadTenants();
                 this.shared.showSuccess("Tenant Updated successfully!")
               }
@@ -182,7 +180,6 @@ export class TenantsComponent {
           this.dataService.addTenant(finals).subscribe(
             response => {
               if(response.status == 200) {
-                console.log('response', response);
                 this.loadTenants();
                 this.shared.showSuccess("Tenant Created successfully!")
               }
@@ -210,7 +207,6 @@ export class TenantsComponent {
         this.dataService.deleteTenant(finals).subscribe(
           response => {
             if(response.status == 200) {
-              console.log('response', response);
               this.loadTenants();
               this.shared.showSuccess("Status Updated successfully!")
             }

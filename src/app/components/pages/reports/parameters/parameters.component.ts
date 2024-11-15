@@ -77,7 +77,6 @@ export class ParametersReportComponent implements OnInit {
     this.dataService.getParameterReport(payload).subscribe(
       response => {
         if(response.status == 200) {
-          console.log(response);
           this.devices = response.event.eventData.responseData[0];
           this.applyFilter();
         }

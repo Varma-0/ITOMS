@@ -91,7 +91,6 @@ export class ProfilesComponent implements OnInit {
 
   onSubmit() {
     if (this.profileForm.valid) {
-      console.log(this.profileForm.value);
       // Here you would typically send the form data to your backend
     }
   }

@@ -58,7 +58,6 @@ export class RoleComponent {
         this.dataService.roleData().subscribe(
             response => {
                 if(response.status == 200) {
-                    console.log(response);
                     this.roles = response.event.eventData.map(data => data);
                     this.search();
                 }
@@ -137,7 +136,6 @@ export class RoleComponent {
         }
         this.dataService.getRole(payload).subscribe(
             response => {
-                console.log(response.event.eventData.rolePermissionsList)
                 data.roles = response.event.eventData.rolePermissionsList;
                 this.openCreateDialog(data, true);
                 this.shared.showLoader.next(false);
@@ -183,7 +181,6 @@ export class RoleComponent {
                         response => {
                             if(response.status == 200) {
                                 this.loadRoles();
-                                console.log("resssss", response);
                                 this.shared.showSuccess("Role Updated successfully!")
                             }
                             this.shared.showLoader.next(true);
@@ -197,14 +194,12 @@ export class RoleComponent {
                 }
                 else if (!edit) {
                     this.shared.showLoader.next(true);
-                    console.log(result);
                     const event = new addRoleData(result.data.name, result.data.description, result.roles);
                     const eventType = new addRoleBody(event, 'ROLE', 'CREATE');
                     const finals = new roleAdd(eventType);
                     this.dataService.addRoles(finals).subscribe(
                         response => {
                             if(response.status == 200) {
-                                console.log("resssss", response);
                                 this.loadRoles();
                                 this.shared.showSuccess("Role created successfully")
                             }
@@ -237,7 +232,6 @@ export class RoleComponent {
                 }
                 this.dataService.deleteRole(payload).subscribe((res) => {
                     if(res.status == 200) {
-                        console.log(res);
                         this.loadRoles();
                         this.shared.showSuccess("Role Deleted successfully");
                     }

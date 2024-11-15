@@ -25,7 +25,6 @@ export class SelectCfgComponent {
     const file: File = event.target.files[0];
     if (file && file.type === 'application/zip') {
       // Handle file upload logic here
-      console.log('Selected file:', file.name);
     } else {
       console.error('Please select a valid .zip file.');
     }

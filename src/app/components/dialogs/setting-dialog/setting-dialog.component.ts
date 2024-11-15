@@ -23,7 +23,6 @@ export class SettingDialogComponent {
   oldApps = [];
   constructor(public dialogRef: MatDialogRef<SettingDialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any ,private shared:SharedServices,private dataService: TerminalService) {
     this.shared.setSidebarState(false);
-    console.log(data)
     this.id = data.id;
   }
 
@@ -45,7 +44,6 @@ export class SettingDialogComponent {
     // Remove app from optionalApps and add it to currentApps
     this.addApps = this.addApps.filter(a => a !== app);
     this.oldApps.push(app);
-    console.log("sssas",app)
     this.movedToCurrent.push(app);
   }
 
@@ -58,7 +56,6 @@ export class SettingDialogComponent {
     }
     this.dataService.getPackageList(payload).subscribe(
       response => {
-        console.log(response)
         const oldAppNames = this.oldApps.map(app => app.name);
         this.addApps = response.event.eventData
         .filter(data => !oldAppNames.includes(data.name)) // Only add apps not in oldApps
@@ -92,7 +89,6 @@ export class SettingDialogComponent {
     }
     this.dataService.settingsInDeployment(payload).subscribe(
       response => {
-        console.log("21821",response);
         this.oldApps = response.event.eventData.map(data => ({
           ...data, // Spread the existing data
           icon: this.getRandomIcon() // Assign a random icon

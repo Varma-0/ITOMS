@@ -32,8 +32,6 @@ export class DesignSelectionComponent {
         this.paramTemplate = result.paramTemplate;
         this.profile = result.profile;
         this.error = '';
-        console.log('Param Template:', this.paramTemplate);
-        console.log('Profile:', this.profile);
         this.dialogRef.close({
             type: 'zip',
             profile : this.profile,
@@ -41,7 +39,6 @@ export class DesignSelectionComponent {
         });
       } catch (error) {
         this.error = error.message;
-        console.error('Error processing file:', error);
         this.paramTemplate = [];
         this.profile = [];
       }
@@ -54,7 +51,6 @@ export class DesignSelectionComponent {
     try {
       zipContents = await zip.loadAsync(file);
     } catch (error) {
-      console.error('Error loading zip file:', error);
       throw new Error('Unable to load the zip file. Please ensure it\'s a valid zip archive.');
     }
 
@@ -63,7 +59,6 @@ export class DesignSelectionComponent {
     );
 
     if (!excelFile) {
-      console.error('No Excel file found in the zip archive');
       throw new Error('No Excel file found in the zip archive. Please ensure the zip contains an .xlsx or .xls file.');
     }
 

@@ -77,7 +77,6 @@ export class MerchantsComponent {
       const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
       this.headers = result.headers; // Store headers
       this.excelData = result.data; // Store data
-      console.log("Column Names (Headers):", this.headers,this.excelData);
       this.uploadBulkMerchants();
     } catch (error) {
       console.error("Error:", error.message);
@@ -100,7 +99,6 @@ export class MerchantsComponent {
     this.shared.showLoader.next(true);
     this.dataService.merchantBulkUpload(payload).subscribe(
       response=>{
-        console.log("efwaa",response);
         this.shared.showLoader.next(false);
         this.shared.showSuccess("Merchants Uploaded Successfully")
       },
@@ -200,7 +198,6 @@ export class MerchantsComponent {
         this.dataService.addMerchant(finals).subscribe(
           response => {
             if(response.status == 200) {
-              console.log('response', response);
               this.loadMerchants();
               this.shared.showSuccess("Merchant Created successfully!")
             }
@@ -227,7 +224,6 @@ export class MerchantsComponent {
         this.dataService.deleteMerchant(finals).subscribe(
           response => {
             if(response.status == 200) {
-              console.log('response', response);
               this.loadMerchants();
               this.shared.showSuccess("Merchant Deleted successfully!");
             }

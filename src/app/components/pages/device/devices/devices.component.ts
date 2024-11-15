@@ -61,7 +61,6 @@ export class DevicesComponent {
 
   ngOnInit(): void {
     this.loginData = localStorage.getItem("SA");
-    console.log("uigfiqw",this.loginData);
     this.deviceData();
     this.deviceDropdown();
     this.updatePagination();
@@ -84,7 +83,6 @@ export class DevicesComponent {
       const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
       this.headers = result.headers; // Store headers
       this.excelData = result.data; // Store data
-      console.log("Column Names (Headers):", this.headers,this.excelData);
       this.uploadBulkDevices();
     } catch (error) {
       console.error("Error:", error.message);
@@ -107,7 +105,6 @@ export class DevicesComponent {
     this.shared.showLoader.next(true);
     this.dataService.deviceBulkUpload(payload).subscribe(
       response=>{
-        console.log("efwaa",response);
         this.shared.showLoader.next(false);
         this.shared.showSuccess("Devices Uploaded Successfully")
       },
@@ -124,7 +121,6 @@ export class DevicesComponent {
     this.shared.showLoader.next(true);
     this.dataService.terminalData(terminalRequest).subscribe(
       response => {
-        console.log(response);
         this.device = response.event.eventData.map(data => {
           const time = data.createdBy.ts;
           const fulldate = time.split('T')[0];  // Get the full date (YYYY-MM-DD)
@@ -149,7 +145,6 @@ export class DevicesComponent {
         // this.paginatedDevices = this.device;
 
         // Log the updated device array
-        console.log('Updated device data:', this.device);
       },
       error => {
         console.error('Error:', error);
@@ -165,7 +160,6 @@ export class DevicesComponent {
     this.shared.showLoader.next(true);
     this.dataService.modelData(terminalRequest).subscribe(
       response => {
-        console.log(response);
         this.device = response.event.eventData.map(data => {
           const time = data.createdBy.ts;
           const fulldate = time.split('T')[0];  // Get the full date (YYYY-MM-DD)
@@ -183,7 +177,6 @@ export class DevicesComponent {
         });
         this.shared.showLoader.next(false);
         // this.filteredDevices = this.device;
-        console.log('Updated device data:', this.device);
       },
       error => {
         console.error('Error:', error);
@@ -260,7 +253,6 @@ export class DevicesComponent {
     this.shared.showLoader.next(true);
     this.dataService.deleteDevice(deleteRequest).subscribe(
       response => {
-        console.log("Delete response", response);
         this.deviceData();
         this.shared.showLoader.next(false);
       },
@@ -274,7 +266,6 @@ export class DevicesComponent {
 
 
   openCreateDialog(data?,edit?): void {
-    console.log("checking",data);
     const dialogRef = this.dialog.open(DevicesFormComponent,{
      data : {
         title : edit ? 'Edit Device' : 'Add Device',
@@ -297,17 +288,14 @@ export class DevicesComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("dufgq",result);
       if (result) {
        if(edit) {
         const event = new createDevice(data.deviceId,result.sno,result.skey,result.modalName,result.modal,result.hierarchyName,"",result.merchantName,result.merchant);
         const terminalRequest = new updateDeviceEvent(event,'DEVICE','UPDATE');
         const editDevice = new updateDevice(terminalRequest);
-        console.log("cwicw",editDevice);
         this.shared.showLoader.next(true);
         this.dataService.updateDevice(editDevice).subscribe(
           response => {
-            console.log(response);
             this.deviceData();
             this.shared.showLoader.next(false);
           },
@@ -322,11 +310,9 @@ export class DevicesComponent {
           const event = new addDevice(result.sno,result.status,result.skey,result.modalName,result.modal,result.hierarchyName,"",result.merchantName,result.merchant)
           const terminalRequest = new addDeviceEvent(event,'DEVICE','CREATE');
           const editDevice = new addDeviceBody(terminalRequest);
-          console.log("cwicw",editDevice);
           this.shared.showLoader.next(true);
           this.dataService.addNewDevice(editDevice).subscribe(
             response => {
-              console.log(response);
               this.deviceData();
               this.shared.showLoader.next(false);
             },

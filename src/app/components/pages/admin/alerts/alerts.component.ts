@@ -57,7 +57,6 @@ export class AlertComponent {
         this.shared.showLoader.next(true);
         this.dataService.alertData().subscribe(
             response => {
-                console.log(response);
                 this.alerts = response.event.eventData.map(data => data);
                 this.search();
                 this.shared.showLoader.next(false);
@@ -128,7 +127,6 @@ export class AlertComponent {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result);
                 if (edit) {
                     this.shared.showLoader.next(true);
                     const payload = {
@@ -210,7 +208,6 @@ export class AlertComponent {
 
     openDeleteDialog(alert): void {
         const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-        console.log(alert);
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.shared.showLoader.next(true);
@@ -226,7 +223,6 @@ export class AlertComponent {
                 this.dataService.deleteAlertData(finals).subscribe(
                     response => {
                         if(response.status == 200) {
-                            console.log("respoonse",response);
                             this.loadAlerts();
                             this.shared.showSuccess("Role Deleted successfully");
                         }

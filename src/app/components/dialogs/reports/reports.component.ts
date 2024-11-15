@@ -38,7 +38,6 @@ export class ReportsDialogComponent {
 
   updatePagination(): void {
     this.totalPages = Math.ceil(this.data.length / this.itemsPerPage);
-    console.log("dww",this.totalPages);
   }
 
   previousPage(): void {

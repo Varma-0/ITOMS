@@ -29,26 +29,6 @@
           <img [src]="type.icon" [alt]="type.name">
         </label>
       </div>
-      <!-- <div *ngIf="currentStep === 1" >
-        <div *ngIf="!isUploaded; else uploadedButtons" class="file-upload-container" (dragover)="onDragOver($event)"
-          (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" (click)="fileInput.click()">
-          <input type="file" (change)="onFileSelected($event)" #fileInput hidden accept=".zip">
-          <div class="upload-icon">
-            <i class="material-icons">cloud_upload</i>
-          </div>
-          <p>Click to upload or drag a ZIP file here</p>
-          <p class="file-size-info">(The ZIP file size can not be more than {{maxFileSize}}MB)</p>
-        </div>
-      </div>
-      <ng-template #uploadedButtons>
-        <img src="../../../../../../assets/img/success.png">
-        <p>File Name: {{ fileName }}</p>
-        <p>Size: {{ (fileSize / 1024 / 1024).toFixed(2) }} MB</p> 
-        <div class="d-flex align-items-center flex-row justify-content-end" style="gap:10px">
-          <button class="btn btn-danger" (click)="resetUpload()">Re-upload</button>
-          <button class="btn btn-primary" (click)="nextStep()">Next</button>
-        </div>
-      </ng-template> -->
       <div *ngIf="currentStep === 1">
         <div *ngIf="!isUploaded && !isUploading; else uploadingOrUploaded" 
              class="file-upload-container" 

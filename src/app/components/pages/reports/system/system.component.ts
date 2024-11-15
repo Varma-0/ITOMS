@@ -61,7 +61,6 @@ export class SystemReportComponent implements OnInit {
     this.dataService.getAuditReport(data).subscribe(
         response => {
           if(response.status == 200) {
-            console.log(response);
             this.devices = [];
             response.event.eventData.forEach(element => {
               const auditDate = new Date(element.auditTime).toISOString().split('T')[0];

@@ -39,7 +39,6 @@ export class ViewTenantComponent {
           userId: data.tenantName,
           status: data.status
         }));
-        console.log(this.tenants);
         this.search();
       }
     );

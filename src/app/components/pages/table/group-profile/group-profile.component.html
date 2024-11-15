@@ -33,50 +33,6 @@
     <button class="add-button" style="float: right;" (click)="openModal()">
         <i class="material-icons">add</i> Add Sub Profile
       </button>
-    <!-- <div class="table-container">
-        <table class="user-table">
-      <div *ngIf="formsArray.value.length > 1; else nodata">
-          <thead>
-            <tr>
-              <th style="text-align: left;" >Name</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let device of formsArray.value">
-              <td style="text-align: left;" *ngIf="device.name != 'profile'">{{ device.name }}</td>
-              <td class="actions-cell" *ngIf="device.name != 'profile'">
-                <button class="icon-button" (click)="viewProfile(device.name)" data-tooltip="View Data">
-                    <i class="material-icons">visibility</i>
-                </button>
-                <button class="icon-button deactivate" data-tooltip="Delete sub profile" (click)="deleteGroupByTitle(device.name)">
-                  <i class="material-icons">delete</i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-          </div>
-            <ng-template #nodata>
-              <h4>Curerently there are no sub profiles </h4>
-            </ng-template>
-        </table>
-    </div> -->
-    <!-- <div class="left-body" style="border-right: none;">
-        <ng-container *ngFor="let form of formsArray.value;">
-            <div *ngIf="form.name != 'profile'"  class="textarea-container">
-                <label class="textarea-label">{{form.name}}</label>
-                <ng-container>
-                  <div #textarea>
-                    <div class="row" style="display: flex; align-items: center; justify-content:center ;">
-                        <mat-label style="margin-top: px;display: flex;justify-content:center ;" >VIEW</mat-label>
-                        <mat-icon style="width: auto;" (click)="viewProfile(form.name)" >visibility</mat-icon>
-                    </div>
-                  </div>
-                </ng-container>
-                <span class="close-icon" (click)="deleteGroupByTitle(form.name)">×</span>
-              </div>
-        </ng-container>
-      </div> -->
       <div class="card-container">
         <div class="cards-grid">
             <div *ngIf="formsArray.value.length <= 1">
@@ -193,10 +149,6 @@
             (input)="activeForm.get('type')?.value == 'Number' ? onInput($event) : ''"
             [(ngModel)]="activeForm.controls['default'].value" [ngModelOptions]="{standalone: true}">
         </div>
-        <!-- <div class="form-group" *ngIf="ifDate.includes(activeForm.get('type')?.value)">
-                    <label for="input5">Date Format</label>
-                    <input id="input5" type="text" class="form-control" formControlName="dateformat">
-                </div> -->
         <div class="form-group" *ngIf="maxVal.includes(activeForm.get('type')?.value)">
           <label for="input6">{{activeForm.get('type')?.value == "String" ? "Maximum Length" : "Maximum Value"
             }}</label>
@@ -299,6 +251,3 @@
       </div>
     </div>
   </div>
-  <!-- <div *ngIf="true">
-    <app-json-viewer [jsonData]="sampleData"></app-json-viewer>
-  </div> -->

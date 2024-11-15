@@ -44,7 +44,6 @@ export class TerminalChartComponent implements OnInit {
       chart.render();
     } else {
       // Optionally handle the case where there are no data points
-      console.warn('No data available to render the chart.');
     }
   }
 }

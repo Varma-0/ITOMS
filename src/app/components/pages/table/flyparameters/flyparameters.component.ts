@@ -202,7 +202,6 @@ this.showDynamicKeys = true;
           });
 
           dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
           });
       },
       (error)=>{

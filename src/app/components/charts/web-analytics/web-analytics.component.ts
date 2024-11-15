@@ -13,7 +13,6 @@ export class WebAnalyticsComponent implements OnInit {
 
     ngOnInit() {
         // New application activity data
-        console.log("efwwfw",this.activityData);
         const applicationActivity = this.activityData;
 
         // Convert data to an array format suitable for the chart

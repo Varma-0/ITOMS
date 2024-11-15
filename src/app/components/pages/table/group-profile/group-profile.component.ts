@@ -146,21 +146,6 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
     this.setActiveLeftTab('profile');
   }
   performView(){
-    // const jsonData = {
-    //     '3rd Party Apps': {
-    //       '3rdPartyApps_01': ['com.ar.layup'],
-    //       '3rdPartyApps_02': ['com.triplejumptech.horizon'],
-    //       '3rdPartyApps_03': ['com.dashpay.vas'],
-    //       '3rdPartyApps_04': ['com.ar.valueadds'],
-    //       '3rdPartyApps_05': ['za.co.nedbank.rp'],
-    //       '3rdPartyApps_06': ['com.payflow.ezagapos'],
-    //       '3rdPartyApps_07': ['za.co.bbsoft.mobilepos'],
-    //       '3rdPartyApps_08': ['com.easipolmobile'],
-    //       '3rdPartyApps_09': ['com.example.mycalculator'],
-    //       '3rdPartyApps_10': ['com.istatik.mobile'],
-    //       '3rdPartyApps_11': ['com.waxdpayment.waxdtransport'],
-    //     },
-    //   };
     const map = {};
     const data = this.formsArray.value.map((data) => {
         const array = data.details.map(this.transformObject);
@@ -175,32 +160,8 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('Modal closed with result:', result);
       });
-    // this.activeForm?.updateValueAndValidity();
-    // const index = this.formsArray.controls.indexOf(this.activeForm);
-    // if (index !== -1) {
-    //   this.formsArray.setControl(index, this.activeForm);
-    // }
-    // const data = [];
-    // this.formsArray.value.forEach(element => {
-    //     data.push({
-    //         title:element.label,
-    //         defaultValue: element.default
-    //     })
-    // });
-    // const dialogRef = this.dialog.open(TerminalProfileComponent, {
-    //     data: {
-    //       // title: 'Profile',
-    //       items: data
-    //     },
-    //     width: '60%'
-    //   });
-
-    //   dialogRef.afterClosed().subscribe(result => {
-    //     console.log(result);
-    //   });
-
+    
   }
 
   performSave() {
@@ -225,7 +186,6 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
             }
             this.dataService.addParametrs(payload).subscribe(
                 response => {
-                  console.log("fd",response);
                 }
               )
     }else{
@@ -243,7 +203,6 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
             }
             this.dataService.deleteParametrs(payload).subscribe(
                 response => {
-                  console.log("fd",response);
                 }
               )
         }else{
@@ -259,7 +218,6 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
             })
             const transformedArray = [];
             transformedArray.push(map);
-        console.log("wew",transformedArray);
     const payload = {
         "event": {
             "eventData": {
@@ -283,7 +241,6 @@ this.back.emit("");
 
 
    transformObject(input) {
-    console.log("qfq",input.defaultValue);
     return {
         id: input.id,
         title: input.label,
@@ -356,26 +313,9 @@ this.back.emit("");
             });
         });
     }catch(e){}
-    console.log(this.getDetailsArrayByTitle('profile'))
     if(!this.getDetailsArrayByTitle('profile')){
         this.addGroupWithTitle('profile');
     }
-        // this.profile.forEach(item => {
-        //     if(!item.paramLabel){
-        //         const newForm: FormGroup = this.fb.group({
-        //             label: [this.getLabelValue('label',item)],
-        //             key: [this.getLabelValue('key',item)],
-        //             type: [this.getLabelValue('type',item)],
-        //             default: [this.getLabelValue('default',item)],
-        //             maxvalue: [this.getLabelValue('maxvalue',item)],
-        //             minvalue: [this.getLabelValue('minvalue',item)],
-        //             manadatroy: [''],
-        //             description: [this.getLabelValue('description',item)]
-        //           });
-        //           this.formsArray.push(newForm);
-        //           this.update = false;
-        //     }
-        // })
     this.cdr.detectChanges(); // Ensure changes are detected after populating
   }
 

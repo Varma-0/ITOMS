@@ -84,10 +84,6 @@
             (input)="activeForm.get('type')?.value == 'Number' ? onInput($event) : ''"
             [(ngModel)]="activeForm.controls['default'].value" [ngModelOptions]="{standalone: true}">
         </div>
-        <!-- <div class="form-group" *ngIf="ifDate.includes(activeForm.get('type')?.value)">
-                    <label for="input5">Date Format</label>
-                    <input id="input5" type="text" class="form-control" formControlName="dateformat">
-                </div> -->
         <div class="form-group" *ngIf="maxVal.includes(activeForm.get('type')?.value)">
           <label for="input6">{{activeForm.get('type')?.value == "String" ? "Maximum Length" : "Maximum Value"
             }}</label>

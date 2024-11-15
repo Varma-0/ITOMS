@@ -63,7 +63,6 @@ newCPassword: any;
     this.authService.emailChecklogin(loginRequest).subscribe(
       response => {
         if (response.status == 200) {
-          console.log("qq0")
           this.showPasswordField = true;
           this.uid = response.event.eventData.uid
           localStorage.setItem("uid",this.uid);
@@ -129,14 +128,12 @@ newCPassword: any;
   onSubmitEmailforOtp() {
     this.loadingOtp = true;
     const eventData = new emailData(this.usernameforgot,'EMAIL');
-    console.log(eventData)
     const event = new emailEvent(eventData, 'USER', 'FORGOT_CRED');
     const updatePassRequest = new emailBody(event);
     this.shared.showLoader.next(true);
     this.authService.emailVerificationforPassReset(updatePassRequest).subscribe(
       response => {
         if(response.status == 200) {
-          console.log("EmailforOtp",response);
           this.forgotPassword = false;
           this.errorMessage = '';
           this.enterOtp = true;
@@ -158,14 +155,12 @@ newCPassword: any;
   onSubmitOtp() {
     this.validateOtp = true;
     const eventData = new verifyEmailData(this.usernameforgot,this.getotp,'EMAIL');
-    console.log(eventData)
     const event = new emailEvent(eventData, 'USER', 'VERIFY_OTP');
     const updatePassRequest = new emailBody(event);
     this.shared.showLoader.next(true); // Hide loader on error
     this.authService.otpConfirmationforPassReset(updatePassRequest).subscribe(
       response => {
         if(response.status == 200) {
-          console.log("Otp",response)
            this.uidVerify = response.event.eventData.uid;
            this.enterOtp = false;
            this.enterNewPass = true;
@@ -193,14 +188,12 @@ newCPassword: any;
     }
     this.validatePass = true;
     const eventData = new passData(this.uidVerify,this.newPassword);
-    console.log(eventData)
     const event = new passEvent(eventData, 'USER', 'CRD_RESET');
     const updatePassRequest = new passBody(event);
     this.shared.showLoader.next(true);
     this.authService.resetPass(updatePassRequest).subscribe(
       response => {
         if(response.status == 200) {
-          console.log("Otp",response)
           this.uid = response.event.eventData.uid;
           this.enterNewPass = false;
           this.forgotPassword = false;
@@ -222,7 +215,6 @@ newCPassword: any;
   onSubmitDropdown(): void {
    this.loadingDropdown = true;
    if(this.selectedOption) {
-    console.log('fwffw',this.selectedOption);
     localStorage.setItem('uid',this.uid);
     localStorage.setItem('ina',this.inasecretkey)
     const eventData = new dropData(this.selectedOption["id"],this.uid, this.inasecretkey);

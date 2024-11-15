@@ -61,7 +61,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
       });
 
   }
@@ -82,7 +81,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
             }
             this.dataService.addParametrs(payload).subscribe(
                 response => {
-                  console.log("fd",response);
                 }
               )
     }else{
@@ -100,7 +98,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
             }
             this.dataService.deleteParametrs(payload).subscribe(
                 response => {
-                  console.log("fd",response);
                 }
               )
         }else{
@@ -110,7 +107,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
               this.formsArray.setControl(index, this.activeForm);
             }
         const transformedArray = this.formsArray.value.map(this.transformObject);
-        console.log("wew",transformedArray);
     const payload = {
         "event": {
             "eventData": {
@@ -124,7 +120,6 @@ export class ProfileComponent implements OnInit, AfterViewInit, AfterViewChecked
     }
     this.dataService.updateParametrs(payload).subscribe(
         response => {
-          console.log("fd",response);
         }
       )
     }
@@ -134,7 +129,6 @@ this.back.emit("");
 
 
    transformObject(input) {
-    console.log("qfq",input.defaultValue);
     return {
         id: input.id,
         title: input.label,

@@ -103,7 +103,6 @@ paginatedTerminals: any[] = [];
     }
     this.dataService.getDeployment(payload).subscribe(
       response => {
-        // console.log("qdoog",response);
         this.deployments = response.event.eventData;
         this.filteredDeployments = this.deployments;
         this.updatePagination();
@@ -128,7 +127,6 @@ paginatedTerminals: any[] = [];
   }
 
   toggleColumn(index: number) {
-    console.log(this.columns[index])
   }
 
   getSelectedCount() {
@@ -177,7 +175,6 @@ paginatedTerminals: any[] = [];
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("1111111111",result);
       if (result) {
         if (edit) {
           const payloadForModel = {
@@ -210,7 +207,6 @@ paginatedTerminals: any[] = [];
           
                   this.dataService.addTerminal(payload).subscribe(
                     response => {
-                      console.log("erecw", response);
                       this.getTerminalData(); // Refresh terminal data
                     },
                     error => {
@@ -241,7 +237,6 @@ paginatedTerminals: any[] = [];
           }
           this.dataService.deleteTerminal(deletePayload).subscribe(
             response => {
-              console.log("erecw",response);
               this.getTerminalData();
             },
             error => {
@@ -262,7 +257,6 @@ paginatedTerminals: any[] = [];
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("1111111111",result);
       if (result) {
         const payload = {
           "event": {
@@ -273,7 +267,6 @@ paginatedTerminals: any[] = [];
         }
         this.dataService.createDeployment(payload).subscribe(
           response => {
-            console.log("dvub",response);
             this.loadDeploymentsData();
           }
         )
@@ -309,7 +302,6 @@ paginatedTerminals: any[] = [];
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("Dialog closed", result);
       if (result) {
         // Handle the result
       }
@@ -317,15 +309,6 @@ paginatedTerminals: any[] = [];
   }
   selectedDevices: Device[] = [];
 
-
-
-
-  // toggleSelectAll(event: Event) {
-  //   const isChecked = (event.target as HTMLInputElement).checked;
-  //   this.data.forEach(device => {
-  //     device.selected = isChecked;
-  //   });
-  // }
 
   selectItem(deployment: any) {
     this.selectedItem = deployment;
@@ -343,7 +326,6 @@ paginatedTerminals: any[] = [];
     }
     this.dataService.settingsInDeployment(payload).subscribe(
       response => {
-        console.log("21821",response);
         if (response.event.eventData != 'null') {
           this.settingsInApplication = response.event.eventData
           this.selectTab('settings');
@@ -403,7 +385,6 @@ paginatedTerminals: any[] = [];
   selectTab(tab: string) {
     this.selectedTab = tab;
      if(this.selectedTab == 'process') {
-      console.log("ewufwew process")
       this.getProcessData();
     } else if(this.selectedTab == 'terminal') {
       this.getTerminalData();
@@ -418,7 +399,6 @@ paginatedTerminals: any[] = [];
       width: '60%'
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log("Dialog closed", result);
       if (result) {
         // Handle the result
         let deploymentList = result.map(app => ({
@@ -440,7 +420,6 @@ paginatedTerminals: any[] = [];
         }
         this.dataService.addSetting(payload).subscribe(
           response=> {
-            console.log("res",response);
             this.getSettingsData();
           }
         )

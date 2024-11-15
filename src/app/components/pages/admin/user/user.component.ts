@@ -74,7 +74,6 @@ export class UserComponent {
             response => {
                 if(response.status == 200) {
                     this.users = response.event.eventData.users.map(data => data);
-                    console.log(this.users);
                     this.search();
                 }
                 this.shared.showLoader.next(false);
@@ -157,9 +156,7 @@ export class UserComponent {
             },
             width: '60%'
         });
-        console.log("result", data);
         dialogRef.afterClosed().subscribe(result => {
-            console.log("result", result);
             if (result) {
 
             }

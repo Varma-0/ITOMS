@@ -11,7 +11,6 @@ export class ZipExtractorService {
   constructor(private sharedService: SharedServices) {} // Inject SharedServices
 
   async extractZip(file: File, selectedType: 'apk' | 'nld'): Promise<{ appFile: File | null; imageBase64: string | null; zipBlob: Blob | null }> {
-    console.log("Selected Type:", selectedType);
     let appFile: File | null = null;
     let imageBase64: string | null = null;
     let zipBlob: Blob | null = null; // Declare variable to hold the ZIP Blob

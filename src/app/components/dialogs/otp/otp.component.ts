@@ -68,7 +68,6 @@ export class OtpComponent {
 
   verifyOtp(){
     const eventData = new verifyEmailData(this.email,this.otpFor.otp.value,'EMAIL');
-    console.log(eventData)
     const event = new emailEvent(eventData, 'USER', 'VERIFY_OTP');
     const updatePassRequest = new emailBody(event);
     this.authService.otpConfirmationforPassReset(updatePassRequest).subscribe(
@@ -86,7 +85,6 @@ export class OtpComponent {
 
   setPassword(data){
     const eventData = new passData(this.id,data.password);
-    console.log(eventData)
     const event = new passEvent(eventData, 'USER', 'CRD_RESET');
     const updatePassRequest = new passBody(event);
     this.authService.resetPass(updatePassRequest).subscribe(

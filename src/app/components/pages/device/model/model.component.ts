@@ -67,8 +67,6 @@ export class ModelComponent implements OnInit {
       const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
       this.headers = result.headers; // Store headers
       this.excelData = result.data; // Store data
-      console.log("Column Names (Headers):", this.headers,this.excelData);
-      // this.uploadBulkModels();
     } catch (error) {
       console.error("Error:", error.message);
       this.shared.showError(error.message); // Handle error
@@ -90,7 +88,6 @@ export class ModelComponent implements OnInit {
     this.shared.showLoader.next(true);
     this.dataService.modelBulkUpload(payload).subscribe(
       response=>{
-        console.log("efwaa",response);
         this.shared.showLoader.next(false);
         this.shared.showSuccess("Models Uploaded Successfully")
       },
@@ -192,7 +189,6 @@ export class ModelComponent implements OnInit {
     this.shared.showLoader.next(true);
     this.dataService.updateModel(update).subscribe(
       response => {
-        console.log("Update response", response);
         this.fetchData();
         this.shared.showLoader.next(false);
       },
@@ -211,7 +207,6 @@ export class ModelComponent implements OnInit {
     this.shared.showLoader.next(true);
     this.dataService.createModel(create).subscribe(
       response => {
-        console.log("Create response", response);
         this.fetchData();
         this.shared.showLoader.next(false);
       },
@@ -239,7 +234,6 @@ export class ModelComponent implements OnInit {
     this.shared.showLoader.next(true);
     this.dataService.deleteModel(deleteRequest).subscribe(
       response => {
-        console.log("Delete response", response);
         this.fetchData();
         this.shared.showLoader.next(false);
       },

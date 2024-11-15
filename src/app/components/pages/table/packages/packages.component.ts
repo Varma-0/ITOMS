@@ -52,7 +52,6 @@ export class PackagesComponent implements OnInit {
     }
     this.dataService.getPackageList(payload).subscribe(
       response => {
-        console.log(response)
         this.resources = response.event.eventData.map(data => ({
           id: data.id,
           name: data.name,
@@ -93,7 +92,6 @@ export class PackagesComponent implements OnInit {
 
   addNew() {
     // Implement add new resource functionality
-    console.log('Add new resource');
   }
 
   onViewChange(newView: boolean) {
@@ -108,6 +106,5 @@ export class PackagesComponent implements OnInit {
   createResource(){
     this.create = !this.create;
     this.insideCreate = !this.insideCreate;
-    console.log(this.insideCreate,"feqqw");
   }
 }

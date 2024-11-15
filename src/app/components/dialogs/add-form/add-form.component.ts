@@ -114,7 +114,6 @@ export class AddFormComponent {
       }
       if(this.title == 'Edit User'){
         this.userForm.patchValue(this.userData.form);
-        console.log(this.userData.form)
         if(this.loginData == 'true'){
             const tenantsArray = this.userForm.get('tenants') as FormArray;
             this.userData.form.roles.forEach(result => {

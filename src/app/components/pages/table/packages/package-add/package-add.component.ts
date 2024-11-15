@@ -33,7 +33,6 @@ export class PackageAddComponent {
   appTypes = [
     { name: 'apk', type:'Android', icon: 'assets/img/android-logo.png' },
     { name: 'nld', type: 'Linux', icon: 'assets/img/linux-icon.png' },
-    // { name: 'RTOS', icon: 'assets/img/rtos.png' }
   ];
   selectedType: any = null;
   isUploaded: boolean = false;
@@ -112,7 +111,6 @@ export class PackageAddComponent {
       const { appFile, imageBase64, zipBlob } = await this.zipExtractorService.extractZip(file, this.selectedType.name.toLowerCase());
       if (appFile) {
         this.fileName = appFile.name; // Get the name of the application file
-        console.log(this.fileName);
     
         const parts = this.fileName.split('.');
         // Remove the extension from the file name
@@ -122,13 +120,12 @@ export class PackageAddComponent {
         this.onlyName = nameParts[0]; // Assuming name is the first part
         this.version = nameParts.length > 1 ? nameParts[1] : ''; // Assuming version is the second part
         this.fileSize = file.size; // Get the size of the uploaded file
-        console.log("File Name:", this.fileName, "File Size:", this.fileSize);
-        
+       
         this.isUploaded = true; // Set upload status to true
         if (zipBlob) {
           this.blobFile = new File([zipBlob], appFile.name, { type: 'application/octet-stream' });
           const blobUrl = URL.createObjectURL(zipBlob);
-          console.log("Blob URL:", blobUrl); // This URL can be used to download the blob
+          
         }
       } else {
         throw new Error('App file not found in the ZIP archive.'); // Handle case where appFile is null
@@ -141,14 +138,6 @@ export class PackageAddComponent {
     
   }
 
-  // selectCard(card: any): void {
-  //   card.selected = !card.selected;
-  //   this.selectedCard = {
-  //     id: card.modelId,
-  //     name: card.name,
-  //   };
-  //   console.log('Selected Card:', this.selectedCard);
-  // }
   selectCard(card: any): void {
     card.selected = !card.selected;
 
@@ -164,8 +153,6 @@ export class PackageAddComponent {
       // Remove the card from selectedCards if it's there
       this.selectedCards = this.selectedCards.filter(selectedCard => selectedCard.id !== card.modelId);
     }
-
-    console.log('Selected Cards:', this.selectedCards);
   }
 
   get selectedCount(): number {
@@ -209,7 +196,6 @@ export class PackageAddComponent {
     formData.append('json', JSON.stringify(jsonData));
     this.dataService.uploadPackage(formData).subscribe(
       response => {
-        console.log(response,"uploadPackage");
       },
       error => {
           console.error('Error:', error);
@@ -236,10 +222,6 @@ export class PackageAddComponent {
         this.modelsList = response.event.eventData.map(data => ({
           modelId: data.id,
           name: data.name,
-          // oem: data.oem,
-          // description: data.description,
-          // fulldate: data.createdBy.ts.split('T')[0],
-          // delete: data.delete
         }));
       },
       error => {
@@ -249,7 +231,6 @@ export class PackageAddComponent {
   }
 
   nextStep() {
-    console.log("wegw",this.currentStep);
     this.currentStep === 1 ? this.getModelsApi(): '';
     this.currentStep === 2 ? this.uploadPackage()    : '';
     if (this.currentStep < this.steps.length) {

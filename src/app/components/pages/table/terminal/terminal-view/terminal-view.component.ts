@@ -207,18 +207,6 @@ export class TerminalViewComponent {
   }
 
   fetchData() {
-    // console.log("adcgwguowe",this.latestData);
-    // const payload = {
-    //   "event": {
-    //     "eventData":this.latestData.id,
-    //     "eventType": "REPORT",
-    //     "eventSubType": "SEARCH"
-    //   }
-    // }
-    // this.shared.showLoader.next(true);
-    // this.terminalService.getTerminalReport(payload).subscribe(
-    //   reponse => {
-    //     const data = reponse.event.eventData
         this.cards = [
           { header: 'Storage', percentage: this.latestData['storage'], icon: 'file_present' },
           { header: 'Modules', percentage: this.latestData['modules'], icon: 'view_module' },
@@ -229,7 +217,6 @@ export class TerminalViewComponent {
         this.lastBootTime = this.latestData['lastBootTime']
         this.latitude = this.latestData['latitude']
         this.longitude = this.latestData['longitude']
-        // console.log("fwww",this.latestData['cardMethodStatistics']['Contactless Card'])
         this.seriesm = [];
         this.seriesm.push(this.latestData['cardMethodStatistics']['Contactless Card'])
         this.seriesm.push(this.latestData['cardMethodStatistics']['Swipe Card'])
@@ -237,9 +224,6 @@ export class TerminalViewComponent {
         this.cardMethodStatisticsData = this.latestData['cardMethodStatistics']
         this.applicationActivity = this.latestData['applicationActivity']
         const entries = Object.entries(this.applicationActivity);
-        // this.datesArray = entries.map(([date]) => date); // Extract keys (dates)
-        // this.valuesArray = entries.map(([, value]) => value); // Extract values
-        // console.log("efwwfw",this.applicationActivity);  
         this.shared.showLoader.next(false);
     //   },
     //   error => {    
@@ -258,7 +242,6 @@ export class TerminalViewComponent {
   onCardClick(item: any) {
     this.cards_remote.forEach(card => card.isActive = false);
     item.isActive = true;
-    console.log(item.title + ' clicked!');
   }
 
   toggleView() {
@@ -282,11 +265,9 @@ export class TerminalViewComponent {
    }
 
   abc() {
-    console.log("wfwq")
   }
 
   demo(ele) {
-    console.log("fkw",ele)
   }
 
 
@@ -297,6 +278,5 @@ export class TerminalViewComponent {
   onToggleChange(event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
     this.toggleText = isChecked ? 'On' : 'Off';
-    console.log('Toggle switch state:', this.toggleText);
   }
 }

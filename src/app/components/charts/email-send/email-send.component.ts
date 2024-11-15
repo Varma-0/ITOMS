@@ -115,7 +115,6 @@ export class EmailSendComponent implements OnInit {
     };
   }
 
-  // Generate a set of random colors for the chart
  // Generate a set of random colors for the chart, avoiding light colors
 private generateColors(count: number): string[] {
   const colors: string[] = [];

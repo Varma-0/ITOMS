@@ -78,7 +78,6 @@ export class SoftwareReportComponent implements OnInit {
     this.dataService.getSoftwareReport(payload).subscribe(
       response => {
         if(response.status == 200) {
-          console.log(response);
           this.devices = response.event.eventData.responseData[0];
           this.applyFilter();
         }        

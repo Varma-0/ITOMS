@@ -69,7 +69,6 @@ export class SearchReportComponent implements OnInit {
         response => {
           if(response.status == 200) {
             this.devices = response.event.eventData.responseData[0];
-            console.log(this.devices);
             this.applyFilter();
           }
           this.shared.showLoader.next(false);
