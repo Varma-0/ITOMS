@@ -74,7 +74,6 @@ export class HeaderComponent implements OnInit {
                 this.shared.showLoader.next(false); // Hide loader on error
             },
             error => {
-                console.error('Tenant change failed', error);
                 this.shared.showLoader.next(false); // Hide loader on error
             }
         );

@@ -72,7 +72,6 @@ export class HierarchySelectionComponent {
                     selectedItem: null
                 });
                 this.loadMerchants();
-                console.error('Error:', error);
             }
         )
     }
@@ -88,7 +87,6 @@ export class HierarchySelectionComponent {
                 }));
             },
             error => {
-                console.error('Error:', error);
             }
         )
     }
@@ -133,7 +131,6 @@ export class HierarchySelectionComponent {
                 }));
             },
             error => {
-                console.error('Error:', error);
             }
         )
     }
@@ -159,7 +156,6 @@ export class HierarchySelectionComponent {
                 }) : null);
             },
             error => {
-                console.error('Error:', error);
             }
         )
     }

@@ -77,7 +77,6 @@ newCPassword: any;
       },
       error => {
         this.errorMessage = 'Identity Verification Failed';
-        // console.error('Validation failed', error);
         this.loadingEmail = false;
         this.shared.showLoader.next(false);
       }
@@ -112,7 +111,6 @@ newCPassword: any;
       },
       error => {
         this.errorMessage = this.errorApiMessage ? this.errorApiMessage : 'Password validation failed';
-        console.error('Password validation failed', this.errorApiMessage);
         this.loadingPassword = false;
         this.shared.showLoader.next(false);
       }
@@ -145,7 +143,6 @@ newCPassword: any;
       },
       error => {
         this.errorMessage = this.errorApiMessage ? this.errorApiMessage : 'Identity Verification Failed';
-        // console.error('Password validation failed', error);
         this.loadingOtp = false;
         this.shared.showLoader.next(false);
       }
@@ -172,7 +169,6 @@ newCPassword: any;
       },
       error => {
         this.errorMessage = this.errorApiMessage;
-        // console.error('Password validation failed', error);
         this.validateOtp = false;
         this.shared.showLoader.next(false);
       }
@@ -205,7 +201,6 @@ newCPassword: any;
       },
       error => {
         this.errorMessage = this.errorApiMessage;
-        // console.error('Password validation failed', error);
         this.validateOtp = false;
         this.shared.showLoader.next(false);
       }
@@ -242,7 +237,6 @@ newCPassword: any;
       },
       error => {
         this.errorMessage = 'Failed to process selected option';
-        // console.error('Dropdown option submission failed', error);
         this.loadingDropdown = false;
         this.shared.showLoader.next(false);
       }

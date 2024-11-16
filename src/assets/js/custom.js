@@ -3,7 +3,7 @@
 
     // Header Sticky
     $(window).on('scroll',function() {
-        if ($(this).scrollTop() > 30){  
+        if ($(this).scrollTop() > 30){
             $('.top-navbar').addClass("is-sticky");
         }
         else{
@@ -26,7 +26,7 @@
     $(function () {
         $('#sidemenu-nav').metisMenu();
     });
-    
+
     // Summernote JS
     $('.summernote').summernote({
         height: 230,                 // Set editor height
@@ -66,7 +66,7 @@
                     }
                 });
             }
-            
+
         },{accY: 0});
     }
 
@@ -80,7 +80,7 @@
             // Hide The Other Panels
             $('.accordion-content').not($(this).next()).removeClass('fast');
             // Removes Active Class From Other Titles
-            $('.accordion-title').not($(this)).removeClass('active');		
+            $('.accordion-title').not($(this)).removeClass('active');
         });
     });
 
@@ -118,25 +118,18 @@
         // inline: true,
         url: 'data-original',
         ready: function (e) {
-            console.log(e.type);
         },
         show: function (e) {
-            console.log(e.type);
         },
         shown: function (e) {
-            console.log(e.type);
         },
         hide: function (e) {
-            console.log(e.type);
         },
         hidden: function (e) {
-            console.log(e.type);
         },
         view: function (e) {
-            console.log(e.type);
         },
         viewed: function (e) {
-            console.log(e.type);
         }
     };
     function toggleButtons(mode) {
@@ -150,25 +143,18 @@
     }
     $images.on({
         ready:  function (e) {
-            console.log(e.type);
         },
         show:  function (e) {
-            console.log(e.type);
         },
         shown:  function (e) {
-            console.log(e.type);
         },
         hide:  function (e) {
-            console.log(e.type);
         },
         hidden: function (e) {
-            console.log(e.type);
         },
         view:  function (e) {
-            console.log(e.type);
         },
         viewed: function (e) {
-            console.log(e.type);
         }
     }).viewer(options);
     toggleButtons(options.inline ? 'inline' : 'modal');
@@ -202,12 +188,12 @@
 
     // Feather Icon Js
     feather.replace();
-    
+
     // Tabs
     (function ($) {
         $('.tab ul.tabs').addClass('active').find('> li:eq(0)').addClass('current');
         $('.tab ul.tabs li a').on('click', function (g) {
-            var tab = $(this).closest('.tab'), 
+            var tab = $(this).closest('.tab'),
             index = $(this).closest('li').index();
             tab.find('ul.tabs > li').removeClass('current');
             $(this).closest('li').addClass('current');
@@ -239,7 +225,7 @@
     $('.chat-list-header .header-right .favorite').on('click', function() {
         $(this).toggleClass('active');
     });
-    
+
     // World Map JS
     $("#world-map-markers").vectorMap({
         map: "world_mill_en",
@@ -354,5 +340,5 @@
             }
         ]
     });
-    
+
 }(jQuery));

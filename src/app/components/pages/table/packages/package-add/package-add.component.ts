@@ -36,7 +36,7 @@ export class PackageAddComponent {
   ];
   selectedType: any = null;
   isUploaded: boolean = false;
-  fileName: string = ''; 
+  fileName: string = '';
   fileSize: number = 0;
   modelsList: any[] = [];
   isUploading = false;
@@ -111,7 +111,7 @@ export class PackageAddComponent {
       const { appFile, imageBase64, zipBlob } = await this.zipExtractorService.extractZip(file, this.selectedType.name.toLowerCase());
       if (appFile) {
         this.fileName = appFile.name; // Get the name of the application file
-    
+
         const parts = this.fileName.split('.');
         // Remove the extension from the file name
         this.fileName = parts.length > 1 ? parts.slice(0, -1).join('.') : '';
@@ -120,22 +120,21 @@ export class PackageAddComponent {
         this.onlyName = nameParts[0]; // Assuming name is the first part
         this.version = nameParts.length > 1 ? nameParts[1] : ''; // Assuming version is the second part
         this.fileSize = file.size; // Get the size of the uploaded file
-       
+
         this.isUploaded = true; // Set upload status to true
         if (zipBlob) {
           this.blobFile = new File([zipBlob], appFile.name, { type: 'application/octet-stream' });
           const blobUrl = URL.createObjectURL(zipBlob);
-          
+
         }
       } else {
         throw new Error('App file not found in the ZIP archive.'); // Handle case where appFile is null
       }
-    
+
     } catch (error) {
-      console.error('Error extracting ZIP:', error);
       alert(error.message); // Alert if there’s an error
     }
-    
+
   }
 
   selectCard(card: any): void {
@@ -161,7 +160,6 @@ export class PackageAddComponent {
 
   async uploadPackage() {
     if (!this.blobFile) {
-      console.error('No file uploaded');
       return;
     }
 
@@ -198,7 +196,6 @@ export class PackageAddComponent {
       response => {
       },
       error => {
-          console.error('Error:', error);
       }
     )
   }
@@ -225,7 +222,6 @@ export class PackageAddComponent {
         }));
       },
       error => {
-        console.error('Error:', error);
       }
     );
   }

@@ -84,7 +84,6 @@ export class ParametersReportComponent implements OnInit {
       },
       error => {
         this.shared.showLoader.next(false);
-        console.error('Error:', error);
         this.shared.showError(error.message)
       }
   )
@@ -179,7 +178,6 @@ export class ParametersReportComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // Implement delete functionality here
-        console.log('User deleted');
       }
     });
   }

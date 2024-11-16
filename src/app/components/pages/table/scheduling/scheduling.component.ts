@@ -139,13 +139,13 @@ paginatedTerminals: any[] = [];
     this.paginatedTerminals = this.filteredTerminals.slice(start, end);
     this.totalPages = Math.ceil(this.filteredTerminals.length / this.itemsPerPage);
   }
-  
+
   // Change items per page
   updateItemsPerPage() {
     this.currentPage = 1; // Reset to first page
     this.updatePagination();
   }
-  
+
   // Go to previous page
   previousPage() {
     if (this.currentPage > 1) {
@@ -153,7 +153,7 @@ paginatedTerminals: any[] = [];
       this.updatePagination();
     }
   }
-  
+
   // Go to next page
   nextPage() {
     if (this.currentPage < this.totalPages) {
@@ -161,7 +161,7 @@ paginatedTerminals: any[] = [];
       this.updatePagination();
     }
   }
-  
+
 
   openCreateTerminalDialog(edit?: any,data?: any): void {
     const dialogRef = this.dialog.open(DevicesFormComponent, {
@@ -184,11 +184,11 @@ paginatedTerminals: any[] = [];
               "eventSubType": "SEARCH"
             }
           };
-        
+
           this.dataService.getDevicebysn(payloadForModel).subscribe(
             response => {
               if(response.event.eventData.status != "BLOCK") {
-                this.modelNameBasedOnSN = response.event.eventData.modelName;        
+                this.modelNameBasedOnSN = response.event.eventData.modelName;
                 setTimeout(() => {
                   const payload = {
                     "event": {
@@ -204,13 +204,12 @@ paginatedTerminals: any[] = [];
                       "eventSubType": "CREATE"
                     }
                   };
-          
+
                   this.dataService.addTerminal(payload).subscribe(
                     response => {
                       this.getTerminalData(); // Refresh terminal data
                     },
                     error => {
-                      console.error(error);
                     }
                   );
                 }, 5000); // Wait for 1 second before executing the next API call
@@ -219,10 +218,9 @@ paginatedTerminals: any[] = [];
               }
             },
             error => {
-              console.error(error);
             }
           );
-        }        
+        }
         else if (!edit) {
           const deletePayload = {
             "event": {
@@ -240,7 +238,6 @@ paginatedTerminals: any[] = [];
               this.getTerminalData();
             },
             error => {
-              console.error(error);
             }
           )
         }

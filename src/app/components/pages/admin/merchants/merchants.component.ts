@@ -79,7 +79,6 @@ export class MerchantsComponent {
       this.excelData = result.data; // Store data
       this.uploadBulkMerchants();
     } catch (error) {
-      console.error("Error:", error.message);
       this.shared.showError(error.message); // Handle error
     } finally {
       // Reset the file input value
@@ -130,7 +129,6 @@ export class MerchantsComponent {
       error => {
         this.shared.showLoader.next(false);
         this.shared.showError(error.message)
-        console.error('Error:', error);
       }
     )
   }
@@ -206,7 +204,6 @@ export class MerchantsComponent {
           error => {
             this.shared.showLoader.next(false);
             this.shared.showError(error.message)
-            console.error('Error:', error);
           }
         )
       }
@@ -232,7 +229,6 @@ export class MerchantsComponent {
           error => {
             this.shared.showLoader.next(false);
             this.shared.showError(error.message)
-            console.error('Error:', error);
           }
         )
     }

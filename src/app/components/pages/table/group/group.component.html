@@ -95,7 +95,6 @@
               <thead>
                 <tr>
                   <th>
-                    <!-- <input type="checkbox" (change)="masterToggle()" [checked]="isAllSelected()"> -->
                     <div class="checkbox">
                         <input class="inp-cbx" id="cbx" type="checkbox" style="display: none;" (change)="masterToggle()" [checked]="isAllSelected()"/>
                         <label class="cbx" for="cbx">
@@ -120,7 +119,7 @@
                 </tr>
                 <tr *ngFor="let grp of groups">
                   <td>
-                    <input type="checkbox" 
+                    <input type="checkbox"
                            (change)="toggleSelection(grp)"
                            [checked]="isSelected(grp)">
                   </td>
@@ -133,7 +132,7 @@
               </tbody>
             </table>
           </div>
-        
+
           <div style="height: 50px;"></div>
       </div>
     </div>

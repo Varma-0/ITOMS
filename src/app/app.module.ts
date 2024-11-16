@@ -73,14 +73,13 @@ import { DevicesFormComponent } from './components/dialogs/device-form/device-fo
 import { HierarchySelectionComponent } from './components/dialogs/hierarchy-selection/hierarchy-selection.component';
 import { HierarchyFormComponent } from './components/dialogs/hierarchy-form/hierarchy-form.component';
 import { ReportsDialogComponent } from './components/dialogs/reports/reports.component';
-import { HeartReportComponent } from './components/pages/reports/heart/heart.component';
-import { SystemReportComponent } from './components/pages/reports/system/system.component';
+import { HeartReportComponent } from './components/pages/reports/heartBeat/heartBeat.component';
+import { AuditReportComponent } from './components/pages/reports/audit/audit.component';
 import { SwapReportComponent } from './components/pages/reports/swap/swap.component';
-import { HirerichiesReportComponent } from './components/pages/reports/hirerichies/hirerichies.component';
 import { ParametersReportComponent } from './components/pages/reports/parameters/parameters.component';
 import { SearchReportComponent } from './components/pages/reports/search/search.component';
 import { SoftwareReportComponent } from './components/pages/reports/software/software.component';
-import { StatusReportComponent } from './components/pages/reports/status/status.component';
+import { ConnectionReportComponent } from './components/pages/reports/connection/connection.component';
 import { BasicLineChart1Component } from './components/charts/basic-line-chart1/basic-line-chart1.component';
 import { BasicLineChart2Component } from './components/charts/basic-line-chart2/basic-line-chart2.component';
 import { GoogleMapComponent } from './components/pages/table/terminal/google-map/google-map.component';
@@ -124,13 +123,12 @@ import { LoaderComponent } from './components/layouts/loader/loader.component';
     AlertComponent,
     ReportsDialogComponent,
     HeartReportComponent,
-    SystemReportComponent,
+    AuditReportComponent,
     SwapReportComponent,
-    HirerichiesReportComponent,
     ParametersReportComponent,
     SearchReportComponent,
     SoftwareReportComponent,
-    StatusReportComponent,
+    ConnectionReportComponent,
     WebAnalyticsComponent,
     EmailSendComponent,
     TrafficSourceComponent,

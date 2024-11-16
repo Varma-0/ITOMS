@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ReportsDialogComponent } from 'src/app/components/dialogs/reports/reports.component';
 import { SharedServices } from 'src/app/services/shared.service';
 import { TerminalService } from 'src/app/services/terminal/devicelist';
 import * as XLSX from 'xlsx';
@@ -10,8 +8,8 @@ interface Device {
     deviceId: string;
     merchantName: string;
     merchantHierarchy: string;
-    deviceModel: string;
-    view?: boolean;
+    deviceCurrentStatus: string;
+    lastHeartBeat: string;
   }
 
 interface Column {
@@ -21,11 +19,11 @@ interface Column {
 }
 
 @Component({
-  selector: 'app-heart',
-  templateUrl: './heart.component.html',
-  styleUrls: ['./heart.component.scss']
+  selector: 'app-connection',
+  templateUrl: './connection.component.html',
+  styleUrls: ['./connection.component.scss']
 })
-export class HeartReportComponent implements OnInit {
+export class ConnectionReportComponent implements OnInit {
   devices: Device[] = [];
   paginatedDevicess: any[] = [];
   filteredDevices: Device[] = [];
@@ -35,8 +33,8 @@ export class HeartReportComponent implements OnInit {
     { key: 'deviceId', label: 'Device ID', visible: true },
     { key: 'merchantName', label: 'Merchant Name', visible: true },
     { key: 'merchantHierarchy', label: 'Merchant Hierarchy', visible: true },
-    { key: 'deviceModel', label: 'Model', visible: true },
-    { key: 'view', label: 'View', visible: true },
+    { key: 'deviceCurrentStatus', label: 'Connected Status', visible: true },
+    { key: 'lastHeartBeat', label: 'Last Connected', visible: true },
   ];
 
   currentPage = 1;
@@ -44,7 +42,7 @@ export class HeartReportComponent implements OnInit {
   totalPages = 1;
   itemsPerPageOptions = [5, 10, 15];
 
-  constructor(public dialog: MatDialog,private dataService:TerminalService, private shared: SharedServices) { }
+  constructor(private dataService: TerminalService, private shared: SharedServices) { }
 
   ngOnInit(): void {
     this.getData();
@@ -58,7 +56,7 @@ export class HeartReportComponent implements OnInit {
         }
       }
     this.shared.showLoader.next(true);
-    this.dataService.getHeartReport(data).subscribe(
+    this.dataService.getStatusReport(data).subscribe(
         response => {
           if(response.status == 200) {
             this.devices = response.event.eventData.responseData[0];
@@ -67,9 +65,8 @@ export class HeartReportComponent implements OnInit {
           this.shared.showLoader.next(false);
         },
         error => {
-            this.shared.showLoader.next(false);
-            console.error('Error:', error);
-            this.shared.showError(error.message)
+          this.shared.showLoader.next(false);
+          this.shared.showError(error.message)
         }
     )
   }
@@ -97,7 +94,7 @@ export class HeartReportComponent implements OnInit {
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(visibleData);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Devices');
-    XLSX.writeFile(wb, 'DeviceHeartReport.xlsx');
+    XLSX.writeFile(wb, 'DeviceConnReport.xlsx');
   }
 
   toggleColumn(column: Column): void {
@@ -125,6 +122,12 @@ export class HeartReportComponent implements OnInit {
     return this.filteredDevices.slice(this.startIndex, this.endIndex);
   }
 
+  // goToPage(page: number): void {
+  //   if (page >= 1 && page <= this.totalPages) {
+  //     this.currentPage = page;
+  //   }
+  // }
+
   updatePagination() {
     this.totalPages = Math.ceil(this.filteredDevices.length / this.itemsPerPage);
     this.currentPage = 1;
@@ -149,34 +152,5 @@ export class HeartReportComponent implements OnInit {
       this.currentPage++;
       this.paginate();
     }
-  }
-
-  openReportDialog(data): void {
-        const payload = {
-            "event": {
-              "eventData":data,
-              "eventType": "REPORT",
-              "eventSubType": "SEARCH"
-            }
-          }
-        this.shared.showLoader.next(true);
-        this.dataService.getHeartViewReport(payload).subscribe(
-            response => {
-                const dialogRef = this.dialog.open(ReportsDialogComponent,{
-                    data: response.event.eventData.responseData
-                });
-
-                dialogRef.afterClosed().subscribe(result => {
-                  if (result) {
-                    // Implement delete functionality here
-                    console.log('User deleted');
-                  }
-                });
-              this.shared.showLoader.next(false);
-            },
-            error => {
-                console.error('Error:', error);
-            }
-        )
   }
 }

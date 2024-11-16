@@ -81,7 +81,6 @@ export class UserComponent {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message)
-                console.error('Error:', error);
             }
         );
     }
@@ -102,7 +101,6 @@ export class UserComponent {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message)
-                console.error('Error:', error);
             }
         )
     }
@@ -123,7 +121,6 @@ export class UserComponent {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message)
-                console.error('Error:', error);
             }
         )
     }
@@ -144,7 +141,6 @@ export class UserComponent {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message)
-                console.error('Error:', error);
             }
         )
     }
@@ -333,7 +329,6 @@ export class UserComponent {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message)
-                console.error('Error:', error);
             }
         );
     }
@@ -354,7 +349,6 @@ export class UserComponent {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message)
-                console.error('Error:', error);
             }
         );
     }
@@ -427,7 +421,6 @@ export class UserComponent {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message)
-                console.error('Error:', error);
             }
         }
     }
@@ -438,7 +431,6 @@ export class UserComponent {
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 // Implement delete functionality here
-                console.log('User deleted');
             }
         });
     }

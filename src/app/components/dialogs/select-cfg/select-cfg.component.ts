@@ -26,7 +26,6 @@ export class SelectCfgComponent {
     if (file && file.type === 'application/zip') {
       // Handle file upload logic here
     } else {
-      console.error('Please select a valid .zip file.');
     }
   }
 }

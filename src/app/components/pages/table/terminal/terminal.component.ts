@@ -74,7 +74,7 @@ columns = [
       this.uploadFile(file);
     }
   }
-  
+
   async uploadFile(file: File): Promise<void> {
     try {
       const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
@@ -82,7 +82,6 @@ columns = [
       this.excelData = result.data; // Store data
       this.uploadBulkTerminals();
     } catch (error) {
-      console.error("Error:", error.message);
       this.shared.showError(error.message); // Handle error
     } finally {
       // Reset the file input value
@@ -135,7 +134,6 @@ row(individualData){
         this.updatePagination();
       },
       error => {
-        console.error('Error:', error);
       }
     );
   }
@@ -158,9 +156,8 @@ row(individualData){
         this.views = !this.views;
         this.insideView = !this.insideView;
       },
-      error => {    
+      error => {
         this.shared.showLoader.next(false);
-        console.error(error)
         this.shared.showError(error.message)
       }
     )
@@ -287,7 +284,6 @@ row(individualData){
         },
         error => {
           this.shared.showError(error.message)
-          console.error('Error:', error);
         }
       )
       // Call your block service or perform necessary action here with selectedDevices
@@ -314,7 +310,6 @@ row(individualData){
         },
         error => {
           this.shared.showError(error.message)
-          console.error('Error:', error);
         }
       )
       // Call your block service or perform necessary action here with selectedDevices
@@ -322,7 +317,7 @@ row(individualData){
   }
 
   addToGroup() {
-    
+
   }
 
   updateItemsPerPage(): void {

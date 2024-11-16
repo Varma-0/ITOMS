@@ -14,8 +14,8 @@ export class ProfilesComponent implements OnInit {
   uid: any;
 
   constructor(
-    private fb: FormBuilder, 
-    private dataService: TerminalService, 
+    private fb: FormBuilder,
+    private dataService: TerminalService,
     private shared: SharedServices
   ) {}
 
@@ -50,7 +50,7 @@ export class ProfilesComponent implements OnInit {
       response => {
         if (response.status == 200) {
           const userDetails = response.event.eventData.userDetails;
-          
+
           // Update form with user details, using 'N/A' for null values
           this.profileForm.patchValue({
             firstName: userDetails.firstName || 'N/A',
@@ -70,7 +70,6 @@ export class ProfilesComponent implements OnInit {
       },
       error => {
         this.shared.showError(error.message);
-        console.error('Error:', error);
         this.shared.showLoader.next(false);
       }
     );
@@ -81,7 +80,7 @@ export class ProfilesComponent implements OnInit {
   updateInitials() {
     const firstName = this.profileForm.get('firstName').value;
     const lastName = this.profileForm.get('lastName').value;
-    
+
     if (firstName === 'N/A' || lastName === 'N/A') {
       this.initials = 'N/A';
     } else {

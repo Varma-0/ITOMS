@@ -20,11 +20,11 @@ interface Column {
 }
 
 @Component({
-  selector: 'app-system',
-  templateUrl: './system.component.html',
-  styleUrls: ['./system.component.scss']
+  selector: 'app-audit',
+  templateUrl: './audit.component.html',
+  styleUrls: ['./audit.component.scss']
 })
-export class SystemReportComponent implements OnInit {
+export class AuditReportComponent implements OnInit {
   devices: Device[] = []
   paginatedDevicess: any[] = [];
   filteredDevices: Device[] = [];
@@ -79,7 +79,6 @@ export class SystemReportComponent implements OnInit {
         },
         error => {
           this.shared.showLoader.next(false);
-          console.error('Error:', error);
           this.shared.showError(error.message)
         }
     )

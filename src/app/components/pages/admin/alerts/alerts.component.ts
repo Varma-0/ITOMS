@@ -64,7 +64,6 @@ export class AlertComponent {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message)
-                console.error('Error:', error);
             }
         )
     }
@@ -161,7 +160,6 @@ export class AlertComponent {
                         error => {
                             this.shared.showLoader.next(false);
                             this.shared.showError(error.message)
-                            console.error('Error:', error);
                         }
                     )
                 } else {
@@ -198,7 +196,6 @@ export class AlertComponent {
                         error => {
                             this.shared.showLoader.next(false);
                             this.shared.showError(error.message)
-                            console.error('Error:', error);
                         }
                     )
                 }
@@ -231,7 +228,6 @@ export class AlertComponent {
                     error => {
                         this.shared.showLoader.next(false);
                         this.shared.showError(error.message)
-                        console.error('Error:', error);
                     }
                   )
             }

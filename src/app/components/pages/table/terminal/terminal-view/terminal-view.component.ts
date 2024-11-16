@@ -225,13 +225,6 @@ export class TerminalViewComponent {
         this.applicationActivity = this.latestData['applicationActivity']
         const entries = Object.entries(this.applicationActivity);
         this.shared.showLoader.next(false);
-    //   },
-    //   error => {    
-    //     this.shared.showLoader.next(false);
-    //     console.error(error)
-    //     this.shared.showError(error.message)
-    //   }
-    // )
   }
 
   ngAfterViewInit() {

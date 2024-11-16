@@ -66,7 +66,6 @@ export class RoleComponent {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message);
-                console.error('Error:', error);
             }
         );
     }
@@ -87,7 +86,6 @@ export class RoleComponent {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message)
-                console.error('Error:', error);
             }
         )
     }
@@ -143,7 +141,6 @@ export class RoleComponent {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message)
-                console.error('Error:', error);
             }
         )
     }
@@ -188,7 +185,6 @@ export class RoleComponent {
                         error => {
                             this.shared.showLoader.next(false);
                             this.shared.showError(error.message)
-                            console.error('Error:', error);
                         }
                     )
                 }
@@ -208,7 +204,6 @@ export class RoleComponent {
                         error => {
                             this.shared.showLoader.next(false);
                             this.shared.showError(error.message)
-                            console.error('Error:', error);
                         }
                     )
                 }
@@ -240,7 +235,6 @@ export class RoleComponent {
                 error => {
                     this.shared.showLoader.next(false);
                     this.shared.showError(error.message)
-                    console.error('Error:', error);
                 }
             }
         });

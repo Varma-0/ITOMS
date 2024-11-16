@@ -161,7 +161,7 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
 
       dialogRef.afterClosed().subscribe(result => {
       });
-    
+
   }
 
   performSave() {
@@ -231,7 +231,6 @@ export class GroupProfileComponent implements OnInit, AfterViewInit, AfterViewCh
     }
     this.dataService.updateParametrs(payload).subscribe(
         response => {
-          console.log("fd",response);
         }
       )
     }

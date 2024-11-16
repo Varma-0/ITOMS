@@ -115,7 +115,6 @@ export class HierarchyLevelComponent implements OnInit {
           this.excelData = result.data; // Store data
           this.uploadBulkHierarchies();
         } catch (error) {
-          console.error("Error:", error.message);
           this.shared.showError(error.message); // Handle error
         } finally {
           // Reset the file input value
@@ -179,7 +178,6 @@ export class HierarchyLevelComponent implements OnInit {
                     selectedItem: null
                 });
                 this.loadMerchants();
-                console.error('Error:', error);
                 // this.shared.showError(error.message);
             }
         )
@@ -200,7 +198,6 @@ export class HierarchyLevelComponent implements OnInit {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message);
-                console.error('Error:', error);
             }
         )
     }
@@ -357,7 +354,6 @@ export class HierarchyLevelComponent implements OnInit {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message);
-                console.error('Error:', error);
             }
         )
     }
@@ -386,13 +382,11 @@ export class HierarchyLevelComponent implements OnInit {
 
     addNewItem(levelIndex: number) {
         if (levelIndex >= this.hierarchyLevels.length - 1) {
-            console.log("Cannot add child to the lowest level");
             return;
         }
 
         const parentItem = this.hierarchyLevels[levelIndex].selectedItem;
         if (!parentItem) {
-            console.log("Please select a parent item first");
             return;
         }
 
@@ -433,7 +427,6 @@ export class HierarchyLevelComponent implements OnInit {
                     error => {
                         this.shared.showLoader.next(false);
                         // this.shared.showError(error.message)
-                        console.error('Error:', error);
                     }
                 )
             }
@@ -467,7 +460,6 @@ export class HierarchyLevelComponent implements OnInit {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message);
-                console.error('Error:', error);
             }
         )
     }
@@ -492,7 +484,6 @@ export class HierarchyLevelComponent implements OnInit {
                     error => {
                         this.shared.showLoader.next(false);
                         this.shared.showError(error.message);
-                        console.error('Error:', error);
                     }
                 )
             }
@@ -516,7 +507,6 @@ export class HierarchyLevelComponent implements OnInit {
             error => {
                 this.shared.showLoader.next(false);
                 this.shared.showError(error.message);
-                console.error('Error:', error);
             }
         )
     }

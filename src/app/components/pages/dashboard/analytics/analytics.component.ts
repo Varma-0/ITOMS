@@ -57,7 +57,6 @@ export class AnalyticsComponent implements OnInit {
         this.shared.showLoader.next(false);
       },
       error => {
-        console.error('Error:', error);
         this.shared.showLoader.next(false);
         this.shared.showError(error.message)
       }
@@ -75,7 +74,6 @@ export class AnalyticsComponent implements OnInit {
         this.shared.showLoader.next(false);
       },
       error => {
-        console.error('Error:', error);
         this.shared.showLoader.next(false);
         this.shared.showError(error.message)
       }
@@ -92,7 +90,6 @@ export class AnalyticsComponent implements OnInit {
         this.shared.showLoader.next(false);
       },
       error => {
-        console.error('Error:', error);
         this.shared.showLoader.next(false);
         this.shared.showError(error.message)
       }
@@ -145,7 +142,6 @@ export class AnalyticsComponent implements OnInit {
         this.loadMerchantCount(chartData); // Load the next count
       },
       error => {
-        console.error('Error fetching terminal count:', error);
         this.updateStatsCard('Terminals', 0, 'bx bx-terminal', '#007bff');
         this.loadMerchantCount(chartData); // Load the next count
         this.shared.showLoader.next(false); // Hide loader on error
@@ -161,7 +157,6 @@ export class AnalyticsComponent implements OnInit {
         this.loadApkCountInfo(chartData); // Load the next count
       },
       error => {
-        console.error('Error fetching merchant count:', error);
         this.updateStatsCard('Merchants', 0, 'bx bx-store', '#13bb37');
         this.loadApkCountInfo(chartData); // Load the next count
         this.shared.showLoader.next(false); // Hide loader on error
@@ -177,7 +172,6 @@ export class AnalyticsComponent implements OnInit {
         this.shared.showLoader.next(false); // Hide loader after all requests
       },
       error => {
-        console.error('Error fetching APK count:', error);
         this.updateStatsCard('Applications', 0, 'bx bx-mobile-alt', '#ff4b00');
         this.shared.showLoader.next(false); // Hide loader on error
         this.shared.showError(error.message)

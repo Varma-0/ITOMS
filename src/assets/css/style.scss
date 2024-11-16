@@ -1217,59 +1217,11 @@ Partner Area CSS
     img {
         display: none;
     }
-    &.bg-1 {
-        background: {
-            image: url(../../assets/img/banner-img1.jpg);
-        };
-    }
-    &.bg-2 {
-        background: {
-            image: url(../../assets/img/banner-img2.jpg);
-        };
-    }
-    &.bg-3 {
-        background: {
-            image: url(../../assets/img/banner-img3.jpg);
-        };
-    }
     &.mbanner-bg-one {
-        background: {
-            image: url(../../assets/img/banner-img2.jpg);
-        };
         .animate-banner-image {
             padding: 15px;
             margin-top: 65px;
         }
-    }
-    &.banner-slider-bg1 {
-        background: {
-            image: url(../../assets/img/banner-slider/banner-img1.jpg) !important;
-        };
-    }
-    &.banner-slider-bg2 {
-        background: {
-            image: url(../../assets/img/banner-slider/banner-img2.jpg) !important;
-        };
-    }
-    &.banner-slider-bg3 {
-        background: {
-            image: url(../../assets/img/banner-slider/banner-img3.jpg) !important;
-        };
-    }
-    &.slider-bg1 {
-        background: {
-            image: url(../../assets/img/banner-slider/banner-img1.jpg);
-        };
-    }
-    &.slider-bg2 {
-        background: {
-            image: url(../../assets/img/banner-slider/banner-img2.jpg);
-        };
-    }
-    &.slider-bg3 {
-        background: {
-            image: url(../../assets/img/banner-slider/banner-img3.jpg);
-        };
     }
 }
 .banner-img {
@@ -1285,21 +1237,6 @@ Partner Area CSS
     };
     img {
         display: none;
-    }
-    &.bg-1 {
-        background: {
-            image: url(../../assets/img/banner-img1.jpg);
-        };
-    }
-    &.bg-2 {
-        background: {
-            image: url(../../assets/img/banner-img2.jpg);
-        };
-    }
-    &.bg-3 {
-        background: {
-            image: url(../../assets/img/banner-img3.jpg);
-        };
     }
 }
 .banner-content-slides {
@@ -1684,9 +1621,6 @@ Partner Area CSS
 }
 .banner-img {
     &.banner-video {
-        background: {
-            image: url(../../assets/img/banner-video-bg.jpg) !important;
-        };
         height: 100vh;
         position: relative;
         .video-box {
@@ -4843,15 +4777,6 @@ Sidebar Widget Area CSS
                         repeat: no-repeat;
                         position: center center !important;
                     }
-                    &.bg1 {
-                        background-image: url(../../assets/img/blog-image/img7.jpg);
-                    }
-                    &.bg2 {
-                        background-image: url(../../assets/img/blog-image/img8.jpg);
-                    }
-                    &.bg3 {
-                        background-image: url(../../assets/img/blog-image/img9.jpg);
-                    }
                 }
             }
             .info {
@@ -5269,7 +5194,6 @@ Signup Area CSS
     height: 100%;
     width: 100%;
     background: {
-        image: url(../../assets/img/signup-bg.jpg);
         position: center center;
         size: cover;
         repeat: no-repeat;
@@ -13381,7 +13305,6 @@ Login CSS
 
     &.bg-image {
         background: {
-            image: url(../../assets/img/login-bg.jpg);
             position: center center;
             size: cover;
             repeat: no-repeat;
@@ -13597,7 +13520,6 @@ Register CSS
 
     &.bg-image {
         background: {
-            image: url(../../assets/img/register-bg.jpg);
             position: center center;
             size: cover;
             repeat: no-repeat;
@@ -13807,7 +13729,6 @@ Reset Password CSS
 
     &.bg-image {
         background: {
-            image: url(../../assets/img/reset-password-bg.jpg);
             position: center center;
             size: cover;
             repeat: no-repeat;
@@ -13957,7 +13878,6 @@ Forgot Password CSS
 
     &.bg-image {
         background: {
-            image: url(../../assets/img/forgot-password-bg.jpg);
             position: center center;
             size: cover;
             repeat: no-repeat;
@@ -14111,7 +14031,6 @@ Lock Screen CSS
 
     &.bg-image {
         background: {
-            image: url(../../assets/img/lock-screen-bg.jpg);
             position: center center;
             size: cover;
             repeat: no-repeat;
@@ -14261,7 +14180,6 @@ Error 404 CSS
 
     &.bg-image {
         background: {
-            image: url(../../assets/img/error-404-bg.jpg);
             position: center center;
             size: cover;
             repeat: no-repeat;
@@ -14324,7 +14242,6 @@ Error 404 CSS
                 top: 0;
                 bottom: 5px;
             };
-            background: url(../../assets/img/oops-bg.jpg) no-repeat;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: cover;
@@ -14375,7 +14292,6 @@ Error 500 CSS
 
     &.bg-image {
         background: {
-            image: url(../../assets/img/error-500-bg.jpg);
             position: center center;
             size: cover;
             repeat: no-repeat;
@@ -14438,7 +14354,6 @@ Error 500 CSS
                 top: 0;
                 bottom: 5px;
             };
-            background: url(../../assets/img/oops-bg.jpg) no-repeat;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: cover;
@@ -14489,7 +14404,6 @@ Coming Soon CSS
 
     &.bg-image {
         background: {
-            image: url(../../assets/img/coming-soon-bg.jpg);
             position: center center;
             size: cover;
             repeat: no-repeat;
@@ -14676,7 +14590,6 @@ Maintenance CSS
 
     &.bg-image {
         background: {
-            image: url(../../assets/img/maintenance-bg.jpg);
             position: center center;
             size: cover;
             repeat: no-repeat;
@@ -14706,7 +14619,6 @@ Maintenance CSS
             display: inline-block;
         }
         h2 {
-            background: url(../../assets/img/oops-bg.jpg) no-repeat;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: cover;
@@ -14766,7 +14678,6 @@ Not Authorized CSS
 
     &.bg-image {
         background: {
-            image: url(../../assets/img/not-authorized-bg.jpg);
             position: center center;
             size: cover;
             repeat: no-repeat;
@@ -14796,7 +14707,6 @@ Not Authorized CSS
             display: inline-block;
         }
         h2 {
-            background: url(../../assets/img/oops-bg.jpg) no-repeat;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: cover;

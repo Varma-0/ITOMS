@@ -71,7 +71,6 @@ export class SwapReportComponent implements OnInit {
         },
         error => {
           this.shared.showLoader.next(false);
-          console.error('Error:', error);
           this.shared.showError(error.message)
         }
     )

@@ -80,12 +80,11 @@ export class SoftwareReportComponent implements OnInit {
         if(response.status == 200) {
           this.devices = response.event.eventData.responseData[0];
           this.applyFilter();
-        }        
+        }
         this.shared.showLoader.next(false);
       },
       error => {
         this.shared.showLoader.next(false);
-        console.error('Error:', error);
         this.shared.showError(error.message)
       }
   )
@@ -177,7 +176,6 @@ export class SoftwareReportComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // Implement delete functionality here
-        console.log('User deleted');
       }
     });
   }

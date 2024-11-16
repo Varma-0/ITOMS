@@ -77,7 +77,7 @@ export class DevicesComponent {
       this.uploadFile(file);
     }
   }
-  
+
   async uploadFile(file: File): Promise<void> {
     try {
       const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
@@ -85,7 +85,6 @@ export class DevicesComponent {
       this.excelData = result.data; // Store data
       this.uploadBulkDevices();
     } catch (error) {
-      console.error("Error:", error.message);
       this.shared.showError(error.message); // Handle error
     } finally {
       // Reset the file input value
@@ -147,7 +146,6 @@ export class DevicesComponent {
         // Log the updated device array
       },
       error => {
-        console.error('Error:', error);
         this.shared.showLoader.next(false);
         this.shared.showError(error.message)
       }
@@ -179,7 +177,6 @@ export class DevicesComponent {
         // this.filteredDevices = this.device;
       },
       error => {
-        console.error('Error:', error);
         this.shared.showLoader.next(false);
         this.shared.showError(error.message)
       }
@@ -203,7 +200,6 @@ export class DevicesComponent {
         this.shared.showLoader.next(false);
       },
       error => {
-        console.error('Error:', error);
         this.shared.showLoader.next(false);
         this.shared.showError(error.message)
       }
@@ -257,7 +253,6 @@ export class DevicesComponent {
         this.shared.showLoader.next(false);
       },
       error => {
-        console.error('Error:', error);
         this.shared.showLoader.next(false);
         this.shared.showError(error.message)
       }
@@ -300,7 +295,6 @@ export class DevicesComponent {
             this.shared.showLoader.next(false);
           },
           error => {
-            console.error('Error:', error);
             this.shared.showLoader.next(false);
             this.shared.showError(error.message)
           }
@@ -317,7 +311,6 @@ export class DevicesComponent {
               this.shared.showLoader.next(false);
             },
             error => {
-              console.error('Error:', error);
               this.shared.showLoader.next(false);
               this.shared.showError(error.message)
             }

@@ -61,14 +61,13 @@ export class ModelComponent implements OnInit {
       this.uploadFile(file);
     }
   }
-  
+
   async uploadFile(file: File): Promise<void> {
     try {
       const result = await this.excelService.convertExcelToJson(file, this.requiredColumns,this.missingColumns);
       this.headers = result.headers; // Store headers
       this.excelData = result.data; // Store data
     } catch (error) {
-      console.error("Error:", error.message);
       this.shared.showError(error.message); // Handle error
     } finally {
       // Reset the file input value
@@ -97,8 +96,8 @@ export class ModelComponent implements OnInit {
       }
     )
   }
-  
-  
+
+
 
   fetchData() {
     const event = new terminalEvent('MODEL', 'SEARCH');
@@ -119,7 +118,6 @@ export class ModelComponent implements OnInit {
         this.shared.showLoader.next(false);
       },
       error => {
-        console.error('Error:', error);
         this.shared.showLoader.next(false);
         this.shared.showError(error.message)
       }
@@ -193,7 +191,6 @@ export class ModelComponent implements OnInit {
         this.shared.showLoader.next(false);
       },
       error => {
-        console.error('Error:', error);
         this.shared.showLoader.next(false);
         this.shared.showError(error.message)
       }
@@ -211,7 +208,6 @@ export class ModelComponent implements OnInit {
         this.shared.showLoader.next(false);
       },
       error => {
-        console.error('Error:', error);
         this.shared.showLoader.next(false);
         this.shared.showError(error.message)
       }
@@ -238,7 +234,6 @@ export class ModelComponent implements OnInit {
         this.shared.showLoader.next(false);
       },
       error => {
-        console.error('Error:', error);
         this.shared.showLoader.next(false);
         this.shared.showError(error.message)
       }
